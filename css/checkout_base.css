@@ -1,0 +1,83 @@
+.navigation {
+    display:table;
+    
+    width:100%;
+}
+.navigation .slot {
+    display:table-cell;
+    text-align:center;
+    vertical-align:top;
+}
+.navigation .slot.center {
+    vertical-align:bottom;
+}
+.navigation .slot .note {
+    max-width:200px;
+    text-align:center;
+    display:inline-block;
+}
+
+
+.CheckoutPage.delivery_ekont .item.ekont_office {
+    display:block;
+}
+.CheckoutPage.delivery_ekont .item.ekont_office.empty {
+    display:none;
+}
+.CheckoutPage.delivery_ekont .item.ekont_office.empty + .item.ekont_locator {
+    display:block;
+}
+.CheckoutPage.delivery_ekont .item.ekont_office + .item.ekont_locator {
+    display:none;
+}
+.CheckoutPage.delivery_ekont FORM[name='EkontOffice'] {
+    display:block;
+}
+.CheckoutPage.delivery_ekont FORM[name='EkontOffice'] .InputComponent[field='office'] {
+    display:block;
+}
+.CheckoutPage.delivery_ekont FORM[name='EkontOffice'] .InputComponent[field='office'] .InputField {
+    display:block;
+}
+.CheckoutPage.delivery_ekont FORM[name='EkontOffice'] .InputComponent[field='office'] .InputLabel {
+    display:none;
+}
+.CheckoutPage.delivery_ekont FORM[name='EkontOffice'] .InputComponent[field='office'] TEXTAREA[name='office'] {
+    width:100%;
+    overflow:hidden;
+    min-height:60px;
+}
+
+.CheckoutPage.confirm .item {
+    padding-bottom:10px;
+    margin-top:10px;
+    border-bottom:1px dashed black;
+    
+}
+/*.CheckoutPage.confirm .item .value {
+    font-size:1.2em;
+}*/
+
+.CheckoutPage.confirm .item .DefaultButton {
+    margin-top:5px;
+}
+
+.CheckoutPage.confirm FORM[name='RequestInvoice'] {
+    border-spacing:0px;
+}
+.CheckoutPage.confirm FORM[name='RequestInvoice'] .InputLabel {
+    padding-left:0px;
+}
+
+.CheckoutPage.confirm FORM[name='OrderNote'] {
+    border-spacing:0px;
+    width:100%;
+}
+.CheckoutPage.confirm FORM[name='OrderNote'] .InputLabel {
+    padding-left:0px;
+    display:none;
+}
+
+.cart_view {
+    width:100%;
+}

@@ -5,7 +5,7 @@ include_once("lib/beans/LanguagesBean.php");
 
 
 $page = new AdminPage("Languages");
-$page->checkAccess(ROLE_CONFIG_MENU);
+$page->checkAccess(ROLE_SETTINGS_MENU);
 
 $menu=array(
 // 	new MenuItem("Add Language","add.php", "list-add.png"),

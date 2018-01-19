@@ -9,7 +9,7 @@ class FAQItemInputForm extends InputForm
   public function __construct() 
   {
 	
-      $field = InputFactory::CreateField(InputFactory::SELECT, "section", "Section", 1);
+      $field = InputFactory::CreateField(InputFactory::SELECT, "section", "Секция", 1);
 
       $enm = new DBEnumSelector("faq_items", "section");
       $rend = $field->getRenderer();
@@ -19,10 +19,10 @@ class FAQItemInputForm extends InputForm
 
       $this->addField($field);
 
-      $field = InputFactory::CreateField(InputFactory::TEXTFIELD, "question", "Question", 1);
+      $field = InputFactory::CreateField(InputFactory::TEXTFIELD, "question", "Въпрос", 1);
       $this->addField($field);
 
-      $field = InputFactory::CreateField(InputFactory::TEXTAREA, "answer", "Answer", 1);
+      $field = InputFactory::CreateField(InputFactory::TEXTAREA, "answer", "Отговор", 1);
       $this->addField($field);
 	
   }

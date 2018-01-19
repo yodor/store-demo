@@ -11,12 +11,12 @@ class ProductClassInputForm extends InputForm
     public function __construct()
     {
 
-        $field = InputFactory::CreateField(InputFactory::TEXTFIELD, "class_name", "Class Name", 1);
+        $field = InputFactory::CreateField(InputFactory::TEXTFIELD, "class_name", "Име на класа", 1);
         $this->addField($field);
         $field->enableTranslator(false);
         
         
-        $field1 = new ArrayInputField("attribute_name", "Attribute", 0);
+        $field1 = new ArrayInputField("attribute_name", "Атрибут", 0);
         $field1->allow_dynamic_addition=true;
         $field1->setSource(new ClassAttributesBean());
     // 	  $field1->getValueTransactor()->process_datasource_foreign_keys = true;
@@ -39,7 +39,7 @@ class ProductClassInputForm extends InputForm
         
         $arend = new ArrayField();
         $act_rend = new ActionRenderer(new Action("New attribute", "../attributes/add.php", array()) );
-        $act_rend->setName("New Attribute");
+        $act_rend->setName("Нов атрибут");
         $act_rend->setAttribute("action", "inline-new");
         $arend->addControl($act_rend);
 

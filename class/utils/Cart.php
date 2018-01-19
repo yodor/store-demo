@@ -140,6 +140,14 @@ class Cart
         }
         return $qty;
     }
+    public function getItemCount()
+    {
+        $num_items = 0;
+        foreach ($this->items as $piID=>$qty) {
+            $num_items = $num_items + $qty;
+        }
+        return $num_items;
+    }
     public function clearCart()
     {
         $this->items=array();

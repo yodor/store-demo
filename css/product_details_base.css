@@ -4,19 +4,23 @@
  .images {
   display:inline-block;
 /*   max-width:400px; */
-  outline:1px dotted gray;
+/*   outline:1px dotted gray; */
   vertical-align:top;
   
 }
  .images .image_big {
-  display:block;
-  float:right;
-  margin-left:10px;
-
+  vertical-align:top;
+  display:inline-block;
+/*   float:right; */
+/*   margin-left:10px; */
+  max-width:460px;
 }
  .images .image_gallery {
-  display:block;
-  float:left;
+  display:inline-block;
+/*   float:left; */
+  max-width:110px;
+  margin-left:10px;
+  vertical-align:top;
 }
 
  .images .image_gallery .list {
@@ -34,7 +38,7 @@
   background-size:contain;
   background-position:center center;
   cursor:pointer;
-  margin-bottom:5px;
+  margin-bottom:10px;
 }
  .images .image_gallery .list .item[active='1'] {
   outline:1px solid red;
@@ -46,7 +50,7 @@
 .side_pane {
   display:inline-block;
   max-width:256px;
-  outline:1px dotted gray;
+/*   outline:1px dotted gray; */
   vertical-align:top;
   text-align:left;
   float:right;

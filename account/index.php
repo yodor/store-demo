@@ -1,4 +1,4 @@
 <?php
-header("Location: orders_history.php");
+header("Location: orders.php");
 exit;
 ?>

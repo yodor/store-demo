@@ -3,6 +3,7 @@ include_once("lib/pages/SimplePage.php");
 
 include_once("lib/utils/MainMenu.php");
 include_once("lib/components/MenuBarComponent.php");
+include_once("lib/components/KeywordSearchComponent.php");
 
 include_once("lib/forms/InputForm.php");
 include_once("lib/forms/renderers/FormRenderer.php");
@@ -11,6 +12,9 @@ include_once("lib/input/InputFactory.php");
 
 include_once("lib/beans/MenuItemsBean.php");
 include_once("class/beans/SectionsBean.php");
+
+include_once("class/utils/Cart.php");
+include_once("lib/auth/UserAuthenticator.php");
 
 class StorePage extends SimplePage
 {
@@ -21,11 +25,31 @@ class StorePage extends SimplePage
 
     protected $section = "";
     
+    public $keyword_search = NULL;
+    
+    protected $cart = NULL;
+    
+    public $client_name = "";
+    
     public function __construct()
     {
-
+        
+        
 	parent::__construct();
 
+	$this->is_auth = UserAuthenticator::checkAuthState();
+        if ($this->is_auth) {
+            $this->userID = (int)$_SESSION[CONTEXT_USER]["id"];
+            $bean = new UsersBean();
+            $this->client_name = $bean->fieldValue($this->userID, "fullname");
+            
+        }
+        else {
+            $this->userID = -1;
+            $this->client_name = "";
+        }
+        $this->cart = new Cart();
+        
 	$menu = new MainMenu();
 	
 	$menu->setMenuBeanClass("MenuItemsBean", "");
@@ -52,12 +76,26 @@ class StorePage extends SimplePage
                 $this->section = $section;
             }
         }
+        
+        //construct filters 
+        $search_fields = array("relation.product_name", "relation.product_summary", "relation.keywords");
+
+        $ksc = new KeywordSearchComponent($search_fields, "relation");
+        $ksc->getForm()->getField("keyword")->getRenderer()->setFieldAttribute("placeholder", "Търси ...");
+        $ksc->getForm()->getRenderer()->setAttribute("method", "get");
+        $this->keyword_search = $ksc;
     }
 
+    public function getCart()
+    {
+        return $this->cart;
+    }
+    
     public function getMenuBar()
     {
         return $this->menu_bar;
     }
+    
     protected function dumpCSS()
     {
 	parent::dumpCSS();
@@ -102,13 +140,48 @@ class StorePage extends SimplePage
 	
 	$this->selectActiveMenu();
 	
-	//$this->constructTitle();
+               
+                
+	echo "<div class='full' align=center>";
 
-	echo "<div align=center>";
-
-            $this->menu_bar->render();
+            echo "<div class='header '>";
+                 echo "<div class='aside'>";
+                
+                    echo "<div class='links'>";
+                        echo "<div class='login_pane'>";
+                            if ($this->is_auth) {
+                                echo "<a href='".SITE_ROOT."account/' class='account_link'>{$this->client_name}</a>";
+                            }
+                            else {
+                                echo "<a href='".SITE_ROOT."account/login.php' class='account_link'>".tr("Вход")." / ".tr("Регистрация")."</a>";
+                            }
+                        echo "</div>";
+                        
+                        echo "<a href='".SITE_ROOT."checkout/cart.php' class='checkout_link'>".tr("Кошница")." (".$this->cart->getItemCount().")</a>";
+                        echo "<a href='".SITE_ROOT."contacts.php' class='contacts_link'>".tr("Контакти")."</a>";
+                        
+                    echo "</div>";
+                    
+                    echo "<div class='search_pane'>";
+                    $this->keyword_search->render();
+                    echo "<div class='clear'></div>";
+                    echo "</div>";
+                    
+                echo "</div>";
+                
+                echo "<div class='clear'></div>";
+                
+                echo "<a class='logo' href='".SITE_ROOT."'></a>";
+            echo "</div>";
             
-            echo "<div class='main_content'>"; //inner contents
+         echo "</div>";
+         
+         echo "<div class='full border_bottom' align=center>";
+         $this->menu_bar->render();
+         echo "</div>";
+         
+         echo "<div class='full' align=center>";
+            echo "<div class='main_content container'>"; //inner contents
           
     }
 
@@ -132,9 +205,40 @@ class StorePage extends SimplePage
 
 	  
             echo "</div>"; //main_content
-	echo "</div>"; //align=center
+	echo "</div>"; //full align=center
 
-
+        echo "<div class='full black' align=center>";
+            echo "<div class='footer container'>";
+                
+                echo "<div class='links'>";
+                    //main menu and other links
+                    echo "<div class='menu'>";
+                        $items = $this->menu_bar->getMainMenu()->getMenuItems();
+                        foreach($items as $idx=>$item) {
+                            echo "<a href='{$item->getHref()}'>".tr($item->getTitle())."</a>";
+                        }
+                    echo "</div>";//menu
+                    
+                    echo "<div class='other'>";
+                        echo "<a href='".SITE_ROOT."terms_usage.php'>".tr("Условия за ползване")."</a>";
+                        echo "<a href='".SITE_ROOT."terms_delivery.php'>".tr("Условия за доставка")."</a>";
+                    echo "</div>";
+                    
+                echo "</div>";
+                
+                echo "<div class='social_links'>";
+                //social media links
+                echo "</div>";
+                
+                echo "<div class='logo'></div>";
+                
+            echo "</div>";//footer
+        echo "</div>";//full
+        
+        echo "<div class='full black footer_bottom' align=center>";
+            echo tr("MM Fashion Shop. Web Design SaturnoSoft.biz");
+        echo "</div>";
+        
 	echo "\n";
 	echo "\n<!--finishPage StorePage-->\n";
 

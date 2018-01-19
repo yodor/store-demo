@@ -45,3 +45,7 @@
 .order_items .line .item.amount {
     text-align:right;
 }
+
+.FormRenderer[name='RegisterClient'] .SubmitLine .TextSpace {
+    display:none;
+}

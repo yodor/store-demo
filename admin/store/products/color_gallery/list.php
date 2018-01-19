@@ -53,7 +53,7 @@ RequestController::addRequestHandler($h_delete);
 // $ksc = new KeywordSearchComponent($search_fields);
 
 $select_colors = $bean->getSelectQuery();
-$select_colors->fields = " pclr.*, p.product_name, p.product_code ";
+$select_colors->fields = " pclr.*, p.product_name ";
 $select_colors->from = " product_colors pclr LEFT JOIN products p ON p.prodID = pclr.prodID ";
 $select_colors->where = " pclr.prodID = ".$rc->ref_id;
 

@@ -1,16 +1,17 @@
 <?php
 include_once("class/pages/ProductsPage.php");
-
+include_once("class/components/renderers/items/ProductListItem.php");
 
 class ProductDetailsPage extends ProductsPage
 {
 
     protected $sellable = NULL;
+    protected $list_item = NULL;
     
     public function __construct()
     {
         parent::__construct();
-
+        $this->list_item = new ProductListItem();
     }
 
     protected function dumpCSS()
@@ -90,6 +91,52 @@ class ProductDetailsPage extends ProductsPage
             
         return $actions;
         
+    }
+    public function renderSameCategoryProducts()
+    {
+        echo "<div class='caption'>".tr("Още продукти от тази категория")."</div>";
+        
+        
+        $sel = new ProductsQuery();
+        $sel->order_by = " pi.view_counter ";
+        $sel->group_by = " pi.prodID, pi.color ";
+        $sel->limit = "4";
+        $sel->where = " p.section='{$this->section}' AND p.catID='{$this->sellable["catID"]}' ";
+
+        $db = DBDriver::get();
+        
+//         echo $sel->getSQL();
+        $res = $db->query($sel->getSQL());
+        if (!$res) throw new Exception("Unable to query products from section='{$this->section}' and catID='{$this->sellable["catID"]}'. Error: ".$db->getError());
+        
+        while ($row = $db->fetch($res)) {
+            $this->list_item->setItem($row);
+            $this->list_item->render();
+        }
+        $db->free($res);
+    }
+    public function renderMostOrderedProducts()
+    {
+        echo "<div class='caption'>".tr("Най-продавани от тази секция")."</div>";
+        
+        
+        $sel = new ProductsQuery();
+        $sel->order_by = " pi.order_counter ";
+        $sel->group_by = " pi.prodID, pi.color ";
+        $sel->limit = "4";
+        $sel->where = " p.section='{$this->section}'  ";
+
+        $db = DBDriver::get();
+        
+//         echo $sel->getSQL();
+        $res = $db->query($sel->getSQL());
+        if (!$res) throw new Exception("Unable to query products from section='{$this->section}' and catID='{$this->sellable["catID"]}'. Error: ".$db->getError());
+        
+        while ($row = $db->fetch($res)) {
+            $this->list_item->setItem($row);
+            $this->list_item->render();
+        }
+        $db->free($res);
     }
 }
 

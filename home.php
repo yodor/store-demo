@@ -6,14 +6,14 @@ include_once("class/beans/SectionBannersBean.php");
 include_once("class/utils/ProductsQuery.php");
 include_once("class/components/renderers/items/ProductListItem.php");
 
-function dumpCSS()
-{
-    echo '<link rel="stylesheet" href="'.SITE_ROOT.'css/ProductListItem.css" type="text/css" >';
-}
+// function dumpCSS()
+// {
+//     echo '<link rel="stylesheet" href="'.SITE_ROOT.'css/ProductListItem.css" type="text/css" >';
+// }
 
 $page = new StorePage();
 
-
+$item = new ProductListItem();
 
 $page->beginPage();
 
@@ -22,7 +22,7 @@ $section_banners = new SectionBannersBean();
 
 $page->sections->startIterator("WHERE 1 ORDER BY position ASC");
 
-$item = new ProductListItem();
+
 
 $sel = new ProductsQuery();
 $sel->order_by = " RAND() ";

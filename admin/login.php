@@ -49,7 +49,7 @@ echo "<div class='login_component'>";
 
   echo "<span class='inner'>";
 
-  echo "<span class='caption'>Demo Administration</span>";
+  echo "<span class='caption'>".tr("Администрация")."</span>";
   $afr->renderForm($af);
   echo "</span>";
 

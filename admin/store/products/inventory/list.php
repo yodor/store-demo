@@ -45,11 +45,17 @@ catch (Exception $e) {
 
 }
 
+
 $bean = new ProductInventoryBean();
 
 
 $h_delete = new DeleteItemRequestHandler($bean);
 RequestController::addRequestHandler($h_delete);
+
+
+$search_fields = array("product_name", "category_name", "class_name", "product_summary", "keywords", "brand_name", "section", "color", "inventory_attributes");
+$ksc = new KeywordSearchComponent($search_fields);
+$ksc->getForm()->getRenderer()->setAttribute("method", "get");
 
 $piID = -1;
 if (isset($_GET["piID"])) {
@@ -60,9 +66,11 @@ if (isset($_GET["piID"])) {
 // $ksc = new KeywordSearchComponent($search_fields);
 
 $select_inventory = $bean->getSelectQuery();
-$select_inventory->fields = " pi.*, pi.prodID as product_photo, pclr.pclrID,  sc.color_code, pi.size_value, p.product_name, p.product_code, p.class_name, p.section, (SELECT GROUP_CONCAT(CONCAT_WS(':', ia.attribute_name, ia.value) SEPARATOR '<BR>') FROM inventory_attributes ia WHERE ia.piID=pi.piID GROUP BY ia.piID) as inventory_attributes  ";
-$select_inventory->from = " product_inventory pi LEFT JOIN product_colors pclr ON pclr.pclrID = pi.pclrID LEFT JOIN store_colors sc ON sc.color=pclr.color LEFT JOIN products p ON p.prodID = pi.prodID JOIN color_chips cc ON cc.prodID = p.prodID LEFT JOIN product_photos pp ON pp.prodID = pi.prodID ";
+$select_inventory->fields = " pi.*, pc.category_name,   sc.color_code,  p.brand_name, p.keywords, p.product_name, p.product_summary, p.class_name, p.section, (SELECT GROUP_CONCAT(CONCAT_WS(':', ia.attribute_name, ia.value) SEPARATOR '<BR>') COLLATE 'utf8_general_ci' FROM inventory_attributes ia WHERE ia.piID=pi.piID GROUP BY ia.piID )  as inventory_attributes  ";
+$select_inventory->from = " product_inventory pi JOIN products p ON p.prodID = pi.prodID JOIN product_categories pc ON pc.catID=p.catID LEFT JOIN product_colors pclr ON pclr.pclrID = pi.pclrID LEFT JOIN store_colors sc ON sc.color=pclr.color LEFT  JOIN color_chips cc ON cc.prodID = p.prodID LEFT JOIN product_photos pp ON pp.prodID = pi.prodID ";
 $select_inventory->group_by = " pi.piID ";
+
+
 if ($prodID>0) {
   $select_inventory->where = " pi.prodID = '$prodID' ";
   $page->caption = tr("Inventory").": ".$rc->ref_row["product_name"];
@@ -71,14 +79,16 @@ else {
   $page->caption = tr("All Products Inventory");
 }
 
+$view_inventory = new SelectQuery();
+$view_inventory->from = "(".$select_inventory->getSQL(false, false).") as derived ";
 
 
 
-// $ksc->processSearch($select_products);
+$ksc->processSearch($view_inventory);
 
 
 
-$view = new TableView(new SQLResultIterator($select_inventory, "piID"));
+$view = new TableView(new SQLResultIterator($view_inventory, "piID"));
 $view->setCaption("Inventory List");
 $view->setDefaultOrder(" prodID DESC ");
 
@@ -87,15 +97,22 @@ $view->addColumn(new TableColumn("piID","ID"));
 
 $view->addColumn(new TableColumn("prodID","ProdID"));
 
-$view->addColumn(new TableColumn("product_photo","Product Photo"));
-
-$view->addColumn(new TableColumn("product_name", "Product Name"));
-$view->addColumn(new TableColumn("product_code", "Product Code"));
-
-$view->addColumn(new TableColumn("class_name","Class"));
 $view->addColumn(new TableColumn("section","Section"));
 
 $view->addColumn(new TableColumn("pclrID", "Color Scheme"));
+
+$view->addColumn(new TableColumn("product_name", "Product Name"));
+
+$view->addColumn(new TableColumn("category_name", "Category"));
+
+$view->addColumn(new TableColumn("brand_name", "Brand"));
+
+// $view->addColumn(new TableColumn("product_photo","Product Photo"));
+
+$view->addColumn(new TableColumn("class_name","Class"));
+
+
+
 
 $view->addColumn(new TableColumn("color", "Color Name"));
 $view->addColumn(new TableColumn("color_code", "Color Code"));
@@ -113,10 +130,10 @@ $view->addColumn(new TableColumn("inventory_attributes","Attributes"));
 
 $view->addColumn(new TableColumn("actions","Actions"));
 
-$view->getColumn("product_photo")->setCellRenderer(new TableImageCellRenderer(new ProductPhotosBean(), TableImageCellRenderer::RENDER_THUMB, -1, 48));
-$view->getColumn("product_photo")->getCellRenderer()->setSourceIteratorKey("prodID");
-$view->getColumn("product_photo")->getCellRenderer()->setListLimit(1);
-$view->getColumn("product_photo")->getHeaderCellRenderer()->setSortable(false);
+// $view->getColumn("product_photo")->setCellRenderer(new TableImageCellRenderer(new ProductPhotosBean(), TableImageCellRenderer::RENDER_THUMB, -1, 48));
+// $view->getColumn("product_photo")->getCellRenderer()->setSourceIteratorKey("prodID");
+// $view->getColumn("product_photo")->getCellRenderer()->setListLimit(1);
+// $view->getColumn("product_photo")->getHeaderCellRenderer()->setSortable(false);
 
 $view->getColumn("pclrID")->setCellRenderer(new TableImageCellRenderer(new ProductColorPhotosBean(), TableImageCellRenderer::RENDER_THUMB, -1, 48));
 $view->getColumn("pclrID")->getCellRenderer()->setSourceIteratorKey("pclrID");
@@ -156,7 +173,7 @@ $page->beginPage($menu);
 
 $page->renderPageCaption();
 
-// $ksc->render();
+$ksc->render();
 $view->render();
 
 $page->finishPage();

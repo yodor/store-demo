@@ -80,9 +80,9 @@ class OrderProcessor {
                 $item = $inventory->getByID($piID, $db);
                 $prodID = (int)$item["prodID"];
                 
-                $product = $products->getByID($prodID, $db, " prodID, brand_name, product_code, product_name ");
+                $product = $products->getByID($prodID, $db, " prodID, brand_name, product_name ");
 
-                $product_details = "Продукт||{$product["product_name"]}//Цвят||{$item["color"]}//Размер||{$item["size_value"]}//Марка||{$product["brand_name"]}//Код|| {$product["product_code"]}";
+                $product_details = "Продукт||{$product["product_name"]}//Цвят||{$item["color"]}//Размер||{$item["size_value"]}//Марка||{$product["brand_name"]}//Код|| {$piID}-{$prodID}";
       
                 $order_item = array();
                 $order_item["piID"] = $piID;
@@ -96,8 +96,11 @@ class OrderProcessor {
                 $itemID = $order_items->insertRecord($order_item, $db);
                 if ($itemID<1)throw new Exception("Unable to insert order item: ".$db->getError());
                 
-                $qty_update = array("stock_amount"=>($item["stock_amount"]-$qty));
-                if (!$inventory->updateRecord($piID, $qty_update, $db)) throw new Exception("Unable to decrement inventory quantities: ".$db->getError());
+                $inventory_update = array(
+                    "stock_amount"=>($item["stock_amount"]-$qty), 
+                    "order_counter"=>($item["order_counter"]+1)
+                );
+                if (!$inventory->updateRecord($piID, $inventory_update, $db)) throw new Exception("Unable to update inventory statistics: ".$db->getError());
                 
                 $pos++;
             }

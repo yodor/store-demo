@@ -20,7 +20,7 @@ class ProductInventoryInputForm extends InputForm
     public function __construct()
     {
 
-		$field = InputFactory::CreateField(InputFactory::SELECT, "pclrID", "Color Scheme", 0);
+		$field = InputFactory::CreateField(InputFactory::SELECT, "pclrID", "Цветова схема", 0);
 		$field->getRenderer()->setSource(new ProductColorsBean());
 		
 
@@ -30,31 +30,31 @@ class ProductInventoryInputForm extends InputForm
 		$this->addField($field);
 	
 
-		$field = InputFactory::CreateField(InputFactory::SELECT, "size_value", "Sizing", 0);
+		$field = InputFactory::CreateField(InputFactory::SELECT, "size_value", "Оразмеряване", 0);
 		$field->getRenderer()->setSource(new StoreSizesBean());
 		$field->getRenderer()->list_key = "size_value";
 		$field->getRenderer()->list_label = "size_value";
 		
-		$field->getRenderer()->addon_content = "<a class='ActionRenderer' action='inline-new' href='../../sizes/add.php'>".tr("New Sizing Code")."</a>";
+		$field->getRenderer()->addon_content = "<a class='ActionRenderer' action='inline-new' href='../../sizes/add.php'>".tr("Нов код за оразмеряване")."</a>";
 		
 		$this->addField($field);
 
-		$field = InputFactory::CreateField(InputFactory::TEXTFIELD, "stock_amount", "Stock Amount", 1);
+		$field = InputFactory::CreateField(InputFactory::TEXTFIELD, "stock_amount", "Стокова наличност", 1);
 		$this->addField($field);
 		
-		$field = InputFactory::CreateField(InputFactory::TEXTFIELD, "price", "Price", 0);
+		$field = InputFactory::CreateField(InputFactory::TEXTFIELD, "price", "Продажна цена", 0);
 		$this->addField($field);
 		
-		$field = InputFactory::CreateField(InputFactory::TEXTFIELD, "buy_price", "Buy Price", 0);
+		$field = InputFactory::CreateField(InputFactory::TEXTFIELD, "buy_price", "Покупна цена", 0);
 		$this->addField($field);
 
-		$field = InputFactory::CreateField(InputFactory::TEXTFIELD, "old_price", "Old Price", 0);
+		$field = InputFactory::CreateField(InputFactory::TEXTFIELD, "old_price", "Стара цена", 0);
 		$this->addField($field);
 		
-		$field = InputFactory::CreateField(InputFactory::TEXTFIELD, "weight", "Weight", 0);
+		$field = InputFactory::CreateField(InputFactory::TEXTFIELD, "weight", "Тегло", 0);
 		$this->addField($field);
 	
-	$field = new ArrayInputField("value", "Class Attributes", 0);
+	$field = new ArrayInputField("value", "Атрибути на класа", 0);
 	$field->allow_dynamic_addition = false;
 	$field->source_label_visible = true;
 	
@@ -83,7 +83,7 @@ class ProductInventoryInputForm extends InputForm
 	  
 	  $this->getField("pclrID")->getRenderer()->setFilter(" WHERE prodID='{$this->prodID}' ");
 	  
-	  $this->getField("pclrID")->getRenderer()->addon_content = "<a class='ActionRenderer' action='inline-new' href='../color_gallery/add.php?prodID={$this->prodID}'>".tr("New Color Scheme")."</a>";
+	  $this->getField("pclrID")->getRenderer()->addon_content = "<a class='ActionRenderer' action='inline-new' href='../color_gallery/add.php?prodID={$this->prodID}'>".tr("Нова цветова схема")."</a>";
 	  
 // 	  $this->getField("size_value")->getRenderer()->setFilter(" WHERE prodID='{$this->prodID}' ");
 
@@ -93,7 +93,7 @@ class ProductInventoryInputForm extends InputForm
 	  
 	  $rend = $this->getField("value")->getRenderer();
 	  
-	  $rend->setCaption(tr("Product Class").": ".$this->product["class_name"]);
+	  $rend->setCaption(tr("Продуктов клас").": ".$this->product["class_name"]);
 	  
 	  $data_filter = " ca LEFT JOIN attributes attr ON attr.name = ca.attribute_name WHERE ca.class_name='{$this->product["class_name"]}' ";
 	  $data_fields = " ca.*, attr.unit as attribute_unit, attr.type attribute_type ";

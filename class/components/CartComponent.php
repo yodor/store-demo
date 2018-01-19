@@ -67,7 +67,7 @@ class CartComponent extends MLTagComponent
 
         echo "<td field='model_code'>";
 //         trbean($prodID, "product_name", $product, $this->products);
-        echo $product["product_name"]."<BR>".tr("Цвят").": ".$item["color"]."<BR>".tr("Размер").": ".$item["size_value"];
+        echo $product["product_name"]."<BR>".tr("Цвят").": ".$item["color"]."<BR>".tr("Размер").": ".$item["size_value"]."<BR>".tr("Код").": ".$piID."-".$prodID;
         
         echo "</td>";
 

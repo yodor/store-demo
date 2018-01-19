@@ -8,7 +8,7 @@ include_once("class/pages/ProductListPage.php");
 include_once("class/beans/ProductsBean.php");
 include_once("class/beans/ProductPhotosBean.php");
 include_once("lib/components/TableView.php");
-include_once("lib/components/KeywordSearchComponent.php");
+
 include_once("lib/iterators/SQLResultIterator.php");
 include_once("lib/utils/RelatedSourceFilterProcessor.php");
 include_once("class/beans/ProductColorPhotosBean.php");
@@ -47,13 +47,10 @@ $product_selector->where = "  ";
 //process get filters
 $proc = new RelatedSourceFilterProcessor("prodID");
 
-//construct filters 
-$search_fields = array("relation.product_code", "relation.product_name", "relation.product_description", "relation.keywords");
 
-$ksc = new KeywordSearchComponent($search_fields, "relation");
-$ksc->getForm()->getRenderer()->setAttribute("method", "get");
 
-$proc->addFilter("keyword", $ksc);
+
+$proc->addFilter("keyword", $page->keyword_search);
 
 $proc->addFilter("brand_name", "brand_name");
 $proc->addFilter("color", new ColorFilter());
@@ -100,22 +97,22 @@ $product_selector = $bean->childNodesWith($product_selector, $nodeID);
 $product_selector->where.= " AND relation.catID = child.catID ";
 $product_selector->group_by = " relation.prodID, relation.color ";
 
-
+// echo $product_selector->getSQL();
 
 if (strcmp_isset("view", "list", $_GET)) {
   $view = new TableView(new SQLResultIterator($product_selector, "piID"));
   // $view->addColumn(new TableColumn("piID","ID"));
   // $view->addColumn(new TableColumn("prodID","ID"));
-  $view->addColumn(new TableColumn("pclrpID","Photo"));
-  $view->addColumn(new TableColumn("product_code","Product Code"));
-  $view->addColumn(new TableColumn("product_name","Product Name"));
-  $view->addColumn(new TableColumn("brand_name","Brand Name"));
+  $view->addColumn(new TableColumn("pclrpID","Снимка"));
+//   $view->addColumn(new TableColumn("product_code","Product Code"));
+  $view->addColumn(new TableColumn("product_name","Продукт"));
+  $view->addColumn(new TableColumn("brand_name","Марка"));
   // $view->addColumn(new TableColumn("category_name","Category Name"));
-  $view->addColumn(new TableColumn("color","Color"));
-  $view->addColumn(new TableColumn("sell_price","Price"));
+  $view->addColumn(new TableColumn("color","Цвят"));
+  $view->addColumn(new TableColumn("sell_price","Цена"));
   // $view->addColumn(new TableColumn("size_values","Sizing"));
-  $view->addColumn(new TableColumn("colors","Colors"));
-  $view->addColumn(new TableColumn("color_ids","Colors"));
+  $view->addColumn(new TableColumn("colors","Цветове"));
+//   $view->addColumn(new TableColumn("color_ids","Colors"));
   
   $view->getColumn("pclrpID")->setCellRenderer(new ProductPhotoCellRenderer(TableImageCellRenderer::RENDER_THUMB, -1, 48));
   $view->getColumn("pclrpID")->getHeaderCellRenderer()->setSortable(false);
@@ -126,9 +123,9 @@ else {
 }
 $view->items_per_page = 12;
 
-$sort_prod = new PaginatorSortField("relation.prodID", "Auto");
+$sort_prod = new PaginatorSortField("relation.prodID", "Най-нови");
 $view->getPaginator()->addSortField($sort_prod);
-$sort_price = new PaginatorSortField("relation.sell_price", "Price");
+$sort_price = new PaginatorSortField("relation.sell_price", "Цена");
 $view->getPaginator()->addSortField($sort_price);
 
 $view->getTopPaginator()->view_modes_enabled = true;
@@ -267,9 +264,9 @@ echo "<div class='column left'>";
   echo "<div class='filters'>";
 	echo "<form name='filters' autocomplete='off'>";
 	echo "<div class='InputComponent'>";
-	  echo "<span class='label'>".tr("Brand")."</span>";
+	  echo "<span class='label'>".tr("Марка")."</span>";
 	
-	  $field = InputFactory::CreateField(InputFactory::SELECT, "brand_name", "Brands", 0);
+	  $field = InputFactory::CreateField(InputFactory::SELECT, "brand_name", "Марка", 0);
 	  $rend = $field->getRenderer();
 	  $rend->setSource(ArraySelector::FromSelect($brand_select, "brand_name", "brand_name"));
 	  $rend->list_key = "brand_name";
@@ -281,8 +278,8 @@ echo "<div class='column left'>";
 	echo "</div>";//InputComponent
 	
 	echo "<div class='InputComponent'>";
-	  echo "<span class='label'>".tr("Color")."</span>";
-	  $field = InputFactory::CreateField(InputFactory::SELECT, "color", "Colors", 0);
+	  echo "<span class='label'>".tr("Цвят")."</span>";
+	  $field = InputFactory::CreateField(InputFactory::SELECT, "color", "Цвят", 0);
 	  $rend = $field->getRenderer();
 	  $rend->setSource(ArraySelector::FromSelect($color_select, "color", "color"));
 	  $rend->list_key = "color";
@@ -294,8 +291,8 @@ echo "<div class='column left'>";
 	echo "</div>";//InputComponent
 	
 	echo "<div class='InputComponent'>";
-	  echo "<span class='label'>".tr("Sizing")."</span>";
-	  $field = InputFactory::CreateField(InputFactory::SELECT, "size_value", "Sizing", 0);
+	  echo "<span class='label'>".tr("Размер")."</span>";
+	  $field = InputFactory::CreateField(InputFactory::SELECT, "size_value", "Размер", 0);
 	  $rend = $field->getRenderer();
 	  $rend->setSource(ArraySelector::FromSelect($size_select, "size_value", "size_value"));
 	  $rend->list_key = "size_value";
@@ -307,7 +304,7 @@ echo "<div class='column left'>";
 	echo "</div>";//InputComponent
 	
 	echo "<div class='InputComponent Slider'>";
-	  echo "<span class='label'>".tr("Price")."</span>";
+	  echo "<span class='label'>".tr("Цена")."</span>";
 	  $value_min = $price_info["min"];
 	  $value_max = $price_info["max"];
 	  
@@ -355,7 +352,7 @@ echo "<div class='column left'>";
 	
 	echo "</form>";
 	
-	echo "<button class='DefaultButton' onClick='javascript:clearFilters()'>".tr("Clear Refinements")."</button>";
+	echo "<button class='DefaultButton' onClick='javascript:clearFilters()'>".tr("Изчисти филтрите")."</button>";
 	
   echo "</div>";//filters
 
@@ -365,7 +362,7 @@ echo "<div class='column product_list'>";
 //    Session::set("search_home", false); 
     $page->renderCategoryPath($nodeID);
    
-    $ksc->render();
+//     $ksc->render();
   
     echo "<div class='clear'></div>";
 //   $view->enablePaginators(false);

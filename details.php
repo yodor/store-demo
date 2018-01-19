@@ -18,6 +18,8 @@ if (isset($_GET["piID"])) {
 
 $sellable = array();
 
+$landing_sellable = array();
+
 $db = DBDriver::get();
 $res = NULL;
 try {
@@ -38,6 +40,7 @@ try {
 	//
 	if ((int)$piID == (int)$item["piID"]) {
 	  $found_piID = true;
+	  $landing_sellable = $item;
 	}
 	
   }
@@ -49,6 +52,7 @@ try {
   
   if (!$found_piID) {
 	$piID = $sellable[0]["piID"];
+	$landing_sellable = $sellable[0];
   }
   
 }
@@ -59,6 +63,20 @@ catch (Exception $e) {
   header("Location: list.php");
   exit;
 }
+
+
+//update view counter
+try {
+    $db->transaction();
+    $res = $db->query("UPDATE product_inventory pi SET pi.view_counter=pi.view_counter+1 WHERE pi.prodID='$prodID' AND pi.pclrID='{$landing_sellable["pclrID"]}'");
+    if (!$res) throw new Exception($db->getError()); 
+    $db->commit();
+}
+catch (Exception $e) {
+    $db->rollback();
+    debug("Unable to update inventory view counter: ".$db->getError());
+}
+
 
 
 //per pclrID items used for color button images
@@ -175,7 +193,7 @@ echo "<div class='column details'>";
   echo "<div class='images'>";
   
 	//main image
-	$gallery_href = STORAGE_HREF."?cmd=image_crop&width=400&height=-1";
+	$gallery_href = STORAGE_HREF."?cmd=image_crop&width=460&height=-1";
 	$big_href = STORAGE_HREF."?cmd=gallery_photo";
 	echo "<div class='image_big' source='$gallery_href' >";
 	echo "<a class='image_popup' href='' source='$big_href'><img src='$big_href'></a>";
@@ -312,6 +330,16 @@ echo "<div class='column details'>";
     echo "</div>";
   
   echo "</div>"; //side_pane
+  
+  echo "<div class='clear'></div>";
+  
+  echo "<div class='category_products'>";
+  $page->renderSameCategoryProducts();
+  echo "</div>";
+  
+  echo "<div class='ordered_products'>";
+  $page->renderMostOrderedProducts();
+  echo "</div>";
   
 echo "</div>"; //column details
 

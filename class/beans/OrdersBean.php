@@ -3,6 +3,11 @@ include_once ("lib/beans/DBTableBean.php");
 
 class OrdersBean extends DBTableBean 
 {
+    const STATUS_PROCESSING = "Processing";
+    const STATUS_SENT = "Sent";
+    const STATUS_COMPLETED = "Completed";
+    const STATUS_CANCELED = "Canceled";
+    
     protected $createString = "CREATE TABLE `orders` (
  `orderID` int(11) unsigned NOT NULL AUTO_INCREMENT,
  `total` decimal(10,2) NOT NULL,

@@ -26,7 +26,7 @@ class OrderConfirmationMailer extends Mailer {
         $message.= "Изпращаме Ви това съобщение за да Ви уведомим, че поръчка Ви е приета за обработка. ";
         $message.="\r\n\r\n<br><br>";
 
-        $order_link = SITE_URL.SITE_ROOT."account/orders.php?orderID=$orderID";
+        $order_link = SITE_URL.SITE_ROOT."account/order_details.php?orderID=$orderID";
 
         $message.="Можете да видите поръчката си на адрес - ";
         $message.="<a href='$order_link'>$order_link</a>";

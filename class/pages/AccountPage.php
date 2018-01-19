@@ -39,7 +39,7 @@ class AccountPage extends StorePage
     {
         parent::dumpCSS();
 
-        echo "<link rel='stylesheet' href='".SITE_ROOT."lib/css/FormRenderer.css' type='text/css'>";
+//         echo "<link rel='stylesheet' href='".SITE_ROOT."lib/css/FormRenderer.css' type='text/css'>";
         
         echo "<link rel='stylesheet' href='".SITE_ROOT."css/account.css?ver=1.0' type='text/css'>";
         
@@ -54,15 +54,25 @@ class AccountPage extends StorePage
         echo "<div class='columns'>";
         
         echo "<div class='column left'>";
+        
+//             if ($this->is_auth) {
+//                 $bean = new UsersBean();
+//                 $fullname = $bean->fieldValue($this->getUserID(), "fullname");
+//                 echo "<div class='welcome caption'>";
+//                 echo tr("Добре дошли, ").$fullname;
+//                 echo "</div>";
+//             }
             //render menu items
-            echo "<div class='account_menu'>";
-            $menu_items = $this->account_menu->getMenuItems();
-            foreach ($menu_items as $idx=>$item) {
-                echo "<a class='item' href='".$item->getHref()."'>";
-                echo $item->getTitle();
-                echo "</a>";
+            if ($this->is_auth) {
+                echo "<div class='account_menu'>";
+                $menu_items = $this->account_menu->getMenuItems();
+                foreach ($menu_items as $idx=>$item) {
+                    echo "<a class='item' href='".$item->getHref()."'>";
+                    echo $item->getTitle();
+                    echo "</a>";
+                }
+                echo "</div>";
             }
-            echo "</div>";
         echo "</div>";
                     
         echo "<div class='column right'>";

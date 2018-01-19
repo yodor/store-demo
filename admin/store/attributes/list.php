@@ -13,7 +13,7 @@ $page->checkAccess(ROLE_CONTENT_MENU);
 
 $action_add = new Action("", "add.php", array());
 $action_add->setAttribute("action", "add");
-$action_add->setAttribute("title", "Add Attribute");
+$action_add->setAttribute("title", "Add attribute");
 $page->addAction($action_add);
 
 $bean = new AttributesBean();
@@ -23,7 +23,7 @@ RequestController::addRequestHandler($h_delete);
 
 
 $view = new TableView(new BeanResultIterator($bean));
-$view->setCaption("Store Attributes List");
+$view->setCaption("Store attributes list");
 $view->setDefaultOrder(" name ASC ");
 
 $view->addColumn(new TableColumn($bean->getPrKey(),"ID"));

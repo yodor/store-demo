@@ -8,15 +8,14 @@ include_once("class/pages/AdminPage.php");
 
 
 $page = new AdminPage("Settings");
-$page->checkAccess(ROLE_CONFIG_MENU);
+$page->checkAccess(ROLE_SETTINGS_MENU);
 
 
 $menu=array(
 	
-	new MenuItem("Administrative Users","admins/list.php", "irc-operator.png"),
+	new MenuItem("Administrators","admins/list.php", "irc-operator.png"),
 	new MenuItem("Languages","languages/list.php", "applications-education-language.png"),
 	new MenuItem("SEO","seo.php", "applications-education-language.png"),
-	new MenuItem("Raw SQL","rawsql.php", "preferences-other.png"),
 	
 );
 

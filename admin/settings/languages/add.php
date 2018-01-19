@@ -10,7 +10,7 @@ $menu=array(
 );
 
 $page = new AdminPage("Add Language");
-$page->checkAccess(ROLE_CONFIG_MENU);
+$page->checkAccess(ROLE_SETTINGS_MENU);
 
 $view = new InputFormView(new LanguagesBean(), new LanguageInputForm());
 

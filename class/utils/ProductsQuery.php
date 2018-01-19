@@ -28,11 +28,14 @@ class ProductsQuery extends SelectQuery
 
 pi.price - (pi.price * (coalesce(sp.discount_percent,0)) / 100.0) AS sell_price, 
 
+(SELECT min(pi4.price - (pi4.price * (coalesce(sp.discount_percent,0)) / 100.0)) FROM product_inventory pi4 WHERE pi4.prodID=pi.prodID ) as price_min, 
+(SELECT max(pi5.price - (pi5.price * (coalesce(sp.discount_percent,0)) / 100.0)) FROM product_inventory pi5 WHERE pi5.prodID=pi.prodID ) as price_max, 
+
 coalesce(sp.discount_percent,0) as discount_percent,
 
 pi.piID, pi.size_value, pi.color, pi.pclrID, pi.prodID, pi.stock_amount,
 
-p.product_code, p.product_name, p.brand_name, p.product_summary, p.product_description, p.keywords,
+p.product_name, p.brand_name, p.product_summary, p.keywords,
 p.promotion, p.visible, p.class_name, p.section, p.old_price, p.insert_date, p.update_date
 ";
 		$this->from = " product_inventory pi 

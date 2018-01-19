@@ -9,11 +9,11 @@ class StoreColorInputForm extends InputForm
     public function __construct()
     {
 
-	  $field = InputFactory::CreateField(InputFactory::TEXTFIELD, "color", "Color Name", 1);
+	  $field = InputFactory::CreateField(InputFactory::TEXTFIELD, "color", "Име на цвят", 1);
 	  $this->addField($field);
 	  $field->enableTranslator(true);
 
-	  $field = InputFactory::CreateField(InputFactory::COLORCODE, "color_code", "Color Code", 0);
+	  $field = InputFactory::CreateField(InputFactory::COLORCODE, "color_code", "Цветови код", 0);
 	  
 	  $this->addField($field);
 

@@ -12,7 +12,7 @@ $menu=array(
 
 	
 $page = new AdminPage("Add User");
-$page->checkAccess(ROLE_ADMIN_USERS_MENU);
+$page->checkAccess(ROLE_SETTINGS_MENU);
 
 
 $view = new InputFormView(new AdminUsersBean(), new AdminUserInputForm());

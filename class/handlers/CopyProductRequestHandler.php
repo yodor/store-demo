@@ -41,7 +41,7 @@ class CopyProductRequestHandler extends RequestHandler
   }
   protected function processConfirmation()
   {
-      $this->drawConfirmDialog("Confirm Copy","Confirm you want to copy this item including the attributes and photos?");
+      $this->drawConfirmDialog("Потвърдете копиране","Потвърдете копиране на този продукт включително атрибути и снимки?");
   }
   protected function process() 
   {
@@ -92,7 +92,7 @@ class CopyProductRequestHandler extends RequestHandler
 	    
 	    $db->commit();
 	    $success=true;
-	    Session::set("alert","Product Copy Success. Click <a href='add.php?editID=$lastID&catID={$cbrow["catID"]}'>here</a> to edit the product copy.");
+	    Session::set("alert",tr("Продуктът е копиран успешно.").tr("Кликнете")." <a href='add.php?editID=$lastID&catID={$cbrow["catID"]}'>".tr("тук")."</a> ".tr("за редактиране");
 // 				header("Location: add.php?editID=$lastID&catID=".$cbrow["catID"]);
 	    header("Location: {$this->cancel_url}");
 	    exit;

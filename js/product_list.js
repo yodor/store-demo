@@ -1,9 +1,18 @@
 function clearFilters()
 {
   var uri = new URI(document.location.href);
-//   console.log(uri.filename());
-  document.location.href = uri.filename(); 
+  
+  var form = document.forms["filters"];
+  var elements = form.elements;
+  for (var a = 0; a< elements.length; a++) {
+    element = form.elements[a];
+    //console.log(element.name+"=>"+element.value);
+    uri.removeSearch(element.name);
+  }
+
+  document.location.href = uri.href();
 }
+
 function filterChanged(elm, filter_name, is_combined)
 {
   var elm = $(elm);

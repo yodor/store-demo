@@ -1,34 +1,28 @@
 <?php
 include_once("class/pages/StorePage.php");
-include_once("lib/beans/ConfigBean.php");
 
-include_once("class/utils/Cart.php");
 
-include_once("lib/auth/UserAuthenticator.php");
-include_once("lib/beans/UsersBean.php");
-include_once("class/beans/ClientAddressesBean.php");
 
-include_once("class/beans/ProductColorPhotosBean.php");
-include_once("class/beans/ProductsBean.php");
-include_once("class/beans/ProductInventoryBean.php");
+// include_once("class/beans/ClientAddressesBean.php");
+
+// include_once("class/beans/ProductColorPhotosBean.php");
+// include_once("class/beans/ProductsBean.php");
+// include_once("class/beans/ProductInventoryBean.php");
 
 class CheckoutPage extends StorePage 
 {
 
-    protected $cart = NULL;
+    
     
     public $modify_enabled=false;
     public $total = 0.0;
 
     public function __construct()
     {
-        $this->cart = new Cart();
+        
         parent::__construct();
         
-        $this->is_auth = UserAuthenticator::checkAuthState();
-        if ($this->is_auth) {
-            $this->userID = (int)$_SESSION[CONTEXT_USER]["id"];
-        }
+        
     }
 
     
@@ -43,10 +37,7 @@ class CheckoutPage extends StorePage
         
     }
 
-    public function getCart()
-    {
-        return $this->cart;
-    }
+    
     
     public function beginPage()
     {

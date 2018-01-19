@@ -4,67 +4,78 @@ include_once("lib/components/renderers/items/ItemRendererImpl.php");
 include_once("lib/utils/StorageItem.php");
 include_once("class/beans/ProductColorPhotosBean.php");
 
-class ProductListItem extends ItemRendererImpl {
+class ProductListItem extends ItemRendererImpl implements IHeadRenderer {
   
   
-  protected $colors = null;
-  
-  protected $photo = null;
-  
-  protected $sel = null;
-  
-  
-  public function __construct()
-  {
-	 
+    protected $colors = null;
 
-		$this->setClassName("ProductListItem");
-// 		$this->addClassName("clearfix");
+    protected $photo = null;
 
-		
-		$sel = new SelectQuery();
-		$sel->fields = " pi.piID, pc.pclrID, pc.color, pc.prodID, sc.color_code,
+    protected $sel = null;
 
-(SELECT pclrpID FROM product_color_photos pcp WHERE pcp.pclrID=pc.pclrID ORDER BY position ASC LIMIT 1) as pclrpID,
-(SELECT ppID FROM product_photos pp WHERE pp.prodID=pc.prodID ORDER BY position ASC LIMIT 1) as ppID,
-(color_photo IS NOT NULL) as have_chip ";
-		$sel->from = " product_colors pc JOIN store_colors sc ON sc.color=pc.color  LEFT JOIN product_inventory pi ON pi.prodID=pc.prodID AND pi.color=pc.color";
-		$this->sel = $sel;
-		
-		
-  }
 
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->setClassName("ProductListItem");
+    // 		$this->addClassName("clearfix");
+    
+        $sel = new SelectQuery();
+        
+        $sel->from = " product_colors pc JOIN store_colors sc ON sc.color=pc.color  LEFT JOIN product_inventory pi ON pi.prodID=pc.prodID AND pi.color=pc.color";
+        
+        
+        $sel->fields = " pi.piID, pc.pclrID, pc.color, pc.prodID, sc.color_code,
+
+    (SELECT pclrpID FROM product_color_photos pcp WHERE pcp.pclrID=pc.pclrID ORDER BY position ASC LIMIT 1) as pclrpID,
+    (SELECT ppID FROM product_photos pp WHERE pp.prodID=pc.prodID ORDER BY position ASC LIMIT 1) as ppID,
+    (color_photo IS NOT NULL) as have_chip ";
+       
+        $this->sel = $sel;
+                
+        
+                
+    }
+
+    public function renderScript()
+    {}
+    public function renderStyle()
+    {
+        echo "<link rel='stylesheet' href='".SITE_ROOT."css/ProductListItem.css' type='text/css' >";
+        echo "\n";
+    }
 
 	public function setItem($item)
 	{
-		parent::setItem($item);
-		$this->setAttribute("prodID", $this->item["prodID"]);
-		$this->setAttribute("piID", $this->item["piID"]);
-		
-		
-		if ($this->item["color_ids"]) {
-		  $colors = explode("|", $this->item["color_ids"]);
-		  if (count($colors)>0) {
+            parent::setItem($item);
+            $this->setAttribute("prodID", $this->item["prodID"]);
+            $this->setAttribute("piID", $this->item["piID"]);
+            
+            
+            if ($this->item["color_ids"]) {
+                $colors = explode("|", $this->item["color_ids"]);
+                if (count($colors)>0) {
 
-			$this->colors = $colors;
-		  }
-		  
-		}
-		
-		$photo = null;
-		if (isset($item["pclrpID"]) && $item["pclrpID"]>0) {
-			  $photo = new StorageItem();
-			  $photo->itemID = (int)$item["pclrpID"];
-			  $photo->itemClass = "ProductColorPhotosBean";//ProductColorPhotosBean::class;
-		}
-		else if (isset($item["ppID"]) && $item["ppID"]>0){
-			  $photo = new StorageItem();
-			  $photo->itemID = (int)$item["ppID"];
-			  $photo->itemClass = "ProductPhotosBean";//ProductPhotosBean::class;
-		}
-		if ($photo) {
-		  $this->photo = $photo;
-		}
+                    $this->colors = $colors;
+                }
+                
+            }
+            
+            $photo = null;
+            if (isset($item["pclrpID"]) && $item["pclrpID"]>0) {
+                        $photo = new StorageItem();
+                        $photo->itemID = (int)$item["pclrpID"];
+                        $photo->itemClass = "ProductColorPhotosBean";//ProductColorPhotosBean::class;
+            }
+            else if (isset($item["ppID"]) && $item["ppID"]>0){
+                        $photo = new StorageItem();
+                        $photo->itemID = (int)$item["ppID"];
+                        $photo->itemClass = "ProductPhotosBean";//ProductPhotosBean::class;
+            }
+            if ($photo) {
+                $this->photo = $photo;
+            }
 		
 		
 // 		$this->sel->where = " pc.prodID = {$item["prodID"]} ";
@@ -84,7 +95,7 @@ class ProductListItem extends ItemRendererImpl {
 		$item_href_main = $item_href.$this->item["piID"];
 		echo "<a href='$item_href_main' class='product_link'>";
 		if ($this->photo) {
-			$img_href = $this->photo->hrefThumb(210,210);
+			$img_href = $this->photo->hrefThumb(275,275);
 			echo "<img src='$img_href'>";
 		}
 		echo "</a>";
@@ -97,7 +108,7 @@ class ProductListItem extends ItemRendererImpl {
 			$num_colors = count($this->colors);
 			if ($num_colors>0) {
 
-				echo "<div class='colors'>".$num_colors." ".($num_colors>1 ? tr("colors") : tr("color"))."</div>";
+				echo "<div class='colors'>".$num_colors." ".($num_colors>1 ? tr("цвята") : tr("цвят"))."</div>";
 			  
 				echo "<div class='color_chips'>";
 				
@@ -105,7 +116,8 @@ class ProductListItem extends ItemRendererImpl {
 				
 				foreach ($this->colors as $idx=>$pclrID) {
 	
-				  $this->sel->where = " pc.prodID={$this->item["prodID"]} AND pc.pclrID=$pclrID ";
+				  $this->sel->where = " pc.prodID='{$this->item["prodID"]}' AND pc.pclrID='$pclrID' ";
+// 				  echo $this->sel->getSQL();
 				  
 				  $res = $db->query($this->sel->getSQL());
 				  if (!$res) throw new Exception($db->getError());
@@ -161,7 +173,14 @@ class ProductListItem extends ItemRendererImpl {
 // 			echo "<div class='stock_amount'><label>".tr("Наличност").": </label>".$this->item["stock_amount"]."</div>";
 			
 
-			echo "<div class='sell_price'>".sprintf("%1.2f",$this->item["sell_price"])." лв</div>";
+			echo "<div class='sell_price'>";
+                            
+                            echo "<div class='item_price'>".sprintf("%1.2f",$this->item["sell_price"])." ".tr("лв.")."</div>";
+                            
+                            if ($this->item["price_min"] != $this->item["sell_price"] || $this->item["price_max"] != $this->item["sell_price"] ) {
+                                echo "<div class='series_price'>".sprintf("%1.2f",$this->item["price_min"])." ".tr("лв.")." - ".sprintf("%1.2f",$this->item["price_max"])." ".tr("лв.")."</div>";
+                            }
+			echo "</div>";
 
 		echo "</div>"; //product_details
 		

@@ -7,11 +7,11 @@ class AttributeInputForm extends InputForm
 
     public function __construct()
     {
-	$field = new InputField("name", "Attribute Name", 1);
+	$field = new InputField("name", "Име на атрибут", 1);
 	$field->setRenderer(new TextField());
 	$this->addField($field);
 
-	$field = new InputField("unit", "Attribute Unit", 0);
+	$field = new InputField("unit", "Мярна единица", 0);
 	$field->setRenderer(new TextField());
 	$this->addField($field);
     }

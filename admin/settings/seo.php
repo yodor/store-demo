@@ -8,7 +8,7 @@ include_once("lib/forms/renderers/FormRenderer.php");
 
 
 $page = new AdminPage("SEO");
-$page->checkAccess(ROLE_CONFIG_MENU);
+$page->checkAccess(ROLE_SETTINGS_MENU);
 
 $config = ConfigBean::factory();
 $config->setSection("seo");

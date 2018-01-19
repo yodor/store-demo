@@ -34,7 +34,7 @@ $bean = new ProductsBean();
 $h_delete = new DeleteItemRequestHandler($bean);
 RequestController::addRequestHandler($h_delete);
 
-$search_fields = array("product_code", "product_name", "category_name", "class_name", "product_summary", "keywords", "brand_name", "section");
+$search_fields = array("product_name", "category_name", "class_name", "product_summary", "keywords", "brand_name", "section");
 $ksc = new KeywordSearchComponent($search_fields);
 $ksc->getForm()->getRenderer()->setAttribute("method", "get");
 
@@ -48,13 +48,16 @@ $select_products->fields = "
 SUM(pi.stock_amount) as stock_amount,
 min(pi.price) as price_min, max(pi.price) as price_max,
 group_concat(distinct(size_value) SEPARATOR ';') as sizes, 
-p.prodID, p.product_name, p.class_name, p.brand_name, p.section, pc.category_name, p.product_code, p.visible, p.promotion, 
+p.prodID, p.product_name, p.class_name, p.brand_name, p.section, pc.category_name, p.visible, 
 p.price, p.old_price, p.buy_price, cc.pi_ids, replace(cc.colors, '|',';') as colors, cc.color_photos, cc.have_chips, cc.color_ids, cc.product_photos
 ";
 
 $select_products->from = " products p LEFT JOIN product_inventory pi ON pi.prodID = p.prodID LEFT JOIN color_chips cc ON cc.prodID = p.prodID JOIN product_categories pc ON pc.catID=p.catID ";
 $select_products->group_by = "  p.prodID, pi.prodID ";
+
 $ksc->processSearch($select_products);
+
+
 
 
 $view = new TableView(new SQLResultIterator($select_products, "prodID"));
@@ -65,18 +68,19 @@ $view->addColumn(new TableColumn("prodID","ID"));
 
 $view->addColumn(new TableColumn("section","Section"));
 
-$view->addColumn(new TableColumn("photo", "Product Photo"));
+// $view->addColumn(new TableColumn("photo", "Product Photo"));
 
 $view->addColumn(new TableColumn("color_photos", "Color Gallery"));
 
+$view->addColumn(new TableColumn("product_name","Product Name"));
 
 $view->addColumn(new TableColumn("category_name", "Category"));
 $view->addColumn(new TableColumn("brand_name","Brand"));
 $view->addColumn(new TableColumn("class_name","Class"));
 
-$view->addColumn(new TableColumn("product_name","Product Name"));
 
-$view->addColumn(new TableColumn("product_code","Product Code"));
+
+// $view->addColumn(new TableColumn("product_code","Product Code"));
 
 
 
@@ -93,7 +97,7 @@ $view->addColumn(new TableColumn("sizes", "Sizes"));
 
 $view->addColumn(new TableColumn("visible", "Visible"));
 
-$view->addColumn(new TableColumn("promotion", "Promotion"));
+// $view->addColumn(new TableColumn("promotion", "Promotion"));
 
 
 
@@ -102,16 +106,16 @@ $view->addColumn(new TableColumn("stock_amount", "Stock Amount"));
 
 $view->addColumn(new TableColumn("actions","Actions"));
 
-$view->getColumn("photo")->setCellRenderer(new TableImageCellRenderer(new ProductPhotosBean(), TableImageCellRenderer::RENDER_THUMB, -1, 64));
-$view->getColumn("photo")->getCellRenderer()->setListLimit(0);
-$view->getColumn("photo")->getHeaderCellRenderer()->setSortable(false);
+// $view->getColumn("photo")->setCellRenderer(new TableImageCellRenderer(new ProductPhotosBean(), TableImageCellRenderer::RENDER_THUMB, -1, 64));
+// $view->getColumn("photo")->getCellRenderer()->setListLimit(0);
+// $view->getColumn("photo")->getHeaderCellRenderer()->setSortable(false);
 
 $view->getColumn("color_photos")->setCellRenderer(new TableImageCellRenderer(new ProductColorPhotosBean(), TableImageCellRenderer::RENDER_THUMB, 48, -1));
 $view->getColumn("color_photos")->getCellRenderer()->setListLimit(0);
 $view->getColumn("color_photos")->getHeaderCellRenderer()->setSortable(false);
 
 $view->getColumn("visible")->setCellRenderer(new BooleanFieldCellRenderer("Yes", "No"));
-$view->getColumn("promotion")->setCellRenderer(new BooleanFieldCellRenderer("Yes", "No"));
+// $view->getColumn("promotion")->setCellRenderer(new BooleanFieldCellRenderer("Yes", "No"));
 
 $act = new ActionsTableCellRenderer();
 $act->addAction(

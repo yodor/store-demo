@@ -11,8 +11,8 @@ $page->checkAccess(ROLE_ORDERS_MENU);
 
 $bean = new OrdersBean();
 
-// $h_send = new ConfirmSendRequestHandler($bean);
-// RequestController::addRequestHandler($h_send);
+$h_send = new ConfirmSendRequestHandler($bean);
+RequestController::addRequestHandler($h_send);
 
 $h_delete = new DeleteItemRequestHandler($bean);
 RequestController::addRequestHandler($h_delete);
@@ -20,20 +20,19 @@ RequestController::addRequestHandler($h_delete);
 
 $sel = new OrdersQuery();
 
+$sel->where = " o.status='".OrdersBean::STATUS_SENT."' ";
+
 
 include_once("list.php");
 
 $menu = array();
 
 $page->beginPage($menu);
-
 $page->renderPageCaption();
 
 $scomp->render();
 
-
 $view->render();
-
 
 $page->finishPage();
 ?>

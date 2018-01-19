@@ -30,7 +30,7 @@ class ProductListPage extends ProductsPage
     protected function dumpCSS()
     {
         parent::dumpCSS();
-        echo "<link rel='stylesheet' href='".SITE_ROOT."css/related_tree.css?ver=1.0' type='text/css'>";
+        echo "<link rel='stylesheet' href='".SITE_ROOT."css/product_list.css?ver=1.0' type='text/css'>";
         echo "\n";
     }
     

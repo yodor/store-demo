@@ -10,7 +10,7 @@ include_once("lib/iterators/SQLResultIterator.php");
 
 
 $page = new AdminPage();
-$page->checkAccess(ROLE_CONFIG_MENU);
+$page->checkAccess(ROLE_SETTINGS_MENU);
 
 $langID=-1;
 if (!isset($_GET["langID"])){

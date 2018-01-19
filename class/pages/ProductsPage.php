@@ -84,8 +84,8 @@ class ProductsPage extends StorePage
     protected function dumpCSS()
     {
         parent::dumpCSS();
-        echo "<link rel='stylesheet' href='".SITE_ROOT."css/ProductsPage.css?ver=1.0' type='text/css'>";
-        echo "\n";
+//         echo "<link rel='stylesheet' href='".SITE_ROOT."css/ProductsPage.css?ver=1.0' type='text/css'>";
+//         echo "\n";
     }
     
     protected function dumpJS()

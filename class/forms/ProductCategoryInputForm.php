@@ -11,11 +11,11 @@ class ProductCategoryInputForm extends InputForm
 
     public function __construct()
     {
-	  $field = new InputField("category_name", "Category Name", 1);
+	  $field = new InputField("category_name", "Име на категория", 1);
 	  $field->setRenderer(new TextField());
 	  $this->addField($field);
 
-	  $field = new InputField("parentID", "Parent Category", 1);
+	  $field = new InputField("parentID", "Родителска категория", 1);
 	  $pcats = new ProductCategoriesBean();
 	  
 	  $rend = new NestedSelectField();
@@ -28,7 +28,7 @@ class ProductCategoryInputForm extends InputForm
 	  $field->setRenderer($rend);
 	  $this->addField($field);
 
-	  $field = InputFactory::CreateField(InputFactory::SESSION_IMAGE, "photo", "Photo", 0);
+	  $field = InputFactory::CreateField(InputFactory::SESSION_IMAGE, "photo", "Снимка", 0);
 	  $this->addField($field);
 
 // 	  $field1 = new ArrayInputField("maID", "Attribute", 0);

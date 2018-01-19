@@ -22,13 +22,13 @@ class ProductColorInputForm extends InputForm
 
    
 
-	$field = InputFactory::CreateField(InputFactory::SELECT, "color", "Color Code", 1);
+	$field = InputFactory::CreateField(InputFactory::SELECT, "color", "Цветови код", 1);
 	
 	$rend = $field->getRenderer();
 	$rend->setSource(new StoreColorsBean());
 	$rend->list_label = "color";
 	$rend->list_key = "color";
-	$rend->addon_content = "<a class='ActionRenderer' action='new' href='../../colors/add.php'>".tr("New Color Code")."</a>";
+	$rend->addon_content = "<a class='ActionRenderer' action='new' href='../../colors/add.php'>".tr("Нов цветови код")."</a>";
 	
 	$opt = $rend->getItemRenderer();
 	$opt->addDataRowAttribute("color_code");
@@ -37,7 +37,7 @@ class ProductColorInputForm extends InputForm
 // 	$field->enableTranslator(true);
 
 
-	$input = InputFactory::CreateField(InputFactory::SESSION_IMAGE, "color_photo","Color Chip", 0);
+	$input = InputFactory::CreateField(InputFactory::SESSION_IMAGE, "color_photo","Чип за цвета", 0);
 // 	$input->setSource(new ProductPhotosBean());
 // 	$input->transact_mode = InputField::TRANSACT_OBJECT;
 // 	$input->getValueTransactor()->max_slots = 10;
@@ -47,7 +47,7 @@ class ProductColorInputForm extends InputForm
 	$this->addField($input);
 
 
-	$input = InputFactory::CreateField(InputFactory::SESSION_IMAGE, "photo","Photos", 0);
+	$input = InputFactory::CreateField(InputFactory::SESSION_IMAGE, "photo","Снимки", 0);
 	$bean = new ProductColorPhotosBean();
 	
 	$input->setSource($bean);

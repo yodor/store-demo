@@ -1,7 +1,5 @@
 <?php
-
 // define("DEBUG_OUTPUT", 1);
-
 $cdir = dirname(__FILE__);
 $realpath = realpath ( $cdir.DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR );
 include_once($realpath."/session.php");
@@ -10,32 +8,33 @@ include_once("lib/buttons/StyledButton.php");
 StyledButton::setDefaultClass("admin_button");
 
 
-  $all_roles = array(
+$all_roles = array(
 
-"ROLE_CONTENT_MENU",
-"ROLE_CONFIG_MENU",
-"ROLE_ADMIN_USERS_MENU",
-
+    "ROLE_STORE_MENU",
+    "ROLE_ORDERS_MENU",
+    "ROLE_CLIENTS_MENU",
+    "ROLE_CONTENT_MENU",
+    "ROLE_SETTINGS_MENU"
 );
 
 
-  foreach($all_roles as $key=>$val) {
-	define($val,$val);  
-  }
+foreach($all_roles as $key=>$val) {
+    define($val,$val);  
+}
   
   
-  include_once("lib/utils/MenuItem.php");
+include_once("lib/utils/MenuItem.php");
 $admin_menu = array();
 
-$admin_menu[] = new MenuItem("Store", ADMIN_ROOT."store/index.php", "class:icon_store");
+$admin_menu[] = new MenuItem("Магазин", ADMIN_ROOT."store/index.php", "class:icon_store");
 
-$admin_menu[] = new MenuItem("Orders", ADMIN_ROOT."orders/index.php", "class:icon_orders");
+$admin_menu[] = new MenuItem("Поръчки", ADMIN_ROOT."orders/index.php", "class:icon_orders");
 
-$admin_menu[] = new MenuItem("Clients", ADMIN_ROOT."clients/index.php", "class:icon_clients");
+$admin_menu[] = new MenuItem("Клиенти", ADMIN_ROOT."clients/index.php", "class:icon_clients");
 
-$admin_menu[] = new MenuItem("Content", ADMIN_ROOT."content/index.php", "class:icon_content");
+$admin_menu[] = new MenuItem("Съдържание", ADMIN_ROOT."content/index.php", "class:icon_content");
 
-$admin_menu[] = new MenuItem("Settings", ADMIN_ROOT."settings/index.php", "class:icon_settings");
+$admin_menu[] = new MenuItem("Настройки", ADMIN_ROOT."settings/index.php", "class:icon_settings");
 
 
 

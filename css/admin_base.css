@@ -1,3 +1,26 @@
 .group .item LABEL:after {
     content: ": ";
 }
+
+.orders .confirmed .TableView TD[column='order_date'] {
+    white-space:nowrap;
+    
+}
+.orders .confirmed .TableView TD[column='userID'] {
+    white-space:nowrap;
+    
+}
+.orders .confirmed .TableView TD[column='items'] {
+    white-space:nowrap;
+}
+.orders .confirmed .TableView TD[column='note'] {
+    max-width:100px;
+}
+
+.KeywordSearchComponent .fields {
+    vertical-align:bottom;
+}
+
+.KeywordSearchComponent .buttons {
+    vertical-align:bottom;
+}

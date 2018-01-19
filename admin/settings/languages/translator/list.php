@@ -5,8 +5,7 @@ include_once("lib/beans/LanguagesBean.php");
 include_once("lib/beans/SiteTextsBean.php");
 
 $page = new AdminPage();
-$page->checkAccess(ROLE_CONFIG_MENU);
-
+$page->checkAccess(ROLE_SETTINGS_MENU);
 
 $bean = new SiteTextsBean();
 

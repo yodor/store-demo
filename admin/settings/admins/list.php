@@ -12,7 +12,7 @@ $menu=array(
 );
 
 $page = new AdminPage();
-$page->checkAccess(ROLE_ADMIN_USERS_MENU);
+$page->checkAccess(ROLE_SETTINGS_MENU);
 
 $action_add = new Action("", "add.php", array());
 $action_add->setAttribute("action", "add");

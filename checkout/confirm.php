@@ -230,7 +230,7 @@ echo "<div class='navigation'>";
     echo "<div class='slot left'>";
         echo "<a href='cart.php'>";
         echo "<img src='".SITE_ROOT."images/cart_edit.png'>";
-        echo "<div class='checkout_button' >".tr("Назад")."</div>";
+        echo "<div class='DefaultButton checkout_button' >".tr("Назад")."</div>";
         echo "</a>";
     echo "</div>";
 
@@ -243,7 +243,7 @@ echo "<div class='navigation'>";
     echo "<div class='slot right'>";
         echo "<a href='javascript:document.forms.OrderNote.submit()'>";
         echo "<img src='".SITE_ROOT."images/cart_checkout.png'>";
-        echo "<div class='checkout_button'  >".tr("Потвърди поръчка")."</div>";
+        echo "<div class='DefaultButton checkout_button'  >".tr("Потвърди поръчка")."</div>";
         echo "</a>";
     echo "</div>";
 

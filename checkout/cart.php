@@ -62,6 +62,22 @@ else if (isset($_GET["removeItem"])){
     exit;
     
 }
+else if (isset($_GET["clearItem"])) {
+    $piID=-1;
+    if (isset($_GET["piID"])){
+        $piID=(int)$_GET["piID"];
+    }
+    try {
+        $item = $inventory->getByID($piID);
+        $page->getCart()->clearItem($piID);
+    }
+    catch (Exception $e) {
+
+    }
+    
+    header("Location:cart.php");
+    exit;
+}
 else if (isset($_GET["clear"])) {
 
     $page->getCart()->clearCart();
@@ -92,7 +108,7 @@ if ($page->total) {
     echo "<div class='slot left'>";
         echo "<a href='cart.php?clear'>";
         echo "<img src='".SITE_ROOT."images/cart_clear.png'>";
-        echo "<div class='checkout_button'  >".tr("Изпразни кошницата")."</div>";
+        echo "<div class='DefaultButton checkout_button'  >".tr("Изпразни кошницата")."</div>";
         echo "</a>";
     echo "</div>";
 
@@ -107,7 +123,7 @@ if ($page->total) {
     echo "<div class='slot right'>";
         echo "<a href='customer.php'>";
         echo "<img src='".SITE_ROOT."images/cart_checkout.png'>";
-        echo "<div class='checkout_button'  >".tr("Каса")."</div>";
+        echo "<div class='DefaultButton checkout_button'  >".tr("Каса")."</div>";
         echo "</a>";
     echo "</div>";
     

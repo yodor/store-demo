@@ -34,6 +34,7 @@ body {
 .header {
     padding-bottom:10px;
     text-align:center;
+    overflow:hidden;
 }
 
 .header .logo {
@@ -200,7 +201,7 @@ body {
 }
 
 .caption {
-    font-size:1.3em;
+    font-size:1.5em;
     font-weight:bold;
 /*     padding-top:5px; */
     padding-bottom:5px;
@@ -318,10 +319,16 @@ body.mce_browser .FormRenderer .SubmitLine .Buttons {
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
+    font-weight:normal;
+    text-transform:uppercase;
 }
 .DefaultButton:visited {
     color:#0c2226;
+    font-weight:normal;
+    text-transform:uppercase;
 }
 .DefaultButton:hover {
     color:#2b7a88;
+    font-weight:normal;
+    text-transform:uppercase;
 }

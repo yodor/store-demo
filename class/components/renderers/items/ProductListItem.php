@@ -18,7 +18,7 @@ class ProductListItem extends ItemRendererImpl implements IHeadRenderer {
     {
         parent::__construct();
 
-        $this->setClassName("ProductListItem");
+        
     // 		$this->addClassName("clearfix");
     
         $sel = new SelectQuery();

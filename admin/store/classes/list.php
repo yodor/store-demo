@@ -31,17 +31,21 @@ $page->addAction($action_add);
 
 $bean = new ProductClassesBean();
 
+$sql = $bean->getSelectQuery();
+
+$sql->from = " product_classes pc ";
+$sql->fields = " pc.*, (SELECT GROUP_CONCAT(attribute_name SEPARATOR '<BR>') FROM class_attributes ca WHERE ca.pclsID=pc.pclsID) as class_attributes ";
 
 $h_delete = new DeleteItemRequestHandler($bean);
 RequestController::addRequestHandler($h_delete);
 
 
-$view = new TableView(new BeanResultIterator($bean));
+$view = new TableView(new SQLResultIterator($sql, $bean->getPrKey()));
 $view->setCaption("Product Classes List");
 $view->setDefaultOrder($bean->getPrKey()." DESC ");
 $view->addColumn(new TableColumn($bean->getPrKey(),"ID"));
 $view->addColumn(new TableColumn("class_name","Class Name"));
-
+$view->addColumn(new TableColumn("class_attributes","Attributes"));
 
 $view->addColumn(new TableColumn("actions","Actions"));
 

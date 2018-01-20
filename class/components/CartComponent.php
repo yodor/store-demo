@@ -6,7 +6,7 @@ include_once("class/beans/ProductColorPhotosBean.php");
 include_once("class/beans/ProductsBean.php");
 include_once("class/beans/ProductInventoryBean.php");
 
-class CartComponent extends MLTagComponent
+class CartComponent extends MLTagComponent implements IHeadRenderer
 {
     protected $cart = NULL;
     protected $heading_text = "";
@@ -16,17 +16,32 @@ class CartComponent extends MLTagComponent
     protected $photos = NULL;
     protected $products = NULL;
     protected $total = 0.0;
+    protected $order_total = 0.0;
+    protected $delivery_price = NULL;
     
     public function __construct()
     {
+        parent::__construct();
+        
+        
         $this->inventory = new ProductInventoryBean();
         $this->photos = new ProductColorPhotosBean();
         $this->products = new ProductsBean();
         
-        $this->cart = new Cart();
-        parent::__construct();
+       // $this->cart = new Cart();
         
-        $this->setClassName("CartComponent");
+        
+        
+        
+    }
+    
+    public function renderScript()
+    {}
+	
+    public function renderStyle()
+    {
+        echo "<link rel='stylesheet' href='".SITE_ROOT."css/CartComponent.css' type='text/css' >";
+        echo "\n";
     }
     public function setCart(Cart $cart) 
     {
@@ -44,6 +59,14 @@ class CartComponent extends MLTagComponent
     {
         return $this->total;
     }
+    public function getOrderTotal()
+    {
+        return $this->order_total;
+    }
+    public function getDeliveryPrice()
+    {
+        return $this->delivery_price;
+    }
     protected function renderCartItem($position, $piID, $qty)
     {
         $item = $this->inventory->getByID($piID);
@@ -53,7 +76,14 @@ class CartComponent extends MLTagComponent
         $product = $this->products->getByID($prodID);
 
         //product inventory ID
-        echo "<td field='product_position'>$position</td>";
+        echo "<td field='position'>";
+        if ($this->modify_enabled) {
+            echo "<a class='item_remove' href='cart.php?clearItem&piID=$piID'>&#8855;</a>";
+        }
+        else {
+            echo $position;
+        }
+        echo "</td>";
 
         //only one photo here
         echo "<td field='product_photo'>";
@@ -65,20 +95,22 @@ class CartComponent extends MLTagComponent
         }
         echo "</td>";
 
-        echo "<td field='model_code'>";
+        echo "<td field='product_model'>";
 //         trbean($prodID, "product_name", $product, $this->products);
         echo $product["product_name"]."<BR>".tr("Цвят").": ".$item["color"]."<BR>".tr("Размер").": ".$item["size_value"]."<BR>".tr("Код").": ".$piID."-".$prodID;
         
         echo "</td>";
 
         echo "<td field='qty'>";
-        if ($this->modify_enabled) {
-            echo "<a class='qty_adjust' href='cart.php?removeItem&piID=$piID'> &ndash; </a>";
-        }
-        echo "<span class='cart_qty'>".$qty."</span>";
-        if ($this->modify_enabled) {
-            echo "<a class='qty_adjust' href='cart.php?addItem&piID=$piID'> + </a>";
-        }			      
+//             echo "<div class='qty'>";
+            if ($this->modify_enabled) {
+                echo "<a class='qty_adjust minus' href='cart.php?removeItem&piID=$piID'>&#8854;</a>";
+            }
+            echo "<span class='cart_qty'>".$qty."</span>";
+            if ($this->modify_enabled) {
+                echo "<a class='qty_adjust plus' href='cart.php?addItem&piID=$piID'>&#8853;</a>";
+            }
+//             echo "</div>";
         echo "</td>";
 
         echo "<td field='price'>";
@@ -87,21 +119,22 @@ class CartComponent extends MLTagComponent
 //                 echo sprintf("%0.2f ".$price["symbol"] , $price["price_value"]);
         $price = $item["price"];
         
-        echo sprintf("%0.2f лв", $price);
+        echo "<span>".sprintf("%0.2f лв.", $price)."</span>";
         
 
         echo "</td>";
 
-        echo "<td field='line_total'>";
+        echo "<td field='line-total'>";
 //                 $line_total = ($qty * (float)$price["price_value"]);
 //                 echo sprintf("%0.2f ".$price["symbol"], $line_total );
         $line_total = ($qty * (float)$price);
-        echo sprintf("%0.2f лв", $line_total);
-        
-        
-        
-
+        echo "<span>".sprintf("%0.2f лв.", $line_total)."</span>";
+  
         echo "</td>";
+        
+//         echo "<td field='actions'>";
+        
+//         echo "</td>";
 
         return $line_total;
         
@@ -127,8 +160,9 @@ class CartComponent extends MLTagComponent
         <th>#</th>
         <th colspan=2 field='product'>".tr("Продукт")."</th>
         <th field='qty'>".tr("Количество")."</th>
-        <th field='price'>".tr("Цена")."</th>
-        <th field='line_total'>".tr("Всичко")."</th>";
+        <th field='price'>".tr("Ед. цена")."</th>
+        <th field='line_total'>".tr("Общо")."</th>
+        ";
         echo "</tr>";
 
 
@@ -140,7 +174,7 @@ class CartComponent extends MLTagComponent
         if (count($items)==0){
             echo "<tr>";
             echo "<td colspan=6 field='cart_empty'>";
-            echo tr("Вашата кошница е празна.");
+            echo tr("Вашата кошница е празна");
             echo "</td>";
             echo "</tr>";
         }
@@ -168,62 +202,71 @@ class CartComponent extends MLTagComponent
 
 
 
-
+        $order_total = $total;
+        
         if ($total>0) {
             $this->total = $total;
 
             echo "<tr label='summary-total'>";
-            echo "<td colspan=4 rowspan=3 field='items_total'>";
-            echo $num_items_total." ";
-            echo ($num_items_total>1)? tr("Продукта") : tr("Продукт");
-            echo "</td>";
+//             echo "<td colspan=4 rowspan=3 field='items_total'>";
+//             echo $num_items_total." ";
+//             echo ($num_items_total>1)? tr("Продукта") : tr("Продукт");
+//             echo "</td>";
 
-            echo "<td class='label amount_total'>";
-            echo tr("Общо").": ";
+            echo "<td colspan=5 class='label amount_total'>";
+            echo tr("Сума").": ";
             echo "</td>";
 
             echo "<td class='value amount_total'>";
-//             echo sprintf("%0.2f ".$price["symbol"], $total );
-            echo sprintf("%0.2f лв", $total );
+//          echo sprintf("%0.2f ".$price["symbol"], $total );
+            echo sprintf("%0.2f лв.", $total );
             echo "</td>";
 
             
             echo "</tr>";
 
+            
             $config = ConfigBean::factory();
-            $config->setSection("global");
-
-            echo "<tr label='summary-delivery'>";
+            $config->setSection("delivery_prices");
             
-            echo "<td class='label delivery' >";	
-            echo tr("Доставка").": ";
-            echo "</td>";
+            iF ($this->cart->getDeliveryType() != null){
+                echo "<tr label='summary-delivery'>";
+                
+                echo "<td colspan=5 class='label delivery' >";	
+                echo tr("Доставка").": ";
+                echo "</td>";
+                
+                echo "<td class='value delivery'>";
+
+                $delivery_price = $config->getValue($this->cart->getDeliveryType());
+                $this->deliver_price = $delivery_price;
+                
+//              $price = $currency_rates->getPrice($delivery_price);
+                $order_total = $order_total + $delivery_price;
+                echo sprintf("%0.2f лв.", $delivery_price);
+
+                echo "</td>";
+
+                echo "</tr>";
+                
+                
+                echo "<tr label='summary-order-total'>";
             
-            echo "<td class='value delivery'>";
+                echo "<td colspan=5 class='label order_total'>";	
+                    echo tr("Поръчка общо").": ";
+                echo "</td>";
+                echo "<td class='value order_total'>";
 
-            $delivery_price = $config->getValue("delivery_price",1);
+    //              echo sprintf("%0.2f ".$price["symbol"] , $price["price_value"] + $total);
+                    echo sprintf("%0.2f лв.", $order_total);
 
-            //$price = $currency_rates->getPrice($delivery_price);
+                echo "</td>";
+
+                echo "</tr>";
+                
+            }
+
             
-            echo sprintf("%0.2f лв", $delivery_price);
-
-            echo "</td>";
-
-            echo "</tr>";
-
-            echo "<tr label='summary-order-total'>";
-            
-            echo "<td class='label order_total'>";	
-            echo tr("Поръчка общо").": ";
-            echo "</td>";
-            echo "<td class='value order_total'>";
-
-//             echo sprintf("%0.2f ".$price["symbol"] , $price["price_value"] + $total);
-            echo sprintf("%0.2f лв", $delivery_price + $total);
-
-            echo "</td>";
-
-            echo "</tr>";
 
 
         }
@@ -231,6 +274,8 @@ class CartComponent extends MLTagComponent
        
         
         $this->total = $total;
+        $this->order_total = $order_total;
+        
     }
 
 }

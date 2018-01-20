@@ -25,7 +25,7 @@ $page->sections->startIterator("WHERE 1 ORDER BY position ASC");
 
 
 $sel = new ProductsQuery();
-$sel->order_by = " RAND() ";
+$sel->order_by = " pi.order_counter DESC, pi.view_counter DESC ";
 $sel->group_by = " pi.prodID, pi.color ";
 $sel->limit = "4";
 

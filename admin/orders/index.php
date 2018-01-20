@@ -10,7 +10,7 @@ $menu=array(
     new MenuItem("Завършени", "completed.php", "class:orders icon_completed"),
     new MenuItem("Отказани", "canceled.php", "class:orders icon_completed"),
     new MenuItem("Всички", "all.php", "class:orders icon_all"),
-
+    new MenuItem("Цени за доставка", "delivery.php", "class:orders icon_delivery"),
   
 );
 

@@ -1,6 +1,6 @@
 <?php
 include_once("class/pages/StorePage.php");
-
+include_once("class/components/CartComponent.php");
 
 
 // include_once("class/beans/ClientAddressesBean.php");
@@ -16,13 +16,16 @@ class CheckoutPage extends StorePage
     
     public $modify_enabled=false;
     public $total = 0.0;
-
+    
+    protected $ccmp = NULL;
+    
     public function __construct()
     {
         
         parent::__construct();
         
-        
+         
+        $this->ccmp = new CartComponent();
     }
 
     
@@ -31,8 +34,6 @@ class CheckoutPage extends StorePage
     {
         parent::dumpCSS();
 
-        echo "<link rel='stylesheet' href='".SITE_ROOT."lib/css/FormRenderer.css' type='text/css'>";
-        
         echo "<link rel='stylesheet' href='".SITE_ROOT."css/checkout.css?ver=1.0' type='text/css'>";
         
     }
@@ -59,13 +60,12 @@ class CheckoutPage extends StorePage
     }
 
     public function drawCartItems($heading_text="") {
-        include_once("class/components/CartComponent.php");
-        $ccmp = new CartComponent();
-        $ccmp->setCart($this->cart);
-        $ccmp->setHeadingText($heading_text);
-        $ccmp->setModifyEnabled($this->modify_enabled);
-        $ccmp->render();
-        $this->total = $ccmp->getTotal();
+       
+        $this->ccmp->setCart($this->cart);
+        $this->ccmp->setHeadingText($heading_text);
+        $this->ccmp->setModifyEnabled($this->modify_enabled);
+        $this->ccmp->render();
+        $this->total = $this->ccmp->getOrderTotal();
     }
     
 //     public function showShippingInfo()

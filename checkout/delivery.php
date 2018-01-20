@@ -2,7 +2,7 @@
 include_once("session.php");
 include_once("class/pages/CheckoutPage.php");
 include_once("class/forms/DeliveryAddressForm.php");
-
+include_once("class/beans/ClientAddressesBean.php");
 
 
 class DeliveryAddressProcessor extends FormProcessor
@@ -54,6 +54,8 @@ $page = new CheckoutPage();
 $page->ensureCartItems();
 $page->ensureClient();
 
+$page->getCart()->setDeliveryType(NULL);
+
 $form = new DeliveryAddressForm();
 $proc = new DeliveryAddressProcessor();
 $frend = new FormRenderer();
@@ -67,10 +69,10 @@ $bean = new ClientAddressesBean();
 
 $proc->setBean($bean);
 
-$proc->processForm($form, "delivery_type");
+$proc->processForm($form, "Delivery");
 
 
-if ($proc->getStatus() == FormProcessor::STATUS_ERROR) {
+if ($proc->getStatus() === FormProcessor::STATUS_ERROR) {
     Session::set("alert", $proc->getMessage());
 }
 
@@ -87,11 +89,11 @@ $page->drawCartItems();
 
 echo "<div class='delivery_address'>";
 
-  echo "<div class='caption'>".tr("Начин на доставка")."</div>";
-
-
+  echo "<div class='caption'>".$page->getPreferredTitle()."</div>";
+  
   $frend->startRender();
   $frend->renderImpl();
+  echo "<input type='hidden' name='Delivery' value='submit'>";
   $frend->finishRender();
   
 echo "</div>"; //delivery_details
@@ -109,7 +111,7 @@ echo "<div class='navigation'>";
   echo "<div class='slot left'>";
     echo "<a href='cart.php'>";
     echo "<img src='".SITE_ROOT."images/cart_edit.png'>";
-    echo "<div class='checkout_button' >".tr("Назад")."</div>";
+    echo "<div class='DefaultButton checkout_button' >".tr("Назад")."</div>";
     echo "</a>";
   echo "</div>";
 
@@ -122,7 +124,7 @@ echo "<div class='navigation'>";
   echo "<div class='slot right'>";
     echo "<a href='javascript:document.forms.DeliveryAddress.submit();'>";
     echo "<img src='".SITE_ROOT."images/cart_checkout.png'>";
-    echo "<div class='checkout_button'>".tr("Продължи")."</div>";
+    echo "<div class='DefaultButton checkout_button'>".tr("Продължи")."</div>";
     echo "</a>";
   echo "</div>";
   // 

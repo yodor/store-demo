@@ -85,7 +85,11 @@ class PricingFilter implements IQueryFilter
 		  $price_min = (float)$price_range[0];
 		  $price_max = (float)$price_range[1];
 		  
-		  $sel->where = " (  $price_min <= relation.price_min AND $price_max <=  relation.price_max) ";
+		  $sel->where = " (  
+		  (relation.price_min >= $price_min AND relation.price_min <= $price_max) 
+		  OR 
+		  (relation.price_max >= $price_min AND relation.price_max <=  $price_max) 
+		  )";
 	  }
 	  
 	}

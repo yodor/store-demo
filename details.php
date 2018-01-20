@@ -27,6 +27,7 @@ try {
   $relation = $page->derived;
   
   $relation->where = " pi.prodID = $prodID ";
+  $relation->order_by = " pi.size_value ASC ";
   $relation->group_by = " pi.piID ";
   
 //    echo $relation->getSQL();

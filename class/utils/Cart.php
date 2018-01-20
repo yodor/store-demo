@@ -3,6 +3,8 @@ class Cart
 {
     private $items = array();
 
+    //reference enum delivery_type in orders 
+    //TODO make this available from admin to set delivery price
     const DELIVERY_USERADDRESS = "UserAddress";
     const DELIVERY_EKONTOFFICE = "EkontOffice";
     
@@ -10,7 +12,7 @@ class Cart
     
     
 	
-    protected $delivery_type = Cart::DELIVERY_USERADDRESS;
+    protected $delivery_type = null;
     protected $note = "";
     
     protected $require_invoice = false;
@@ -25,13 +27,13 @@ class Cart
     
     public function setDeliveryType($delivery_type)
     {
-        if (!in_array($delivery_type, $this->delivery_options)) {
-            $this->delivery_type = Cart::DELIVERY_USERADDRESS;
-        }
-        else {
-            $this->delivery_type = $delivery_type;
-        }
-
+//         if (!in_array($delivery_type, $this->delivery_options)) {
+//             $this->delivery_type = Cart::DELIVERY_USERADDRESS;
+//         }
+//         else {
+//             
+//         }
+        $this->delivery_type = $delivery_type;
         $this->storeCart();
     }
     public function getDeliveryType()
@@ -124,7 +126,23 @@ class Cart
             
         }
         else {
-            throw new Exception("Продуктът не беше намерен във Вашата кошница");
+            throw new Exception("Продуктът не беше намерен");
+        }
+
+    }
+    public function clearItem($piID)
+    {
+            
+        if (isset($this->items[$piID])){
+                
+
+            unset($this->items[$piID]);
+ 
+            $this->storeCart();
+            
+        }
+        else {
+            throw new Exception("Продуктът не беше намерен");
         }
 
     }

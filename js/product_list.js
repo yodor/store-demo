@@ -4,12 +4,22 @@ function clearFilters()
   
   var form = document.forms["filters"];
   var elements = form.elements;
-  for (var a = 0; a< elements.length; a++) {
-    element = form.elements[a];
-    //console.log(element.name+"=>"+element.value);
+  for (var a = 0; a < elements.length; a++) {
+      
+    var element = form.elements[a];
+    
+    var filter_group = $(element).attr("filter_group");
+    
+    //console.log(element.name+"=>"+element.value+" | filter group: " + filter_group);
+    
+    if (filter_group) {   
+        uri.removeSearch(filter_group);
+    }
     uri.removeSearch(element.name);
+
   }
 
+  
   document.location.href = uri.href();
 }
 
@@ -35,18 +45,17 @@ function filterChanged(elm, filter_name, is_combined)
     });
     value = values.join("|");
   }
-  console.log("Filter changed: "+name+" => "+value);
   
-  
-  
+  //console.log("Filter changed: "+name+" => "+value);
+
   var uri = new URI(document.location.href);
   uri.removeSearch(name);
   uri.addSearch(name, value);
 
-  var href = uri.href();
-  console.log(href);
+  
+  //console.log(uri.href());
 
-  document.location.href = href;
+  document.location.href = uri.href();
 
 }
 addLoadEvent(function() {

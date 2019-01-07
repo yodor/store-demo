@@ -137,7 +137,15 @@ window.addEventListener("message", receiveMessage, false);
 
 function receiveMessage(event)
 {
-    if (event.origin !== "http://www.bgmaps.com") {
+
+    if ((event.origin === "http://www.bgmaps.com") || (event.origin === "https://www.bgmaps.com") ) {
+    
+    }
+    else {
+       
+        console.log("event.origin missmatch");
+        console.log(event.origin);
+        
         return;
     }
 

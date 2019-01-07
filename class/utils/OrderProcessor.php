@@ -5,6 +5,7 @@ include_once("class/beans/OrderItemsBean.php");
 
 include_once("class/beans/ProductsBean.php");
 include_once("class/beans/ProductInventoryBean.php");
+include_once("class/beans/ProductColorPhotosBean.php");
 include_once("lib/beans/ConfigBean.php");
 
 
@@ -38,15 +39,16 @@ class OrderProcessor {
             $db->transaction();
         
             $inventory = new ProductInventoryBean();
-
+            
+            
             $orders = new OrdersBean();
             $cart_data=array();
 
             $items = $cart->getItems();
             
             $config = ConfigBean::factory();
-            $config->setSection("global");
-            $delivery_price = $config->getValue("delivery_price",1);
+            $config->setSection("delivery_prices");
+            $delivery_price = $config->getValue($cart->getDeliveryType(),1);
             
             $order = array();
             $order["delivery_price"] = sprintf("%0.2f", $delivery_price);
@@ -72,7 +74,7 @@ class OrderProcessor {
         
             $order_items = new OrderItemsBean();
             $products = new ProductsBean();
-            
+            $photos = new ProductColorPhotosBean();
             
             $pos = 1;
             foreach ($items as $piID=>$qty) {
@@ -84,6 +86,20 @@ class OrderProcessor {
 
                 $product_details = "Продукт||{$product["product_name"]}//Цвят||{$item["color"]}//Размер||{$item["size_value"]}//Марка||{$product["brand_name"]}//Код|| {$piID}-{$prodID}";
       
+                //get the inventory image raw data
+                $pclrID = $item["pclrID"];
+                $item_photo = null;
+                
+                try {
+                    $pclrpID = $photos->getFirstPhotoID($pclrID);
+                    $photo_row = $photos->getByID($pclrpID);
+                    $item_photo = $photo_row["photo"];
+                }
+                catch (Exception $e) {
+                    
+                }
+                
+                
                 $order_item = array();
                 $order_item["piID"] = $piID;
                 $order_item["qty"] = $qty;
@@ -92,6 +108,7 @@ class OrderProcessor {
                 $order_item["orderID"] = $orderID;
                 $order_item["product"] = $product_details;
                 $order_item["prodID"] = $prodID;
+                $order_item["photo"] = DBDriver::get()->escapeString($item_photo);
                 
                 $itemID = $order_items->insertRecord($order_item, $db);
                 if ($itemID<1)throw new Exception("Unable to insert order item: ".$db->getError());

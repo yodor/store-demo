@@ -23,16 +23,9 @@ class CartComponent extends MLTagComponent implements IHeadRenderer
     {
         parent::__construct();
         
-        
         $this->inventory = new ProductInventoryBean();
         $this->photos = new ProductColorPhotosBean();
         $this->products = new ProductsBean();
-        
-       // $this->cart = new Cart();
-        
-        
-        
-        
     }
     
     public function renderScript()
@@ -43,30 +36,37 @@ class CartComponent extends MLTagComponent implements IHeadRenderer
         echo "<link rel='stylesheet' href='".SITE_ROOT."css/CartComponent.css' type='text/css' >";
         echo "\n";
     }
+    
     public function setCart(Cart $cart) 
     {
         $this->cart = $cart;
     }
+    
     public function setHeadingText($heading_text)
     {
         $this->heading_text = $heading_text;
     }
+    
     public function setModifyEnabled($mode)
     {
         $this->modify_enabled = (int)$mode;
     }
+    
     public function getTotal()
     {
         return $this->total;
     }
+    
     public function getOrderTotal()
     {
         return $this->order_total;
     }
+    
     public function getDeliveryPrice()
     {
         return $this->delivery_price;
     }
+    
     protected function renderCartItem($position, $piID, $qty)
     {
         $item = $this->inventory->getByID($piID);
@@ -88,11 +88,12 @@ class CartComponent extends MLTagComponent implements IHeadRenderer
         //only one photo here
         echo "<td field='product_photo'>";
         $pclrID = $item["pclrID"];
-        $this->photos->startIterator(" WHERE pclrID='$pclrID' ORDER BY position ASC LIMIT 1 " , $this->photos->getPrKey());
-        if ($this->photos->fetchNext($photo_row)){
-            $pclrpID = $photo_row[$this->photos->getPrKey()];
-            echo "<img src='".STORAGE_HREF."?cmd=image_thumb&width=100&class=ProductColorPhotosBean&id=$pclrpID'>"; 
-        }
+        
+        $pclrpID = $this->photos->getFirstPhotoID($pclrID);
+        
+        echo $this->photos->getThumb($pclrpID, 100);
+
+        
         echo "</td>";
 
         echo "<td field='product_model'>";
@@ -139,6 +140,7 @@ class CartComponent extends MLTagComponent implements IHeadRenderer
         return $line_total;
         
     }
+    
     protected function renderImpl() 
     {
         

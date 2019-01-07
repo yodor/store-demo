@@ -2,6 +2,7 @@
 include_once ("lib/components/Component.php");
 include_once ("lib/components/renderers/ICellRenderer.php");
 include_once ("lib/components/TableColumn.php");
+include_once ("class/beans/OrderItemsBean.php");
 
 class OrderItemsCellRenderer extends TableCellRenderer implements ICellRenderer
 {
@@ -27,10 +28,21 @@ class OrderItemsCellRenderer extends TableCellRenderer implements ICellRenderer
             $piID = $item["piID"];
             $prodID = $item["prodID"];
             
+            $itemID = $item["itemID"];
+            
+            
             echo "<div class='item qty'>";
                 echo "<label>".tr("Позиция")."</label>";
                 echo "<span>".$item["position"]."</span>";
             echo "</div>";
+            
+            echo "<div class='item photo'>";
+                echo "<label>";
+                echo $order_items->getThumb($itemID, 100);
+                echo "</label>";
+                
+            echo "</div>";
+            
             
             $details = explode("//",$item["product"]);
             foreach ($details as $index=>$data) {

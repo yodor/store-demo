@@ -3,17 +3,9 @@ include_once("class/pages/StorePage.php");
 include_once("class/components/CartComponent.php");
 
 
-// include_once("class/beans/ClientAddressesBean.php");
-
-// include_once("class/beans/ProductColorPhotosBean.php");
-// include_once("class/beans/ProductsBean.php");
-// include_once("class/beans/ProductInventoryBean.php");
-
 class CheckoutPage extends StorePage 
 {
 
-    
-    
     public $modify_enabled=false;
     public $total = 0.0;
     
@@ -67,31 +59,7 @@ class CheckoutPage extends StorePage
         $this->ccmp->render();
         $this->total = $this->ccmp->getOrderTotal();
     }
-    
-//     public function showShippingInfo()
-//     {
-// 
-//         $config = ConfigBean::factory();
-//         $config->setSection("global");
-// 
-//         
-//         echo "<div class='caption'>";
-//         echo "Условия за доставка";
-//         echo "</div>";
-//         
-//         echo "<div class='panel delivery_info'>";
-//         
-//         
-//         echo "<div class='shipping_info_note'>";
-//         echo mysql_real_unescape_string($config->getValue("delivery_info_text",""));
-//         echo "<div class=clear></div>";
-//         echo "</div>";
-//         
-//         echo "</div>";
-//         
-//     }
-
-    
+        
     public function ensureCartItems()
     {
         

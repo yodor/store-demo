@@ -86,6 +86,7 @@ echo "<div class='order_items'>";
 
 echo "<div class='line'>";
     echo "<span>".tr("Поз.")."</span>";
+    echo "<span></span>";
     echo "<span>".tr("Продукт")."</span>";
     echo "<span>".tr("Количество")."</span>";
     echo "<span>".tr("Ед.цена")."</span>";
@@ -97,7 +98,15 @@ while ($items->fetchNext($item)) {
     $pos++;
     echo "<div class='line'>";
         echo "<div class='item pos'>$pos</div>";
+        
+        echo "<div class='item photo'>";
+            echo $items->getThumb($item["itemID"], 100);
+        echo "</div>";
+        
         echo "<div class='item product'>";
+        
+        
+        
         $details = explode("//", $item["product"]);
         foreach ($details as $index=>$value) {
             $data = explode("||", $value);

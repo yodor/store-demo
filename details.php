@@ -61,7 +61,7 @@ catch (Exception $e) {
 
   
   Session::set("alert", "Този продукт е недостъпен. Грешка: ".$e->getMessage());
-  header("Location: list.php");
+  header("Location: products.php");
   exit;
 }
 
@@ -194,7 +194,7 @@ echo "<div class='column details'>";
   echo "<div class='images'>";
   
 	//main image
-	$gallery_href = STORAGE_HREF."?cmd=image_crop&width=460&height=-1";
+	$gallery_href = STORAGE_HREF."?cmd=image_thumb&width=500&height=500";
 	$big_href = STORAGE_HREF."?cmd=gallery_photo";
 	echo "<div class='image_big' source='$gallery_href' >";
 	echo "<a class='image_popup' href='' source='$big_href'><img src='$big_href'></a>";
@@ -205,7 +205,7 @@ echo "<div class='column details'>";
 	  foreach ($galleries as $pclrID=>$gallery) {
 		echo "<div class='list' pclrID='$pclrID'>";
 		  foreach ($gallery as $key=>$item) {
-			$href_source = STORAGE_HREF."?cmd=image_thumb&width=110&height=110";
+			$href_source = STORAGE_HREF."?cmd=image_thumb&width=50&height=50";
 			
 			$href=$href_source."&class=".$item["class"]."&id=".$item["id"];
 			
@@ -256,7 +256,7 @@ echo "<div class='column details'>";
                 $pclrID = (int)$pclrID;
                 
                 if (isset($item["class"])) {
-                    $href = STORAGE_HREF."?cmd=image_thumb&width=68&height=68&class=".$item["class"]."&id=".$item["id"];
+                    $href = STORAGE_HREF."?cmd=image_thumb&width=100&height=100&class=".$item["class"]."&id=".$item["id"];
                 }
                 
                 $chip_colorName = $color_names[$pclrID];
@@ -334,11 +334,11 @@ echo "<div class='column details'>";
   
   echo "<div class='clear'></div>";
   
-  echo "<div class='category_products'>";
+  echo "<div class='category_products product_group'>";
   $page->renderSameCategoryProducts();
   echo "</div>";
   
-  echo "<div class='ordered_products'>";
+  echo "<div class='ordered_products product_group'>";
   $page->renderMostOrderedProducts();
   echo "</div>";
   

@@ -1,14 +1,61 @@
 @import url("../lib/css/mobile/MenuBarComponent.css") (max-width: 1000px);
 
-/*@media (max-width: 629px) {
-    .main_content {
-        display:block;
+@media (max-width: 1000px) {
+    
+    .header .logo {
+        float:left;
+        margin-left:20px;
     }
-    .main_content .columnn {
-        width:100%;
-        max-width:100%;
-        display:block;
-        box-sizing:border-box;
+}
+
+@media (max-width: 590px) {
+    /*.header .aside .links A {
+         display:block;
+         text-align:left;
+    }*/
+/*    .header .aside .links .login_pane {
+         display:block;
+         text-align:left;
+    }*/
+    .header .aside .search_pane {
+        margin-top:0px;
+    }
+    
+}
+
+@media (max-width: 560px) {
+    .products {
+        text-align:center;
     }
 
-}*/
+}
+@media (max-width: 430px) {
+    .header {
+        padding-bottom: 40px;
+    }
+    .header .logo {
+        width:75px;
+        height:68px;
+    }
+   /* .header .aside .links DIV {
+         display:block;
+         text-align:left;
+    }
+    .header .aside .links A {
+         display:inline-block;
+    }*/
+    
+}
+@media (max-width: 370px) {
+    .footer .links .menu {
+        display:block;
+        text-align:center;
+    }
+    .footer .links .other {
+        display:block;
+        text-align:center;
+        margin-left:0px;
+        margin-top:50px;
+        
+    }
+}

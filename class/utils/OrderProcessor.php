@@ -1,4 +1,6 @@
 <?php
+// define("DEBUG_OUTPUT", 1);
+
 include_once("class/utils/Cart.php");
 include_once("class/beans/OrdersBean.php");
 include_once("class/beans/OrderItemsBean.php");
@@ -19,12 +21,15 @@ class OrderProcessor {
     
     public function createOrder(Cart $cart, $userID)
     {
+        debug("OrderProcessor::createOrder(UserID=$userID)");
+        
 //         throw new Exception("Not implemented yet");
         
         if (count($cart->getItems())<1) throw new Exception("Вашата кошница е празна");
         
         
         if (!UserAuthenticator::checkAuthState()) {
+            debug("OrderProcessor::createOrder() Login required ... ");
             throw new Exception("Login required");
         }
         
@@ -75,6 +80,7 @@ class OrderProcessor {
             $order_items = new OrderItemsBean();
             $products = new ProductsBean();
             $photos = new ProductColorPhotosBean();
+            $gallery_photos = new ProductPhotosBean();
             
             $pos = 1;
             foreach ($items as $piID=>$qty) {
@@ -86,18 +92,45 @@ class OrderProcessor {
 
                 $product_details = "Продукт||{$product["product_name"]}//Цвят||{$item["color"]}//Размер||{$item["size_value"]}//Марка||{$product["brand_name"]}//Код|| {$piID}-{$prodID}";
       
-                //get the inventory image raw data
-                $pclrID = $item["pclrID"];
+                //try inventory image raw data else product photos
                 $item_photo = null;
                 
+                $pclrID = $item["pclrID"];
+                $pclrpID = $photos->getFirstPhotoID($pclrID);
+                
                 try {
-                    $pclrpID = $photos->getFirstPhotoID($pclrID);
-                    $photo_row = $photos->getByID($pclrpID);
-                    $item_photo = $photo_row["photo"];
+                    debug("OrderProcessor::createOrder() Doing copy of product photo to order ");
+                    
+                    //try product gallery photos
+                    if ($pclrpID<1) {
+                        $ppID = $gallery_photos->getFirstPhotoID($prodID);
+                        //no photo here too
+                        if ($ppID<1) {
+                            debug("No product source photo to store into order items. ProdID=$prodID | InvID=$piID ");
+                        }
+                        else {
+                            //copy
+                            $photo_row = $gallery_photos->getByID($ppID);
+                            $item_photo = $photo_row["photo"];
+                        }
+                        
+                    }
+                    else {
+                        $photo_row = $photos->getByID($pclrpID);
+                        $item_photo = $photo_row["photo"];
+                    }
                 }
                 catch (Exception $e) {
-                    
+                    debug("Unable to copy source product photos. ProdID=$prodID | InvID=$piID | Exception: ".$e->getMessage());
                 }
+                
+                
+                
+                
+                    
+                    
+                    
+                
                 
                 
                 $order_item = array();
@@ -122,8 +155,11 @@ class OrderProcessor {
                 $pos++;
             }
             
+            debug("OrderProcessor::createOrder() finalizing transaction ... ");
             $db->commit();   
             $cart->clearCart();
+            
+            debug("OrderProcessor::createOrder() order completed ... ");
         }
         catch (Exception $e) {
             $orderID = -1;

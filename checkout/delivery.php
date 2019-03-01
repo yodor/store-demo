@@ -7,44 +7,23 @@ include_once("class/beans/ClientAddressesBean.php");
 
 class DeliveryAddressProcessor extends FormProcessor
 {
-        protected $bean = null;
-        
-        public function setBean(DBTableBean $bean)
-        {
-            $this->bean = $bean;
-        }
+       
 	public function processImpl(InputForm $form)
 	{
 		
 		
-		parent::processImpl($form);
+            parent::processImpl($form);
+            
+            if ($this->getStatus() != FormProcessor::STATUS_OK) return;
+            
+            $page = SitePage::getInstance();
+            $cart = $page->getCart();
+            
+            $delivery_type = $form->getField("delivery_type")->getValue();
+            
+            $cart->setDeliveryType($delivery_type[0]);
 		
-		if ($this->getStatus() != FormProcessor::STATUS_OK) return;
-		
-		$page = SitePage::getInstance();
-		$cart = $page->getCart();
-		
-		$delivery_type = $form->getField("delivery_type")->getValue();
-		
-		$cart->setDeliveryType($delivery_type[0]);
-		
-		if (strcmp($delivery_type[0], Cart::DELIVERY_USERADDRESS)==0) {
-                    
-                    $cabrow = $this->bean->findFieldValue("userID", $page->getUserID());
-                    if (!$cabrow) {
-                        header("Location: delivery_address.php");
-                        exit;
-                    }
-                    else {
-                        header("Location: confirm.php");
-                        exit;
-                    }
-                
-                }
-                else if (strcmp($delivery_type[0], Cart::DELIVERY_EKONTOFFICE)==0) {
-                    header("Location: delivery_ekont.php");
-                    exit;
-                }
+
 	}
 }
 
@@ -54,9 +33,11 @@ $page = new CheckoutPage();
 $page->ensureCartItems();
 $page->ensureClient();
 
-$page->getCart()->setDeliveryType(NULL);
+// $page->getCart()->setDeliveryType(NULL);
 
 $form = new DeliveryAddressForm();
+
+
 $proc = new DeliveryAddressProcessor();
 $frend = new FormRenderer();
 $frend->setName("DeliveryAddress");
@@ -67,13 +48,37 @@ $form->setProcessor($proc);
 
 $bean = new ClientAddressesBean();
 
-$proc->setBean($bean);
+
 
 $proc->processForm($form, "Delivery");
 
-
-if ($proc->getStatus() === FormProcessor::STATUS_ERROR) {
+if ($proc->getStatus() == FormProcessor::STATUS_NOT_PROCESSED) {
+    $delivery_type = $page->getCart()->getDeliveryType();
+    $form->getField("delivery_type")->setValue($delivery_type);
+}
+else if ($proc->getStatus() == FormProcessor::STATUS_ERROR) {
     Session::set("alert", $proc->getMessage());
+}
+else if ($proc->getStatus() == FormProcessor::STATUS_OK) {
+    // 		echo $delivery_type[0]; exit;
+    $delivery_type = $page->getCart()->getDeliveryType();
+    if (strcmp($delivery_type, Cart::DELIVERY_USERADDRESS)==0) {
+        
+        $cabrow = $bean->findFieldValue("userID", $page->getUserID());
+        if (!$cabrow) {
+            header("Location: delivery_address.php");
+            exit;
+        }
+        else {
+            header("Location: confirm.php");
+            exit;
+        }
+    
+    }
+    else if (strcmp($delivery_type, Cart::DELIVERY_EKONTOFFICE)==0) {
+        header("Location: delivery_ekont.php");
+        exit;
+    }
 }
 
 $page->beginPage();
@@ -103,13 +108,13 @@ echo "</div>"; //delivery_details
 
 
 
-
+$back_url = Session::get("checkout.navigation.back", "cart.php");
 
 echo "<div class='navigation'>";
 
   
   echo "<div class='slot left'>";
-    echo "<a href='cart.php'>";
+    echo "<a href='$back_url'>";
     echo "<img src='".SITE_ROOT."images/cart_edit.png'>";
     echo "<div class='DefaultButton checkout_button' >".tr("Назад")."</div>";
     echo "</a>";
@@ -132,7 +137,7 @@ echo "<div class='navigation'>";
 
 echo "</div>";
 
-
+// Session::set("checkout.navigation.back", $page->getPageURL());
 
 $page->finishPage();
 ?>

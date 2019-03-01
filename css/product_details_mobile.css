@@ -1,3 +1,26 @@
+@media (max-width: 1060px) { 
+    .main_content.container {
+        padding:20px;
+        
+    }
+    .column.details .side_pane {
+        display:block;
+        margin-left:0px;
+        min-width:inherit;
+        max-width:inherit;
+        margin-bottom:20px;
+    }
+    .column.details .product_group {
+        display:block;
+        text-align:center;
+    }
+    .column.details .images {
+        display:block;
+        text-align:center;
+        margin-bottom:30px;
+    }
+    
+}
 @media (max-width: 834px) {
     .column.details .product_details {
         display:block;

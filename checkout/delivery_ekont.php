@@ -83,6 +83,7 @@ echo "<div class='item ekont_office $empty'>";
 
     $frend->startRender();
     echo "<div class='selected_office'>";
+    echo str_replace("\r","<br>",$form->getField("office")->getValue());
     $frend->renderField($form->getField("office"));
     echo "</div>";
     $frend->finishRender();
@@ -104,12 +105,12 @@ echo "</div>"; //ekont_locator
 
 
 
-
+// $back_url = Session::get("checkout.navigation.back", $page->getPageURL());
 
 echo "<div class='navigation'>";
 
     echo "<div class='slot left'>";
-        echo "<a href='confirm.php'>";
+        echo "<a href='delivery.php'>";
         echo "<img src='".SITE_ROOT."images/cart_edit.png'>";
         echo "<div class='DefaultButton checkout_button' >".tr("Назад")."</div>";
         echo "</a>";

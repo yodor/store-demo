@@ -10,10 +10,10 @@ $form = new RegisterClientInputForm();
 $form->loadBeanData($page->getUserID(), new UsersBean());
 
 
-$frend = new FormRenderer();
+$frend = new FormRenderer(FormRenderer::FIELD_VBOX);
 $frend->setAttribute("name", "RegisterClient");
 $frend->setForm($form);
-
+$frend->getSubmitButton()->setText("Update");
 $form->setRenderer($frend);
 
 

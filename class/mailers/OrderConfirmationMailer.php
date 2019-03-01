@@ -20,7 +20,7 @@ class OrderConfirmationMailer extends Mailer {
         
         $this->to = $user["email"];
 
-        $this->subject = "Потвърждение на поръчка / Order Confirmation - OrderID $orderID";
+        $this->subject = "Потвърждение на поръчка / Order Confirmation ID:$orderID";
 		
         $message = "Здравейте, {$user["fullname"]}<br><br>\r\n\r\n";
         $message.= "Изпращаме Ви това съобщение за да Ви уведомим, че поръчка Ви е приета за обработка. ";
@@ -86,6 +86,7 @@ class OrderConfirmationMailer extends Mailer {
 
         $this->body = $this->templateMessage($message);
 
+        
     }	
 
 }

@@ -2,7 +2,7 @@
 include_once("session.php");
 include_once("class/pages/AdminPage.php");
 include_once("class/beans/OrdersBean.php");
-include_once("class/handlers/ConfirmSendRequestHandler.php");
+include_once("class/handlers/OrderStatusRequestHandler.php");
 include_once("lib/handlers/DeleteItemRequestHandler.php");
 include_once("class/utils/OrdersQuery.php");
 
@@ -11,7 +11,7 @@ $page->checkAccess(ROLE_ORDERS_MENU);
 
 $bean = new OrdersBean();
 
-$h_send = new ConfirmSendRequestHandler($bean);
+$h_send = new OrderStatusRequestHandler($bean);
 RequestController::addRequestHandler($h_send);
 
 $h_delete = new DeleteItemRequestHandler($bean);
@@ -24,6 +24,29 @@ $sel->where = " o.status='".OrdersBean::STATUS_PROCESSING."' ";
 
 
 include_once("list.php");
+
+$act = $view->getColumn("actions")->getCellRenderer();
+$act->addAction(
+  new Action(
+	"Потвърди изпращане", "?cmd=order_status", 
+	array(
+	  new ActionParameter("orderID", "orderID"),
+	  new ActionParameter("status", OrdersBean::STATUS_SENT,true),
+	)
+  )
+  
+); 
+$act->addAction(  new RowSeparatorAction() );
+$act->addAction(
+  new Action(
+	"Откажи изпращане", "?cmd=order_status", 
+	array(
+	  new ActionParameter("orderID", "orderID"),
+	  new ActionParameter("status", OrdersBean::STATUS_CANCELED,true),
+	)
+  )
+  
+); 
 
 $menu = array();
 

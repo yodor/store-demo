@@ -1,0 +1,79 @@
+@media (max-width: 780px) {
+    
+    .main_content .caption {
+        text-align:center;
+    }
+    .navigation {
+        display:block;
+        text-align:center;
+        padding-top:20px;
+    }
+    
+    .navigation .slot {
+        display:inline-block;
+        text-align:center;
+    }
+    .navigation .slot.center {
+        display:none;
+    }
+    
+    .CheckoutPage.customer .login_component {
+        display:block;
+        text-align:center;
+    }
+    .CheckoutPage.customer .login_component .inner {
+        display:inline-block;
+        
+    }
+    .CheckoutPage.customer .login_component .inner .DefaultButton[type='submit'] {
+        display:block;
+    }
+    
+    .CheckoutPage.customer .item {
+ 
+        display:inline-block;
+        width:50%;
+        text-align:center;
+        vertical-align:top;
+    }
+    .CheckoutPage.customer .item.login .login_component {
+        display:inline-block;
+    }
+    .CheckoutPage.customer .item.register .panel {
+        display:inline-block;
+    }
+    
+    .CheckoutPage .CartComponent TR[label='item'] TD[field='position'] {
+        display:none;
+    }
+    .CheckoutPage.cart .CartComponent TR[label='item'] TD[field='position'] {
+        display:block;
+    }
+}
+@media (max-width: 625px) {
+    .CheckoutPage.delivery FORM[name='DeliveryAddress']  {
+        display:block;
+        text-align:center;
+    }
+    .CheckoutPage.delivery FORM[name='DeliveryAddress'] .InputComponent {
+        display:inline-block;
+        text-align:center;
+    }
+    .CheckoutPage.delivery FORM[name='DeliveryAddress'] .InputLabel {
+        display:block;
+        text-align:center;
+    }
+    .CheckoutPage.delivery FORM[name='DeliveryAddress'] .InputField {
+        display:block;
+    }
+    .CheckoutPage.delivery FORM[name='DeliveryAddress'] .InputField .FieldElements DIV {
+        display:block;
+        padding-top:10px;
+    }
+}
+@media (max-width: 525px) {
+    .CheckoutPage.customer .item {
+        display:block;
+        width:auto;
+    }
+}

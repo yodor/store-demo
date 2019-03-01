@@ -4,8 +4,9 @@ include_once ("class/beans/OrdersBean.php");
 
 class OrderOwnerAuthenticator extends UserAuthenticator
 {
-    public function checkAuthState($skip_cookie_check, $user_data)
+    public static function checkAuthState($skip_cookie_check, $user_data)
     {
+        debug("OrderOwnerAuthenticator::checkAuthState()");
         $is_owner = false;
         
         if (parent::checkAuthState($skip_cookie_check)) {
@@ -18,6 +19,7 @@ class OrderOwnerAuthenticator extends UserAuthenticator
             
             if ($logged_userID == $order_userID) $is_owner = true;
             
+            debug("OrderOwnerAuthenticator::checkAuthState() Authenticated as owner");
             
         }
         return $is_owner;

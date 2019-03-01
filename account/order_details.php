@@ -71,14 +71,7 @@ echo "<div class='group'>";
         echo "<label>".tr("Статус")."</label>";
         echo "<span>".tr($order["status"])."</span>";
     echo "</div>";
-    echo "<div class='item delivey_price'>";
-        echo "<label>".tr("Цена на доставка")."</label>";
-        echo "<span>".sprintf("%0.2f лв.", $order["delivery_price"])."</span>";
-    echo "</div>";
-    echo "<div class='item order_total'>";
-        echo "<label>".tr("Поръчка общо")."</label>";
-        echo "<span>".sprintf("%0.2f лв.", $order["total"])."</span>";
-    echo "</div>";
+
 echo "</div>";    
     
 $items->startIterator("WHERE orderID='$orderID'");
@@ -99,9 +92,12 @@ while ($items->fetchNext($item)) {
     echo "<div class='line'>";
         echo "<div class='item pos'>$pos</div>";
         
-        echo "<div class='item photo'>";
+        $piID = $item["piID"];
+        $prodID = $item["prodID"];
+        
+        echo "<a class='item photo' href='".SITE_ROOT."details.php?prodID=$prodID&piID=$piID'>";
             echo $items->getThumb($item["itemID"], 100);
-        echo "</div>";
+        echo "</a>";
         
         echo "<div class='item product'>";
         
@@ -120,5 +116,21 @@ while ($items->fetchNext($item)) {
 }
 echo "</div>";
 
+
+echo "<div class='group'>";
+    echo "<div class='item products_total'>";
+        echo "<label>".tr("Продукти общо")."</label>";
+        echo "<span>".formatPrice($order["total"] - $order["delivery_price"])."</span>";
+    echo "</div>";
+    echo "<div class='item delivey_price'>";
+        echo "<label>".tr("Доставка")."</label>";
+        echo "<span>".formatPrice($order["delivery_price"])."</span>";
+    echo "</div>";
+    echo "<div class='item order_total'>";
+        echo "<label>".tr("Поръчка общо")."</label>";
+        echo "<span>".formatPrice($order["total"])."</span>";
+    echo "</div>";
+echo "</div>";
+    
 $page->finishPage();
 ?>

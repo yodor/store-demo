@@ -68,7 +68,7 @@ $view->addColumn(new TableColumn("prodID","ID"));
 
 $view->addColumn(new TableColumn("section","Section"));
 
-// $view->addColumn(new TableColumn("photo", "Product Photo"));
+$view->addColumn(new TableColumn("photo", "Product Photo"));
 
 $view->addColumn(new TableColumn("color_photos", "Color Gallery"));
 
@@ -106,9 +106,9 @@ $view->addColumn(new TableColumn("stock_amount", "Stock Amount"));
 
 $view->addColumn(new TableColumn("actions","Actions"));
 
-// $view->getColumn("photo")->setCellRenderer(new TableImageCellRenderer(new ProductPhotosBean(), TableImageCellRenderer::RENDER_THUMB, -1, 64));
-// $view->getColumn("photo")->getCellRenderer()->setListLimit(0);
-// $view->getColumn("photo")->getHeaderCellRenderer()->setSortable(false);
+$view->getColumn("photo")->setCellRenderer(new TableImageCellRenderer(new ProductPhotosBean(), TableImageCellRenderer::RENDER_THUMB, -1, 64));
+$view->getColumn("photo")->getCellRenderer()->setListLimit(1);
+$view->getColumn("photo")->getHeaderCellRenderer()->setSortable(false);
 
 $view->getColumn("color_photos")->setCellRenderer(new TableImageCellRenderer(new ProductColorPhotosBean(), TableImageCellRenderer::RENDER_THUMB, 48, -1));
 $view->getColumn("color_photos")->getCellRenderer()->setListLimit(0);

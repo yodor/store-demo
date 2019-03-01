@@ -29,8 +29,7 @@ $order_items = new OrderItemsBean();
 $db = DBDriver::factory();
 
 
-$h = new DeleteItemRequestHandler($bean);
-RequestController::addRequestHandler($h);
+
 
 
 $search_fields = array("orderID","items");
@@ -99,7 +98,7 @@ $view->addColumn(new TableColumn("delivery_price", "Delivery Price"));
 
 $view->addColumn(new TableColumn("total", "Total"));
 
-// $view->addColumn(new TableColumn("status", "Status"));
+$view->addColumn(new TableColumn("status", "Status"));
 
 $view->addColumn(new TableColumn("actions", "Actions"));
 
@@ -115,23 +114,23 @@ $view->getColumn("require_invoice")->setCellRenderer(new OrderInvoiceCellRendere
 $act = new ActionsTableCellRenderer();
 
 // $act->addAction(
-//   $h1->createAction("Маркирай изпратена","field=is_complete&status=1",  "return (\$row['is_confirmed']>0 && \$row['is_complete']<1);")
+//   $h1->createAction("Маркирай изпратена","?cmd=confirm_send",  "return (\$row['status']>0 && \$row['is_complete']<1);")
 //   
 // ); 
 // 
-$act->addAction(
-  new Action(
-	"Потвърди изпълнение", "?cmd=confirm_send", 
-	array(
-	  new ActionParameter("orderID", "orderID"),
-	)
-	
-// 	"return (\$row['is_confirmed']<1 && \$row['is_complete']<1);"
-  )
-  
-); 
-$act->addAction(  new RowSeparatorAction() );
-$act->addAction( $h_delete->createAction() );
+// $act->addAction(
+//   new Action(
+// 	"Потвърди изпълнение", "?cmd=confirm_send", 
+// 	array(
+// 	  new ActionParameter("orderID", "orderID"),
+// 	)
+// 	
+// // 	"return (\$row['is_confirmed']<1 && \$row['is_complete']<1);"
+//   )
+//   
+// ); 
+// $act->addAction(  new RowSeparatorAction() );
+// $act->addAction( $h_delete->createAction() );
 // $act->addAction(  new RowSeparatorAction() );
 
 $view->getColumn("actions")->setCellRenderer($act);

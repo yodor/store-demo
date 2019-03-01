@@ -10,11 +10,11 @@ class OrderConfirmationAdminMailer extends Mailer
 
         $this->to = ORDER_ADMIN_EMAIL;
 
-        $this->subject = "Нова поръчка / New order - OrderID $orderID ";
+        $this->subject = "Нова поръчка / New order - ID:$orderID ";
 
         $message="OrderID: $orderID\r\n<BR>";
 
-        $order_link = SITE_URL.SITE_ROOT."admin/orders/list.php?orderID=$orderID";
+        $order_link = SITE_URL.SITE_ROOT."admin/orders/confirmed.php?orderID=$orderID";
 
         $message.="Можете да видите поръчката на адрес - ";
         $message.="<a href='$order_link'>$order_link</a>";

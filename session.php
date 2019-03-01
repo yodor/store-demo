@@ -23,4 +23,8 @@ include_once("lib/config/defaults.php");
 // 
 // $defines->dump();
 
+function formatPrice($price)
+{
+    return sprintf("%0.2f лв", $price);
+}
 ?>

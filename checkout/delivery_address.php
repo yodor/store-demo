@@ -79,12 +79,12 @@ echo "<div class='delivery_details'>";
 echo "</div>"; //delivery_details
 
 
-
+// $back_url = Session::get("checkout.navigation.back", $page->getPageURL());
 
 echo "<div class='navigation'>";
 
     echo "<div class='slot left'>";
-        echo "<a href='confirm.php'>";
+        echo "<a href='delivery.php'>";
         echo "<img src='".SITE_ROOT."images/cart_edit.png'>";
         echo "<div class='DefaultButton checkout_button' >".tr("Назад")."</div>";
         echo "</a>";

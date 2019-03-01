@@ -21,5 +21,20 @@ class ProductPhotosBean extends OrderedDataBean
 	parent::__construct("product_photos");
     }
 
+    //return ppID
+    public function getFirstPhotoID($prodID) 
+    {
+    
+        $ppID = -1;
+        
+        $this->startIterator(" WHERE prodID='$prodID' ORDER BY position ASC LIMIT 1 " , $this->getPrKey());
+        if ($this->fetchNext($photo_row)){
+            $ppID = $photo_row[$this->getPrKey()];
+            
+        }
+        
+        return $ppID;
+    
+    }
 }
 ?>

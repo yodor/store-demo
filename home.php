@@ -36,7 +36,7 @@ while ($page->sections->fetchNext($section_row)) {
     $secID = $section_row["secID"];
     echo "<div class='section $section'>";
         
-        echo "<div class='caption'>$section</div>";
+        echo "<a class='caption' href='products.php?section=$section'>$section</a>";
         
         
         $num = $section_banners->startIterator("WHERE secID='$secID' ORDER BY RAND() LIMIT 1", " sbID, caption, link, position ");
@@ -51,7 +51,7 @@ while ($page->sections->fetchNext($section_row)) {
         
         echo "<div class='products'>";
             $sel->where = " p.section='$section' ";
-
+            $sel->limit = "4";
 //             echo $sel->getSQL();
             $res = $db->query($sel->getSQL());
             if (!$res) throw new Exception("Unable to query products from section '$section'. Error: ".$db->getError());

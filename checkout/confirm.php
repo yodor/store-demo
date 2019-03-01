@@ -249,5 +249,8 @@ echo "<div class='navigation'>";
 
 
 echo "</div>";
+
+Session::set("checkout.navigation.back", $page->getPageURL());
+
 $page->finishPage();
 ?>

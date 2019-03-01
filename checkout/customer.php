@@ -35,14 +35,14 @@ if ($auth->checkAuthState()) {
 
 $af = new AuthForm();
 $afr = new AuthFormRenderer();
-$afr->setAttribute("name", "auth");
+$afr->setAttribute("name", "client_auth");
 $afr->setForm($af);
 $afr->setAuthContext($auth->getAuthContext());
 $afr->forgot_password_url = SITE_ROOT."account/forgot_password.php";
 
 $form = new RegisterClientInputForm();
 
-$frender = new FormRenderer();
+$frender = new FormRenderer(FormRenderer::FIELD_VBOX);
 $frender->setAttribute("name", "RegisterClient");
 $frender->setForm($form);
 

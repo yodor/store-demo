@@ -137,7 +137,7 @@ else {
     echo "</a>";
 }
 
-
+Session::set("checkout.navigation.back", $page->getPageURL());
 
 $page->finishPage();
 ?>

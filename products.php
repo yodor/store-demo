@@ -246,10 +246,11 @@ $page->beginPage();
 
 echo "<div class='column left'>";
 
-  echo "<div class='categories'>";
+  echo "<div class='categories panel'>";
 //   if ($num_filters>0) {
 // 	echo "<a class='ActionRenderer Clear' href='javascript:clearFilters()'>Show All Categories</a>";
 //   }
+    echo "<div class='caption'>".tr("Категорий")."</div>";
   $treeView->render();
   echo "</div>"; //tree
 
@@ -261,7 +262,8 @@ echo "<div class='column left'>";
 //   echo "</div>";
 
   //TODO: filters as links option
-  echo "<div class='filters'>";
+  echo "<div class='filters panel'>";
+        echo "<div class='caption'>".tr("Филтри")."</div>";
 	echo "<form name='filters' autocomplete='off'>";
 	echo "<div class='InputComponent'>";
 	  echo "<span class='label'>".tr("Марка")."</span>";

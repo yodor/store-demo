@@ -4,7 +4,10 @@
 .account_menu .item {
     display:block;
     padding:10px;
-    border:1px dotted black;
+    border-bottom:2px solid gray;
+    font-size:1.2em;
+    text-decoration:none;
+    color:black;
 }
 
 .group .item LABEL:after {
@@ -16,6 +19,7 @@
     border-collapse:collapse;
     border:1px solid gray;
     margin-top:20px;
+    margin-bottom:20px;
 }
 .order_items .line {
     display:table-row;

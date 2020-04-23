@@ -19,19 +19,17 @@ if ($page->getUserID() > 0) {
 }
 
 $auth = new UserAuthenticator();
-
+$auth->setLoginURL(SITE_ROOT . "checkout/customer.php");
 $req = new AuthenticatorRequestHandler($auth, "doLogin");
-$req->setCancelUrl(SITE_ROOT . "checkout/customer.php");
+$req->setCancelUrl($auth->getLoginURL());
 $req->setSuccessUrl(SITE_ROOT . "checkout/delivery.php");
 
 RequestController::addRequestHandler($req);
 
-
-if ($auth->Validate()) {
+if ($auth->authorize()) {
     header("Location: delivery.php");
     exit;
 }
-
 
 $af = new AuthForm();
 $afr = new AuthFormRenderer();

@@ -47,18 +47,13 @@ class RegisterClientFormProcessor extends FormProcessor
             $urow["is_confirmed"] = 1;
             $urow["date_signup"] = DBDriver::Factory()->dateTime();
 
+            $auth = new UserAuthenticator();
 
-            $userID = $users->insert($urow);
-            if ($userID < 1) {
-                throw new Exception("Грешка в системата за регистрация. Моля опитайте по късно. " . $users->getDB()->getError());
-            }
+            $context = $auth->register($urow);
 
-            $mailer = new RegisterCustomerPasswordMailer($userID, $password, $urow["fullname"], $urow["email"]);
+            $mailer = new RegisterCustomerPasswordMailer($context->getID(), $password, $urow["fullname"], $urow["email"]);
             $mailer->send();
 
-            $context_data = array(UserAuthenticator::DATA_EMAIL => $urow["email"], UserAuthenticator::DATA_FULLNAME => $urow["fullname"]);
-            $auth = new UserAuthenticator();
-            $auth->store($userID, $context_data);
         }
         else {
 

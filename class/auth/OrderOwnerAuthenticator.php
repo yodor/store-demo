@@ -4,16 +4,15 @@ include_once("class/beans/OrdersBean.php");
 
 class OrderOwnerAuthenticator extends UserAuthenticator
 {
-    public function validate(bool $skip_cookie_check = false, array $user_data = NULL)
+    protected function validate(AuthContext $context, string $name, array $user_data = NULL)
     {
         $is_owner = false;
 
+        $context_data = parent::validate($context, $name, $user_data);
 
-        $context_data = parent::data($skip_cookie_check);
+        if ($context_data != NULL) {
 
-        if ($context_data) {
-
-            $logged_userID = $context_data[Authenticator::CONTEXT_ID];
+            $logged_userID = $context->getID();
 
             $orders = new OrdersBean();
             $orderID = (int)$user_data[$orders->key()];

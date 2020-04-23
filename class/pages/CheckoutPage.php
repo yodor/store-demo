@@ -66,7 +66,7 @@ class CheckoutPage extends StorePage
         $items = $this->cart->getItems();
 
         if (count($items) < 1) {
-            Session::Set("alert", tr("Вашата кошница е празна"));
+            Session::SetAlert(tr("Вашата кошница е празна"));
             header("Location: cart.php");
             exit;
         }
@@ -76,7 +76,7 @@ class CheckoutPage extends StorePage
     {
 
         if (!$this->is_auth) {
-            Session::Set("alert", tr("Изисква регистрация"));
+            Session::SetAlert(tr("Изисква регистрация"));
             header("Location: cart.php");
             exit;
         }

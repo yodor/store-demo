@@ -33,12 +33,12 @@ $frend->setForm($form);
 $proc->processForm($form);
 
 if ($proc->getStatus() == FormProcessor::STATUS_OK) {
-    Session::Set("alert", tr("Вашият адрес беше успешно променен"));
+    Session::SetAlert(tr("Вашият адрес беше успешно променен"));
     header("Location: registered_address.php");
     exit;
 }
 else if ($proc->getStatus() == FormProcessor::STATUS_ERROR) {
-    Session::Set("alert", $proc->getMessage());
+    Session::SetAlert($proc->getMessage());
 }
 
 $page->startRender();

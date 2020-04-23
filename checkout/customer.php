@@ -53,7 +53,7 @@ $form->setProcessor(new RegisterClientFormProcessor());
 $form->getProcessor()->processForm($form, "RegisterClient");
 
 if ($form->getProcessor()->getStatus() == IFormProcessor::STATUS_ERROR) {
-    Session::Set("alert", $form->getProcessor()->getMessage());
+    Session::SetAlert($form->getProcessor()->getMessage());
 }
 else if ($form->getProcessor()->getStatus() == IFormProcessor::STATUS_OK) {
 

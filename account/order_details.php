@@ -36,7 +36,7 @@ if (isset($_GET["orderID"])) {
     $orderID = (int)$_GET["orderID"];
     $num = $orders->startIterator("WHERE orderID='$orderID' AND userID='$userID'");
     if ($num < 1) {
-        Session::Set("alert", "Няма достъп до тази поръчка");
+        Session::SetAlert("Няма достъп до тази поръчка");
         header("Location: orders.php");
         exit;
     }

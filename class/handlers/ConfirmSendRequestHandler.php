@@ -49,7 +49,7 @@ class ConfirmSendRequestHandler extends RequestHandler
             //
             // 	  $db->commit();
 
-            Session::Set("alert", tr("Поръчката беше маркирана като изпратена") . "<BR>" . tr("Потвърждаващ e-mail беше изпратен на клиента"));
+            Session::SetAlert(tr("Поръчката беше маркирана като изпратена") . "<BR>" . tr("Потвърждаващ e-mail беше изпратен на клиента"));
 
         }
         catch (Exception $e) {

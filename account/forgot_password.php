@@ -68,7 +68,7 @@ $form->setProcessor($proc);
 $proc->processForm($form);
 
 if ($proc->getStatus() != IFormProcessor::STATUS_NOT_PROCESSED) {
-    Session::Set("alert", $proc->getMessage());
+    Session::SetAlert($proc->getMessage());
     header("Location: forgot_password.php");
     exit;
 }

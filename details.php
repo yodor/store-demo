@@ -59,7 +59,7 @@ try {
 catch (Exception $e) {
 
 
-    Session::Set("alert", "Този продукт е недостъпен. Грешка: " . $e->getMessage());
+    Session::SetAlert("Този продукт е недостъпен. Грешка: " . $e->getMessage());
     header("Location: list.php");
     exit;
 }
@@ -348,7 +348,7 @@ echo "</div>"; //column details
 
     var attributes = <?php echo json_encode($attributes);?>
 
-        addLoadEvent(function () {
+        onPageLoad(function () {
 
 //   var first_color = $(".color_chooser .color_button").first();
 //   changeColor(first_color.attr("pclrID"));

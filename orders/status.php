@@ -66,7 +66,7 @@ $proc->processForm($form);
 
 if ($proc->getStatus() == IFormProcessor::STATUS_ERROR) {
 
-    Session::Set("alert", tr($form->getProcessor()->getMessage()));
+    Session::SetAlert(tr($form->getProcessor()->getMessage()));
 
 }
 

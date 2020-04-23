@@ -33,12 +33,12 @@ $frend->setForm($form);
 $proc->processForm($form);
 
 if ($proc->getStatus() == FormProcessor::STATUS_OK) {
-    Session::Set("alert", tr("Детайлите за фактуриране бяха променени успешно"));
+    Session::SetAlert(tr("Детайлите за фактуриране бяха променени успешно"));
     header("Location: invoice_details.php");
     exit;
 }
 else if ($proc->getStatus() == FormProcessor::STATUS_ERROR) {
-    Session::Set("alert", $proc->getMessage());
+    Session::SetAlert($proc->getMessage());
 }
 
 $page->startRender();

@@ -24,12 +24,12 @@ if (isset($_GET["addItem"])) {
         $prodID = $item["prodID"];
 
         if ($item["stock_amount"] < 1) {
-            Session::Set("alert", tr("Съжаляваме в момента няма наличност от този артикул"));
+            Session::SetAlert(tr("Съжаляваме в момента няма наличност от този артикул"));
             header("Location: " . SITE_ROOT . "details.php?prodID=$prodID&piID=$piID");
             exit;
         }
         if ($item["stock_amount"] - $page->getCart()->getItemQty($piID) - 1 < 0) {
-            Session::Set("alert", tr("Няма повече наличност от този артикул"));
+            Session::SetAlert(tr("Няма повече наличност от този артикул"));
         }
         else {
             $page->getCart()->addItem($piID);

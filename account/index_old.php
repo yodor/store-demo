@@ -48,7 +48,7 @@ $page = new AccountPage();
 /*
 $is_auth = UserAuthenticator::checkAuthState();
 if (!$is_auth) {
-//   Session::set("alert", tr("This page is password protected."));
+//   Session::Alert(tr("This page is password protected."));
   header("Location: login.php");
   exit;
 }*/
@@ -81,7 +81,7 @@ $form->setProcessor($proc);
 $proc->processForm($form);
 
 if ($proc->getStatus() != IFormProcessor::STATUS_NOT_PROCESSED) {
-    Session::Set("alert", $proc->getMessage());
+    Session::SetAlert($proc->getMessage());
     header("Location: " . $_SERVER["REQUEST_URI"]);
     exit;
 }

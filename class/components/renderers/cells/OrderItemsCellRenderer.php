@@ -7,7 +7,7 @@ include_once("class/beans/OrderItemsBean.php");
 class OrderItemsCellRenderer extends TableCellRenderer implements ICellRenderer
 {
 
-    public function renderCell($row, TableColumn $tc)
+    public function renderCell(array &$row, TableColumn $tc)
     {
 
         $this->processAttributes($row, $tc);

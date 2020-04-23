@@ -28,7 +28,7 @@ try {
 }
 catch (Exception $e) {
     $error_details = $e->getMessage();
-    //   Session::set("alert", tr($error_details));
+    //   Session::Alert(tr($error_details));
 }
 ob_end_clean();
 

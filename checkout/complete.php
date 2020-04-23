@@ -51,7 +51,7 @@ try {
 
 }
 catch (Exception $e) {
-    Session::Set("alert", tr("Възникна грешка при обработка на Вашата поръчка.") . "<BR>" . tr("Details") . ": " . $e->getMessage());
+    Session::SetAlert(tr("Възникна грешка при обработка на Вашата поръчка.") . "<BR>" . tr("Details") . ": " . $e->getMessage());
     try {
         $oem = new OrderErrorAdminMailer();
         $oem->send();

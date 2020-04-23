@@ -43,7 +43,7 @@ if ($proc->getStatus() == FormProcessor::STATUS_OK) {
     exit;
 }
 else if ($proc->getStatus() == FormProcessor::STATUS_ERROR) {
-    Session::Set("alert", $proc->getMessage());
+    Session::SetAlert($proc->getMessage());
 }
 
 

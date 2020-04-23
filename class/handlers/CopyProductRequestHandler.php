@@ -97,7 +97,7 @@ class CopyProductRequestHandler extends RequestHandler
 
             $db->commit();
             $success = true;
-            Session::Set("alert", tr("Продуктът е копиран успешно.") . tr("Кликнете") . " <a href='add.php?editID=$lastID&catID={$cbrow["catID"]}'>" . tr("тук") . "</a> " . tr("за редактиране"));
+            Session::SetAlert(tr("Продуктът е копиран успешно.") . tr("Кликнете") . " <a href='add.php?editID=$lastID&catID={$cbrow["catID"]}'>" . tr("тук") . "</a> " . tr("за редактиране"));
 
             header("Location: {$this->cancel_url}");
             exit;

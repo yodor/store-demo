@@ -24,12 +24,12 @@ $proc->setEditID($page->getUserID());
 $proc->processForm($form);
 
 if ($proc->getStatus() == FormProcessor::STATUS_OK) {
-    Session::Set("alert", tr("Профилът беше променен успешно"));
+    Session::SetAlert(tr("Профилът беше променен успешно"));
     header("Location: profile.php");
     exit;
 }
 else if ($proc->getStatus() == FormProcessor::STATUS_ERROR) {
-    Session::Set("alert", $proc->getMessage());
+    Session::SetAlert($proc->getMessage());
     $form->loadBeanData($page->getUserID(), new UsersBean());
 }
 

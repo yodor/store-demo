@@ -17,7 +17,7 @@ class OrdersBean extends DBTableBean
  `require_invoice` tinyint(1) NOT NULL DEFAULT '0',
  `order_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
  `completion_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
- `status` enum('Initial','Processing','Completed') NOT NULL DEFAULT 'Initial',
+ `status` enum('Processing','Sent','Completed','Canceled') NOT NULL DEFAULT 'Processing',
  `userID` int(11) unsigned NOT NULL,
  PRIMARY KEY (`orderID`),
  KEY `userID` (`userID`),

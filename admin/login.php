@@ -24,7 +24,7 @@ $af = new AuthForm();
 $afr = new AuthFormRenderer();
 
 
-$afr->setAttribute("name", "auth");
+$afr->setAttribute("name", "admin_auth");
 $afr->setForm($af);
 $afr->setAuthContext($auth->name());
 $afr->getSubmitButton()->setClassName("admin_button orange");

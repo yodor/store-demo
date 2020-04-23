@@ -25,8 +25,13 @@ class CheckoutPage extends StorePage
     {
         parent::dumpCSS();
 
+<<<<<<< HEAD
         echo "<link rel='stylesheet' href='" . SITE_ROOT . "css/checkout.css?ver=1.0' type='text/css'>";
 
+=======
+        echo "<link rel='stylesheet' href='".SITE_ROOT."css/checkout.css?ver=1.2' type='text/css'>";
+        
+>>>>>>> origin/master
     }
 
 

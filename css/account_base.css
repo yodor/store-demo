@@ -3,9 +3,18 @@
 }
 
 .account_menu .item {
+<<<<<<< HEAD
     display: block;
     padding: 10px;
     border: 1px dotted black;
+=======
+    display:block;
+    padding:10px;
+    border-bottom:2px solid gray;
+    font-size:1.2em;
+    text-decoration:none;
+    color:black;
+>>>>>>> origin/master
 }
 
 .group .item LABEL:after {
@@ -13,10 +22,18 @@
 }
 
 .order_items {
+<<<<<<< HEAD
     display: table;
     border-collapse: collapse;
     border: 1px solid gray;
     margin-top: 20px;
+=======
+    display:table;
+    border-collapse:collapse;
+    border:1px solid gray;
+    margin-top:20px;
+    margin-bottom:20px;
+>>>>>>> origin/master
 }
 
 .order_items .line {

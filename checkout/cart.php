@@ -135,6 +135,12 @@ else {
     echo "</a>";
 }
 
+<<<<<<< HEAD
 
 $page->finishRender();
+=======
+Session::set("checkout.navigation.back", $page->getPageURL());
+
+$page->finishPage();
+>>>>>>> origin/master
 ?>

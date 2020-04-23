@@ -237,12 +237,22 @@ $page->startRender();
 
 echo "<div class='column left'>";
 
+<<<<<<< HEAD
 echo "<div class='categories'>";
 //   if ($num_filters>0) {
 // 	echo "<a class='ActionRenderer Clear' href='javascript:clearFilters()'>Show All Categories</a>";
 //   }
 $treeView->render();
 echo "</div>"; //tree
+=======
+  echo "<div class='categories panel'>";
+//   if ($num_filters>0) {
+// 	echo "<a class='ActionRenderer Clear' href='javascript:clearFilters()'>Show All Categories</a>";
+//   }
+    echo "<div class='caption'>".tr("Категорий")."</div>";
+  $treeView->render();
+  echo "</div>"; //tree
+>>>>>>> origin/master
 
 //   echo "<BR>";
 
@@ -251,6 +261,7 @@ echo "</div>"; //tree
 //   echo "<HR>";
 //   echo "</div>";
 
+<<<<<<< HEAD
 //TODO: filters as links option
 echo "<div class='filters'>";
 echo "<form name='filters' autocomplete='off'>";
@@ -346,6 +357,104 @@ echo "</form>";
 echo "<button class='DefaultButton' onClick='clearFilters()'>" . tr("Изчисти филтрите") . "</button>";
 
 echo "</div>";//filters
+=======
+  //TODO: filters as links option
+  echo "<div class='filters panel'>";
+        echo "<div class='caption'>".tr("Филтри")."</div>";
+	echo "<form name='filters' autocomplete='off'>";
+	echo "<div class='InputComponent'>";
+	  echo "<span class='label'>".tr("Марка")."</span>";
+	
+	  $field = InputFactory::CreateField(InputFactory::SELECT, "brand_name", "Марка", 0);
+	  $rend = $field->getRenderer();
+	  $rend->setSource(ArraySelector::FromSelect($brand_select, "brand_name", "brand_name"));
+	  $rend->list_key = "brand_name";
+	  $rend->list_label = "brand_name";
+	  $rend->setFieldAttribute("onChange", "javascript:filterChanged(this)");
+	  $field->setValue($brand_value);
+	  
+	  $rend->renderField($field);
+	echo "</div>";//InputComponent
+	
+	echo "<div class='InputComponent'>";
+	  echo "<span class='label'>".tr("Цвят")."</span>";
+	  $field = InputFactory::CreateField(InputFactory::SELECT, "color", "Цвят", 0);
+	  $rend = $field->getRenderer();
+	  $rend->setSource(ArraySelector::FromSelect($color_select, "color", "color"));
+	  $rend->list_key = "color";
+	  $rend->list_label = "color";
+	  $rend->setFieldAttribute("onChange", "javascript:filterChanged(this)");
+	  $field->setValue($color_value);
+	  
+	  $rend->renderField($field);
+	echo "</div>";//InputComponent
+	
+	echo "<div class='InputComponent'>";
+	  echo "<span class='label'>".tr("Размер")."</span>";
+	  $field = InputFactory::CreateField(InputFactory::SELECT, "size_value", "Размер", 0);
+	  $rend = $field->getRenderer();
+	  $rend->setSource(ArraySelector::FromSelect($size_select, "size_value", "size_value"));
+	  $rend->list_key = "size_value";
+	  $rend->list_label = "size_value";
+	  $rend->setFieldAttribute("onChange", "javascript:filterChanged(this)");
+	  $field->setValue($size_value);
+	  
+	  $rend->renderField($field);
+	echo "</div>";//InputComponent
+	
+	echo "<div class='InputComponent Slider'>";
+	  echo "<span class='label'>".tr("Цена")."</span>";
+	  $value_min = $price_info["min"];
+	  $value_max = $price_info["max"];
+	  
+	  if ($price_info["price_range"]) {
+		  $price_range = explode("|", trim($price_info["price_range"]));
+		  if (count($price_range)==2) {
+			$value_min = (float)$price_range[0];
+			$value_max = (float)$price_range[1];
+		  }
+	  }
+	 
+	 $value_min = sprintf("%1.2f", $value_min);
+	 $value_max = sprintf("%1.2f", $value_max);
+	 
+	  echo "<span class='value' id='amount'>$value_min - $value_max</span>";
+	  echo "<div class='InputField'>";
+		echo "<div class='drag' min='{$price_info["min"]}' max='{$price_info["max"]}'></div>";
+		echo "<input type='hidden' name='price_range' value='$value_min|$value_max'>";
+	  echo "</div>";
+	echo "</div>";//InputComponent
+	
+	try {
+	  foreach($dyn_filters as $name=>$item) {
+		echo "<div class='InputComponent'>";
+		  echo "<span class='label'>".tr($name)."</span>";
+		  $field = InputFactory::CreateField(InputFactory::SELECT, "$name", "$name", 0);
+		  $rend = $field->getRenderer();
+		  $sel = $item["select"];
+  // 		echo $sel->getSQL();
+		  $rend->setSource(ArraySelector::FromSelect($item["select"], "ia_value", "ia_value"));
+		  $rend->list_key = "ia_value";
+		  $rend->list_label = "ia_value";
+		  $rend->setFieldAttribute("onChange", "javascript:filterChanged(this, 'ia', true)");
+		  $rend->setFieldAttribute("filter_group", "ia");
+		  $field->setValue($item["value"]);
+		  
+		  $rend->renderField($field);
+		echo "</div>";//InputComponent
+	  }
+	}
+	catch (Exception $e) {
+	  echo $e;
+	}
+	
+	
+	echo "</form>";
+	
+	echo "<button class='DefaultButton' onClick='javascript:clearFilters()'>".tr("Изчисти филтрите")."</button>";
+	
+  echo "</div>";//filters
+>>>>>>> origin/master
 
 echo "</div>"; //column categories
 

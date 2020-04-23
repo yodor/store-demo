@@ -97,8 +97,13 @@ class StorePage extends SparkPage
     {
         parent::dumpCSS();
 
+<<<<<<< HEAD
         echo "<link rel='stylesheet' href='" . SITE_ROOT . "css/store.css' type='text/css'>";
         echo "<link rel='stylesheet' href='//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css'>";
+=======
+	echo "<link rel='stylesheet' href='".SITE_ROOT."css/store.css?ver=1.10' type='text/css'>";
+	echo "<link rel='stylesheet' href='//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css'>";
+>>>>>>> origin/master
 
         echo "\n";
 

@@ -1,8 +1,17 @@
 .navigation {
+<<<<<<< HEAD
     display: table;
 
     width: 100%;
     border-spacing: 10px;
+=======
+    display:table;
+    
+    width:100%;
+    border-spacing:10px;
+    margin-top:40px;
+    margin-bottom:40px;
+>>>>>>> origin/master
 }
 
 .navigation .slot {
@@ -72,11 +81,19 @@
 }
 
 .CheckoutPage.delivery_ekont FORM[name='EkontOffice'] {
+<<<<<<< HEAD
     display: block;
+=======
+/*     display:block; */
+>>>>>>> origin/master
 }
 
 .CheckoutPage.delivery_ekont FORM[name='EkontOffice'] .InputComponent[field='office'] {
+<<<<<<< HEAD
     display: block;
+=======
+    display:none;
+>>>>>>> origin/master
 }
 
 .CheckoutPage.delivery_ekont FORM[name='EkontOffice'] .InputComponent[field='office'] .InputField {
@@ -138,3 +155,20 @@
     display: none;
 }
 
+.CheckoutPage.customer .item {
+ 
+    display:inline-block;
+    width:50%;
+    text-align:center;
+    vertical-align:top;
+}
+.CheckoutPage.customer .item.login .login_component {
+    display:inline-block;
+}
+.CheckoutPage.customer .item.register .panel {
+    display:inline-block;
+}
+
+.CheckoutPage.customer .navigation .slot.center {
+    display:none;
+}

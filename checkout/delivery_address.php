@@ -68,6 +68,7 @@ $frend->renderImpl();
 
 echo "<input type=hidden name='submit_item' value='submit'>";
 
+<<<<<<< HEAD
 $frend->finishRender();
 
 
@@ -84,6 +85,18 @@ echo "</a>";
 echo "</div>";
 
 echo "<div class='slot center'>";
+=======
+// $back_url = Session::get("checkout.navigation.back", $page->getPageURL());
+
+echo "<div class='navigation'>";
+
+    echo "<div class='slot left'>";
+        echo "<a href='delivery.php'>";
+        echo "<img src='".SITE_ROOT."images/cart_edit.png'>";
+        echo "<div class='DefaultButton checkout_button' >".tr("Назад")."</div>";
+        echo "</a>";
+    echo "</div>";
+>>>>>>> origin/master
 
 echo "</div>";
 

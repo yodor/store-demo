@@ -34,7 +34,9 @@
     border-bottom: 1px solid black;
     padding: 10px;
 }
-
+.CartComponent TR[label='item'] TD LABEL {
+    display:none;
+}
 .CartComponent TR[label='item'] TD[field='position'] {
     font-size: 1.5em;
 }

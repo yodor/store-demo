@@ -1,6 +1,5 @@
 <?php
 include_once("lib/mailers/Mailer.php");
-include_once("class/beans/OrdersBean.php");
 include_once("lib/beans/UsersBean.php");
 
 class ForgotPasswordMailer extends Mailer
@@ -9,11 +8,17 @@ class ForgotPasswordMailer extends Mailer
     public function __construct($email, $random_pass)
     {
 
+<<<<<<< HEAD
         $users = new UsersBean();
         $userID = $users->email2id($email);
         $user_row = $users->getByID($userID);
         $user_details = new UserDetailsBean();
         $ud_row = $user_details->getByRef("userID", $userID);
+=======
+	$users = new UsersBean();
+	$userID = $users->email2id($email);
+	$user_row = $users->getByID($userID);
+>>>>>>> origin/master
 
         $this->to = $user_row["email"];
 
@@ -76,5 +81,9 @@ class ForgotPasswordMailer extends Mailer
     }
 
 }
+<<<<<<< HEAD
 
 ?>
+=======
+?>
+>>>>>>> origin/master

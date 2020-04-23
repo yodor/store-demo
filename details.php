@@ -58,10 +58,17 @@ try {
 }
 catch (Exception $e) {
 
+<<<<<<< HEAD
 
     Session::SetAlert("Този продукт е недостъпен. Грешка: " . $e->getMessage());
     header("Location: list.php");
     exit;
+=======
+  
+  Session::set("alert", "Този продукт е недостъпен. Грешка: ".$e->getMessage());
+  header("Location: products.php");
+  exit;
+>>>>>>> origin/master
 }
 
 
@@ -188,6 +195,7 @@ $page->renderCategoryPath();
 
 echo "<div class='column details'>";
 
+<<<<<<< HEAD
 echo "<div class='images'>";
 
 //main image
@@ -235,6 +243,55 @@ echo "</div>";
 echo "<div class='group sizing_colors'>";
 
 //hide color chooser for single color or color schemeless products
+=======
+  echo "<div class='images'>";
+  
+	//main image
+	$gallery_href = STORAGE_HREF."?cmd=image_thumb&width=500&height=500";
+	$big_href = STORAGE_HREF."?cmd=gallery_photo";
+	echo "<div class='image_big' source='$gallery_href' >";
+	echo "<a class='image_popup' href='' source='$big_href'><img src='$big_href'></a>";
+	echo "</div>";
+	
+	//photo galleries per color
+	echo "<div class='image_gallery'>";
+	  foreach ($galleries as $pclrID=>$gallery) {
+		echo "<div class='list' pclrID='$pclrID'>";
+		  foreach ($gallery as $key=>$item) {
+			$href_source = STORAGE_HREF."?cmd=image_thumb&width=50&height=50";
+			
+			$href=$href_source."&class=".$item["class"]."&id=".$item["id"];
+			
+			echo "<div class='item' bean='{$item["class"]}' itemID='{$item["id"]}' source='$href_source' onClick='javascript:changeImage(this)' style='background-image:url($href)'>";
+// 			echo "<img src='$href' >";
+			echo "</div>";
+			
+		  }
+		echo "</div>";//list
+	  }
+	echo "</div>";//image_gallery
+	
+  echo "</div>"; // images
+  
+  echo "<div class='side_pane'>";
+  
+    echo "<div class='product_name'>".$sellable_variation["product_name"]."</div>";
+
+    echo "<div class='sell_price'>";
+        echo "<span class='value' piID='$piID'>".sprintf("%0.2f",$sellable_variation["sell_price"])."</span>";
+        echo "&nbsp;<span class='currency'>лв.</span>";
+    echo "</div>";
+  
+    echo "<div class='stock_amount'>";
+        echo "<span>".tr("Наличност")."&nbsp;-&nbsp;</span>";
+        echo "<span class='value'></span>";
+        echo "<span> бр.</span>";
+    echo "</div>";
+    
+    echo "<div class='group sizing_colors'>";
+
+	//hide color chooser for single color or color schemeless products
+>>>>>>> origin/master
 // 	if ($pclrID == 0 || count($color_names)==1) {
 //             //no colors setup
 //             $chooser_visibility = "style='display:none'";
@@ -245,6 +302,7 @@ echo "<label>" . tr("Цвят") . "</label>";
 echo "<span class='value'></span>";
 echo "</div>";
 
+<<<<<<< HEAD
 echo "<div class='item color_chooser'>";
 
 echo "<span class='value'>";
@@ -280,6 +338,54 @@ foreach ($color_chips as $pclrID => $item) {
     $pids = implode("|", $pids);
     $sell_prices = implode("|", $sell_prices);
     $stock_amounts = implode("|", $stock_amounts);
+=======
+            echo "<span class='value'>";
+          
+            foreach ($color_chips as $pclrID=>$item) {
+                $pclrID = (int)$pclrID;
+                
+                if (isset($item["class"])) {
+                    $href = STORAGE_HREF."?cmd=image_thumb&width=100&height=100&class=".$item["class"]."&id=".$item["id"];
+                }
+                
+                $chip_colorName = $color_names[$pclrID];
+
+                $sizes = $prices[$pclrID];
+                
+
+                $pids = array();
+                
+                $sell_prices = array();
+                $stock_amounts = array();
+                
+                foreach ($sizes as $size_value=>$arr) {
+                    foreach($arr as $cpiID=>$sell_data) {
+                        $pids[] = $cpiID;
+                        $sell_prices[] = $sell_data["sell_price"];
+                        $stock_amounts[] = $sell_data["stock_amount"];
+                    }
+                }
+                
+                
+                $size_values = implode("|", array_keys($sizes));
+                $cpiID = $pids[0];
+                $pids = implode("|", $pids);
+                $sell_prices = implode("|", $sell_prices);
+                $stock_amounts = implode("|", $stock_amounts);
+                
+                //sizing pids = $pid_values
+                echo "<span class='color_button' pclrID='$pclrID' piID='$cpiID' size_values='$size_values' sell_prices='$sell_prices' stock_amounts='$stock_amounts' pids='$pids' color_name='$chip_colorName' onClick='javascript:changeColor($pclrID)' title='$chip_colorName'>";
+                                
+                    if (isset($item["class"])) {
+                        echo "<img src='$href' >";
+                    }
+                    else {
+                        echo "<span class='simple_color' style='background-color:{$color_codes[$pclrID]};'></span>";
+                    }
+
+                echo "</span>";
+            }
+>>>>>>> origin/master
 
     //sizing pids = $pid_values
     echo "<span class='color_button' pclrID='$pclrID' piID='$cpiID' size_values='$size_values' sell_prices='$sell_prices' stock_amounts='$stock_amounts' pids='$pids' color_name='$chip_colorName' onClick='javascript:changeColor($pclrID)' title='$chip_colorName'>";
@@ -304,6 +410,7 @@ echo "</div>";//color_chooser
 //             echo "</select>";
 // 	  echo "</span>";
 // 	echo "</div>";
+<<<<<<< HEAD
 echo "<div class='item size_chooser' model='size_button'>";
 echo "<label>" . tr("Размер") . "</label>";
 echo "<span class='value'>";
@@ -325,6 +432,44 @@ echo "<div class='summary'>";
 echo "<label>" . tr("Описание") . "</label>";
 echo "<span class='value'>" . $sellable_variation["product_summary"] . "</span>";
 echo "</div>";
+=======
+	echo "<div class='item size_chooser' model='size_button'>";
+	  echo "<label>".tr("Размер")."</label>";
+	  echo "<span class='value'>";
+            //listed from javascript
+	  echo "</span>";
+	echo "</div>";
+
+    echo "</div>"; //sizing_colors
+  
+    echo "<div class='group attributes'>";
+    echo "</div>";
+  
+    
+    
+    echo "<div class='cart_link'>";
+        echo "<a class='cart_add' href='javascript:addToCart()'>".tr("Добави в кошница")."</a>";
+    echo "</div>";
+    
+    echo "<div class='summary'>";
+        echo "<label>".tr("Описание")."</label>";
+        echo "<span class='value'>".$sellable_variation["product_summary"]."</span>";
+    echo "</div>";
+  
+  echo "</div>"; //side_pane
+  
+  echo "<div class='clear'></div>";
+  
+  echo "<div class='category_products product_group'>";
+  $page->renderSameCategoryProducts();
+  echo "</div>";
+  
+  echo "<div class='ordered_products product_group'>";
+  $page->renderMostOrderedProducts();
+  echo "</div>";
+  
+echo "</div>"; //column details
+>>>>>>> origin/master
 
 echo "</div>"; //side_pane
 

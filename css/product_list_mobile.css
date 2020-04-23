@@ -1,3 +1,12 @@
+@media (max-width: 720px) {
+    .ListView {
+        display:block;
+    }
+    .ListView .viewport {
+        text-align:center;
+        
+    }
+}
 @media (max-width: 630px) {
     .main_content {
         /*margin-left:0px;
@@ -14,20 +23,62 @@
     }
 
     .main_content .column.left {
+<<<<<<< HEAD
         text-align: center;
 
         max-width: inherit;
+=======
+        text-align:center;
+        
+        max-width:inherit;
+        padding-left:20px;
+>>>>>>> origin/master
     }
 
     .main_content .column.left .categories {
+<<<<<<< HEAD
         display: inline-block;
         vertical-align: top;
+=======
+/*         display:inline-block; */
+/*         vertical-align:top; */
+>>>>>>> origin/master
     }
 
     .main_content .column.left .filters {
         display: inline-block;
         vertical-align: top;
     }
+    .main_content .column.product_list .caption {
+        display:block;
+        text-align:center;
+        margin-top:20px;
+/*         display:none; */
+/*         float:left; */
+    }
+    .main_content .column.product_list .ListView {
+         margin-top:20px;
+    }
+   /* .main_content .column.left .panel * {
+        display:none;
+    }*/
+    .main_content .column.left .panel {
+        display:block;
+        
+    }
+    .main_content .column.left .panel .caption {
+        display:block;
+    }
+    /*.main_content .column.left .panel .caption:after {
+        content:"";
+        background-image: url("../lib/images/menu.png");
+        background-size: contain;
+        min-width:35px;
+        min-height:35px;
+        text-align:right;
+        display:inline-block;
+        
+    }*/
 }
 
 /*.main_content {

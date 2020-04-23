@@ -50,6 +50,7 @@ $page->setPreferredTitle(tr("Детайли за поръчка"));
 echo "<div class='caption'>" . $page->getPreferredTitle() . "</div>";
 
 echo "<div class='group'>";
+<<<<<<< HEAD
 echo "<div class='item order_num'>";
 echo "<label>" . tr("Номер на поръчка") . "</label>";
 echo "<span>" . $orderID . "</span>";
@@ -80,6 +81,31 @@ echo "<span>" . sprintf("%0.2f лв.", $order["total"]) . "</span>";
 echo "</div>";
 echo "</div>";
 
+=======
+    echo "<div class='item order_num'>";
+        echo "<label>".tr("Номер на поръчка")."</label>";
+        echo "<span>".$orderID."</span>";
+    echo "</div>";
+    echo "<div class='item order_date'>";
+        echo "<label>".tr("Дата")."</label>";
+        echo "<span>".$order["order_date"]."</span>";
+    echo "</div>";
+    echo "<div class='item delivery_type'>";
+        echo "<label>".tr("Начин на доставка")."</label>";
+        echo "<span>".Cart::getDeliveryTypeText($order["delivery_type"])."</span>";
+    echo "</div>";
+    echo "<div class='item require_invoice'>";
+        echo "<label>".tr("Фактуриране")."</label>";
+        echo "<span>".(($order["require_invoice"]>0)?tr("Да"):tr("Не"))."</span>";
+    echo "</div>";
+    echo "<div class='item status'>";
+        echo "<label>".tr("Статус")."</label>";
+        echo "<span>".tr($order["status"])."</span>";
+    echo "</div>";
+
+echo "</div>";    
+    
+>>>>>>> origin/master
 $items->startIterator("WHERE orderID='$orderID'");
 echo "<div class='order_items'>";
 
@@ -96,6 +122,7 @@ $pos = 0;
 while ($items->fetchNext($item)) {
     $pos++;
     echo "<div class='line'>";
+<<<<<<< HEAD
     echo "<div class='item pos'>$pos</div>";
 
     echo "<div class='item photo'>";
@@ -114,9 +141,53 @@ while ($items->fetchNext($item)) {
     echo "<div class='item qty'>" . $item["qty"] . "</div>";
     echo "<div class='item price'>" . sprintf("%0.2f лв.", $item["price"]) . "</div>";
     echo "<div class='item amount'>" . sprintf("%0.2f лв.", ($item["qty"] * $item["price"])) . "</div>";
+=======
+        echo "<div class='item pos'>$pos</div>";
+        
+        $piID = $item["piID"];
+        $prodID = $item["prodID"];
+        
+        echo "<a class='item photo' href='".SITE_ROOT."details.php?prodID=$prodID&piID=$piID'>";
+            echo $items->getThumb($item["itemID"], 100);
+        echo "</a>";
+        
+        echo "<div class='item product'>";
+        
+        
+        
+        $details = explode("//", $item["product"]);
+        foreach ($details as $index=>$value) {
+            $data = explode("||", $value);
+            echo $data[0].": ".$data[1]."<BR>";
+        }
+        echo "</div>";
+        echo "<div class='item qty'>".$item["qty"]."</div>";
+        echo "<div class='item price'>".sprintf("%0.2f лв.", $item["price"])."</div>";
+        echo "<div class='item amount'>".sprintf("%0.2f лв.", ($item["qty"] * $item["price"]))."</div>";
+>>>>>>> origin/master
     echo "</div>";
 }
 echo "</div>";
 
+<<<<<<< HEAD
 $page->finishRender();
+=======
+
+echo "<div class='group'>";
+    echo "<div class='item products_total'>";
+        echo "<label>".tr("Продукти общо")."</label>";
+        echo "<span>".formatPrice($order["total"] - $order["delivery_price"])."</span>";
+    echo "</div>";
+    echo "<div class='item delivey_price'>";
+        echo "<label>".tr("Доставка")."</label>";
+        echo "<span>".formatPrice($order["delivery_price"])."</span>";
+    echo "</div>";
+    echo "<div class='item order_total'>";
+        echo "<label>".tr("Поръчка общо")."</label>";
+        echo "<span>".formatPrice($order["total"])."</span>";
+    echo "</div>";
+echo "</div>";
+    
+$page->finishPage();
+>>>>>>> origin/master
 ?>

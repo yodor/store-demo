@@ -41,10 +41,15 @@ class AccountPage extends StorePage
     {
         parent::dumpCSS();
 
+<<<<<<< HEAD
         //         echo "<link rel='stylesheet' href='".SITE_ROOT."lib/css/FormRenderer.css' type='text/css'>";
 
         echo "<link rel='stylesheet' href='" . SITE_ROOT . "css/account.css?ver=1.0' type='text/css'>";
 
+=======
+        echo "<link rel='stylesheet' href='".SITE_ROOT."css/account.css?ver=1.3' type='text/css'>";
+        
+>>>>>>> origin/master
     }
 
 

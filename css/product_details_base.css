@@ -1,5 +1,14 @@
 .column.details {
+<<<<<<< HEAD
     display: block;
+=======
+  display:block;
+  margin-top:20px;
+}
+
+.column.details .product_group {
+    display:block;
+>>>>>>> origin/master
 }
 
 .images {
@@ -9,6 +18,7 @@
     vertical-align: top;
 
 }
+<<<<<<< HEAD
 
 .images .image_big {
     vertical-align: top;
@@ -24,6 +34,22 @@
     max-width: 110px;
     margin-left: 10px;
     vertical-align: top;
+=======
+ .images .image_big {
+  vertical-align:top;
+  display:inline-block;
+/*   float:right; */
+/*   margin-left:10px; */
+  max-width:500px;
+}
+ .images .image_gallery {
+  display:block;
+/*   float:left; */
+/*   max-width:50px; */
+/*   margin-left:10px; */
+  vertical-align:top;
+  margin-top:15px;
+>>>>>>> origin/master
 }
 
 .images .image_gallery .list {
@@ -34,6 +60,7 @@
   display:block;
 }*/
 
+<<<<<<< HEAD
 .images .image_gallery .list .item {
     display: block;
     width: 110px;
@@ -63,6 +90,37 @@
     margin-left: 20px;
     font-size: 1.1em;
     box-sizing: border-box;
+=======
+ .images .image_gallery .list .item {
+  display:inline-block;
+  width:64px;
+  height:64px;
+  background-repeat:no-repeat;
+  background-size:contain;
+  background-position:center center;
+  cursor:pointer;
+  margin-bottom:10px;
+  margin-right:15px;
+}
+ .images .image_gallery .list .item[active='1'] {
+  outline:1px solid red;
+}
+ .images .image_gallery .list .item IMG {
+  display:block;
+}
+
+.side_pane {
+  display:inline-block;
+  max-width:525px;
+  min-width:256px;
+/*   outline:1px dotted gray; */
+  vertical-align:top;
+  text-align:left;
+/*   float:right; */
+  margin-left:20px;
+  font-size:1.1em;
+  box-sizing:border-box;
+>>>>>>> origin/master
 }
 
 .side_pane LABEL:after {
@@ -70,14 +128,23 @@
 }
 
 .side_pane .product_name {
+<<<<<<< HEAD
     text-align: center;
     font-size: 1.3em;
     margin-bottom: 10px;
     text-transform: uppercase;
     font-weight: bold;
+=======
+/*     text-align:center; */
+    font-size:1.3em;
+    margin-bottom:10px;
+    text-transform:uppercase;
+    font-weight:bold;
+>>>>>>> origin/master
 }
 
 .side_pane .sell_price {
+<<<<<<< HEAD
     font-size: 1.5em;
     text-align: center;
     margin-bottom: 10px;
@@ -87,6 +154,17 @@
     text-align: center;
     margin-bottom: 5px;
     box-sizing: border-box;
+=======
+    font-size:1.5em;
+/*     text-align:center; */
+    margin-bottom:10px;
+}
+
+.side_pane .sizing_colors .current_color {
+/*     text-align:center; */
+    margin-bottom:5px;
+    box-sizing:border-box;
+>>>>>>> origin/master
 }
 
 .side_pane .sizing_colors .current_color .value {
@@ -99,8 +177,13 @@
 }
 
 .side_pane .stock_amount {
+<<<<<<< HEAD
     text-align: center;
     padding: 10px;
+=======
+/*     text-align:center; */
+    margin-bottom:10px;
+>>>>>>> origin/master
 }
 
 .side_pane .stock_amount LABEL {
@@ -135,22 +218,39 @@
 
 
 .side_pane .cart_link {
+<<<<<<< HEAD
     text-align: center;
     display: block;
     margin-bottom: 10px;
+=======
+    text-align:center;
+    display:block;
+    margin-bottom:10px;
+    margin-top:10px;
+>>>>>>> origin/master
 }
 
 .side_pane .cart_link A {
+<<<<<<< HEAD
 
     padding: 20px;
     border: 1px dotted blue;
     display: block;
+=======
+    
+    padding:20px;
+    border:1px solid gray;
+    display:block;
+    text-decoration:none;
+    color:gray;
+>>>>>>> origin/master
 }
 
 .side_pane .summary {
 
 }
 
+<<<<<<< HEAD
 .size_chooser {
     margin-bottom: 10px;
     text-align: center;
@@ -172,6 +272,15 @@
     vertical-align: top;
     margin-bottom: 10px;
     text-align: center;
+=======
+
+
+.color_chooser {
+  display:block;
+  vertical-align:top;
+  margin-bottom:10px;
+/*   text-align:center; */
+>>>>>>> origin/master
 }
 
 .color_chooser .color_button {
@@ -187,9 +296,15 @@
 }
 
 .color_chooser .color_button IMG {
+<<<<<<< HEAD
     display: block;
     width: 68px;
     height: 68px;
+=======
+  display:block;
+  width:36px;
+  height:36px;
+>>>>>>> origin/master
 }
 
 .color_chooser .color_button SPAN {
@@ -200,17 +315,41 @@
     height: 68px;
 }
 
+
+
+
+
 .size_chooser {
+<<<<<<< HEAD
     display: block;
     vertical-align: top;
     margin-bottom: 10px;
     text-align: center;
+=======
+  display:block;
+  vertical-align:top;
+  margin-bottom:10px;
+/*   text-align:center; */
+>>>>>>> origin/master
 }
 
 .size_chooser .value {
 
 }
+<<<<<<< HEAD
 
+=======
+.size_chooser LABEL {
+     display:block;
+     margin-bottom:5px;
+}
+
+.size_chooser .product_size {
+ 
+  font-size:1.3em;
+
+}
+>>>>>>> origin/master
 .size_chooser .size_button {
     display: inline-block;
     outline: 1px dotted gray;

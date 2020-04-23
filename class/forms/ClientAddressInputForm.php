@@ -10,13 +10,13 @@ class ClientAddressInputForm extends InputForm
     {
         parent::__construct();
 
-        $field = DataInputFactory::Create(DataInputFactory::TEXTFIELD, "city", "Град", 1);
+        $field = DataInputFactory::Create(DataInputFactory::TEXT, "city", "Град", 1);
         $this->addField($field);
-        $field = DataInputFactory::Create(DataInputFactory::TEXTFIELD, "postcode", "Пощенски код", 1);
+        $field = DataInputFactory::Create(DataInputFactory::TEXT, "postcode", "Пощенски код", 1);
         $this->addField($field);
-        $field = DataInputFactory::Create(DataInputFactory::TEXTFIELD, "address1", "Адрес (ред 1)", 1);
+        $field = DataInputFactory::Create(DataInputFactory::TEXT, "address1", "Адрес (ред 1)", 1);
         $this->addField($field);
-        $field = DataInputFactory::Create(DataInputFactory::TEXTFIELD, "address2", "Адрес (ред 2)", 0);
+        $field = DataInputFactory::Create(DataInputFactory::TEXT, "address2", "Адрес (ред 2)", 0);
         $this->addField($field);
 
     }

@@ -39,19 +39,19 @@ class ProductInventoryInputForm extends InputForm
 
         $this->addField($field);
 
-        $field = DataInputFactory::Create(DataInputFactory::TEXTFIELD, "stock_amount", "Стокова наличност", 1);
+        $field = DataInputFactory::Create(DataInputFactory::TEXT, "stock_amount", "Стокова наличност", 1);
         $this->addField($field);
 
-        $field = DataInputFactory::Create(DataInputFactory::TEXTFIELD, "price", "Продажна цена", 0);
+        $field = DataInputFactory::Create(DataInputFactory::TEXT, "price", "Продажна цена", 0);
         $this->addField($field);
 
-        $field = DataInputFactory::Create(DataInputFactory::TEXTFIELD, "buy_price", "Покупна цена", 0);
+        $field = DataInputFactory::Create(DataInputFactory::TEXT, "buy_price", "Покупна цена", 0);
         $this->addField($field);
 
-        $field = DataInputFactory::Create(DataInputFactory::TEXTFIELD, "old_price", "Стара цена", 0);
+        $field = DataInputFactory::Create(DataInputFactory::TEXT, "old_price", "Стара цена", 0);
         $this->addField($field);
 
-        $field = DataInputFactory::Create(DataInputFactory::TEXTFIELD, "weight", "Тегло", 0);
+        $field = DataInputFactory::Create(DataInputFactory::TEXT, "weight", "Тегло", 0);
         $this->addField($field);
 
         $field = new ArrayDataInput("value", "Атрибути на класа", 0);

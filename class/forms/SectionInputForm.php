@@ -7,7 +7,7 @@ class SectionInputForm extends InputForm
 
     public function __construct()
     {
-        $field = DataInputFactory::Create(DataInputFactory::TEXTFIELD, "section_title", "Секция", 1);
+        $field = DataInputFactory::Create(DataInputFactory::TEXT, "section_title", "Секция", 1);
         $this->addField($field);
 
     }

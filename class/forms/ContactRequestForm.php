@@ -9,7 +9,7 @@ class ContactRequestForm extends InputForm
     {
         parent::__construct();
 
-        $field = DataInputFactory::Create(DataInputFactory::TEXTFIELD, "fullname", "Име", 1);
+        $field = DataInputFactory::Create(DataInputFactory::TEXT, "fullname", "Име", 1);
         $this->addField($field);
 
         $field = DataInputFactory::Create(DataInputFactory::EMAIL, "email", "Email", 1);

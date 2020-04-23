@@ -19,7 +19,7 @@ class FAQItemInputForm extends InputForm
 
         $this->addField($field);
 
-        $field = DataInputFactory::Create(DataInputFactory::TEXTFIELD, "question", "Въпрос", 1);
+        $field = DataInputFactory::Create(DataInputFactory::TEXT, "question", "Въпрос", 1);
         $this->addField($field);
 
         $field = DataInputFactory::Create(DataInputFactory::TEXTAREA, "answer", "Отговор", 1);

@@ -10,13 +10,13 @@ class RegisterClientInputForm extends InputForm
     {
         parent::__construct();
 
-        $field = DataInputFactory::Create(DataInputFactory::TEXTFIELD, "fullname", "Пълно име", 1);
+        $field = DataInputFactory::Create(DataInputFactory::TEXT, "fullname", "Пълно име", 1);
         $this->addField($field);
 
         $field = DataInputFactory::Create(DataInputFactory::EMAIL, "email", "Email", 1);
         $this->addField($field);
 
-        $field = DataInputFactory::Create(DataInputFactory::TEXTFIELD, "phone", "Телефон", 1);
+        $field = DataInputFactory::Create(DataInputFactory::TEXT, "phone", "Телефон", 1);
         $this->addField($field);
 
     }

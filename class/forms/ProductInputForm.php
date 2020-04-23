@@ -52,7 +52,7 @@ class ProductInputForm extends InputForm
         $this->addField($field);
 
 
-        $field = DataInputFactory::Create(DataInputFactory::TEXTFIELD, "product_name", "Име на продукта", 1);
+        $field = DataInputFactory::Create(DataInputFactory::TEXT, "product_name", "Име на продукта", 1);
         $this->addField($field);
 
         //         $field = DataInputFactory::CreateField(DataInputFactory::TEXTFIELD, "product_code", "Product Code", 1);

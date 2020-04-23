@@ -9,7 +9,7 @@ class StoreSizeInputForm extends InputForm
     public function __construct()
     {
 
-        $field = DataInputFactory::Create(DataInputFactory::TEXTFIELD, "size_value", "Оразмеряващ код", 1);
+        $field = DataInputFactory::Create(DataInputFactory::TEXT, "size_value", "Оразмеряващ код", 1);
         $this->addField($field);
         $field->enableTranslator(true);
 

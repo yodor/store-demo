@@ -1,5 +1,5 @@
 <?php
-include_once ("lib/beans/OrderedDataBean.php");
+include_once("lib/beans/OrderedDataBean.php");
 
 
 class SectionsBean extends OrderedDataBean
@@ -12,10 +12,10 @@ class SectionsBean extends OrderedDataBean
  PRIMARY KEY (`secID`),
  UNIQUE KEY `gender_title` (`section_title`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8";
-    
-    public function __construct() 
+
+    public function __construct()
     {
-	parent::__construct("sections");
+        parent::__construct("sections");
     }
 
 }

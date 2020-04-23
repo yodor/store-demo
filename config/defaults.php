@@ -1,7 +1,7 @@
 <?php
 
 
-define ("SITE_TITLE", "Demo Store");
+define("SITE_TITLE", "Demo Store");
 
 $defines->set("TRANSLATOR_ENABLED", TRUE);
 $defines->set("DB_ENABLED", TRUE);

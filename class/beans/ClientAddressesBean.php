@@ -1,9 +1,9 @@
 <?php
-include_once ("lib/beans/DBTableBean.php");
+include_once("lib/beans/DBTableBean.php");
 
-class ClientAddressesBean extends DBTableBean 
+class ClientAddressesBean extends DBTableBean
 {
-protected $createString = "CREATE TABLE `client_addresses` (
+    protected $createString = "CREATE TABLE `client_addresses` (
  `uaID` int(11) unsigned NOT NULL AUTO_INCREMENT,
  `fullname` varchar(255) NOT NULL,
  `phone` varchar(255) NOT NULL,
@@ -20,10 +20,12 @@ protected $createString = "CREATE TABLE `client_addresses` (
 ";
 
 
-	public function __construct() {
-            parent::__construct("client_addresses");
-	}
+    public function __construct()
+    {
+        parent::__construct("client_addresses");
+    }
 
-	
+
 }
+
 ?>

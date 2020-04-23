@@ -1,10 +1,11 @@
 .account_menu {
-    display:block;
+    display: block;
 }
+
 .account_menu .item {
-    display:block;
-    padding:10px;
-    border:1px dotted black;
+    display: block;
+    padding: 10px;
+    border: 1px dotted black;
 }
 
 .group .item LABEL:after {
@@ -12,40 +13,47 @@
 }
 
 .order_items {
-    display:table;
-    border-collapse:collapse;
-    border:1px solid gray;
-    margin-top:20px;
+    display: table;
+    border-collapse: collapse;
+    border: 1px solid gray;
+    margin-top: 20px;
 }
+
 .order_items .line {
-    display:table-row;
+    display: table-row;
 }
+
 .order_items .line SPAN {
-    display:table-cell;
-    font-weight:bold;
-    padding:5px;
-    border:1px;
-    text-align:center;
+    display: table-cell;
+    font-weight: bold;
+    padding: 5px;
+    border: 1px;
+    text-align: center;
 }
+
 .order_items .line .item {
-    display:table-cell;
-    vertical-align:middle;
-    border:1px solid gray;
-    padding:5px;
+    display: table-cell;
+    vertical-align: middle;
+    border: 1px solid gray;
+    padding: 5px;
 }
+
 .order_items .line .item.pos {
-    text-align:center;
+    text-align: center;
 }
+
 .order_items .line .item.qty {
-    text-align:center;
+    text-align: center;
 }
+
 .order_items .line .item.price {
-    text-align:right;
+    text-align: right;
 }
+
 .order_items .line .item.amount {
-    text-align:right;
+    text-align: right;
 }
 
 .FormRenderer[name='RegisterClient'] .SubmitLine .TextSpace {
-    display:none;
+    display: none;
 }

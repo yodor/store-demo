@@ -1,17 +1,17 @@
 <?php
-include_once ("session.php");
-include_once ("class/pages/AccountPage.php");
-include_once ("class/components/renderers/cells/OrderDeliveryCellRenderer.php");
-include_once ("class/components/renderers/cells/OrderInvoiceCellRenderer.php");
-include_once ("class/components/renderers/cells/OrderItemsCellRenderer.php");
-include_once ("lib/components/TableView.php");
-include_once ("lib/components/renderers/cells/DateFieldCellRenderer.php");
-include_once ("lib/iterators/SQLResultIterator.php");
-include_once ("lib/beans/UsersBean.php");
-include_once ("class/beans/ClientAddressesBean.php");
-include_once ("class/beans/EkontAddressesBean.php");
-include_once ("class/beans/InvoiceDetailsBean.php");
-include_once ("class/beans/OrderItemsBean.php");
+include_once("session.php");
+include_once("class/pages/AccountPage.php");
+include_once("class/components/renderers/cells/OrderDeliveryCellRenderer.php");
+include_once("class/components/renderers/cells/OrderInvoiceCellRenderer.php");
+include_once("class/components/renderers/cells/OrderItemsCellRenderer.php");
+include_once("lib/components/TableView.php");
+include_once("lib/components/renderers/cells/DateFieldCellRenderer.php");
+include_once("lib/iterators/SQLResultIterator.php");
+include_once("lib/beans/UsersBean.php");
+include_once("class/beans/ClientAddressesBean.php");
+include_once("class/beans/EkontAddressesBean.php");
+include_once("class/beans/InvoiceDetailsBean.php");
+include_once("class/beans/OrderItemsBean.php");
 
 $page = new AccountPage();
 
@@ -26,7 +26,7 @@ $sel = new SelectQuery();
 
 $sel->fields = " *, (SELECT concat(sum(oi.qty),' бр.') FROM order_items oi WHERE oi.orderID = o.orderID) as item_count ";
 $sel->from = " orders o ";
-$sel->where = " o.userID='".$page->getUserID()."'";
+$sel->where = " o.userID='" . $page->getUserID() . "'";
 $sel->order_by = " 'Processing', 'Sent', 'Completed' ";
 
 $view = new TableView(new SQLResultIterator($sel, "orderID"));
@@ -53,7 +53,6 @@ $view->addColumn(new TableColumn("total", "Сума"));
 // $view->addColumn(new TableColumn("require_invoice", "Фактуриране"));
 
 
-
 $view->addColumn(new TableColumn("status", "Статус"));
 
 $view->addColumn(new TableColumn("actions", "Действия"));
@@ -69,18 +68,16 @@ $view->getColumn("order_date")->setCellRenderer(new DateFieldCellRenderer());
 
 $act = new ActionsTableCellRenderer();
 
-$act->addAction(
-    new Action("Покажи детайли", "order_details.php", array(new ActionParameter("orderID", "orderID")))
-);
+$act->addAction(new Action("Покажи детайли", "order_details.php", array(new ActionParameter("orderID", "orderID"))));
 
 
 $view->getColumn("actions")->setCellRenderer($act);
 
-$page->beginPage();
+$page->startRender();
 $page->setPreferredTitle(tr("История на поръчките"));
 
-echo "<div class='caption'>".$page->getPreferredTitle()."</div>";
+echo "<div class='caption'>" . $page->getPreferredTitle() . "</div>";
 $view->render();
 
-$page->finishPage();
+$page->finishRender();
 ?>

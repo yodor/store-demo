@@ -14,7 +14,7 @@ $page = new AdminPage();
 $page->checkAccess(ROLE_CONTENT_MENU);
 $page->setAccessibleTitle("Banners Gallery");
 
-$action_back = new Action("", Session::get("sections.list"), array());
+$action_back = new Action("", Session::Get("sections.list"), array());
 $action_back->setAttribute("action", "back");
 $action_back->setAttribute("title", "Back to Sections");
 $page->addAction($action_back);
@@ -22,17 +22,16 @@ $page->addAction($action_back);
 $rc = new ReferenceKeyPageChecker(new SectionsBean(), "../list.php");
 
 
-
-$action_add = new Action("", "add.php?".$rc->ref_key."=".$rc->ref_id, array());
+$action_add = new Action("", "add.php?" . $rc->ref_key . "=" . $rc->ref_id, array());
 $action_add->setAttribute("action", "add");
 $action_add->setAttribute("title", "Add Photo");
 $page->addAction($action_add);
 
 
-$page->setCaption( tr("Banners Gallery").": ".$rc->ref_row["section_title"] );
+$page->setCaption(tr("Banners Gallery") . ": " . $rc->ref_row["section_title"]);
 
 $bean = new SectionBannersBean();
-$bean->setFilter($rc->ref_key."='".$rc->ref_id."'");
+$bean->setFilter($rc->ref_key . "='" . $rc->ref_id . "'");
 
 
 $h_delete = new DeleteItemRequestHandler($bean);
@@ -46,17 +45,16 @@ $gv->blob_field = "photo";
 
 $gv->initView($bean, "add.php", $rc->ref_key, $rc->ref_id);
 
-Session::set("section.banners.list", $page->getPageURL());
+Session::Set("section.banners.list", $page->getPageURL());
 
 
-
-$page->beginPage($menu);
+$page->startRender($menu);
 $page->renderPageCaption();
 
 $gv->render();
 
 
-$page->finishPage();
+$page->finishRender();
 
 
 ?>

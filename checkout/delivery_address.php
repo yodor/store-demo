@@ -15,11 +15,10 @@ $cab = new ClientAddressesBean();
 $form = new ClientAddressInputForm();
 
 
-
 $editID = -1;
 $row = $cab->findFieldValue("userID", $page->getUserID());
 if ($row) {
-    $editID = $row[$cab->getPrKey()];
+    $editID = $row[$cab->key()];
     $form->loadBeanData($editID, $cab);
 }
 
@@ -39,71 +38,65 @@ $frend->setForm($form);
 $proc->processForm($form, "submit_item");
 
 if ($proc->getStatus() == FormProcessor::STATUS_OK) {
-//   Session::set("DeliveryDetailsForm", serialize($dform));
-  header("Location: confirm.php");
-  exit;
+    //   Session::set("DeliveryDetailsForm", serialize($dform));
+    header("Location: confirm.php");
+    exit;
 }
 else if ($proc->getStatus() == FormProcessor::STATUS_ERROR) {
-    Session::set("alert", $proc->getMessage());
+    Session::Set("alert", $proc->getMessage());
 }
 
 
-
-
-$page->beginPage();
+$page->startRender();
 
 
 $page->setPreferredTitle(tr("Адрес за доставка"));
 
 
-
 $page->drawCartItems();
-
 
 
 echo "<div class='delivery_details'>";
 
-  echo "<div class='caption'>".tr("Адрес за доставка")."</div>";
+echo "<div class='caption'>" . tr("Адрес за доставка") . "</div>";
 
 
-  $frend->startRender();
-  
-  $frend->renderImpl();
+$frend->startRender();
 
-  
-  echo "<input type=hidden name='submit_item' value='submit'>";
+$frend->renderImpl();
 
-  $frend->finishRender();
-  
-  
+
+echo "<input type=hidden name='submit_item' value='submit'>";
+
+$frend->finishRender();
+
+
 echo "</div>"; //delivery_details
-
-
 
 
 echo "<div class='navigation'>";
 
-    echo "<div class='slot left'>";
-        echo "<a href='confirm.php'>";
-        echo "<img src='".SITE_ROOT."images/cart_edit.png'>";
-        echo "<div class='DefaultButton checkout_button' >".tr("Назад")."</div>";
-        echo "</a>";
-    echo "</div>";
+echo "<div class='slot left'>";
+echo "<a href='confirm.php'>";
+echo "<img src='" . SITE_ROOT . "images/cart_edit.png'>";
+echo "<div class='DefaultButton checkout_button' >" . tr("Назад") . "</div>";
+echo "</a>";
+echo "</div>";
 
-    echo "<div class='slot center'>";
+echo "<div class='slot center'>";
 
-    echo "</div>";
-  
-    echo "<div class='slot right'>";
-        echo "<a href='javascript:document.forms.ClientAddress.submit();'>";
-        echo "<img src='".SITE_ROOT."images/cart_checkout.png'>";
-        echo "<div class='DefaultButton checkout_button'  >".tr("Продължи")."</div>";
-        echo "</a>";
-    echo "</div>";
+echo "</div>";
+
+echo "<div class='slot right'>";
+echo "<a href='javascript:document.forms.ClientAddress.submit();'>";
+echo "<img src='" . SITE_ROOT . "images/cart_checkout.png'>";
+echo "<div class='DefaultButton checkout_button'  >" . tr("Продължи") . "</div>";
+echo "</a>";
+echo "</div>";
 
 
 echo "</div>";
 
 
-$page->finishPage();
+$page->finishRender();
 ?>

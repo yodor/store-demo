@@ -13,7 +13,7 @@ $form = new ClientAddressInputForm();
 $editID = -1;
 $row = $cab->findFieldValue("userID", $page->getUserID());
 if ($row) {
-    $editID = $row[$cab->getPrKey()];
+    $editID = $row[$cab->key()];
     $form->loadBeanData($editID, $cab);
 }
 
@@ -33,21 +33,21 @@ $frend->setForm($form);
 $proc->processForm($form);
 
 if ($proc->getStatus() == FormProcessor::STATUS_OK) {
-    Session::set("alert", tr("Вашият адрес беше успешно променен"));
+    Session::Set("alert", tr("Вашият адрес беше успешно променен"));
     header("Location: registered_address.php");
     exit;
 }
 else if ($proc->getStatus() == FormProcessor::STATUS_ERROR) {
-    Session::set("alert", $proc->getMessage());
+    Session::Set("alert", $proc->getMessage());
 }
 
-$page->beginPage();
+$page->startRender();
 
 $page->setPreferredTitle(tr("Регистриран адрес"));
-echo "<div class='caption'>".$page->getPreferredTitle()."</div>";
+echo "<div class='caption'>" . $page->getPreferredTitle() . "</div>";
 
 
 $frend->renderForm($form);
 
-$page->finishPage();
+$page->finishRender();
 ?>

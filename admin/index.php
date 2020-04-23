@@ -4,9 +4,8 @@ include_once("class/pages/AdminPage.php");
 
 $page = new AdminPage();
 
-$page->beginPage();
+$page->startRender();
 
 
-
-$page->finishPage();
+$page->finishRender();
 ?>

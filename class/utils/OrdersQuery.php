@@ -13,4 +13,5 @@ class OrdersQuery extends SelectQuery
         $this->where = "";
     }
 }
+
 ?>

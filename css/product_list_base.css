@@ -1,19 +1,21 @@
 .main_content {
-    display:inline-table;
-    box-sizing:border-box;
+    display: inline-table;
+    box-sizing: border-box;
 }
+
 .main_content .column {
-  display:table-cell;
-  vertical-align:top;
-  box-sizing:border-box;
+    display: table-cell;
+    vertical-align: top;
+    box-sizing: border-box;
 }
+
 .main_content .column.left {
-  max-width:180px;
-  padding-right:20px;
+    max-width: 180px;
+    padding-right: 20px;
 }
 
 .main_content .column.product_list {
-  max-width:900px;
+    max-width: 900px;
 }
 
 
@@ -31,98 +33,109 @@
 }*/
 
 .TreeView .Node {
-    font-size:1.2em;
+    font-size: 1.2em;
 }
 
 FORM[name='filters'] {
-    
+
 }
 
 .filters {
-  display:inline-block;
+    display: inline-block;
 }
+
 .filters FORM {
-  display:block;
+    display: block;
 }
+
 .filters .InputComponent {
-  margin-top:10px;
-  text-align:left;
+    margin-top: 10px;
+    text-align: left;
 }
+
 .filters .InputField {
-  display:block;
+    display: block;
 }
+
 .filters .InputField .FieldElements {
-    display:block;
+    display: block;
 }
+
 .filters .InputField.SelectField SELECT {
-    width:100%;
-    text-align:center;
-    font-size:1.1em;
+    width: 100%;
+    text-align: center;
+    font-size: 1.1em;
 }
 
 .filters .label {
-  display:block;
-  margin-bottom:5px;
-  font-size:1.2em;
-  
-  color: #1875ac;
-/*   font-family: 'Roboto Condensed', sans-serif; */
-  
+    display: block;
+    margin-bottom: 5px;
+    font-size: 1.2em;
+
+    color: #1875ac;
+    /*   font-family: 'Roboto Condensed', sans-serif; */
+
 }
 
-.filters .InputComponent.Slider .label  {
-  display:inline-block;
+.filters .InputComponent.Slider .label {
+    display: inline-block;
 }
+
 .filters .InputComponent.Slider .value {
-  display:inline-block;
-  margin-left:5px;
+    display: inline-block;
+    margin-left: 5px;
 }
+
 .filters .InputComponent.Slider .InputField {
-  display:block;
-  padding-left:7px;
-  padding-right:7px;
+    display: block;
+    padding-left: 7px;
+    padding-right: 7px;
 }
+
 .filters BUTTON {
-  margin-top:20px;
+    margin-top: 20px;
 }
+
 .filters .label {
 
-  
 
 }
 
 .ListView .viewport {
-  margin-left:-5px;
-  margin-right:-5px;
+    margin-left: -5px;
+    margin-right: -5px;
 }
+
 .ListView .PaginatorTopComponent {
-    background:none;
-    background-color:transparent !important;
+    background: none;
+    background-color: transparent !important;
 }
+
 .ListView .PaginatorBottomComponent {
-    background:none;
-    background-color:transparent !important;
+    background: none;
+    background-color: transparent !important;
 }
+
 .PaginatorTopComponent .view_mode {
-    display:none;
+    display: none;
 }
 
 .PaginatorTopComponent .sort_fields {
-    text-align:right;
+    text-align: right;
 }
+
 .PaginatorTopComponent .sort_fields .direction {
-    margin-left:10px;
-    font-weight:bold;
-    color:black;
-    text-decoration:none;
-    font-size:1.5em;
-    
+    margin-left: 10px;
+    font-weight: bold;
+    color: black;
+    text-decoration: none;
+    font-size: 1.5em;
+
 }
 
 .PaginatorTopComponent .page_navigation.short {
-    display:none;
+    display: none;
 }
-
 
 
 /*.InputComponent {

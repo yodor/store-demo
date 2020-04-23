@@ -1,13 +1,13 @@
 <?php
-include_once ("lib/beans/DBTableBean.php");
+include_once("lib/beans/DBTableBean.php");
 
-class OrdersBean extends DBTableBean 
+class OrdersBean extends DBTableBean
 {
     const STATUS_PROCESSING = "Processing";
     const STATUS_SENT = "Sent";
     const STATUS_COMPLETED = "Completed";
     const STATUS_CANCELED = "Canceled";
-    
+
     protected $createString = "CREATE TABLE `orders` (
  `orderID` int(11) unsigned NOT NULL AUTO_INCREMENT,
  `total` decimal(10,2) NOT NULL,
@@ -24,10 +24,10 @@ class OrdersBean extends DBTableBean
  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
 ";
-	
-	
-	
-    public function __construct() {
+
+
+    public function __construct()
+    {
         parent::__construct("orders");
     }
 

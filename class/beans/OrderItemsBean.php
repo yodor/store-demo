@@ -1,7 +1,7 @@
 <?php
-include_once ("lib/beans/DBTableBean.php");
+include_once("lib/beans/DBTableBean.php");
 
-class OrderItemsBean extends DBTableBean 
+class OrderItemsBean extends DBTableBean
 {
     protected $createString = "CREATE TABLE `order_items` (
  `itemID` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -24,13 +24,12 @@ class OrderItemsBean extends DBTableBean
  CONSTRAINT `order_items_ibfk_4` FOREIGN KEY (`prodID`) REFERENCES `products` (`prodID`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8
 ";
-	
-	
-	
-    public function __construct() {
+
+
+    public function __construct()
+    {
         parent::__construct("order_items");
     }
-
 
 
 }

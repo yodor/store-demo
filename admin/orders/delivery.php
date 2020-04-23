@@ -31,21 +31,20 @@ $form->setProcessor($proc);
 $proc->processForm($form);
 
 if ($proc->getStatus() === IFormProcessor::STATUS_OK) {
-  Session::set("alert", "Configuration Updated");
-//   header("Location: delivery.php");
-//   exit;
+    Session::Set("alert", "Configuration Updated");
+    //   header("Location: delivery.php");
+    //   exit;
 }
 else if ($proc->getStatus() === IFormProcessor::STATUS_ERROR) {
-  Session::set("alert", $proc->getMessage());
-//   header("Location: delivery.php");
-//   exit; 
+    Session::Set("alert", $proc->getMessage());
+    //   header("Location: delivery.php");
+    //   exit;
 }
 
 
-
-$page->beginPage();
+$page->startRender();
 
 $form->getRenderer()->renderForm($form);
 
-$page->finishPage();
+$page->finishRender();
 ?>

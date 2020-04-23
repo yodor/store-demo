@@ -24,28 +24,28 @@ $proc->setEditID($page->getUserID());
 $proc->processForm($form);
 
 if ($proc->getStatus() == FormProcessor::STATUS_OK) {
-    Session::set("alert", tr("Профилът беше променен успешно"));
+    Session::Set("alert", tr("Профилът беше променен успешно"));
     header("Location: profile.php");
     exit;
 }
 else if ($proc->getStatus() == FormProcessor::STATUS_ERROR) {
-    Session::set("alert", $proc->getMessage());
+    Session::Set("alert", $proc->getMessage());
     $form->loadBeanData($page->getUserID(), new UsersBean());
 }
 
-$page->beginPage();
+$page->startRender();
 
 $page->setPreferredTitle(tr("Клиентски профил"));
 
-echo "<div class='caption'>".$page->getPreferredTitle()."</div>";
+echo "<div class='caption'>" . $page->getPreferredTitle() . "</div>";
 
 $frend->renderForm($form);
 
-echo "<div class='caption'>".tr("Парола за достъп")."</div>";
+echo "<div class='caption'>" . tr("Парола за достъп") . "</div>";
 
 echo "<a class='DefaultButton' href='generate_password.php'>";
 echo tr("Генерирай нова парола");
 echo "</a>";
 
-$page->finishPage();
+$page->finishRender();
 ?>

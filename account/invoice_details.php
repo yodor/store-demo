@@ -13,7 +13,7 @@ $form = new InvoiceDetailsInputForm();
 $editID = -1;
 $row = $ccb->findFieldValue("userID", $page->getUserID());
 if ($row) {
-    $editID = $row[$ccb->getPrKey()];
+    $editID = $row[$ccb->key()];
     $form->loadBeanData($editID, $ccb);
 }
 
@@ -33,21 +33,21 @@ $frend->setForm($form);
 $proc->processForm($form);
 
 if ($proc->getStatus() == FormProcessor::STATUS_OK) {
-    Session::set("alert", tr("Детайлите за фактуриране бяха променени успешно"));
+    Session::Set("alert", tr("Детайлите за фактуриране бяха променени успешно"));
     header("Location: invoice_details.php");
     exit;
 }
 else if ($proc->getStatus() == FormProcessor::STATUS_ERROR) {
-    Session::set("alert", $proc->getMessage());
+    Session::Set("alert", $proc->getMessage());
 }
 
-$page->beginPage();
+$page->startRender();
 
 $page->setPreferredTitle(tr("Детайли за фактуриране"));
-echo "<div class='caption'>".$page->getPreferredTitle()."</div>";
+echo "<div class='caption'>" . $page->getPreferredTitle() . "</div>";
 
 
 $frend->renderForm($form);
 
-$page->finishPage();
+$page->finishRender();
 ?>

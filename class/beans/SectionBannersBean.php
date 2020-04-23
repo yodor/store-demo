@@ -1,5 +1,5 @@
 <?php
-include_once ("lib/beans/OrderedDataBean.php");
+include_once("lib/beans/OrderedDataBean.php");
 
 
 class SectionBannersBean extends OrderedDataBean
@@ -18,11 +18,12 @@ class SectionBannersBean extends OrderedDataBean
  CONSTRAINT `section_banners_ibfk_1` FOREIGN KEY (`secID`) REFERENCES `sections` (`secID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8
 ";
-    
-    public function __construct() 
+
+    public function __construct()
     {
-	parent::__construct("section_banners");
+        parent::__construct("section_banners");
     }
 
 }
+
 ?>

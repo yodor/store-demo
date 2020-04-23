@@ -8,21 +8,22 @@ class ContactRequestMailer extends Mailer
     public function __construct($crID)
     {
 
-	  $config = ConfigBean::factory();
-	  $config->setSection("global");
-	  
-      $this->to = $config->getValue("admin_email");
+        $config = ConfigBean::factory();
+        $config->setSection("global");
 
-      $subject = "Contact Request - crID: $crID";
-      
-      $this->subject = $subject;
+        $this->to = $config->getValue("admin_email");
 
-      $message="crID: $crID\r\n";
-      $message.="<a href='".SITE_URL.SITE_ROOT."admin/contact_requests/list.php'>List Contact Requests</a>";
+        $subject = "Contact Request - crID: $crID";
 
-      $this->body = $this->templateMessage($message);
+        $this->subject = $subject;
 
-    }	
+        $message = "crID: $crID\r\n";
+        $message .= "<a href='" . SITE_URL . SITE_ROOT . "admin/contact_requests/list.php'>List Contact Requests</a>";
+
+        $this->body = $this->templateMessage($message);
+
+    }
 
 }
+
 ?>

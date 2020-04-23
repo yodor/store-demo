@@ -13,41 +13,41 @@ class ForgotPasswordProcessor extends FormProcessor
 {
     protected function processImpl(InputForm $form)
     {
-	parent::processImpl($form);
-	
-	if ($this->status != IFormProcessor::STATUS_OK) return;
-	
-	$email = $form->getField("email")->getValue();
-	
-	global $users;
-	
-	if (!$users->emailExists($email)) {
-	    $form->getField("email")->setError(tr("Този адрес не е регистриран при нас"));
-	    throw new Exception(tr("Този адрес не е регистриран при нас"));
-	}
+        parent::processImpl($form);
 
-	
-	$random_pass = Authenticator::generateRandomAuth(8);
-	
-	$db = DBDriver::get();
-	try {
-	    $db->transaction();
+        if ($this->status != IFormProcessor::STATUS_OK) return;
 
-	    $userID = $users->email2id($email);
-	    $update_row = array();
-	    $update_row["password"] = md5($random_pass);
-	    if (!$users->updateRecord($userID, $update_row, $db)) throw new Exception("Невъзможна промяна на запис: ".$db->getError());
+        $email = $form->getField("email")->getValue();
 
-	    $fpm = new ForgotPasswordMailer($email, $random_pass);
-	    $fpm->send();
-	    
-	    $db->commit();
-	    $this->setMessage(tr("Вашата нова парола беше изпратена на адрес").": $email");
-	}
-	catch (Exception $e) {
-	    $db->rollback();
-	    throw $e;
-	}
+        global $users;
+
+        if (!$users->emailExists($email)) {
+            $form->getField("email")->setError(tr("Този адрес не е регистриран при нас"));
+            throw new Exception(tr("Този адрес не е регистриран при нас"));
+        }
+
+
+        $random_pass = Authenticator::RandomToken(8);
+
+        $db = DBDriver::Get();
+        try {
+            $db->transaction();
+
+            $userID = $users->email2id($email);
+            $update_row = array();
+            $update_row["password"] = md5($random_pass);
+            if (!$users->update($userID, $update_row, $db)) throw new Exception("Невъзможна промяна на запис: " . $db->getError());
+
+            $fpm = new ForgotPasswordMailer($email, $random_pass);
+            $fpm->send();
+
+            $db->commit();
+            $this->setMessage(tr("Вашата нова парола беше изпратена на адрес") . ": $email");
+        }
+        catch (Exception $e) {
+            $db->rollback();
+            throw $e;
+        }
     }
 }
 
@@ -67,14 +67,13 @@ $form->setProcessor($proc);
 
 $proc->processForm($form);
 
-if ($proc->getStatus() != IFormProcessor::STATUS_NOT_PROCESSED)
-{
-    Session::set("alert", $proc->getMessage());
+if ($proc->getStatus() != IFormProcessor::STATUS_NOT_PROCESSED) {
+    Session::Set("alert", $proc->getMessage());
     header("Location: forgot_password.php");
     exit;
 }
 
-$page->beginPage();
+$page->startRender();
 
 $page->setPreferredTitle("Забравена парола");
 
@@ -94,5 +93,5 @@ $frend->renderForm($form);
 
 echo "</div>";
 
-$page->finishPage();
+$page->finishRender();
 ?>

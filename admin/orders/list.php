@@ -1,23 +1,22 @@
 <?php
-include_once ("lib/components/TableView.php");
+include_once("lib/components/TableView.php");
 
-include_once ("lib/beans/UsersBean.php");
-include_once ("class/beans/ClientAddressesBean.php");
-include_once ("class/beans/EkontAddressesBean.php");
-include_once ("class/beans/InvoiceDetailsBean.php");
-include_once ("class/beans/OrderItemsBean.php");
+include_once("lib/beans/UsersBean.php");
+include_once("class/beans/ClientAddressesBean.php");
+include_once("class/beans/EkontAddressesBean.php");
+include_once("class/beans/InvoiceDetailsBean.php");
+include_once("class/beans/OrderItemsBean.php");
 
-include_once ("class/components/renderers/cells/OrderItemsCellRenderer.php");
-include_once ("class/components/renderers/cells/OrderDeliveryCellRenderer.php");
-include_once ("class/components/renderers/cells/OrderClientCellRenderer.php");
-include_once ("class/components/renderers/cells/OrderInvoiceCellRenderer.php");
+include_once("class/components/renderers/cells/OrderItemsCellRenderer.php");
+include_once("class/components/renderers/cells/OrderDeliveryCellRenderer.php");
+include_once("class/components/renderers/cells/OrderClientCellRenderer.php");
+include_once("class/components/renderers/cells/OrderInvoiceCellRenderer.php");
 
-include_once ("lib/components/renderers/cells/BooleanFieldCellRenderer.php");
-include_once ("lib/components/renderers/cells/DateFieldCellRenderer.php");
+include_once("lib/components/renderers/cells/BooleanFieldCellRenderer.php");
+include_once("lib/components/renderers/cells/DateFieldCellRenderer.php");
 
-include_once ("lib/components/KeywordSearchComponent.php");
-include_once ("lib/iterators/SQLResultIterator.php");
-
+include_once("lib/components/KeywordSearchComponent.php");
+include_once("lib/iterators/SQLResultIterator.php");
 
 
 $ekont_addresses = new EkontAddressesBean();
@@ -26,21 +25,20 @@ $clients = new UsersBean();
 $invoices = new InvoiceDetailsBean();
 $order_items = new OrderItemsBean();
 
-$db = DBDriver::factory();
+$db = DBDriver::Factory();
 
 
 $h = new DeleteItemRequestHandler($bean);
 RequestController::addRequestHandler($h);
 
 
-$search_fields = array("orderID","items");
+$search_fields = array("orderID", "items");
 $scomp = new KeywordSearchComponent($search_fields);
-
 
 
 $filter = $scomp->getQueryFilter();
 if ($filter) {
-  $sel = $sel->combineWith($filter);
+    $sel = $sel->combineWith($filter);
 }
 
 $caption = "Orders List";
@@ -70,7 +68,6 @@ $caption = "Orders List";
 // }
 
 
-
 // echo $sel->getSQL();
 
 
@@ -81,7 +78,7 @@ $view->setCaption($caption);
 
 $view->setDefaultOrder(" order_date DESC ");
 
-$view->addColumn(new TableColumn($bean->getPrKey(), "ID"));
+$view->addColumn(new TableColumn($bean->key(), "ID"));
 
 $view->addColumn(new TableColumn("order_date", "Order Date"));
 
@@ -119,24 +116,17 @@ $act = new ActionsTableCellRenderer();
 //   
 // ); 
 // 
-$act->addAction(
-  new Action(
-	"Потвърди изпълнение", "?cmd=confirm_send", 
-	array(
-	  new ActionParameter("orderID", "orderID"),
-	)
-	
-// 	"return (\$row['is_confirmed']<1 && \$row['is_complete']<1);"
-  )
-  
-); 
-$act->addAction(  new RowSeparatorAction() );
-$act->addAction( $h_delete->createAction() );
+$act->addAction(new Action("Потвърди изпълнение", "?cmd=confirm_send", array(new ActionParameter("orderID", "orderID"),)
+
+                // 	"return (\$row['is_confirmed']<1 && \$row['is_complete']<1);"
+                )
+
+);
+$act->addAction(new RowSeparatorAction());
+$act->addAction($h_delete->createAction());
 // $act->addAction(  new RowSeparatorAction() );
 
 $view->getColumn("actions")->setCellRenderer($act);
-
-
 
 
 ?>

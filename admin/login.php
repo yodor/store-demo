@@ -8,19 +8,15 @@ include_once("lib/forms/AuthForm.php");
 include_once("lib/forms/renderers/AuthFormRenderer.php");
 
 
-
 $page = new AdminLoginPage();
 
 $auth = new AdminAuthenticator();
 
 $req = new AuthenticatorRequestHandler($auth, "doLogin");
-$req->setCancelUrl(SITE_ROOT."admin/login.php");
-$req->setSuccessUrl(SITE_ROOT."admin/index.php");
+$req->setCancelUrl(SITE_ROOT . "admin/login.php");
+$req->setSuccessUrl(SITE_ROOT . "admin/index.php");
 
 RequestController::addRequestHandler($req);
-
-
-
 
 
 $af = new AuthForm();
@@ -30,7 +26,7 @@ $afr = new AuthFormRenderer();
 
 $afr->setAttribute("name", "auth");
 $afr->setForm($af);
-$afr->setAuthContext($auth->getAuthContext());
+$afr->setAuthContext($auth->name());
 $afr->getSubmitButton()->setClassName("admin_button orange");
 
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
@@ -38,7 +34,7 @@ header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Expires: 0");
 
 
-$page->beginPage();
+$page->startRender();
 $page->setPreferredTitle("Login");
 
 echo "<div class='login_component'>";
@@ -47,14 +43,14 @@ echo "<div class='login_component'>";
 //   echo "<img src='".SITE_ROOT."admin/pics/admin_logo.png'>";
 //   echo "</div>";
 
-  echo "<span class='inner'>";
+echo "<span class='inner'>";
 
-  echo "<span class='caption'>".tr("Администрация")."</span>";
-  $afr->renderForm($af);
-  echo "</span>";
+echo "<span class='caption'>" . tr("Администрация") . "</span>";
+$afr->renderForm($af);
+echo "</span>";
 
 
 echo "</div>";
 
-$page->finishPage();
+$page->finishRender();
 ?>

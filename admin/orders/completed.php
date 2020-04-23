@@ -18,19 +18,19 @@ RequestController::addRequestHandler($h_delete);
 
 $sel = new OrdersQuery();
 
-$sel->where = " o.status='".OrdersBean::STATUS_COMPLETED."' ";
+$sel->where = " o.status='" . OrdersBean::STATUS_COMPLETED . "' ";
 
 
 include_once("list.php");
 
 $menu = array();
 
-$page->beginPage($menu);
+$page->startRender($menu);
 $page->renderPageCaption();
 
 $scomp->render();
 
 $view->render();
 
-$page->finishPage();
+$page->finishRender();
 ?>

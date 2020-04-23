@@ -25,7 +25,7 @@ include_once("list.php");
 
 $menu = array();
 
-$page->beginPage($menu);
+$page->startRender($menu);
 
 $page->renderPageCaption();
 
@@ -35,5 +35,5 @@ $scomp->render();
 $view->render();
 
 
-$page->finishPage();
+$page->finishRender();
 ?>

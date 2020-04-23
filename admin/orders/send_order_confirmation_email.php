@@ -7,18 +7,17 @@ include_once("class/mailers/OrderConfirmationMailer.php");
 
 
 $page = new AdminPage();
-$page->beginPage();
+$page->startRender();
 
 if (!isset($_GET["orderID"])) {
-  throw new Exception("OrderID not set");
+    throw new Exception("OrderID not set");
 }
 $orderID = (int)$_GET["orderID"];
 
 $mailer = new OrderConfirmationMailer($orderID);
 $mailer->send();
 
-$page->finishPage();
-
+$page->finishRender();
 
 
 ?>

@@ -13,14 +13,11 @@ include_once("lib/iterators/SQLResultIterator.php");
 // include_once("class/beans/ProductInventoryPhotosBean.php");
 
 
-$menu=array(
-    
-);
+$menu = array();
 
 
 $page = new AdminPage();
 $page->checkAccess(ROLE_CONTENT_MENU);
-
 
 
 $action_add = new Action("", "add.php", array());
@@ -31,7 +28,7 @@ $page->addAction($action_add);
 
 $bean = new ProductClassesBean();
 
-$sql = $bean->getSelectQuery();
+$sql = $bean->selectQuery();
 
 $sql->from = " product_classes pc ";
 $sql->fields = " pc.*, (SELECT GROUP_CONCAT(attribute_name SEPARATOR '<BR>') FROM class_attributes ca WHERE ca.pclsID=pc.pclsID) as class_attributes ";
@@ -40,31 +37,29 @@ $h_delete = new DeleteItemRequestHandler($bean);
 RequestController::addRequestHandler($h_delete);
 
 
-$view = new TableView(new SQLResultIterator($sql, $bean->getPrKey()));
+$view = new TableView(new SQLResultIterator($sql, $bean->key()));
 $view->setCaption("Product Classes List");
-$view->setDefaultOrder($bean->getPrKey()." DESC ");
-$view->addColumn(new TableColumn($bean->getPrKey(),"ID"));
-$view->addColumn(new TableColumn("class_name","Class Name"));
-$view->addColumn(new TableColumn("class_attributes","Attributes"));
+$view->setDefaultOrder($bean->key() . " DESC ");
+$view->addColumn(new TableColumn($bean->key(), "ID"));
+$view->addColumn(new TableColumn("class_name", "Class Name"));
+$view->addColumn(new TableColumn("class_attributes", "Attributes"));
 
-$view->addColumn(new TableColumn("actions","Actions"));
+$view->addColumn(new TableColumn("actions", "Actions"));
 
 $act = new ActionsTableCellRenderer();
-$act->addAction(
-  new Action("Edit", "add.php", array( new ActionParameter("editID",$bean->getPrKey()) )  )
-); 
-$act->addAction(  new PipeSeparatorAction() );
-$act->addAction( $h_delete->createAction() );
+$act->addAction(new Action("Edit", "add.php", array(new ActionParameter("editID", $bean->key()))));
+$act->addAction(new PipeSeparatorAction());
+$act->addAction($h_delete->createAction());
 
 $view->getColumn("actions")->setCellRenderer($act);
 
-Session::set("classes.list", $page->getPageURL());
+Session::Set("classes.list", $page->getPageURL());
 
-$page->beginPage($menu);
+$page->startRender($menu);
 
 $page->renderPageCaption();
 
 $view->render();
 
-$page->finishPage();
+$page->finishRender();
 ?>

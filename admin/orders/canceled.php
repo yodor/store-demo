@@ -20,14 +20,14 @@ RequestController::addRequestHandler($h_delete);
 
 $sel = new OrdersQuery();
 
-$sel->where = " o.status='".OrdersBean::STATUS_CANCELED."' ";
+$sel->where = " o.status='" . OrdersBean::STATUS_CANCELED . "' ";
 
 
 include_once("list.php");
 
 $menu = array();
 
-$page->beginPage($menu);
+$page->startRender($menu);
 $page->renderPageCaption();
 
 $scomp->render();
@@ -36,5 +36,5 @@ $scomp->render();
 $view->render();
 
 
-$page->finishPage();
+$page->finishRender();
 ?>

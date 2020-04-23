@@ -5,16 +5,13 @@ include_once("class/forms/RegisterClientInputForm.php");
 include_once("lib/beans/UsersBean.php");
 
 
-$menu=array(
-
-);
+$menu = array();
 
 
-	
 $page = new AdminPage();
 $page->checkAccess(ROLE_CLIENTS_MENU);
 
-$action_back = new Action("", Session::get("clients.list"), array());
+$action_back = new Action("", Session::Get("clients.list"), array());
 $action_back->setAttribute("action", "back");
 $action_back->setAttribute("title", "Back to Clients");
 $page->addAction($action_back);
@@ -27,11 +24,11 @@ $view = new InputFormView(new UsersBean(), new RegisterClientInputForm());
 $view->processInput();
 
 
-$page->beginPage($menu);
+$page->startRender($menu);
 
 $page->renderPageCaption();
 
 $view->render();
 
-$page->finishPage();
+$page->finishRender();
 ?>

@@ -5,11 +5,11 @@ $prop = new DBConnectionProperties();
 $prop->driver = "MySQLi";
 // $prop->driver = "PDOMySQL";
 
-$prop->database="mmshop";
-$prop->user="mmshop1";
-$prop->pass="U%N6bvA:hhRT9rnL";
-$prop->host="localhost";
-$prop->port="3306";
+$prop->database = "mmshop";
+$prop->user = "mmshop1";
+$prop->pass = "U%N6bvA:hhRT9rnL";
+$prop->host = "localhost";
+$prop->port = "3306";
 $prop->is_pdo = false;
 
 
@@ -31,8 +31,6 @@ DBConnections::addConnection($prop);
 // $prop1->setConnectionName("mysqli_conn");
 // 
 // DBConnections::addConnection($prop1);
-
-
 
 
 ?>

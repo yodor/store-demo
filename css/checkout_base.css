@@ -1,116 +1,140 @@
 .navigation {
-    display:table;
-    
-    width:100%;
-    border-spacing:10px;
+    display: table;
+
+    width: 100%;
+    border-spacing: 10px;
 }
+
 .navigation .slot {
-    display:table-cell;
-    text-align:center;
-    vertical-align:bottom;
-/*      */
+    display: table-cell;
+    text-align: center;
+    vertical-align: bottom;
+    /*      */
 }
+
 .navigation .slot.left A {
-    text-decoration:none;
+    text-decoration: none;
 }
+
 .navigation .slot.right A {
-    text-decoration:none;
+    text-decoration: none;
 }
+
 .navigation .slot.center {
-    vertical-align:bottom;
-    min-width:205px;
+    vertical-align: bottom;
+    min-width: 205px;
 
 }
+
 .navigation .slot .note {
-    max-width:200px;
-    text-align:center;
-    display:inline-block;
+    max-width: 200px;
+    text-align: center;
+    display: inline-block;
 }
+
 .navigation .DefaultButton {
-    min-width:205px;
+    min-width: 205px;
 }
+
 .navigation .DefaultButton.checkout_button {
-    display:block;
-    
+    display: block;
+
 }
+
 .CheckoutPage .FormRenderer {
-    font-size:1.3em;
+    font-size: 1.3em;
 }
+
 .CheckoutPage .FormRenderer INPUT[type='radio'] {
-    width:1.5em;
-    height:1.5em;
+    width: 1.5em;
+    height: 1.5em;
 }
+
 .CheckoutPage .FormRenderer INPUT[type='checkbox'] {
-    width:1.5em;
-    height:1.5em;
+    width: 1.5em;
+    height: 1.5em;
 }
+
 .CheckoutPage.delivery_ekont .item.ekont_office {
-    display:block;
+    display: block;
 }
+
 .CheckoutPage.delivery_ekont .item.ekont_office.empty {
-    display:none;
+    display: none;
 }
+
 .CheckoutPage.delivery_ekont .item.ekont_office.empty + .item.ekont_locator {
-    display:block;
+    display: block;
 }
+
 .CheckoutPage.delivery_ekont .item.ekont_office + .item.ekont_locator {
-    display:none;
+    display: none;
 }
+
 .CheckoutPage.delivery_ekont FORM[name='EkontOffice'] {
-    display:block;
+    display: block;
 }
+
 .CheckoutPage.delivery_ekont FORM[name='EkontOffice'] .InputComponent[field='office'] {
-    display:block;
+    display: block;
 }
+
 .CheckoutPage.delivery_ekont FORM[name='EkontOffice'] .InputComponent[field='office'] .InputField {
-    display:block;
+    display: block;
 }
+
 .CheckoutPage.delivery_ekont FORM[name='EkontOffice'] .InputComponent[field='office'] .InputLabel {
-    display:none;
+    display: none;
 }
+
 .CheckoutPage.delivery_ekont FORM[name='EkontOffice'] .InputComponent[field='office'] TEXTAREA[name='office'] {
-    width:100%;
-    overflow:hidden;
-    min-height:60px;
+    width: 100%;
+    overflow: hidden;
+    min-height: 60px;
 }
 
 .CheckoutPage.confirm .item {
-    padding-bottom:10px;
-    margin-top:10px;
-    border-bottom:1px dashed black;
+    padding-bottom: 10px;
+    margin-top: 10px;
+    border-bottom: 1px dashed black;
 
-    
+
 }
+
 .CheckoutPage.confirm .item .DefaultButton {
-    margin-top:1.1em;
-}
-.CheckoutPage.confirm .item.delivery_type .value {
-    font-size:1.3em;
-}
-.CheckoutPage.confirm .item .address_item {
-    font-size:1.3em;
-    line-height:1.2em;
-    
-}
-.CheckoutPage.confirm .item.note {
-    border-bottom:0px;
+    margin-top: 1.1em;
 }
 
+.CheckoutPage.confirm .item.delivery_type .value {
+    font-size: 1.3em;
+}
+
+.CheckoutPage.confirm .item .address_item {
+    font-size: 1.3em;
+    line-height: 1.2em;
+
+}
+
+.CheckoutPage.confirm .item.note {
+    border-bottom: 0px;
+}
 
 
 .CheckoutPage.confirm FORM[name='RequestInvoice'] {
-    border-spacing:0px;
+    border-spacing: 0px;
 }
+
 .CheckoutPage.confirm FORM[name='RequestInvoice'] .InputLabel {
-    padding-left:0px;
+    padding-left: 0px;
 }
 
 .CheckoutPage.confirm FORM[name='OrderNote'] {
-    border-spacing:0px;
-    width:100%;
+    border-spacing: 0px;
+    width: 100%;
 }
+
 .CheckoutPage.confirm FORM[name='OrderNote'] .InputLabel {
-    padding-left:0px;
-    display:none;
+    padding-left: 0px;
+    display: none;
 }
 

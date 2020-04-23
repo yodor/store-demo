@@ -10,14 +10,10 @@ include_once("lib/components/KeywordSearchComponent.php");
 include_once("lib/iterators/SQLResultIterator.php");
 include_once("lib/beans/UsersBean.php");
 
-$menu = array(
-
-
-);
+$menu = array();
 
 $page = new AdminPage();
 $page->checkAccess(ROLE_CLIENTS_MENU);
-
 
 
 $bean = new UsersBean();
@@ -27,9 +23,8 @@ $h_toggle = new ToggleFieldRequestHandler($bean);
 RequestController::addRequestHandler($h_toggle);
 
 
-$search_fields = array("email","fullname", "phone");
+$search_fields = array("email", "fullname", "phone");
 $scomp = new KeywordSearchComponent($search_fields);
-
 
 
 $sel = new SelectQuery();
@@ -40,7 +35,6 @@ $filter = $scomp->getQueryFilter();
 if ($filter) {
     $sel = $sel->combineWith($filter);
 }
-
 
 
 $view = new TableView(new SQLResultIterator($sel, "userID"));
@@ -62,23 +56,21 @@ $view->addColumn(new TableColumn("actions", "Actions"));
 
 
 $vis_act = new ActionsTableCellRenderer();
-$vis_act->addAction( $h_toggle->createAction("Disable", "&field=suspend&status=1", "return (\$row['suspend'] < 1);"));
-$vis_act->addAction( $h_toggle->createAction("Enable", "&field=suspend&status=0", "return (\$row['suspend'] > 0);"));
+$vis_act->addAction($h_toggle->createAction("Disable", "&field=suspend&status=1", "return (\$row['suspend'] < 1);"));
+$vis_act->addAction($h_toggle->createAction("Enable", "&field=suspend&status=0", "return (\$row['suspend'] > 0);"));
 $view->getColumn("suspend")->setCellRenderer($vis_act);
 
 $act = new ActionsTableCellRenderer();
-$act->addAction(
-  new Action("Edit", "add.php", array(new ActionParameter("editID",$bean->getPrKey()))  )
-); 
+$act->addAction(new Action("Edit", "add.php", array(new ActionParameter("editID", $bean->key()))));
 $act->addAction(new PipeSeparatorAction());
-$act->addAction( $h_delete->createAction() );
+$act->addAction($h_delete->createAction());
 
 $view->getColumn("actions")->setCellRenderer($act);
 
 //store page URL to session and restore on confirm product add or insert
-Session::set("clients.list", $page->getPageURL());
+Session::Set("clients.list", $page->getPageURL());
 
-$page->beginPage($menu);
+$page->startRender($menu);
 
 $page->renderPageCaption();
 
@@ -86,5 +78,5 @@ $scomp->render();
 
 $view->render();
 
-$page->finishPage();
+$page->finishRender();
 ?>

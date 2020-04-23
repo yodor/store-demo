@@ -2,8 +2,10 @@
 include_once("session.php");
 include_once("lib/auth/UserAuthenticator.php");
 
-UserAuthenticator::logout();
-header("Location: ".SITE_ROOT);
+$auth = new UserAuthenticator();
+$auth->logout();
+
+header("Location: " . SITE_ROOT);
 exit;
 
 ?>

@@ -4,7 +4,7 @@ include_once("class/pages/StorePage.php");
 
 $page = new StorePage();
 
-$page->beginPage();
-$page->finishPage();
+$page->startRender();
+$page->finishRender();
 
 ?>

@@ -1,7 +1,7 @@
 <?php
-include_once ("lib/beans/OrderedDataBean.php");
+include_once("lib/beans/OrderedDataBean.php");
 
-class ProductColorPhotosBean  extends OrderedDataBean
+class ProductColorPhotosBean extends OrderedDataBean
 {
     protected $createString = "CREATE TABLE `product_color_photos` (
  `pclrpID` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -14,28 +14,29 @@ class ProductColorPhotosBean  extends OrderedDataBean
  KEY `pclrID` (`pclrID`),
  CONSTRAINT `product_color_photos_ibfk_1` FOREIGN KEY (`pclrID`) REFERENCES `product_colors` (`pclrID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8";
-    
-    public function __construct() 
+
+    public function __construct()
     {
-	  parent::__construct("product_color_photos");
+        parent::__construct("product_color_photos");
     }
 
     //return pclrpID
-    public function getFirstPhotoID($pclrID) 
+    public function getFirstPhotoID($pclrID)
     {
-    
+
         $pclrpID = -1;
-        
-        $this->startIterator(" WHERE pclrID='$pclrID' ORDER BY position ASC LIMIT 1 " , $this->getPrKey());
-        if ($this->fetchNext($photo_row)){
-            $pclrpID = $photo_row[$this->getPrKey()];
-            
+
+        $this->startIterator(" WHERE pclrID='$pclrID' ORDER BY position ASC LIMIT 1 ", $this->key());
+        if ($this->fetchNext($photo_row)) {
+            $pclrpID = $photo_row[$this->key()];
+
         }
-        
+
         return $pclrpID;
-    
+
     }
-    
+
 
 }
+
 ?>

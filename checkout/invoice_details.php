@@ -19,7 +19,7 @@ $form = new InvoiceDetailsInputForm();
 $editID = -1;
 $row = $ccb->findFieldValue("userID", $page->getUserID());
 if ($row) {
-    $editID = $row[$ccb->getPrKey()];
+    $editID = $row[$ccb->key()];
     $form->loadBeanData($editID, $ccb);
 }
 
@@ -43,9 +43,9 @@ if ($proc->getStatus() == FormProcessor::STATUS_OK) {
     exit;
 }
 else if ($proc->getStatus() == FormProcessor::STATUS_ERROR) {
-    Session::set("alert", $proc->getMessage());
+    Session::Set("alert", $proc->getMessage());
 }
-$page->beginPage();
+$page->startRender();
 
 
 $page->setPreferredTitle(tr("Детайли за фактуриране"));
@@ -54,50 +54,46 @@ $page->setPreferredTitle(tr("Детайли за фактуриране"));
 $page->drawCartItems();
 
 
-
-
 echo "<div class='item invoice_details'>";
 
-  echo "<div class='caption'>".$page->getPreferredTitle()."</div>";
+echo "<div class='caption'>" . $page->getPreferredTitle() . "</div>";
 
 
-  $frend->startRender();
-  
-  $frend->renderImpl();
+$frend->startRender();
 
-  echo "<input type=hidden name='submit_item' value='submit'>";
+$frend->renderImpl();
 
-  $frend->finishRender();
-  
-  
+echo "<input type=hidden name='submit_item' value='submit'>";
+
+$frend->finishRender();
+
+
 echo "</div>"; //invoice_details
-
-
 
 
 echo "<div class='navigation'>";
 
-    echo "<div class='slot left'>";
-        echo "<a href='confirm.php'>";
-        echo "<img src='".SITE_ROOT."images/cart_edit.png'>";
-        echo "<div class='DefaultButton checkout_button' >".tr("Назад")."</div>";
-        echo "</a>";
-    echo "</div>";
+echo "<div class='slot left'>";
+echo "<a href='confirm.php'>";
+echo "<img src='" . SITE_ROOT . "images/cart_edit.png'>";
+echo "<div class='DefaultButton checkout_button' >" . tr("Назад") . "</div>";
+echo "</a>";
+echo "</div>";
 
-    echo "<div class='slot center'>";
+echo "<div class='slot center'>";
 
-    echo "</div>";
-  
-    echo "<div class='slot right'>";
-        echo "<a href='javascript:document.forms.InvoiceDetails.submit();'>";
-        echo "<img src='".SITE_ROOT."images/cart_checkout.png'>";
-        echo "<div class='DefaultButton checkout_button'  >".tr("Продължи")."</div>";
-        echo "</a>";
-    echo "</div>";
+echo "</div>";
+
+echo "<div class='slot right'>";
+echo "<a href='javascript:document.forms.InvoiceDetails.submit();'>";
+echo "<img src='" . SITE_ROOT . "images/cart_checkout.png'>";
+echo "<div class='DefaultButton checkout_button'  >" . tr("Продължи") . "</div>";
+echo "</a>";
+echo "</div>";
 
 
 echo "</div>";
 
 
-$page->finishPage();
+$page->finishRender();
 ?>

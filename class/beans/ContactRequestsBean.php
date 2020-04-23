@@ -1,9 +1,9 @@
 <?php
-include_once ("lib/beans/DBTableBean.php");
+include_once("lib/beans/DBTableBean.php");
 
-class ContactRequestsBean extends DBTableBean 
+class ContactRequestsBean extends DBTableBean
 {
-protected $createString = "CREATE TABLE `contact_requests` (
+    protected $createString = "CREATE TABLE `contact_requests` (
  `crID` int(10) unsigned NOT NULL auto_increment,
  `fullname` varchar(255) NOT NULL,
  `email` varchar(255) NOT NULL,
@@ -12,11 +12,12 @@ protected $createString = "CREATE TABLE `contact_requests` (
  PRIMARY KEY  (`crID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
 
-	public function __construct() {
-		parent::__construct("contact_requests");
-		$this->na_str=false;
-		$this->na_val="";
-	}
+    public function __construct()
+    {
+        parent::__construct("contact_requests");
+        $this->na_str = false;
+        $this->na_val = "";
+    }
 
-	
+
 }

@@ -7,38 +7,39 @@ include_once("class/beans/UserDetailsBean.php");
 include_once("lib/auth/UserAuthenticator.php");
 include_once("class/beans/OrdersBean.php");
 
-class UpdateAddressProcessor extends FormProcessor {
+class UpdateAddressProcessor extends FormProcessor
+{
 
-  protected function processImpl(InputForm $form)
-  {
-      parent::processImpl($form);
-      
-      global $ud, $ub, $userID, $ud_row;
-      
-      $userID = $_SESSION[CONTEXT_USER]["id"];
+    protected function processImpl(InputForm $form)
+    {
+        parent::processImpl($form);
 
-      if ($this->status != IFormProcessor::STATUS_OK) return;
-      
-      $form_row = $form->getFieldValues();
-      
-      $form_row["userID"]=$userID;
-      
-      $db = DBDriver::get();
-      try {
-	  $db->transaction();
+        global $ud, $ub, $userID, $ud_row;
 
-	  if (!$ud->updateRecord($ud_row[$ud->getPrKey()], $form_row)) throw new Exception("Грешка при промяна на адреса: ".$db->getError());
-	  $db->commit();
+        $userID = $_SESSION[CONTEXT_USER]["id"];
 
-	  $ud_row = $ud->getByRef("userID", $userID);
-	  $this->setMessage(tr("Адресът за доставка беше променен успешно"));
-      }
-      catch (Exception $e) {
-	  $db->rollback();
-	  throw $e;
-	  
-      }
-  }
+        if ($this->status != IFormProcessor::STATUS_OK) return;
+
+        $form_row = $form->getFieldValues();
+
+        $form_row["userID"] = $userID;
+
+        $db = DBDriver::Get();
+        try {
+            $db->transaction();
+
+            if (!$ud->update($ud_row[$ud->key()], $form_row)) throw new Exception("Грешка при промяна на адреса: " . $db->getError());
+            $db->commit();
+
+            $ud_row = $ud->getByRef("userID", $userID);
+            $this->setMessage(tr("Адресът за доставка беше променен успешно"));
+        }
+        catch (Exception $e) {
+            $db->rollback();
+            throw $e;
+
+        }
+    }
 }
 
 
@@ -53,7 +54,6 @@ if (!$is_auth) {
 }*/
 
 
-
 $userID = $_SESSION[CONTEXT_USER]["id"];
 
 $ud = new UserDetailsBean();
@@ -61,12 +61,12 @@ $ub = new UsersBean();
 
 
 $ud_row = $ud->getByRef("userID", $userID);
-$udID = $ud_row[$ud->getPrKey()];
+$udID = $ud_row[$ud->key()];
 $username = $ub->email($userID);
 
 
 $form = new UpdateAddressInputForm();
-$form->star_required=true;
+$form->star_required = true;
 
 $frender = new FormRenderer();
 $frender->setName("UserDetails");
@@ -81,12 +81,12 @@ $form->setProcessor($proc);
 $proc->processForm($form);
 
 if ($proc->getStatus() != IFormProcessor::STATUS_NOT_PROCESSED) {
-  Session::set("alert", $proc->getMessage());
-  header("Location: ".$_SERVER["REQUEST_URI"]);
-  exit;
+    Session::Set("alert", $proc->getMessage());
+    header("Location: " . $_SERVER["REQUEST_URI"]);
+    exit;
 }
 
-$page->beginPage();
+$page->startRender();
 
 $page->setPreferredTitle(tr("Профил на клиента"));
 
@@ -94,22 +94,22 @@ $page->setPreferredTitle(tr("Профил на клиента"));
 echo "<div class='caption'>";
 //   echo tr("Профил на клиента");
 
-  echo "<div class='section welcome'>".tr("Welcome back").", ";
-  echo $ud_row["fullname"];
-  echo "</div>";
-  
-  echo "<div class='section buttons'>";
-	StyledButton::DefaultButton()->drawButton("Logout", "logout.php");
-  echo "</div>";
-  
+echo "<div class='section welcome'>" . tr("Welcome back") . ", ";
+echo $ud_row["fullname"];
+echo "</div>";
+
+echo "<div class='section buttons'>";
+StyledButton::DefaultButton()->renderButton("Logout", "logout.php");
+echo "</div>";
+
 echo "</div>";
 
 
 if (isset($_GET["return"])) {
-  echo "<div class='panel back_to_order'>";
-  $return = DBDriver::get()->escapeString($_GET["return"]);
-  StyledButton::DefaultButton()->drawButton("Обратно към поръчката", SITE_ROOT."$return");
-  echo "</div>";
+    echo "<div class='panel back_to_order'>";
+    $return = DBDriver::Get()->escapeString($_GET["return"]);
+    StyledButton::DefaultButton()->renderButton("Обратно към поръчката", SITE_ROOT . "$return");
+    echo "</div>";
 }
 
 
@@ -152,43 +152,43 @@ echo "</div>";
 $orders = new OrdersBean();
 $orders->startIterator("WHERE userID='$userID'");
 while ($orders->fetchNext($order_row)) {
-  echo "<div class='item'>";
-  
-	echo "<div class='cell oneline orderID'>";
-	  echo "OrderID:".$order_row["orderID"];
-	echo "</div>";
-	
-	echo "<div class='cell cart_data'>";
-	  $all_data = str_replace("\r\n", "<BR>", $order_row["cart_data"]);
-	  echo $all_data;
-// 	  $all_products = explode("\r\n", $order_row["cart_data"]);
-// 	  foreach ($all_products as $idx=>$data) {
-// 		$data = explode("|", $data);
-// 		list($pos, $product_code, $category, $brand, $product_name, $qty, $line_total) = $data;
-// 		echo "<div class='cart_item'>";
-// 		  
-// 		echo "</div>";
-// 	  }
-	echo "</div>";
-	
-	echo "<div class='cell oneline order_total'>";
-	  echo printPrice($order_row["order_total"]);
-	echo "</div>";
-	
-	echo "<div class='cell oneline order_date'>";
-	  echo dateFormat($order_row["order_date"],false);
-	echo "</div>";
-	
-	echo "<div class='cell oneline completion_date'>";
-	  if ($order_row["is_complete"]) {
-	  echo dateFormat($order_row["completion_date"],false);
-	  }
-	  else {
-	  echo "n/a";
-	  }
-	echo "</div>";
-	
-  echo "</div>"; //item
+    echo "<div class='item'>";
+
+    echo "<div class='cell oneline orderID'>";
+    echo "OrderID:" . $order_row["orderID"];
+    echo "</div>";
+
+    echo "<div class='cell cart_data'>";
+    $all_data = str_replace("\r\n", "<BR>", $order_row["cart_data"]);
+    echo $all_data;
+    // 	  $all_products = explode("\r\n", $order_row["cart_data"]);
+    // 	  foreach ($all_products as $idx=>$data) {
+    // 		$data = explode("|", $data);
+    // 		list($pos, $product_code, $category, $brand, $product_name, $qty, $line_total) = $data;
+    // 		echo "<div class='cart_item'>";
+    //
+    // 		echo "</div>";
+    // 	  }
+    echo "</div>";
+
+    echo "<div class='cell oneline order_total'>";
+    echo printPrice($order_row["order_total"]);
+    echo "</div>";
+
+    echo "<div class='cell oneline order_date'>";
+    echo dateFormat($order_row["order_date"], false);
+    echo "</div>";
+
+    echo "<div class='cell oneline completion_date'>";
+    if ($order_row["is_complete"]) {
+        echo dateFormat($order_row["completion_date"], false);
+    }
+    else {
+        echo "n/a";
+    }
+    echo "</div>";
+
+    echo "</div>"; //item
 }
 echo "</div>";
 
@@ -196,5 +196,5 @@ echo "</div>";
 
 echo "</div>";
 
-$page->finishPage();
+$page->finishRender();
 ?>

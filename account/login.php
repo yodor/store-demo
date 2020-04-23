@@ -14,12 +14,11 @@ include_once("class/forms/processors/RegisterClientFormProcessor.php");
 $page = new AccountPage(false);
 
 
-
 $auth = new UserAuthenticator();
 
 $req = new AuthenticatorRequestHandler($auth, "doLogin");
-$req->setCancelUrl(SITE_ROOT."account/login.php");
-$req->setSuccessUrl(SITE_ROOT."account/index.php");
+$req->setCancelUrl(SITE_ROOT . "account/login.php");
+$req->setSuccessUrl(SITE_ROOT . "account/index.php");
 
 RequestController::addRequestHandler($req);
 
@@ -31,7 +30,7 @@ $afr = new AuthFormRenderer();
 
 $afr->setAttribute("name", "auth");
 $afr->setForm($af);
-$afr->setAuthContext($auth->getAuthContext());
+$afr->setAuthContext($auth->name());
 
 
 $form = new RegisterClientInputForm();
@@ -46,12 +45,12 @@ $form->setProcessor(new RegisterClientFormProcessor());
 $form->getProcessor()->processForm($form, "RegisterClient");
 
 if ($form->getProcessor()->getStatus() == IFormProcessor::STATUS_ERROR) {
-  Session::set("alert", $form->getProcessor()->getMessage());
+    Session::Set("alert", $form->getProcessor()->getMessage());
 }
 else if ($form->getProcessor()->getStatus() == IFormProcessor::STATUS_OK) {
 
-  header("Location: delivery.php");
-  exit;
+    header("Location: delivery.php");
+    exit;
 }
 
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
@@ -59,36 +58,35 @@ header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Expires: 0");
 
 
-
-$page->beginPage();
+$page->startRender();
 $page->setPreferredTitle(tr("Вход"));
 
 
-echo "<div class='caption'>".tr("Регистрирани клиенти")."</div>";
+echo "<div class='caption'>" . tr("Регистрирани клиенти") . "</div>";
 
 echo "<div class='panel'>";
-    echo "<div align=center>";
-        echo "<div class='login_component'>";
-            echo "<span class='inner'>";
-            $afr->renderForm($af);
-            echo "</span>";
-        echo "</div>";
-    echo "</div>";
+echo "<div align=center>";
+echo "<div class='login_component'>";
+echo "<span class='inner'>";
+$afr->renderForm($af);
+echo "</span>";
+echo "</div>";
+echo "</div>";
 echo "</div>";
 
-echo "<div class='caption'>".tr("Нови клиенти")."</div>";
-    
+echo "<div class='caption'>" . tr("Нови клиенти") . "</div>";
+
 echo "<div class='panel'>";
-    echo "<div align=center>";
-        echo "<div class='register_component'>";
-        $frender->renderForm($form);
+echo "<div align=center>";
+echo "<div class='register_component'>";
+$frender->renderForm($form);
 //         $frender->startRender();
 //         $frender->renderImpl();
 //         echo "<input type='hidden' name='RegisterClient' value='submit'>";
 //         $frender->finishRender();   
-        echo "</div>";
-    echo "</div>";
+echo "</div>";
+echo "</div>";
 echo "</div>";
 
-$page->finishPage();
+$page->finishRender();
 ?>

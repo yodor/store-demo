@@ -33,43 +33,43 @@ try {
 
     $oproc = new OrderProcessor();
     $orderID = $oproc->createOrder($page->getCart(), $page->getUserID());
-    
+
     try {
         $mailer = new OrderConfirmationMailer($orderID);
         $mailer->send();
     }
     catch (Exception $em) {
-        error_log("Unable to email confirmation message for order to user: ".$em->getMessage());
+        error_log("Unable to email confirmation message for order to user: " . $em->getMessage());
     }
     try {
         $mcopy = new OrderConfirmationAdminMailer($orderID);
         $mcopy->send();
     }
     catch (Exception $em) {
-        error_log("Unable to email confirmation message for order to admin: ".$em->getMessage());
+        error_log("Unable to email confirmation message for order to admin: " . $em->getMessage());
     }
-    
+
 }
 catch (Exception $e) {
-    Session::set("alert", tr("Възникна грешка при обработка на Вашата поръчка.")."<BR>".tr("Details").": ".$e->getMessage());
+    Session::Set("alert", tr("Възникна грешка при обработка на Вашата поръчка.") . "<BR>" . tr("Details") . ": " . $e->getMessage());
     try {
         $oem = new OrderErrorAdminMailer();
         $oem->send();
     }
     catch (Exception $oeme) {
-        error_log("Unable to email order error message to admin: ".$oeme->getMessage());
+        error_log("Unable to email order error message to admin: " . $oeme->getMessage());
     }
     header("Location: confirm.php");
     exit;
 }
 
 
-$page->beginPage();
+$page->startRender();
 
 $page->setPreferredTitle(tr("Поръчката е завършена"));
 
-echo "<div class='caption'>".tr("Поръчката е завършена")."</div>";
-echo tr("Номер на поръчката").": ".$orderID;
+echo "<div class='caption'>" . tr("Поръчката е завършена") . "</div>";
+echo tr("Номер на поръчката") . ": " . $orderID;
 echo "<BR><BR>";
 echo tr("Благодарим Ви че пазарувахте при нас");
 echo "<BR><BR>";
@@ -78,5 +78,5 @@ echo "<BR><BR>";
 echo tr("Можете да разгледата поръчките си от секция клиентските страници.");
 echo "<BR><BR>";
 
-$page->finishPage();
+$page->finishRender();
 ?>

@@ -104,7 +104,7 @@ $view->getColumn("photo")->setCellRenderer(new TableImageCellRenderer(new Produc
 $view->getColumn("photo")->getCellRenderer()->setListLimit(1);
 $view->getColumn("photo")->getHeaderCellRenderer()->setSortable(false);
 
-$view->getColumn("color_photos")->setCellRenderer(new TableImageCellRenderer(new ProductColorPhotosBean(), 48, -1));
+$view->getColumn("color_photos")->setCellRenderer(new TableImageCellRenderer(new ProductColorPhotosBean(), -1, 64));
 $view->getColumn("color_photos")->getCellRenderer()->setListLimit(0);
 $view->getColumn("color_photos")->getHeaderCellRenderer()->setSortable(false);
 

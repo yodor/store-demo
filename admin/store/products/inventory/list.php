@@ -130,7 +130,7 @@ $view->addColumn(new TableColumn("actions", "Actions"));
 // $view->getColumn("product_photo")->getCellRenderer()->setListLimit(1);
 // $view->getColumn("product_photo")->getHeaderCellRenderer()->setSortable(false);
 
-$view->getColumn("pclrID")->setCellRenderer(new TableImageCellRenderer(new ProductColorPhotosBean(),  -1, 48));
+$view->getColumn("pclrID")->setCellRenderer(new TableImageCellRenderer(new ProductColorPhotosBean(),  -1, 64));
 $view->getColumn("pclrID")->getCellRenderer()->setSourceIteratorKey("pclrID");
 $view->getColumn("pclrID")->getHeaderCellRenderer()->setSortable(false);
 

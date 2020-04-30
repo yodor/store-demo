@@ -34,13 +34,12 @@ class CartComponent extends MLTagComponent implements IHeadRenderer
         $this->gallery_photos = new ProductPhotosBean();
     }
 
-    public function renderScript()
-    {}
 
-    public function renderStyle()
+    public function requiredStyle()
     {
-        echo "<link rel='stylesheet' href='".SITE_ROOT."css/CartComponent.css' type='text/css' >";
-        echo "\n";
+        $arr = parent::requiredStyle();
+        $arr[] = SITE_ROOT."css/CartComponent.css";
+        return $arr;
     }
 
     public function setCart(Cart $cart)

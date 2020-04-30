@@ -1,26 +1,22 @@
 <?php
 // include_once("class/beans/SellableProductsBean.php");
 include_once("lib/components/renderers/items/ItemRendererImpl.php");
-include_once("lib/utils/StorageItem.php");
+include_once("lib/storage/StorageItem.php");
 include_once("class/beans/ProductColorPhotosBean.php");
 
-class ProductListItem extends ItemRendererImpl
-{
+class ProductListItem extends ItemRendererImpl implements IHeadRenderer {
 
 
-    protected $colors = NULL;
+    protected $colors = null;
 
-    protected $photo = NULL;
+    protected $photo = null;
 
-    protected $sel = NULL;
+    protected $sel = null;
 
 
     public function __construct()
     {
         parent::__construct();
-
-
-        // 		$this->addClassName("clearfix");
 
         $sel = new SelectQuery();
 
@@ -35,22 +31,12 @@ class ProductListItem extends ItemRendererImpl
 
         $this->sel = $sel;
 
-<<<<<<< HEAD
-
     }
 
     public function requiredStyle()
-=======
-    }
-
-    public function renderScript()
-    {}
-    
-    public function renderStyle()
->>>>>>> origin/master
     {
         $arr = parent::requiredStyle();
-        $arr[] = SITE_ROOT . "css/ProductListItem.css";
+        $arr[] = SITE_ROOT."css/ProductListItem.css";
         return $arr;
     }
 
@@ -59,129 +45,103 @@ class ProductListItem extends ItemRendererImpl
         parent::setItem($item);
         $this->setAttribute("prodID", $this->item["prodID"]);
         $this->setAttribute("piID", $this->item["piID"]);
-<<<<<<< HEAD
 
 
-        if ($this->item["color_ids"]) {
-            $colors = explode("|", $this->item["color_ids"]);
-            if (count($colors) > 0) {
-
-                $this->colors = $colors;
-            }
-
-        }
-
-        $photo = NULL;
-        if (isset($item["pclrpID"]) && $item["pclrpID"] > 0) {
-=======
-        
-        
         if ($this->item["color_ids"]) {
             $colors = explode("|", $this->item["color_ids"]);
             if (count($colors)>0) {
 
                 $this->colors = $colors;
             }
-            
+
         }
-//         var_dump($this->colors);
-        
+        //         var_dump($this->colors);
+
         $photo = null;
         if (isset($item["pclrpID"]) && $item["pclrpID"]>0) {
->>>>>>> origin/master
             $photo = new StorageItem();
-            $photo->itemID = (int)$item["pclrpID"];
-            $photo->itemClass = "ProductColorPhotosBean";//ProductColorPhotosBean::class;
+            $photo->id = (int)$item["pclrpID"];
+            $photo->className = "ProductColorPhotosBean";//ProductColorPhotosBean::class;
         }
-<<<<<<< HEAD
-        else if (isset($item["ppID"]) && $item["ppID"] > 0) {
-=======
         else if (isset($item["ppID"]) && $item["ppID"]>0){
->>>>>>> origin/master
             $photo = new StorageItem();
-            $photo->itemID = (int)$item["ppID"];
-            $photo->itemClass = "ProductPhotosBean";//ProductPhotosBean::class;
+            $photo->id = (int)$item["ppID"];
+            $photo->className = "ProductPhotosBean";//ProductPhotosBean::class;
         }
-<<<<<<< HEAD
-=======
-        
->>>>>>> origin/master
+
         if ($photo) {
             $this->photo = $photo;
         }
 
-<<<<<<< HEAD
-
-        // 		$this->sel->where = " pc.prodID = {$item["prodID"]} ";
+        //$this->sel->where = " pc.prodID = {$item["prodID"]} ";
     }
 
     protected function renderImpl()
     {
-        // 		//var_dump($this->item);
-        // 		print_r(array_keys($this->item));
-        // 		echo "<HR>";
+        //      var_dump($this->item);
+        // 	print_r(array_keys($this->item));
+        // 	echo "<HR>";
         echo "<div class='wrap'>";
 
-        // 		echo $this->sel->getSQL();
+        // 	cho $this->sel->getSQL();
 
-        $product_href = SITE_ROOT . "details.php?prodID={$this->item["prodID"]}";
-        $item_href = SITE_ROOT . "details.php?prodID={$this->item["prodID"]}&piID=";
+        $product_href = SITE_ROOT."details.php?prodID={$this->item["prodID"]}";
+        $item_href = SITE_ROOT."details.php?prodID={$this->item["prodID"]}&piID=";
 
-        $item_href_main = $item_href . $this->item["piID"];
+        $item_href_main = $item_href.$this->item["piID"];
         echo "<a href='$item_href_main' class='product_link'>";
         if ($this->photo) {
-            $img_href = $this->photo->hrefThumb(275, 275);
+            $img_href = $this->photo->hrefThumb(275,275);
             echo "<img src='$img_href'>";
         }
         echo "</a>";
 
         echo "<div class='product_detail'>";
 
-
         echo "<div class='colors_container'>";
 
         $num_colors = count($this->colors);
-        if ($num_colors > 0) {
+        if ($num_colors>0) {
 
-            echo "<div class='colors'>" . $num_colors . " " . ($num_colors > 1 ? tr("цвята") : tr("цвят")) . "</div>";
+            echo "<div class='colors'>".$num_colors." ".($num_colors>1 ? tr("цвята") : tr("цвят"))."</div>";
 
             echo "<div class='color_chips'>";
 
-            $db = DBDriver::Get();
+            $db = DBDriver::get();
 
-            foreach ($this->colors as $idx => $pclrID) {
+            foreach ($this->colors as $idx=>$pclrID) {
 
                 $this->sel->where = " pc.prodID='{$this->item["prodID"]}' AND pc.pclrID='$pclrID' ";
-                // 				  echo $this->sel->getSQL();
+                //echo $this->sel->getSQL();
 
                 $res = $db->query($this->sel->getSQL());
                 if (!$res) throw new Exception($db->getError());
 
-                $chip_class = "";
+                $chip_class  =  "";
                 $chip_id = -1;
                 $use_color_code = false;
 
                 if ($prow = $db->fetch($res)) {
 
                     //use color chip if any
-                    if ($prow["have_chip"] > 0) {
+                    if ($prow["have_chip"]>0) {
                         $chip_class = "ProductColorsBean&bean_field=color_photo";
                         $chip_id = $pclrID;
                     }
                     //use the product photo if no color photo is set
-                    else if ($prow["pclrpID"] < 1 && $prow["ppID"] > 0) {
+                    else if ($prow["pclrpID"]<1 && $prow["ppID"]>0) {
                         $chip_class = "ProductPhotosBean";
                         $chip_id = $prow["ppID"];
                     }
                     else {
                         $chip_class = "ProductColorPhotosBean";
                         $chip_id = $prow["pclrpID"];
-                        if ((int)$chip_id == 0) {
+                        if ((int)$chip_id==0) {
                             $use_color_code = true;
                         }
                     }
 
-                    $item_href_color = $item_href . $prow["piID"];
+                    $item_href_color = $item_href.$prow["piID"];
                     $color_code = $prow["color_code"];
                     echo "<a href='$item_href_color' class='item' color_code='$color_code' title='{$prow["color"]}'>";
                     if ($use_color_code) {
@@ -189,7 +149,7 @@ class ProductListItem extends ItemRendererImpl
                         echo "<div class='color_code' style='background-color:$color_code;width:48px;height:48px;' title='{$prow["color"]}'></div>";
                     }
                     else {
-                        $href = STORAGE_HREF . "?cmd=image_thumb&width=48&height=48&class=$chip_class&id=$chip_id";
+                        $href = STORAGE_HREF."?cmd=image_thumb&width=48&height=48&class=$chip_class&id=$chip_id";
 
                         echo "<img src='$href' >";
                     }
@@ -204,143 +164,27 @@ class ProductListItem extends ItemRendererImpl
         echo "</div>"; //colors_container
 
 
-        echo "<a class='product_name' href='$item_href_main' >" . $this->item["product_name"] . "</a>";
-        // 			echo "<div class='stock_amount'><label>".tr("Наличност").": </label>".$this->item["stock_amount"]."</div>";
-
+        echo "<a class='product_name' href='$item_href_main' >".$this->item["product_name"]."</a>";
+        //echo "<div class='stock_amount'><label>".tr("Наличност").": </label>".$this->item["stock_amount"]."</div>";
 
         echo "<div class='sell_price'>";
 
-        echo "<div class='item_price'>" . sprintf("%1.2f", $this->item["sell_price"]) . " " . tr("лв.") . "</div>";
+        echo "<div class='item_price'>".sprintf("%1.2f",$this->item["sell_price"])." ".tr("лв.")."</div>";
 
-        if ($this->item["price_min"] != $this->item["sell_price"] || $this->item["price_max"] != $this->item["sell_price"]) {
-            echo "<div class='series_price'>" . sprintf("%1.2f", $this->item["price_min"]) . " " . tr("лв.") . " - " . sprintf("%1.2f", $this->item["price_max"]) . " " . tr("лв.") . "</div>";
+        if ($this->item["price_min"] != $this->item["sell_price"] || $this->item["price_max"] != $this->item["sell_price"] ) {
+            echo "<div class='series_price'>".sprintf("%1.2f",$this->item["price_min"])." ".tr("лв.")." - ".sprintf("%1.2f",$this->item["price_max"])." ".tr("лв.")."</div>";
         }
-        echo "</div>";
-
-        echo "</div>"; //product_details
-
 
         echo "</div>";
-
-    }
-
-    public function renderSeparator($idx_curr, $items_total)
-    {
-=======
-        //$this->sel->where = " pc.prodID = {$item["prodID"]} ";
-    }
-	
-    protected function renderImpl()
-    {
-//      var_dump($this->item);
-// 	print_r(array_keys($this->item));
-// 	echo "<HR>";
-        echo "<div class='wrap'>";
-
-// 	cho $this->sel->getSQL();
-        
-        $product_href = SITE_ROOT."details.php?prodID={$this->item["prodID"]}";
-        $item_href = SITE_ROOT."details.php?prodID={$this->item["prodID"]}&piID=";
-        
-        $item_href_main = $item_href.$this->item["piID"];
-        echo "<a href='$item_href_main' class='product_link'>";
-        if ($this->photo) {
-            $img_href = $this->photo->hrefThumb(275,275);
-            echo "<img src='$img_href'>";
-        }
-        echo "</a>";
-        
-        echo "<div class='product_detail'>";
-
-            echo "<div class='colors_container'>";
-
-            $num_colors = count($this->colors);
-            if ($num_colors>0) {
-
-                echo "<div class='colors'>".$num_colors." ".($num_colors>1 ? tr("цвята") : tr("цвят"))."</div>";
-            
-                echo "<div class='color_chips'>";
-                
-                $db = DBDriver::get();
-                
-                foreach ($this->colors as $idx=>$pclrID) {
-
-                    $this->sel->where = " pc.prodID='{$this->item["prodID"]}' AND pc.pclrID='$pclrID' ";
-                    //echo $this->sel->getSQL();
-                    
-                    $res = $db->query($this->sel->getSQL());
-                    if (!$res) throw new Exception($db->getError());
-                    
-                    $chip_class  =  "";
-                    $chip_id = -1;
-                    $use_color_code = false;
-                    
-                    if ($prow = $db->fetch($res)) {
-                            
-                            //use color chip if any
-                            if ($prow["have_chip"]>0) {
-                                $chip_class = "ProductColorsBean&bean_field=color_photo";
-                                $chip_id = $pclrID;
-                            }
-                            //use the product photo if no color photo is set
-                            else if ($prow["pclrpID"]<1 && $prow["ppID"]>0) {
-                                $chip_class = "ProductPhotosBean";
-                                $chip_id = $prow["ppID"];
-                            }
-                            else {
-                                $chip_class = "ProductColorPhotosBean";
-                                $chip_id = $prow["pclrpID"];
-                                if ((int)$chip_id==0) {
-                                    $use_color_code = true;
-                                }
-                            }
-                            
-                            $item_href_color = $item_href.$prow["piID"];
-                            $color_code = $prow["color_code"];
-                            echo "<a href='$item_href_color' class='item' color_code='$color_code' title='{$prow["color"]}'>";
-                            if ($use_color_code) {
-                                $color_code = $prow["color_code"];
-                                echo "<div class='color_code' style='background-color:$color_code;width:48px;height:48px;' title='{$prow["color"]}'></div>";
-                            }
-                            else {
-                                $href = STORAGE_HREF."?cmd=image_thumb&width=48&height=48&class=$chip_class&id=$chip_id";
-                                
-                                echo "<img src='$href' >";
-                            }
-                            
-                            echo "</a>";
-                    }//fetch
-
-                } //foreach color
-                echo "</div>"; //color_chips
-                    
-            }
-            echo "</div>"; //colors_container
-                
-
-            echo "<a class='product_name' href='$item_href_main' >".$this->item["product_name"]."</a>";
-            //echo "<div class='stock_amount'><label>".tr("Наличност").": </label>".$this->item["stock_amount"]."</div>";
-
-            echo "<div class='sell_price'>";
-                
-                echo "<div class='item_price'>".sprintf("%1.2f",$this->item["sell_price"])." ".tr("лв.")."</div>";
-                
-                if ($this->item["price_min"] != $this->item["sell_price"] || $this->item["price_max"] != $this->item["sell_price"] ) {
-                    echo "<div class='series_price'>".sprintf("%1.2f",$this->item["price_min"])." ".tr("лв.")." - ".sprintf("%1.2f",$this->item["price_max"])." ".tr("лв.")."</div>";
-                }
-                
-            echo "</div>";
 
         echo "</div>"; //product_details
 
         echo "</div>"; //wrap
-            
+
     }
 
     public function renderSeparator($idx_curr, $items_total) {
->>>>>>> origin/master
 
     }
 }
-
 ?>

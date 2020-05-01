@@ -25,7 +25,7 @@ class ProductsPage extends StorePage
         $this->action_renderer = new ActionRenderer();
 
 
-        $derived = new ProductsQuery();
+        $derived = new ProductsSQL();
 
 
         if ($this->section) {

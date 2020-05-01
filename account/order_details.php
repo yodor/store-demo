@@ -6,7 +6,7 @@ include_once("class/components/renderers/cells/OrderInvoiceCellRenderer.php");
 include_once("class/components/renderers/cells/OrderItemsCellRenderer.php");
 include_once("lib/components/TableView.php");
 include_once("lib/components/renderers/cells/DateFieldCellRenderer.php");
-include_once("lib/iterators/SQLResultIterator.php");
+include_once("lib/iterators/SQLQuery.php");
 include_once("lib/beans/UsersBean.php");
 include_once("class/beans/ClientAddressesBean.php");
 include_once("class/beans/EkontAddressesBean.php");
@@ -25,7 +25,7 @@ $orders = new OrdersBean();
 
 $clients = new UsersBean();
 
-$sel = new SelectQuery();
+$sel = new SQLSelect();
 
 $userID = $page->getUserID();
 $orderID = -1;
@@ -40,6 +40,7 @@ if (isset($_GET["orderID"])) {
         header("Location: orders.php");
         exit;
     }
+    $order = array();
     $orders->fetchNext($order);
 }
 
@@ -50,9 +51,11 @@ $page->setPreferredTitle(tr("Детайли за поръчка"));
 echo "<div class='caption'>" . $page->getPreferredTitle() . "</div>";
 
 echo "<div class='group'>";
-<<<<<<< HEAD
+
 echo "<div class='item order_num'>";
+
 echo "<label>" . tr("Номер на поръчка") . "</label>";
+
 echo "<span>" . $orderID . "</span>";
 echo "</div>";
 echo "<div class='item order_date'>";
@@ -81,31 +84,10 @@ echo "<span>" . sprintf("%0.2f лв.", $order["total"]) . "</span>";
 echo "</div>";
 echo "</div>";
 
-=======
-    echo "<div class='item order_num'>";
-        echo "<label>".tr("Номер на поръчка")."</label>";
-        echo "<span>".$orderID."</span>";
-    echo "</div>";
-    echo "<div class='item order_date'>";
-        echo "<label>".tr("Дата")."</label>";
-        echo "<span>".$order["order_date"]."</span>";
-    echo "</div>";
-    echo "<div class='item delivery_type'>";
-        echo "<label>".tr("Начин на доставка")."</label>";
-        echo "<span>".Cart::getDeliveryTypeText($order["delivery_type"])."</span>";
-    echo "</div>";
-    echo "<div class='item require_invoice'>";
-        echo "<label>".tr("Фактуриране")."</label>";
-        echo "<span>".(($order["require_invoice"]>0)?tr("Да"):tr("Не"))."</span>";
-    echo "</div>";
-    echo "<div class='item status'>";
-        echo "<label>".tr("Статус")."</label>";
-        echo "<span>".tr($order["status"])."</span>";
-    echo "</div>";
+
 
 echo "</div>";    
-    
->>>>>>> origin/master
+
 $items->startIterator("WHERE orderID='$orderID'");
 echo "<div class='order_items'>";
 
@@ -119,10 +101,11 @@ echo "<span>" . tr("Сума") . "</span>";
 echo "</div>";
 
 $pos = 0;
+$item = array();
 while ($items->fetchNext($item)) {
     $pos++;
     echo "<div class='line'>";
-<<<<<<< HEAD
+
     echo "<div class='item pos'>$pos</div>";
 
     echo "<div class='item photo'>";
@@ -141,7 +124,7 @@ while ($items->fetchNext($item)) {
     echo "<div class='item qty'>" . $item["qty"] . "</div>";
     echo "<div class='item price'>" . sprintf("%0.2f лв.", $item["price"]) . "</div>";
     echo "<div class='item amount'>" . sprintf("%0.2f лв.", ($item["qty"] * $item["price"])) . "</div>";
-=======
+
         echo "<div class='item pos'>$pos</div>";
         
         $piID = $item["piID"];
@@ -164,14 +147,14 @@ while ($items->fetchNext($item)) {
         echo "<div class='item qty'>".$item["qty"]."</div>";
         echo "<div class='item price'>".sprintf("%0.2f лв.", $item["price"])."</div>";
         echo "<div class='item amount'>".sprintf("%0.2f лв.", ($item["qty"] * $item["price"]))."</div>";
->>>>>>> origin/master
+
     echo "</div>";
 }
 echo "</div>";
 
-<<<<<<< HEAD
+
 $page->finishRender();
-=======
+
 
 echo "<div class='group'>";
     echo "<div class='item products_total'>";
@@ -189,5 +172,5 @@ echo "<div class='group'>";
 echo "</div>";
     
 $page->finishPage();
->>>>>>> origin/master
+
 ?>

@@ -27,6 +27,7 @@ class ProductColorPhotosBean extends OrderedDataBean
         $pclrpID = -1;
 
         $this->startIterator(" WHERE pclrID='$pclrID' ORDER BY position ASC LIMIT 1 ", $this->key());
+        $photo_row = array();
         if ($this->fetchNext($photo_row)) {
             $pclrpID = $photo_row[$this->key()];
 

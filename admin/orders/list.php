@@ -16,7 +16,7 @@ include_once("lib/components/renderers/cells/BooleanFieldCellRenderer.php");
 include_once("lib/components/renderers/cells/DateFieldCellRenderer.php");
 
 include_once("lib/components/KeywordSearchComponent.php");
-include_once("lib/iterators/SQLResultIterator.php");
+include_once("lib/iterators/SQLQuery.php");
 
 
 $ekont_addresses = new EkontAddressesBean();
@@ -35,7 +35,7 @@ $search_fields = array("orderID", "items");
 $scomp = new KeywordSearchComponent($search_fields);
 
 
-$filter = $scomp->getQueryFilter();
+$filter = $scomp->filterSelect();
 if ($filter) {
     $sel = $sel->combineWith($filter);
 }
@@ -70,7 +70,7 @@ $caption = "Orders List";
 // echo $sel->getSQL();
 
 
-$view = new TableView(new SQLResultIterator($sel, "orderID"));
+$view = new TableView(new SQLQuery($sel, "orderID"));
 
 
 $view->setCaption($caption);
@@ -115,29 +115,10 @@ $act = new ActionsTableCellRenderer();
 //   
 // ); 
 // 
-<<<<<<< HEAD
-$act->addAction(new Action("Потвърди изпълнение", "?cmd=confirm_send", array(new ActionParameter("orderID", "orderID"),)
-=======
-// $act->addAction(
-//   new Action(
-// 	"Потвърди изпълнение", "?cmd=confirm_send", 
-// 	array(
-// 	  new ActionParameter("orderID", "orderID"),
-// 	)
-// 	
-// // 	"return (\$row['is_confirmed']<1 && \$row['is_complete']<1);"
-//   )
-//   
-// ); 
-// $act->addAction(  new RowSeparatorAction() );
-// $act->addAction( $h_delete->createAction() );
-// $act->addAction(  new RowSeparatorAction() );
->>>>>>> origin/master
 
-                // 	"return (\$row['is_confirmed']<1 && \$row['is_complete']<1);"
-                )
+$act->addAction(new Action("Потвърди изпълнение", "?cmd=confirm_send", array(new ActionParameter("orderID", "orderID"))));
 
-);
+
 $act->addAction(new RowSeparatorAction());
 $act->addAction($h_delete->createAction());
 // $act->addAction(  new RowSeparatorAction() );

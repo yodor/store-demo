@@ -1,7 +1,7 @@
 <?php
-include_once("lib/utils/SelectQuery.php");
+include_once("lib/utils/SQLSelect.php");
 
-class OrdersQuery extends SelectQuery
+class OrdersSQL extends SQLSelect
 {
     public function __construct()
     {

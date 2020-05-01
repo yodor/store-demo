@@ -243,7 +243,7 @@ class CartComponent extends MLTagComponent implements IHeadRenderer
             echo "</tr>";
 
 
-            $config = ConfigBean::factory();
+            $config = ConfigBean::Factory();
             $config->setSection("delivery_prices");
 
             if ($this->cart->getDeliveryType() != null){

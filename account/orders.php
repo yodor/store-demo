@@ -6,7 +6,7 @@ include_once("class/components/renderers/cells/OrderInvoiceCellRenderer.php");
 include_once("class/components/renderers/cells/OrderItemsCellRenderer.php");
 include_once("lib/components/TableView.php");
 include_once("lib/components/renderers/cells/DateFieldCellRenderer.php");
-include_once("lib/iterators/SQLResultIterator.php");
+include_once("lib/iterators/SQLQuery.php");
 include_once("lib/beans/UsersBean.php");
 include_once("class/beans/ClientAddressesBean.php");
 include_once("class/beans/EkontAddressesBean.php");
@@ -22,14 +22,14 @@ $order_items = new OrderItemsBean();
 
 $clients = new UsersBean();
 
-$sel = new SelectQuery();
+$sel = new SQLSelect();
 
 $sel->fields = " *, (SELECT concat(sum(oi.qty),' бр.') FROM order_items oi WHERE oi.orderID = o.orderID) as item_count ";
 $sel->from = " orders o ";
 $sel->where = " o.userID='" . $page->getUserID() . "'";
 $sel->order_by = " 'Processing', 'Sent', 'Completed' ";
 
-$view = new TableView(new SQLResultIterator($sel, "orderID"));
+$view = new TableView(new SQLQuery($sel, "orderID"));
 
 
 // $view->setCaption($caption);

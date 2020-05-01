@@ -11,7 +11,7 @@ include_once("lib/forms/renderers/FormRenderer.php");
 $page = new AdminPage();
 $page->checkAccess(ROLE_ORDERS_MENU);
 
-$config = ConfigBean::factory();
+$config = ConfigBean::Factory();
 $config->setSection("delivery_prices");
 
 $form = new DeliveryConfigForm();

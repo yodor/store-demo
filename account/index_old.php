@@ -151,6 +151,7 @@ echo "<div class='cell completion_date'>Изпълнена</div>";
 echo "</div>";
 $orders = new OrdersBean();
 $orders->startIterator("WHERE userID='$userID'");
+$order_row = array();
 while ($orders->fetchNext($order_row)) {
     echo "<div class='item'>";
 

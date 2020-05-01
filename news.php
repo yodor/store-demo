@@ -46,6 +46,7 @@ $page->startRender();
 echo "<div class='news_view'>";
 
 echo "<div class='column main'>";
+$item_row = array();
 while ($nb->fetchNext($item_row)) {
     $itemID = $item_row[$nb->key()];
     trbean($itemID, "item_title", $item_row, $nb);
@@ -106,6 +107,7 @@ function drawLatestNews($num, $selected_year = false, $selected_month = false)
 
     $nb->startIterator($sql);
 
+    $item_row = array();
     while ($nb->fetchNext($item_row)) {
         $itemID = $item_row[$nb->key()];
         echo "<a class='item' newsID='$itemID' href='" . SITE_ROOT . "news.php?newsID=$itemID'>";

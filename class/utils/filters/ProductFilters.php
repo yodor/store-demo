@@ -1,5 +1,5 @@
 <?php
-include_once("lib/utils/SelectQuery.php");
+include_once("lib/utils/SQLSelect.php");
 
 // class GenderFilter implements IQueryFilter
 // {
@@ -25,12 +25,12 @@ include_once("lib/utils/SelectQuery.php");
 
 class ColorFilter implements IQueryFilter
 {
-    public function getQueryFilter($view = NULL, $value = NULL)
+    public function filterSelect($view = NULL, $value = NULL)
     {
         $sel = NULL;
 
         if ($value) {
-            $sel = new SelectQuery();
+            $sel = new SQLSelect();
             $sel->fields = "";
             $sel->from = "";
             if (strcmp($value, "N/A") == 0 || strcmp($value, "NULL") == 0) {
@@ -48,12 +48,12 @@ class ColorFilter implements IQueryFilter
 class SizingFilter implements IQueryFilter
 {
 
-    public function getQueryFilter($view = NULL, $value = NULL)
+    public function filterSelect($view = NULL, $value = NULL)
     {
         $sel = NULL;
 
         if ($value) {
-            $sel = new SelectQuery();
+            $sel = new SQLSelect();
             $sel->fields = "";
             $sel->from = "";
             if (strcmp($value, "N/A") == 0 || strcmp($value, "NULL") == 0) {
@@ -71,12 +71,12 @@ class SizingFilter implements IQueryFilter
 
 class PricingFilter implements IQueryFilter
 {
-    public function getQueryFilter($view = NULL, $value = NULL)
+    public function filterSelect($view = NULL, $value = NULL)
     {
         $sel = NULL;
 
         if ($value) {
-            $sel = new SelectQuery();
+            $sel = new SQLSelect();
             $sel->fields = "";
             $sel->from = "";
 
@@ -100,13 +100,13 @@ class PricingFilter implements IQueryFilter
 class InventoryAttributeFilter implements IQueryFilter
 {
 
-    public function getQueryFilter($view = NULL, $value = NULL)
+    public function filterSelect($view = NULL, $value = NULL)
     {
         $sel = NULL;
 
         if ($value) {
 
-            $sel = new SelectQuery();
+            $sel = new SQLSelect();
             $sel->fields = "";
             $sel->from = "";
 
@@ -121,7 +121,7 @@ class InventoryAttributeFilter implements IQueryFilter
                 $name_value = explode(":", $filter);
                 if (!is_array($name_value) || count($name_value) != 2) continue;
 
-                $sel_current = new SelectQuery();
+                $sel_current = new SQLSelect();
                 $sel_current->fields = "";
                 $sel_current->from = "";
 

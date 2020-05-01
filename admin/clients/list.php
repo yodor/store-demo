@@ -7,7 +7,7 @@ include_once("lib/handlers/ToggleFieldRequestHandler.php");
 
 include_once("lib/components/TableView.php");
 include_once("lib/components/KeywordSearchComponent.php");
-include_once("lib/iterators/SQLResultIterator.php");
+include_once("lib/iterators/SQLQuery.php");
 include_once("lib/beans/UsersBean.php");
 
 $menu = array();
@@ -27,17 +27,17 @@ $search_fields = array("email", "fullname", "phone");
 $scomp = new KeywordSearchComponent($search_fields);
 
 
-$sel = new SelectQuery();
+$sel = new SQLSelect();
 $sel->fields = " u.email, u.fullname, u.userID, u.phone, last_active, counter, date_signup, u.suspend ";
 $sel->from = " users u ";
 
-$filter = $scomp->getQueryFilter();
+$filter = $scomp->filterSelect();
 if ($filter) {
     $sel = $sel->combineWith($filter);
 }
 
 
-$view = new TableView(new SQLResultIterator($sel, "userID"));
+$view = new TableView(new SQLQuery($sel, "userID"));
 $view->setDefaultOrder(" userID DESC ");
 $view->items_per_page = 20;
 

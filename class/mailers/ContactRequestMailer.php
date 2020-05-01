@@ -8,7 +8,7 @@ class ContactRequestMailer extends Mailer
     public function __construct($crID)
     {
 
-        $config = ConfigBean::factory();
+        $config = ConfigBean::Factory();
         $config->setSection("global");
 
         $this->to = $config->getValue("admin_email");

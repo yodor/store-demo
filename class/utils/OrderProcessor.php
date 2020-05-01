@@ -51,7 +51,7 @@ class OrderProcessor {
 
             $items = $cart->getItems();
 
-            $config = ConfigBean::factory();
+            $config = ConfigBean::Factory();
             $config->setSection("delivery_prices");
             $delivery_price = $config->getValue($cart->getDeliveryType(),1);
 

@@ -32,6 +32,7 @@ class OrderStatusProcessor extends FormProcessor
 
         $num = $orders->startIterator("WHERE order_identifier='$ticket' AND client_identifier='$email' LIMIT 1");
 
+        $order_row = array();
         if ($num > 0 && $orders->fetchNext($order_row)) {
 
             $this->order = $order_row;

@@ -18,7 +18,7 @@ class ProductListItem extends ItemRendererImpl implements IHeadRenderer {
     {
         parent::__construct();
 
-        $sel = new SelectQuery();
+        $sel = new SQLSelect();
 
         $sel->from = " product_colors pc JOIN store_colors sc ON sc.color=pc.color  LEFT JOIN product_inventory pi ON pi.prodID=pc.prodID AND pi.color=pc.color";
 

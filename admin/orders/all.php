@@ -11,7 +11,7 @@ $bean = new OrdersBean();
 
 
 
-$sel = new OrdersQuery();
+$sel = new OrdersSQL();
 
 
 include_once("list.php");

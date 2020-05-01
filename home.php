@@ -3,7 +3,7 @@ include_once("session.php");
 include_once("class/pages/StorePage.php");
 include_once("class/beans/SectionsBean.php");
 include_once("class/beans/SectionBannersBean.php");
-include_once("class/utils/ProductsQuery.php");
+include_once("class/utils/ProductsSQL.php");
 include_once("class/components/renderers/items/ProductListItem.php");
 
 
@@ -19,13 +19,14 @@ $section_banners = new SectionBannersBean();
 $page->sections->startIterator("WHERE 1 ORDER BY position ASC");
 
 
-$sel = new ProductsQuery();
+$sel = new ProductsSQL();
 $sel->order_by = " pi.order_counter DESC, pi.view_counter DESC ";
 $sel->group_by = " pi.prodID, pi.color ";
 $sel->limit = "4";
 
 
 $db = DBDriver::Get();
+$section_row = array();
 while ($page->sections->fetchNext($section_row)) {
     $section = $section_row["section_title"];
     $secID = $section_row["secID"];
@@ -36,7 +37,7 @@ while ($page->sections->fetchNext($section_row)) {
         
         
         $num = $section_banners->startIterator("WHERE secID='$secID' ORDER BY RAND() LIMIT 1", " sbID, caption, link, position ");
-        
+        $banner_row = array();
         if ($section_banners->fetchNext($banner_row)) {
             echo "<a class='banner' href='{$banner_row["link"]}'>";
             $img_href = StorageItem::Image($banner_row["sbID"], $section_banners);

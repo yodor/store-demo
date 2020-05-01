@@ -9,7 +9,7 @@ include_once("class/beans/ProductClassesBean.php");
 include_once("lib/components/TableView.php");
 include_once("lib/components/renderers/cells/TableImageCellRenderer.php");
 include_once("lib/components/KeywordSearchComponent.php");
-include_once("lib/iterators/SQLResultIterator.php");
+include_once("lib/iterators/SQLQuery.php");
 // include_once("class/beans/ProductInventoryPhotosBean.php");
 
 
@@ -28,7 +28,7 @@ $page->addAction($action_add);
 
 $bean = new ProductClassesBean();
 
-$sql = $bean->selectQuery();
+$sql = $bean->select();
 
 $sql->from = " product_classes pc ";
 $sql->fields = " pc.*, (SELECT GROUP_CONCAT(attribute_name SEPARATOR '<BR>') FROM class_attributes ca WHERE ca.pclsID=pc.pclsID) as class_attributes ";
@@ -37,7 +37,7 @@ $h_delete = new DeleteItemRequestHandler($bean);
 RequestController::addRequestHandler($h_delete);
 
 
-$view = new TableView(new SQLResultIterator($sql, $bean->key()));
+$view = new TableView(new SQLQuery($sql, $bean->key()));
 $view->setCaption("Product Classes List");
 $view->setDefaultOrder($bean->key() . " DESC ");
 $view->addColumn(new TableColumn($bean->key(), "ID"));

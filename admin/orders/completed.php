@@ -16,7 +16,7 @@ $bean = new OrdersBean();
 // RequestController::addRequestHandler($h_delete);
 
 
-$sel = new OrdersQuery();
+$sel = new OrdersSQL();
 
 $sel->where = " o.status='" . OrdersBean::STATUS_COMPLETED . "' ";
 

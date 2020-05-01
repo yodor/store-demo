@@ -28,6 +28,7 @@ class ProductPhotosBean extends OrderedDataBean
         $ppID = -1;
         
         $this->startIterator(" WHERE prodID='$prodID' ORDER BY position ASC LIMIT 1 " , $this->getPrKey());
+        $photo_row = array();
         if ($this->fetchNext($photo_row)){
             $ppID = $photo_row[$this->getPrKey()];
             
@@ -37,9 +38,5 @@ class ProductPhotosBean extends OrderedDataBean
     
     }
 }
-<<<<<<< HEAD
 
 ?>
-=======
-?>
->>>>>>> origin/master

@@ -8,12 +8,7 @@ include_once("lib/components/PublicationArchiveComponent.php");
 
 $page = new DemoPage();
 
-function dumpCSS()
-{
-    echo '<link rel="stylesheet" href="' . SITE_ROOT . 'css/news.css" type="text/css">';
-    echo "\n";
-}
-
+$page->addCSS(SITE_ROOT . "css/news.css");
 
 $nb = new NewsItemsBean();
 $prkey = $nb->key();
@@ -23,21 +18,32 @@ $itemID = -1;
 if (isset($_GET[$prkey])) {
     $itemID = (int)$_GET[$prkey];
 }
-$num = $nb->startIterator("WHERE $prkey='$itemID' LIMIT 1");
 
+$qry = $nb->query();
+$qry->select->where = " $prkey='$itemID' ";
+$qry->select->limit = " 1 ";
+$qry->select->order_by = " item_date DESC ";
 
 $pac = new PublicationArchiveComponent(new NewsItemsBean(), SITE_ROOT . "news.php");
-
 
 $selected_year = $pac->getYear();
 $selected_month = $pac->getMonth();
 
+$num = -1;
+
 if ($pac->haveSelection()) {
-    $num = $nb->startIterator(" WHERE YEAR(item_date)='$selected_year' AND MONTHNAME(item_date)='$selected_month' ORDER BY item_date DESC");
+
+    $qry->where = " YEAR(item_date)='$selected_year' AND MONTHNAME(item_date)='$selected_month' ";
+    $qry->limit = "";
+    $num = $qry->exec();
 }
+
 if ($num < 1) {
-    $num = $nb->startIterator(" WHERE YEAR(item_date)='$selected_year' AND MONTHNAME(item_date)='$selected_month' ORDER BY item_date DESC LIMIT 1 ");
+
+    $qry->where = " YEAR(item_date)='$selected_year' AND MONTHNAME(item_date)='$selected_month' ";
+    $num = $qry->exec();
 }
+
 
 
 $page->startRender();
@@ -47,7 +53,7 @@ echo "<div class='news_view'>";
 
 echo "<div class='column main'>";
 $item_row = array();
-while ($nb->fetchNext($item_row)) {
+while ($$nb->fetchNext($item_row)) {
     $itemID = $item_row[$nb->key()];
     trbean($itemID, "item_title", $item_row, $nb);
     trbean($itemID, "content", $item_row, $nb);

@@ -25,22 +25,11 @@ class ProductListPage extends ProductsPage
         $treeView->setItemRenderer($ir);
 
         $this->treeView = $treeView;
-    }
 
-    protected function dumpCSS()
-    {
-        parent::dumpCSS();
-        echo "<link rel='stylesheet' href='" . SITE_ROOT . "css/product_list.css?ver=1.0' type='text/css'>";
-        echo "\n";
-    }
+        $this->addCSS(SITE_ROOT . "css/product_list.css?ver=1.0");
+        $this->addJS(SITE_ROOT . "js/product_list.js?ver=1.2");
 
-    protected function dumpJS()
-    {
-        parent::dumpJS();
-        echo "<script type='text/javascript' src='" . SITE_ROOT . "js/product_list.js?ver=1.2'></script>";
-        echo "\n";
     }
-
 
     protected function constructTitle()
     {

@@ -180,7 +180,7 @@ $page->setSellableItem($sellable_variation);
 
 // $page->selectMenuForSection();
 
-$page->beginPage();
+$page->startRender();
 
 // var_dump($attributes);
 // print_r($galleries);
@@ -388,5 +388,5 @@ echo "</div>"; //column details
 </script>
 
 <?php
-$page->finishPage();
+$page->finishRender();
 ?>

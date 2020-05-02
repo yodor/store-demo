@@ -17,32 +17,4 @@ $defines->dump();
 
 phpinfo();
 
-
-// include_once("class/pages/MainPage.php");
-// 
-// $page = new MainPage(false);
-// 
-// $page->beginPage();
-// 
-// echo tr("Access to this resource is not allowed for your account.");
-// 
-// 
-// 
-// 
-// $page->finishPage();
-
-// include_once("class/pages/MainPage.php");
-// 
-// $page = new MainPage(false);
-// 
-// $page->beginPage();
-// 
-// echo tr("Access to this resource is not allowed for your account.");
-// 
-// 
-// 
-// 
-// $page->finishPage();
-
-
 ?>

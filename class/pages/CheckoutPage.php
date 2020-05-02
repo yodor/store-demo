@@ -18,41 +18,8 @@ class CheckoutPage extends StorePage
 
 
         $this->ccmp = new CartComponent();
-    }
 
-
-    protected function dumpCSS()
-    {
-        parent::dumpCSS();
-
-<<<<<<< HEAD
-        echo "<link rel='stylesheet' href='" . SITE_ROOT . "css/checkout.css?ver=1.0' type='text/css'>";
-
-=======
-        echo "<link rel='stylesheet' href='".SITE_ROOT."css/checkout.css?ver=1.2' type='text/css'>";
-        
->>>>>>> origin/master
-    }
-
-
-    public function beginPage()
-    {
-        parent::startRender();
-
-        //         echo "<div class='column left'>";
-        //$this->renderCategoryTree();
-        //$this->renderNewsItems();
-
-        //         echo "</div>";
-
-        //         echo "<div class='column cart'>";
-
-    }
-
-    public function finishPage()
-    {
-        //         echo "</div>";//column cart
-        parent::finishRender();
+        $this->addCSS(SITE_ROOT."css/checkout.css");
     }
 
     public function drawCartItems($heading_text = "")
@@ -80,7 +47,7 @@ class CheckoutPage extends StorePage
     public function ensureClient()
     {
 
-        if (!$this->is_auth) {
+        if (!$this->context) {
             Session::SetAlert(tr("Изисква регистрация"));
             header("Location: cart.php");
             exit;

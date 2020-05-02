@@ -36,7 +36,6 @@ class StorePage extends SparkPage
 
         parent::__construct($auth);
 
-
         if ($this->context) {
 
             $this->client_name = $this->context[Authenticator::CONTEXT_DATA][UserAuthenticator::DATA_FULLNAME];
@@ -81,6 +80,12 @@ class StorePage extends SparkPage
         $ksc->getForm()->getRenderer()->setAttribute("action", SITE_ROOT . "products.php");
         $ksc->getForm()->setCompareExpression("relation.inventory_attributes", array("%:{keyword}|%", "%:{keyword}"));
         $this->keyword_search = $ksc;
+
+
+        $this->addCSS(SITE_ROOT . "css/store.css");
+        $this->addCSS("//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css");
+
+        $this->addJS("//code.jquery.com/ui/1.11.4/jquery-ui.js");
     }
 
     public function getCart()
@@ -91,37 +96,6 @@ class StorePage extends SparkPage
     public function getMenuBar()
     {
         return $this->menu_bar;
-    }
-
-    protected function dumpCSS()
-    {
-        parent::dumpCSS();
-
-<<<<<<< HEAD
-        echo "<link rel='stylesheet' href='" . SITE_ROOT . "css/store.css' type='text/css'>";
-        echo "<link rel='stylesheet' href='//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css'>";
-=======
-	echo "<link rel='stylesheet' href='".SITE_ROOT."css/store.css?ver=1.10' type='text/css'>";
-	echo "<link rel='stylesheet' href='//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css'>";
->>>>>>> origin/master
-
-        echo "\n";
-
-    }
-
-    protected function dumpJS()
-    {
-        parent::dumpJS();
-
-        echo "<script src='//code.jquery.com/ui/1.11.4/jquery-ui.js'></script>";
-
-        echo "\n";
-    }
-
-    protected function dumpMetaTags()
-    {
-        parent::dumpMetaTags();
-
     }
 
     public function getSection()
@@ -138,7 +112,7 @@ class StorePage extends SparkPage
     {
         parent::startRender();
 
-        echo "\n<!--beginPage StorePage-->\n";
+        echo "\n<!-- startRender StorePage-->\n";
 
 
         $this->selectActiveMenu();
@@ -244,7 +218,7 @@ class StorePage extends SparkPage
         echo "</div>";
 
         echo "\n";
-        echo "\n<!--finishPage StorePage-->\n";
+        echo "\n<!-- finishRender StorePage-->\n";
 
         $this->constructTitle();
 

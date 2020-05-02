@@ -235,7 +235,7 @@ catch (Exception $e) {
 if (is_resource($res)) $db->free($res);
 
 
-$page->beginPage();
+$page->startRender();
 
 
 //
@@ -375,5 +375,5 @@ echo "</div>";
 
 Session::set("shopping.list", $page->getPageURL());
 
-$page->finishPage();
+$page->finishRender();
 ?>

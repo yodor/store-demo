@@ -14,18 +14,19 @@ class AccountPage extends StorePage
 
     public function __construct($need_auth = true)
     {
+
+
         if ($need_auth) {
-            parent::__construct(new UserAuthenticator(SITE_ROOT . "account/login.php"));
-        }
-        else {
-            parent::__construct();
+
+            $this->auth = new UserAuthenticator();
+
         }
 
+        parent::__construct();
 
         $this->account_menu = new MainMenu();
 
         $items = array();
-
 
         $items[] = new MenuItem("История на поръчките", "orders.php");
         $items[] = new MenuItem("Регистриран адрес", "registered_address.php");
@@ -35,25 +36,10 @@ class AccountPage extends StorePage
 
         $this->account_menu->setMenuItems($items);
 
+        $this->addCSS(SITE_ROOT."css/account.css");
     }
 
-    protected function dumpCSS()
-    {
-        parent::dumpCSS();
-
-<<<<<<< HEAD
-        //         echo "<link rel='stylesheet' href='".SITE_ROOT."lib/css/FormRenderer.css' type='text/css'>";
-
-        echo "<link rel='stylesheet' href='" . SITE_ROOT . "css/account.css?ver=1.0' type='text/css'>";
-
-=======
-        echo "<link rel='stylesheet' href='".SITE_ROOT."css/account.css?ver=1.3' type='text/css'>";
-        
->>>>>>> origin/master
-    }
-
-
-    public function beginPage()
+    public function startRender()
     {
 
         parent::startRender();
@@ -62,15 +48,8 @@ class AccountPage extends StorePage
 
         echo "<div class='column left'>";
 
-        //             if ($this->is_auth) {
-        //                 $bean = new UsersBean();
-        //                 $fullname = $bean->fieldValue($this->getUserID(), "fullname");
-        //                 echo "<div class='welcome caption'>";
-        //                 echo tr("Добре дошли, ").$fullname;
-        //                 echo "</div>";
-        //             }
         //render menu items
-        if ($this->is_auth) {
+        if ($this->context) {
             echo "<div class='account_menu'>";
             $menu_items = $this->account_menu->getMenuItems();
             foreach ($menu_items as $idx => $item) {
@@ -86,7 +65,7 @@ class AccountPage extends StorePage
 
     }
 
-    public function finishPage()
+    public function finishRender()
     {
         echo "</div>";//column right
         echo "</div>";//columns

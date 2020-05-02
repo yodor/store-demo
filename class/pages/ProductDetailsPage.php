@@ -12,24 +12,11 @@ class ProductDetailsPage extends ProductsPage
     {
         parent::__construct();
         $this->list_item = new ProductListItem();
-    }
 
-    protected function dumpCSS()
-    {
-        parent::dumpCSS();
-<<<<<<< HEAD
-        echo "<link rel='stylesheet' href='" . SITE_ROOT . "css/product_details.css?ver=1.5' type='text/css'>";
-=======
-        echo "<link rel='stylesheet' href='".SITE_ROOT."css/product_details.css?ver=1.7' type='text/css'>";
->>>>>>> origin/master
-        echo "\n";
-    }
+        $this->addCSS(SITE_ROOT . "css/product_details.css");
+        $this->addCSS(SITE_ROOT."css/product_details.css");
 
-    protected function dumpJS()
-    {
-        parent::dumpJS();
-        echo "<script type='text/javascript' src='" . SITE_ROOT . "js/product_details.js?ver=1.2'></script>";
-        echo "\n";
+        $this->addJS(SITE_ROOT . "js/product_details.js");
     }
 
 
@@ -71,7 +58,7 @@ class ProductDetailsPage extends ProductsPage
     {
         return $this->product_categories->parentCategories($this->sellable["catID"]);
     }
-<<<<<<< HEAD
+
 
     protected function constructPathActions()
     {
@@ -84,19 +71,7 @@ class ProductDetailsPage extends ProductsPage
 
     }
 
-=======
-    
-//     protected function constructPathActions()
-//     {
-//     
-//         $actions = parent::constructPathActions();       
-// 
-//         $actions[] = new Action($this->sellable["product_name"], "", array());
-//             
-//         return $actions;
-//         
-//     }
->>>>>>> origin/master
+
     public function renderSameCategoryProducts()
     {
         echo "<div class='caption'>" . tr("Още продукти от тази категория") . "</div>";

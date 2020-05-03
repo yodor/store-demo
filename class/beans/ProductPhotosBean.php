@@ -26,12 +26,13 @@ class ProductPhotosBean extends OrderedDataBean
     {
     
         $ppID = -1;
-        
-        $this->startIterator(" WHERE prodID='$prodID' ORDER BY position ASC LIMIT 1 " , $this->getPrKey());
-        $photo_row = array();
-        if ($this->fetchNext($photo_row)){
+        $qry = $this->queryField("prodID", $prodID, 1);
+        $qry->select->order_by = " position ASC ";
+        $qry->select->fields = $this->getPrKey();
+        $qry->exec();
+
+        if ($photo_row = $qry->next()){
             $ppID = $photo_row[$this->getPrKey()];
-            
         }
         
         return $ppID;

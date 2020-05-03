@@ -34,10 +34,10 @@ class SourceRelatedField extends DataSourceField implements IArrayFieldRenderer
 
     }
 
-    public function setSource(IDataBean $source)
+    public function setIterator(IDataIterator $query)
     {
-        parent::setSource($source);
-        $this->addClassName(get_class($source));
+        parent::setIterator($query);
+        $this->addClassName(get_class($query));
     }
 
     public function requiredStyle()
@@ -73,8 +73,8 @@ class SourceRelatedField extends DataSourceField implements IArrayFieldRenderer
             if (!in_array($this->list_key, $source_fields)) throw new Exception("List Key '{$this->list_key}' not found in data source fields");
 
             // 	  if (!in_array($this->list_label, $source_fields)) throw new Exception("List Label '{$this->list_label}' not found in data source fields");
-
-            $num = $this->data_bean->startIterator($this->data_filter, $this->data_fields);
+            $this->qry = $this->data_bean->query();
+            $num = $this->qry->exec();
             //   echo $this->data_bean->getLastIteratorSQL();
 
             if ($num < 1) {
@@ -104,8 +104,7 @@ class SourceRelatedField extends DataSourceField implements IArrayFieldRenderer
         $prkey = $this->data_bean->key();
         $index = 0;
 
-        $data_row = array();
-        while ($this->data_bean->fetchNext($data_row)) {
+        while ($data_row = $this->qry->next()) {
 
             // 		$id = $data_row[$this->getSource()->getPrKey()];
             $id = $data_row[$prkey];

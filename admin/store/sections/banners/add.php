@@ -22,7 +22,7 @@ $action_back->setAttribute("title", "Back To Banners");
 $page->addAction($action_back);
 
 $photos = new SectionBannersBean();
-$photos->setFilter("$ref_key='$ref_id'");
+$photos->select()->where = "$ref_key='$ref_id'";
 
 $form = new PhotoInputForm();
 $field = new DataInput("link", "Link", 1);

@@ -24,7 +24,7 @@ $h_delete = new DeleteItemRequestHandler($bean);
 RequestController::addRequestHandler($h_delete);
 
 
-$view = new TableView(new BeanQuery($bean));
+$view = new TableView($bean->query());
 $view->setCaption("Sections List");
 $view->setDefaultOrder(" position ASC ");
 

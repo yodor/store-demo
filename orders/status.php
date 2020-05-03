@@ -90,7 +90,6 @@ if ($proc->getStatus() == IFormProcessor::STATUS_OK) {
 
     $page->renderOrderDetails($proc->orderID, $proc->order, $proc->confirm_ticket);
 
-
     $page->renderOrderDeliveryAddress($proc->order);
 
 

@@ -7,10 +7,10 @@ class DeliveryAddressForm extends InputForm
     public function __construct()
     {
 
-        $aw1 = new ArraySelector(array(Cart::DELIVERY_USERADDRESS => "Моят регистриран адрес", Cart::DELIVERY_EKONTOFFICE => "До офис на Еконт"), "item_id", "item_value");
+        $aw1 = new ArrayDataIterator(array(Cart::DELIVERY_USERADDRESS => "Моят регистриран адрес", Cart::DELIVERY_EKONTOFFICE => "До офис на Еконт"), "item_id", "item_value");
         $f12 = new DataInput("delivery_type", "Изберете адрес", 1);
         $r12 = new RadioField();
-        $r12->setSource($aw1);
+        $r12->setIterator($aw1);
         $r12->list_key = "item_id";
         $r12->list_label = "item_value";
         $f12->setRenderer($r12);

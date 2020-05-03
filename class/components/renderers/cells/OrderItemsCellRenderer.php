@@ -19,11 +19,13 @@ class OrderItemsCellRenderer extends TableCellRenderer implements ICellRenderer
 
         global $order_items;
 
-        $order_items->startIterator("WHERE orderID='$orderID' ORDER BY position ASC");
+        $qry = $order_items->queryField("orderID", $orderID);
+        $qry->select->order_by = " position ASC ";
+        $qry->exec();
 
         echo "<div class='group order_items'>";
 
-        while ($order_items->fetchNext($item)) {
+        while ($item = $qry->next()) {
 
             $piID = $item["piID"];
             $prodID = $item["prodID"];

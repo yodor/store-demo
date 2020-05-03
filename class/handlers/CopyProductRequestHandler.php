@@ -65,17 +65,18 @@ class CopyProductRequestHandler extends RequestHandler
 
             //copy attributes
             $pa = new ProductFeaturesBean();
-            $pa->startIterator("WHERE prodID={$this->item_id}");
-            while ($pa->fetchNext($parow)) {
+            $qry = $pa->queryField("prodID", $this->item_id);
+            $qry->exec();
+            while ($parow = $qry->next()) {
                 unset($parow[$pa->key()]);
                 $parow["prodID"] = $lastID;
                 if (!$pa->insert($parow, $db)) throw new Exception("Unable to copy features: " . $db->getError());
             }
             //copy photos
             $pp = new ProductPhotosBean();
-            $pp->startIterator("WHERE prodID={$this->item_id}");
-
-            while ($pp->fetchNext($pprow)) {
+            $qry = $pp->queryField("prodID", $this->item_id);
+            $qry->exec();
+            while ($pprow = $qry->next()) {
                 unset($pprow[$pp->key()]);
                 $pprow["prodID"] = $lastID;
                 $pprow["photo"] = $db->escapeString($pprow["photo"]);
@@ -85,9 +86,9 @@ class CopyProductRequestHandler extends RequestHandler
             }
 
             $ca = new ClassAttributeValuesBean();
-            $ca->startIterator("WHERE prodID={$this->item_id}");
-
-            while ($ca->fetchNext($carow)) {
+            $qry = $ca->queryField("prodID", $this->item_id);
+            $qry->exec();
+            while ($carow = $qry->next()) {
                 unset($carow[$ca->key()]);
                 $carow["prodID"] = $lastID;
 

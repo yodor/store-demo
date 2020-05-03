@@ -15,8 +15,8 @@ $page->startRender();
 
 $section_banners = new SectionBannersBean();
 
-
-$page->sections->startIterator("WHERE 1 ORDER BY position ASC");
+$qry = $page->sections->query();
+$qry->select->order_by = " position ASC ";
 
 
 $sel = new ProductsSQL();
@@ -24,43 +24,43 @@ $sel->order_by = " pi.order_counter DESC, pi.view_counter DESC ";
 $sel->group_by = " pi.prodID, pi.color ";
 $sel->limit = "4";
 
+$prodQry = new SQLQuery($sel, "p.prodID");
 
-$db = DBDriver::Get();
-$section_row = array();
-while ($page->sections->fetchNext($section_row)) {
+
+while ($section_row = $qry->next()) {
+
     $section = $section_row["section_title"];
     $secID = $section_row["secID"];
     echo "<div class='section $section'>";
 
-        
-        echo "<a class='caption' href='products.php?section=$section'>$section</a>";
-        
-        
-        $num = $section_banners->startIterator("WHERE secID='$secID' ORDER BY RAND() LIMIT 1", " sbID, caption, link, position ");
-        $banner_row = array();
-        if ($section_banners->fetchNext($banner_row)) {
-            echo "<a class='banner' href='{$banner_row["link"]}'>";
-            $img_href = StorageItem::Image($banner_row["sbID"], $section_banners);
-            echo "<img width='100%' src='$img_href'>";
-            echo "</a>";
-        }
-        
-        
-        echo "<div class='products'>";
-            $sel->where = " p.section='$section' ";
-            $sel->limit = "4";
-//             echo $sel->getSQL();
-            $res = $db->query($sel->getSQL());
-            if (!$res) throw new Exception("Unable to query products from section '$section'. Error: ".$db->getError());
-            
-            while ($row = $db->fetch($res)) {
-                $item->setItem($row);
-                $item->render();
-            }
-            $db->free($res);
-            
-        echo "</div>";
-        
+    echo "<a class='caption' href='products.php?section=$section'>$section</a>";
+
+    $qry1 = $section_banners->queryField("secID", $secID, 1);
+    $qry1->select->order_by = " RAND() ";
+    $qry1->select->fields = " sbID, caption, link, position ";
+    $num = $qry1->exec();
+
+    if ($banner_row = $qry1->next()) {
+        echo "<a class='banner' href='{$banner_row["link"]}'>";
+        $img_href = StorageItem::Image($banner_row["sbID"], $section_banners);
+        echo "<img width='100%' src='$img_href'>";
+        echo "</a>";
+    }
+
+
+    echo "<div class='products'>";
+
+    $prodQry->select->where = " p.section='$section' ";
+    $prodQry->select->limit = "4";
+    $prodQry->exec();
+
+    while ($row = $prodQry->next()) {
+        $item->setItem($row);
+        $item->render();
+    }
+
+    echo "</div>";
+
 
     echo "</div>";
 }

@@ -8,26 +8,23 @@ include_once("class/utils/Cart.php");
 class OrderConfirmationMailer extends Mailer
 {
 
-    public function __construct($orderID)
+    public function __construct(int $orderID)
     {
 
         $orders = new OrdersBean();
+
         $order = $orders->getByID($orderID);
 
         $userID = (int)$order["userID"];
 
         $users = new UsersBean();
-        $user = $users->getByID($userID, false, " userID, fullname, email, phone ");
+        $user = $users->fieldValues($userID, array("userID", "fullname", "email", "phone"));
 
         $this->to = $user["email"];
 
-<<<<<<< HEAD
         $this->subject = "Потвърждение на поръчка / Order Confirmation - OrderID $orderID";
 
-=======
-        $this->subject = "Потвърждение на поръчка / Order Confirmation ID:$orderID";
-		
->>>>>>> origin/master
+
         $message = "Здравейте, {$user["fullname"]}<br><br>\r\n\r\n";
         $message .= "Изпращаме Ви това съобщение за да Ви уведомим, че поръчка Ви е приета за обработка. ";
         $message .= "\r\n\r\n<br><br>";
@@ -54,8 +51,11 @@ class OrderConfirmationMailer extends Mailer
         $message .= "</tr>";
 
         $order_items = new OrderItemsBean();
-        $order_items->startIterator("WHERE orderID=$orderID ORDER BY position ASC");
-        while ($order_items->fetchNext($item)) {
+        $qry = $order_items->queryField("orderID", $orderID);
+        $qry->select->order_by = " position ASC ";
+        $qry->exec();
+
+        while ($item = $qry->next()) {
 
             $message .= "<tr>";
 
@@ -92,12 +92,8 @@ class OrderConfirmationMailer extends Mailer
 
         $this->body = $this->templateMessage($message);
 
-<<<<<<< HEAD
-    }
-=======
         
     }	
->>>>>>> origin/master
 
 }
 

@@ -75,12 +75,10 @@ class ClassAttributeField extends DataSourceField implements IArrayFieldRenderer
     {
         parent::__construct();
         $this->setItemRenderer(new ClassAttributeItem());
-        $this->setSource(new ClassAttributesBean());
+        $this->setIterator(new ClassAttributesBean());
         $this->list_key = "caID";
         $this->list_label = "attribute_name";
         RequestController::addAjaxHandler(new ClassAttributeFieldAjaxHandler());
-
-
     }
 
     public function requiredStyle()
@@ -93,13 +91,21 @@ class ClassAttributeField extends DataSourceField implements IArrayFieldRenderer
     public function setCategoryID($catID)
     {
         $this->catID = $catID;
-        $this->data_filter = " ca, attributes ma WHERE ca.catID='$catID' AND ma.maID=ca.maID ";
-        $this->data_fields = " ca.*, ma.name as attribute_name, ma.unit, ma.type ";
+        $this->data_bean->select()->where = "ca.catID='$catID' AND ma.maID=ca.maID";
+        $this->data_bean->select()->fields = " ca.*, ma.name as attribute_name, ma.unit, ma.type ";
+        $this->data_bean->select()->from = " ca, attributes ma ";
     }
 
     public function setProductID($prodID)
     {
         $this->prodID = (int)$prodID;
+        if ($this->prodID > 0) {
+            $this->data_bean->select()->where = "ma.maID=ca.maID AND ca.catID='{$this->catID}'";
+            $this->data_bean->select()->from.= " ca LEFT JOIN class_attribute_values cav ON ca.caID = cav.caID , attributes ma ";
+            $this->data_bean->select()->group_by = "ca.caID";
+            $this->data_bean->select()->having = "(cav.prodID='{$this->prodID}' OR cav.prodID IS NULL)";
+            $this->data_bean->select()->fields = "ca.*, ma.name as attribute_name, ma.unit, ma.type, cav.value, cav.prodID";
+        }
     }
 
     public function renderControls()
@@ -134,20 +140,15 @@ class ClassAttributeField extends DataSourceField implements IArrayFieldRenderer
 
             if (!in_array($this->list_key, $source_fields)) throw new Exception("List Key '{$this->list_key}' not found in data source fields");
 
-            // 	  if (!in_array($this->list_label, $source_fields)) throw new Exception("List Label '{$this->list_label}' not found in data source fields");
+            $this->qry = $this->data_bean->query();
 
-
-            if ($this->prodID > 0) {
-                $this->data_filter = " ca LEFT JOIN class_attribute_values cav ON ca.caID = cav.caID , attributes ma WHERE ma.maID=ca.maID AND ca.catID='{$this->catID}' GROUP BY ca.caID HAVING (cav.prodID='{$this->prodID}' OR cav.prodID IS NULL) ";
-                $this->data_fields = " ca.*, ma.name as attribute_name, ma.unit, ma.type, cav.value, cav.prodID ";
-            }
-
-            $num = $this->data_bean->startIterator($this->data_filter, $this->data_fields);
+            $num = $this->qry->exec();
 
             if ($num < 1) {
                 echo "Selected category does not provide optional attributes";
                 return;
             }
+
             $this->startRenderItems();
 
             $this->renderItems();
@@ -204,8 +205,8 @@ class ClassAttributeField extends DataSourceField implements IArrayFieldRenderer
         $prkey = $this->data_bean->key();
         $index = 0;
 
-        $data_row = array();
-        while ($this->data_bean->fetchNext($data_row)) {
+
+        while ($data_row = $this->qry->next()) {
 
             $id = $data_row["caID"];
 

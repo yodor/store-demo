@@ -62,7 +62,8 @@ class StorePage extends SparkPage
 
         if (isset($_GET["section"])) {
             $section = DBDriver::Get()->escapeString($_GET["section"]);
-            $num = $this->sections->startIterator("WHERE section_title = '$section' LIMIT 1");
+            $qry = $this->sections->queryField("section_title", $section, 1);
+            $num = $qry->exec();
             if ($num < 1) {
                 $this->section = "";
             }
@@ -125,7 +126,7 @@ class StorePage extends SparkPage
 
         echo "<div class='links'>";
         echo "<div class='login_pane'>";
-        if ($this->is_auth) {
+        if ($this->context) {
             echo "<a href='" . SITE_ROOT . "account/' class='account_link'>{$this->client_name}</a>";
         }
         else {
@@ -214,7 +215,7 @@ class StorePage extends SparkPage
         echo "</div>";//full
 
         echo "<div class='full black footer_bottom' align=center>";
-        echo tr("MM Fashion Shop. Web Design SaturnoSoft.biz");
+        echo tr("MM Fashion Shop. Web Design - saturnosoft.biz");
         echo "</div>";
 
         echo "\n";

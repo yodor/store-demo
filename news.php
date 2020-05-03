@@ -109,17 +109,18 @@ function drawLatestNews($num, $selected_year = false, $selected_month = false)
 
 
     $nb = new NewsItemsBean();
-    $sql = "ORDER BY item_date DESC LIMIT 3";
+    $qry = $nb->query();
+    $qry->select->order_by = " item_date DESC ";
+    $qry->select->limit = "3";
+    $qry->select->fields = " $nb->key(), item_title, item_date ";
+    $qry->exec();
 
-    $nb->startIterator($sql);
-
-    $item_row = array();
-    while ($nb->fetchNext($item_row)) {
+    while ($item_row = $qry->next()) {
         $itemID = $item_row[$nb->key()];
         echo "<a class='item' newsID='$itemID' href='" . SITE_ROOT . "news.php?newsID=$itemID'>";
 
         echo "<div class='cell image'>";
-        $img_href = StorageItem::Image($itemID, "NewsItemsBean", 48, 48);
+        $img_href = StorageItem::Image($itemID, $nb, 48, 48);
         echo "<div class='panel'><img src='$img_href'></div>";
         echo "</div>";
 

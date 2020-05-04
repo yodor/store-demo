@@ -1,7 +1,7 @@
 <?php
 include_once("lib/forms/InputForm.php");
 include_once("lib/input/DataInputFactory.php");
-include_once("lib/selectors/DBEnumSelector.php");
+include_once("lib/iterators/DBEnumIterator.php");
 
 class FAQItemInputForm extends InputForm
 {
@@ -11,7 +11,7 @@ class FAQItemInputForm extends InputForm
 
         $field = DataInputFactory::Create(DataInputFactory::SELECT, "section", "Секция", 1);
 
-        $enm = new DBEnumSelector("faq_items", "section");
+        $enm = new DBEnumIterator("faq_items", "section");
         $rend = $field->getRenderer();
         $rend->setIterator($enm);
         $rend->list_key = "section";

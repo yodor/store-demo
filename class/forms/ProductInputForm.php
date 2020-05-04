@@ -23,7 +23,8 @@ class ProductInputForm extends InputForm
 
         $field = DataInputFactory::Create(DataInputFactory::SELECT, "section", "Секция", 1);
         $rend = $field->getRenderer();
-        $rend->setIterator(new SectionsBean());
+        $sb = new SectionsBean();
+        $rend->setIterator($sb->query());
         $rend->list_key = "section_title";
         $rend->list_label = "section_title";
         $this->addField($field);
@@ -31,7 +32,7 @@ class ProductInputForm extends InputForm
         $field = DataInputFactory::Create(DataInputFactory::NESTED_SELECT, "catID", "Категория", 1);
         $bean1 = new ProductCategoriesBean();
         $rend = $field->getRenderer();
-        $rend->setIterator($bean1);
+        $rend->setIterator($bean1->query());
         $rend->list_key = "catID";
         $rend->list_label = "category_name";
 
@@ -39,14 +40,16 @@ class ProductInputForm extends InputForm
 
         $field = DataInputFactory::Create(DataInputFactory::SELECT, "brand_name", "Марка", 1);
         $rend = $field->getRenderer();
-        $rend->setIterator(new BrandsBean());
+        $brands = new BrandsBean();
+        $rend->setIterator($brands->query());
         $rend->list_key = "brand_name";
         $rend->list_label = "brand_name";
         $this->addField($field);
 
         $field = DataInputFactory::Create(DataInputFactory::SELECT, "class_name", "Продуктов клас", 0);
         $rend = $field->getRenderer();
-        $rend->setIterator(new ProductClassesBean());
+        $pcb = new ProductClassesBean();
+        $rend->setIterator($pcb->query());
         $rend->list_key = "class_name";
         $rend->list_label = "class_name";
         $this->addField($field);
@@ -107,7 +110,7 @@ class ProductInputForm extends InputForm
         $field1->setSource($features_source);
 
         $renderer = new TextField();
-        $renderer->setIterator($features_source);
+        $renderer->setIterator($features_source->query());
         $field1->setRenderer($renderer);
 
         $field1->setValidator(new EmptyValueValidator());

@@ -46,8 +46,8 @@ class ClassAttributeFieldAjaxHandler extends JSONRequestHandler
     public function _render(JSONResponse $req)
     {
         $field = new ArrayDataInput("value", "Category Attributes", 0);
-        $field->allow_dynamic_addition = false;
-        $field->source_label_visible = true;
+        $field->allow_dynamic_addition = FALSE;
+        $field->source_label_visible = TRUE;
 
 
         $bean1 = new ClassAttributeValuesBean();
@@ -75,7 +75,8 @@ class ClassAttributeField extends DataSourceField implements IArrayFieldRenderer
     {
         parent::__construct();
         $this->setItemRenderer(new ClassAttributeItem());
-        $this->setIterator(new ClassAttributesBean());
+        $cab = new ClassAttributesBean();
+        $this->setIterator($cab->query());
         $this->list_key = "caID";
         $this->list_label = "attribute_name";
         RequestController::addAjaxHandler(new ClassAttributeFieldAjaxHandler());
@@ -91,20 +92,20 @@ class ClassAttributeField extends DataSourceField implements IArrayFieldRenderer
     public function setCategoryID($catID)
     {
         $this->catID = $catID;
-        $this->data_bean->select()->where = "ca.catID='$catID' AND ma.maID=ca.maID";
-        $this->data_bean->select()->fields = " ca.*, ma.name as attribute_name, ma.unit, ma.type ";
-        $this->data_bean->select()->from = " ca, attributes ma ";
+        $this->iterator->select->where = "ca.catID='$catID' AND ma.maID=ca.maID";
+        $this->iterator->select->fields = " ca.*, ma.name as attribute_name, ma.unit, ma.type ";
+        $this->iterator->select->from = " ca, attributes ma ";
     }
 
     public function setProductID($prodID)
     {
         $this->prodID = (int)$prodID;
         if ($this->prodID > 0) {
-            $this->data_bean->select()->where = "ma.maID=ca.maID AND ca.catID='{$this->catID}'";
-            $this->data_bean->select()->from.= " ca LEFT JOIN class_attribute_values cav ON ca.caID = cav.caID , attributes ma ";
-            $this->data_bean->select()->group_by = "ca.caID";
-            $this->data_bean->select()->having = "(cav.prodID='{$this->prodID}' OR cav.prodID IS NULL)";
-            $this->data_bean->select()->fields = "ca.*, ma.name as attribute_name, ma.unit, ma.type, cav.value, cav.prodID";
+            $this->iterator->select->where = "ma.maID=ca.maID AND ca.catID='{$this->catID}'";
+            $this->iterator->select->from .= " ca LEFT JOIN class_attribute_values cav ON ca.caID = cav.caID , attributes ma ";
+            $this->iterator->select->group_by = "ca.caID";
+            $this->iterator->select->having = "(cav.prodID='{$this->prodID}' OR cav.prodID IS NULL)";
+            $this->iterator->select->fields = "ca.*, ma.name as attribute_name, ma.unit, ma.type, cav.value, cav.prodID";
         }
     }
 
@@ -129,32 +130,21 @@ class ClassAttributeField extends DataSourceField implements IArrayFieldRenderer
         if ($this->catID < 1) {
 
             echo tr("Select product category first");
-
             return;
         }
 
+        $num = $this->iterator->exec();
 
-        if ($this->data_bean instanceof IDataBean) {
-
-            $source_fields = $this->data_bean->fields();
-
-            if (!in_array($this->list_key, $source_fields)) throw new Exception("List Key '{$this->list_key}' not found in data source fields");
-
-            $this->qry = $this->data_bean->query();
-
-            $num = $this->qry->exec();
-
-            if ($num < 1) {
-                echo "Selected category does not provide optional attributes";
-                return;
-            }
-
-            $this->startRenderItems();
-
-            $this->renderItems();
-
-            $this->finishRenderItems();
+        if ($num < 1) {
+            echo "Selected category does not provide optional attributes";
+            return;
         }
+
+        $this->startRenderItems();
+
+        $this->renderItems();
+
+        $this->finishRenderItems();
 
     }
 
@@ -202,11 +192,11 @@ class ClassAttributeField extends DataSourceField implements IArrayFieldRenderer
             $field_values = array($field_values);
         }
 
-        $prkey = $this->data_bean->key();
+        $prkey = $this->iterator->key();
         $index = 0;
 
 
-        while ($data_row = $this->qry->next()) {
+        while ($data_row = $this->iterator->next()) {
 
             $id = $data_row["caID"];
 

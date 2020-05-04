@@ -55,8 +55,8 @@ echo "<div class='column main'>";
 $item_row = array();
 while ($$nb->fetchNext($item_row)) {
     $itemID = $item_row[$nb->key()];
-    trbean($itemID, "item_title", $item_row, $nb);
-    trbean($itemID, "content", $item_row, $nb);
+    trbean($itemID, "item_title", $item_row, $nb->getTableName());
+    trbean($itemID, "content", $item_row, $nb->getTableName());
 
     echo "<div class='item_view' itemID='$itemID'>";
     echo "<div class='title'>";

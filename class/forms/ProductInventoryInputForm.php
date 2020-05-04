@@ -21,8 +21,8 @@ class ProductInventoryInputForm extends InputForm
     {
 
         $field = DataInputFactory::Create(DataInputFactory::SELECT, "pclrID", "Цветова схема", 0);
-        $field->getRenderer()->setIterator(new ProductColorsBean());
-
+        $colors = new ProductCategoriesBean();
+        $field->getRenderer()->setIterator($colors->query());
 
         $field->getRenderer()->list_key = "pclrID";
         $field->getRenderer()->list_label = "color";
@@ -31,7 +31,8 @@ class ProductInventoryInputForm extends InputForm
 
 
         $field = DataInputFactory::Create(DataInputFactory::SELECT, "size_value", "Оразмеряване", 0);
-        $field->getRenderer()->setIterator(new StoreSizesBean());
+        $sizes = new StoreSizesBean();
+        $field->getRenderer()->setIterator($sizes->query());
         $field->getRenderer()->list_key = "size_value";
         $field->getRenderer()->list_label = "size_value";
 
@@ -67,8 +68,8 @@ class ProductInventoryInputForm extends InputForm
 
         $rend = new SourceRelatedField();
 
-
-        $rend->setIterator(new ClassAttributesBean());
+        $bean = new ClassAttributesBean();
+        $rend->setIterator($bean->query());
 
         $rend->list_key = "caID";
         $rend->list_label = "attribute_name";

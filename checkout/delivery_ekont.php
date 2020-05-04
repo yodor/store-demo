@@ -6,18 +6,7 @@ include_once("class/beans/EkontAddressesBean.php");
 
 class EkontOfficeFormProcessor extends FormProcessor
 {
-    protected $bean = NULL;
-    protected $editID = -1;
 
-    public function setBean(DBTableBean $bean)
-    {
-        $this->bean = $bean;
-    }
-
-    public function setEditID($editID)
-    {
-        $this->editID = (int)$editID;
-    }
 
     public function processImpl(InputForm $form)
     {
@@ -82,13 +71,7 @@ echo "<div class='item ekont_office $empty'>";
 
 echo "<div class='caption'>" . tr("Избран офис на Еконт") . "</div>";
 
-<<<<<<< HEAD
-$frend->startRender();
-echo "<div class='selected_office'>";
-$frend->renderField($form->getField("office"));
-echo "</div>";
-$frend->finishRender();
-=======
+
     $frend->startRender();
     echo "<div class='selected_office'>";
     echo str_replace("\r","<br>",$form->getField("office")->getValue());
@@ -96,7 +79,6 @@ $frend->finishRender();
     echo "</div>";
     $frend->finishRender();
    
->>>>>>> origin/master
 
 
 echo "<a class='DefaultButton' href='javascript:changeEkontOffice();'>" . tr("Изберете друг офис") . "</a>";
@@ -104,28 +86,6 @@ echo "<a class='DefaultButton' href='javascript:changeEkontOffice();'>" . tr("И
 echo "</div>";//ekont_office
 
 
-<<<<<<< HEAD
-echo "<div class='item ekont_locator'>";
-echo "<div class='caption'>";
-echo tr("Изберете офис на Еконт за доставка");
-echo "</div>";
-?>
-<iframe id="ekont_frame" scrolling="no" frameborder="0" style="border: medium none; width: 800px; height: 450px;"
-        allowtransparency="true" src="http://www.bgmaps.com/templates/econt?office_type=all&shop_url=<?php
-echo SITE_URL; ?>"></iframe>
-<?php
-echo "</div>"; //ekont_locator
-
-
-echo "<div class='navigation'>";
-
-echo "<div class='slot left'>";
-echo "<a href='confirm.php'>";
-echo "<img src='" . SITE_ROOT . "images/cart_edit.png'>";
-echo "<div class='DefaultButton checkout_button' >" . tr("Назад") . "</div>";
-echo "</a>";
-echo "</div>";
-=======
 // $back_url = Session::get("checkout.navigation.back", $page->getPageURL());
 
 echo "<div class='navigation'>";
@@ -146,7 +106,7 @@ echo "<div class='navigation'>";
         echo "<div class='DefaultButton checkout_button'  >".tr("Продължи")."</div>";
         echo "</a>";
     echo "</div>";
->>>>>>> origin/master
+
 
 echo "<div class='slot center'>";
 echo "</div>";

@@ -9,9 +9,9 @@ class InvoiceDetailsFormProcessor extends FormProcessor
     protected $editID = -1;
     protected $userID = -1;
 
-    public function setEditID($editID)
+    public function setEditID(int $editID) : void
     {
-        $this->editID = (int)$editID;
+        $this->editID = $editID;
     }
 
     public function setUserID($userID)
@@ -19,7 +19,7 @@ class InvoiceDetailsFormProcessor extends FormProcessor
         $this->userID = (int)$userID;
     }
 
-    public function setBean(DBTableBean $bean)
+    public function setBean(DBTableBean $bean) : void
     {
         $this->bean = $bean;
     }

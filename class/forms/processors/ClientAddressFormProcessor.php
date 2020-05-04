@@ -9,15 +9,7 @@ class ClientAddressFormProcessor extends FormProcessor
     protected $editID = -1;
     protected $userID = -1;
 
-    public function setEditID($editID)
-    {
-        $this->editID = (int)$editID;
-    }
 
-    public function setBean(DBTableBean $bean)
-    {
-        $this->bean = $bean;
-    }
 
     public function setUserID($userID)
     {

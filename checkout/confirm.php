@@ -28,13 +28,6 @@ class RequireInvoiceInputForm extends InputForm
 class RequireInvoiceFormProcessor extends FormProcessor
 {
 
-    protected $bean = NULL;
-
-    public function setBean(DBTableBean $bean)
-    {
-        $this->bean = $bean;
-    }
-
     public function processImpl(InputForm $form)
     {
 
@@ -245,12 +238,10 @@ echo "</div>";
 
 
 echo "</div>";
-<<<<<<< HEAD
-$page->finishRender();
-=======
+
 
 Session::set("checkout.navigation.back", $page->getPageURL());
 
 $page->finishPage();
->>>>>>> origin/master
+
 ?>

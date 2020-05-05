@@ -30,10 +30,11 @@ class OrderStatusProcessor extends FormProcessor
         $ticket = $form->getField("ticket")->getValue();
         $email = $form->getField("email")->getValue();
 
-        $num = $orders->startIterator("WHERE order_identifier='$ticket' AND client_identifier='$email' LIMIT 1");
+        $qry = $orders->query();
+        $qry->select->where = " order_identifier='$ticket' AND client_identifier='$email' ";
+        $qry->select->limit = " 1 ";
 
-        $order_row = array();
-        if ($num > 0 && $orders->fetchNext($order_row)) {
+        if ($qry->exec() > 0 && $order_row = $qry->next()) {
 
             $this->order = $order_row;
             $this->orderID = $order_row[$orders->key()];

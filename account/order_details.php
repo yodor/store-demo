@@ -34,14 +34,17 @@ $order = NULL;
 
 if (isset($_GET["orderID"])) {
     $orderID = (int)$_GET["orderID"];
-    $num = $orders->startIterator("WHERE orderID='$orderID' AND userID='$userID'");
+    $qry = $orders->query();
+    $qry->select->where = " orderID='$orderID' AND userID='$userID' ";
+    $qry->select->limit = " 1 ";
+    $num = $qry->exec();
     if ($num < 1) {
         Session::SetAlert("Няма достъп до тази поръчка");
         header("Location: orders.php");
         exit;
     }
-    $order = array();
-    $orders->fetchNext($order);
+    $order = $orders->next();
+
 }
 
 
@@ -88,7 +91,9 @@ echo "</div>";
 
 echo "</div>";    
 
-$items->startIterator("WHERE orderID='$orderID'");
+$qry = $items->queryField("orderID", $orderID);
+$qry->exec();
+
 echo "<div class='order_items'>";
 
 echo "<div class='line'>";
@@ -101,8 +106,8 @@ echo "<span>" . tr("Сума") . "</span>";
 echo "</div>";
 
 $pos = 0;
-$item = array();
-while ($items->fetchNext($item)) {
+
+while ($item = $qry->next()) {
     $pos++;
     echo "<div class='line'>";
 

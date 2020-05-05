@@ -24,7 +24,7 @@ class RegisterClientFormProcessor extends FormProcessor
         parent::processImpl($form);
         if ($this->status != IFormProcessor::STATUS_OK) return;
 
-        $email = $form->getField("email")->getValue();
+        $email = $form->getInput("email")->getValue();
         $users = new UsersBean();
 
         if ($this->editID < 1) {
@@ -32,14 +32,14 @@ class RegisterClientFormProcessor extends FormProcessor
             $email_exists = $users->emailExists($email);
 
             if ($email_exists) {
-                $form->getField("email")->setError("Този имейл адрес е вече регистриран.");
+                $form->getInput("email")->setError("Този имейл адрес е вече регистриран.");
                 throw new Exception(tr("Вие избрахте регистрирация, но имейлът е вече регистриран при нас. Ако сте регистриран клиент изберете вход за регистриран потребител."));
             }
 
             $urow = array();
-            $urow["fullname"] = $form->getField("fullname")->getValue();
-            $urow["email"] = strtolower(trim($form->getField("email")->getValue()));
-            $urow["phone"] = $form->getField("phone")->getValue();
+            $urow["fullname"] = $form->getInput("fullname")->getValue();
+            $urow["email"] = strtolower(trim($form->getInput("email")->getValue()));
+            $urow["phone"] = $form->getInput("phone")->getValue();
 
             $password = Authenticator::RandomToken(8);
 
@@ -61,7 +61,7 @@ class RegisterClientFormProcessor extends FormProcessor
             $existing_data = $users->getByID($this->editID);
             $existing_email = $existing_data["email"];
 
-            $email = strtolower(trim($form->getField("email")->getValue()));
+            $email = strtolower(trim($form->getInput("email")->getValue()));
 
             if (strcmp($email, $existing_email) != 0) {
                 //check if email exists and is for different ID
@@ -73,9 +73,9 @@ class RegisterClientFormProcessor extends FormProcessor
 
 
             $urow = array();
-            $urow["fullname"] = $form->getField("fullname")->getValue();
+            $urow["fullname"] = $form->getInput("fullname")->getValue();
             $urow["email"] = $email;
-            $urow["phone"] = $form->getField("phone")->getValue();
+            $urow["phone"] = $form->getInput("phone")->getValue();
 
             if (!$users->update($this->editID, $urow)) throw new Exception("Грешка при обновяване на профила: " . $users->getDB()->getError());
 

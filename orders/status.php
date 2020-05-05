@@ -27,8 +27,8 @@ class OrderStatusProcessor extends FormProcessor
 
         $orders = new OrdersBean();
 
-        $ticket = $form->getField("ticket")->getValue();
-        $email = $form->getField("email")->getValue();
+        $ticket = $form->getInput("ticket")->getValue();
+        $email = $form->getInput("email")->getValue();
 
         $qry = $orders->query();
         $qry->select->where = " order_identifier='$ticket' AND client_identifier='$email' ";

@@ -12,13 +12,13 @@ class DeliveryConfigForm extends InputForm
         $field = DataInputFactory::Create(DataInputFactory::TEXT, Cart::DELIVERY_USERADDRESS, Cart::getDeliveryTypeText(Cart::DELIVERY_USERADDRESS), 1);
         $field->setValidator(new NumericValidator());
         // 	    $field->getRenderer()->addon_content = "лв.";
-        $this->addField($field);
+        $this->addInput($field);
 
 
         $field = DataInputFactory::Create(DataInputFactory::TEXT, Cart::DELIVERY_EKONTOFFICE, Cart::getDeliveryTypeText(Cart::DELIVERY_EKONTOFFICE), 1);
         $field->setValidator(new NumericValidator());
         // 	    $field->getRenderer()->addon_content = "лв.";
-        $this->addField($field);
+        $this->addInput($field);
 
     }
 

@@ -27,7 +27,7 @@ class ProductInputForm extends InputForm
         $rend->setIterator($sb->query());
         $rend->list_key = "section_title";
         $rend->list_label = "section_title";
-        $this->addField($field);
+        $this->addInput($field);
 
         $field = DataInputFactory::Create(DataInputFactory::NESTED_SELECT, "catID", "Категория", 1);
         $bean1 = new ProductCategoriesBean();
@@ -36,7 +36,7 @@ class ProductInputForm extends InputForm
         $rend->list_key = "catID";
         $rend->list_label = "category_name";
 
-        $this->addField($field);
+        $this->addInput($field);
 
         $field = DataInputFactory::Create(DataInputFactory::SELECT, "brand_name", "Марка", 1);
         $rend = $field->getRenderer();
@@ -44,7 +44,7 @@ class ProductInputForm extends InputForm
         $rend->setIterator($brands->query());
         $rend->list_key = "brand_name";
         $rend->list_label = "brand_name";
-        $this->addField($field);
+        $this->addInput($field);
 
         $field = DataInputFactory::Create(DataInputFactory::SELECT, "class_name", "Продуктов клас", 0);
         $rend = $field->getRenderer();
@@ -52,11 +52,11 @@ class ProductInputForm extends InputForm
         $rend->setIterator($pcb->query());
         $rend->list_key = "class_name";
         $rend->list_label = "class_name";
-        $this->addField($field);
+        $this->addInput($field);
 
 
         $field = DataInputFactory::Create(DataInputFactory::TEXT, "product_name", "Име на продукта", 1);
-        $this->addField($field);
+        $this->addInput($field);
 
         //         $field = DataInputFactory::CreateField(DataInputFactory::TEXTFIELD, "product_code", "Product Code", 1);
         // 	$this->addField($field);
@@ -79,13 +79,13 @@ class ProductInputForm extends InputForm
         // 	$this->addField($field);
 
         $field = DataInputFactory::Create(DataInputFactory::CHECKBOX, "visible", "Видим (в продажба)", 0);
-        $this->addField($field);
+        $this->addInput($field);
 
         // 	$field = DataInputFactory::CreateField(DataInputFactory::CHECKBOX, "promotion", "Promotion", 0);
         // 	$this->addField($field);
 
         $field = DataInputFactory::Create(DataInputFactory::MCE_TEXTAREA, "product_summary", "Описание", 0);
-        $this->addField($field);
+        $this->addInput($field);
 
 
         // 	$field = DataInputFactory::CreateField(DataInputFactory::MCE_TEXTAREA, "product_description", "Product Description", 0);
@@ -93,7 +93,7 @@ class ProductInputForm extends InputForm
 
 
         $field = DataInputFactory::Create(DataInputFactory::TEXTAREA, "keywords", "Ключови думи", 0);
-        $this->addField($field);
+        $this->addInput($field);
 
 
         // 	$input = DataInputFactory::CreateField(DataInputFactory::SESSION_IMAGE, "photo","Photo", 0);
@@ -116,7 +116,7 @@ class ProductInputForm extends InputForm
         $field1->setValidator(new EmptyValueValidator());
         $field1->setProcessor(new BeanPostProcessor());
 
-        $this->addField($field1);
+        $this->addInput($field1);
 
 
         // 	$field = new ArrayInputField("value", "Optional Attributes", 0);

@@ -21,7 +21,7 @@ class RequireInvoiceInputForm extends InputForm
         $field = DataInputFactory::Create(DataInputFactory::CHECKBOX, "require_invoice", "Да се издаде фактура", 0);
 
         $field->getRenderer()->setFieldAttribute("onClick", "javascript:this.form.submit()");
-        $this->addField($field);
+        $this->addInput($field);
     }
 }
 
@@ -44,7 +44,7 @@ class RequireInvoiceFormProcessor extends FormProcessor
             exit;
         }
 
-        $cart->setRequireInvoice($form->getField("require_invoice")->getValue());
+        $cart->setRequireInvoice($form->getInput("require_invoice")->getValue());
 
     }
 
@@ -57,7 +57,7 @@ class OrderNoteInputForm extends InputForm
         parent::__construct();
         $field = DataInputFactory::Create(DataInputFactory::TEXTAREA, "note", "Забележка", 0);
         $field->getRenderer()->setFieldAttribute("maxlength", "200");
-        $this->addField($field);
+        $this->addInput($field);
     }
 }
 
@@ -74,7 +74,7 @@ class OrderNoteFormProcessor extends FormProcessor
         $cart = $page->getCart();
 
 
-        $cart->setNote($form->getField("note")->getValue());
+        $cart->setNote($form->getInput("note")->getValue());
 
         header("Location: complete.php");
         exit;
@@ -94,10 +94,10 @@ $reqform = new RequireInvoiceInputForm();
 $idb = new InvoiceDetailsBean();
 $idbrow = $idb->findFieldValue("userID", $page->getUserID());
 if (!$idbrow) {
-    $reqform->getField("require_invoice")->setValue(false);
+    $reqform->getInput("require_invoice")->setValue(false);
 }
 else {
-    $reqform->getField("require_invoice")->setValue($cart->getRequireInvoice());
+    $reqform->getInput("require_invoice")->setValue($cart->getRequireInvoice());
 }
 
 $reqproc = new RequireInvoiceFormProcessor();
@@ -112,7 +112,7 @@ $reqproc->processForm($reqform, "require_invoice");
 
 //order note 
 $noteform = new OrderNoteInputForm();
-$noteform->getField("note")->setValue($cart->getNote());
+$noteform->getInput("note")->setValue($cart->getNote());
 
 $nfrend = new FormRenderer();
 $nfrend->setName("OrderNote");

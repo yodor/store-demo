@@ -9,7 +9,7 @@ class EkontOfficeInputForm extends InputForm
 
         $field = DataInputFactory::Create(DataInputFactory::TEXTAREA, "office", "Избран офис", 0);
         $field->getRenderer()->setFieldAttribute("readonly", "1");
-        $this->addField($field);
+        $this->addInput($field);
 
 
     }
@@ -18,7 +18,7 @@ class EkontOfficeInputForm extends InputForm
     {
         echo "<div class='InvoiceDetailsList'>";
 
-        foreach ($this->getFields() as $index => $field) {
+        foreach ($this->getInputs() as $index => $field) {
             echo "<div class='address_item'>";
             echo "<label>" . tr($field->getLabel()) . ": </label>";
             $value = strip_tags(stripslashes($field->getValue()));

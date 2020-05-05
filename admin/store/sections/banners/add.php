@@ -28,11 +28,11 @@ $form = new PhotoInputForm();
 $field = new DataInput("link", "Link", 1);
 $field->setRenderer(new TextField());
 // $field->content_after = "<a class='ActionRenderer DynamicPageChooser' href='".ADMIN_ROOT."content/pages/list.php?chooser=1'>".tr("Choose Dynamic Page")."</a>";
-$form->addField($field);
+$form->addInput($field);
 $view = new InputFormView($photos, $form);
 
 //current version of dynamic page photos table is set to DBROWS
-$view->getForm()->getField("photo")->transact_mode = DataInput::TRANSACT_OBJECT;
+$view->getForm()->getInput("photo")->transact_mode = DataInput::TRANSACT_OBJECT;
 
 $view->getTransactor()->appendValue($ref_key, $ref_id);
 

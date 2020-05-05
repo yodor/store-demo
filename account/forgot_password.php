@@ -17,12 +17,12 @@ class ForgotPasswordProcessor extends FormProcessor
 
         if ($this->status != IFormProcessor::STATUS_OK) return;
 
-        $email = $form->getField("email")->getValue();
+        $email = $form->getInput("email")->getValue();
 
         global $users;
 
         if (!$users->emailExists($email)) {
-            $form->getField("email")->setError(tr("Този адрес не е регистриран при нас"));
+            $form->getInput("email")->setError(tr("Този адрес не е регистриран при нас"));
             throw new Exception(tr("Този адрес не е регистриран при нас"));
         }
 

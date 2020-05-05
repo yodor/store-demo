@@ -74,8 +74,8 @@ echo "<div class='caption'>" . tr("Избран офис на Еконт") . "</
 
     $frend->startRender();
     echo "<div class='selected_office'>";
-    echo str_replace("\r","<br>",$form->getField("office")->getValue());
-    $frend->renderField($form->getField("office"));
+    echo str_replace("\r","<br>",$form->getInput("office")->getValue());
+    $frend->renderInput($form->getInput("office"));
     echo "</div>";
     $frend->finishRender();
    

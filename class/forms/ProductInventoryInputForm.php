@@ -27,7 +27,7 @@ class ProductInventoryInputForm extends InputForm
         $field->getRenderer()->list_key = "pclrID";
         $field->getRenderer()->list_label = "color";
         $field->getValueTransactor()->renderer_source_copy_fields = array("color");
-        $this->addField($field);
+        $this->addInput($field);
 
 
         $field = DataInputFactory::Create(DataInputFactory::SELECT, "size_value", "Оразмеряване", 0);
@@ -38,22 +38,22 @@ class ProductInventoryInputForm extends InputForm
 
         $field->getRenderer()->addon_content = "<a class='ActionRenderer' action='inline-new' href='../../sizes/add.php'>" . tr("Нов код за оразмеряване") . "</a>";
 
-        $this->addField($field);
+        $this->addInput($field);
 
         $field = DataInputFactory::Create(DataInputFactory::TEXT, "stock_amount", "Стокова наличност", 1);
-        $this->addField($field);
+        $this->addInput($field);
 
         $field = DataInputFactory::Create(DataInputFactory::TEXT, "price", "Продажна цена", 0);
-        $this->addField($field);
+        $this->addInput($field);
 
         $field = DataInputFactory::Create(DataInputFactory::TEXT, "buy_price", "Покупна цена", 0);
-        $this->addField($field);
+        $this->addInput($field);
 
         $field = DataInputFactory::Create(DataInputFactory::TEXT, "old_price", "Стара цена", 0);
-        $this->addField($field);
+        $this->addInput($field);
 
         $field = DataInputFactory::Create(DataInputFactory::TEXT, "weight", "Тегло", 0);
-        $this->addField($field);
+        $this->addInput($field);
 
         $field = new ArrayDataInput("value", "Атрибути на класа", 0);
         $field->allow_dynamic_addition = false;
@@ -76,16 +76,16 @@ class ProductInventoryInputForm extends InputForm
 
         $field->setRenderer($rend);
 
-        $this->addField($field);
+        $this->addInput($field);
     }
 
     public function setProductID($prodID)
     {
         $this->prodID = (int)$prodID;
 
-        $this->getField("pclrID")->getRenderer()->getIterator()->select->where = " prodID='{$this->prodID}' ";
+        $this->getInput("pclrID")->getRenderer()->getIterator()->select->where = " prodID='{$this->prodID}' ";
 
-        $this->getField("pclrID")->getRenderer()->addon_content = "<a class='ActionRenderer' action='inline-new' href='../color_gallery/add.php?prodID={$this->prodID}'>" . tr("Нова цветова схема") . "</a>";
+        $this->getInput("pclrID")->getRenderer()->addon_content = "<a class='ActionRenderer' action='inline-new' href='../color_gallery/add.php?prodID={$this->prodID}'>" . tr("Нова цветова схема") . "</a>";
 
         // 	  $this->getField("size_value")->getRenderer()->setFilter(" WHERE prodID='{$this->prodID}' ");
 
@@ -93,7 +93,7 @@ class ProductInventoryInputForm extends InputForm
         $this->product = $prods->getByID($this->prodID);
 
 
-        $value_field = $this->getField("value");
+        $value_field = $this->getInput("value");
 
         $rend = $value_field->getRenderer();
 
@@ -104,10 +104,10 @@ class ProductInventoryInputForm extends InputForm
         $rend->getIterator()->select->from.= " ca LEFT JOIN attributes attr ON attr.name = ca.attribute_name ";
         $rend->getIterator()->select->fields = " ca.*, attr.unit as attribute_unit, attr.type attribute_type ";
 
-        $this->getField("price")->setValue($this->product["price"]);
-        $this->getField("buy_price")->setValue($this->product["buy_price"]);
-        $this->getField("old_price")->setValue($this->product["old_price"]);
-        $this->getField("weight")->setValue($this->product["weight"]);
+        $this->getInput("price")->setValue($this->product["price"]);
+        $this->getInput("buy_price")->setValue($this->product["buy_price"]);
+        $this->getInput("old_price")->setValue($this->product["old_price"]);
+        $this->getInput("weight")->setValue($this->product["weight"]);
 
     }
 
@@ -116,7 +116,7 @@ class ProductInventoryInputForm extends InputForm
 
         $item_row = parent::loadBeanData($editID, $bean);
 
-        $value_field = $this->getField("value");
+        $value_field = $this->getInput("value");
 
         $rend = $value_field->getRenderer();
 

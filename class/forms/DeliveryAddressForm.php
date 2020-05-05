@@ -17,7 +17,7 @@ class DeliveryAddressForm extends InputForm
         $f12->setValidator(new EmptyValueValidator());
         $f12->setProcessor(new BeanPostProcessor());
 
-        $this->addField($f12);
+        $this->addInput($f12);
 
     }
 

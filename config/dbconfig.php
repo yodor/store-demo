@@ -20,7 +20,7 @@ DBConnections::addConnection($prop);
 // $prop1 = new DBConnectionProperties();
 // $prop1->driver = "MySQLi";
 // 
-// $prop1->database="demo";
+// $prop1->database="sparkbox-demo";
 // $prop1->user="demo1";
 // $prop1->pass="d3m0d3m0";
 // $prop1->host="localhost";

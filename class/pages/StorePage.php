@@ -76,7 +76,7 @@ class StorePage extends SparkPage
         $search_fields = array("relation.product_name", "relation.product_summary", "relation.keywords", "relation.color", "relation.inventory_attributes");
 
         $ksc = new KeywordSearchComponent($search_fields, "relation");
-        $ksc->getForm()->getInput("keyword")->getRenderer()->setFieldAttribute("placeholder", "Търси ...");
+        $ksc->getForm()->getInput("keyword")->getRenderer()->setInputAttribute("placeholder", "Търси ...");
         $ksc->getForm()->getRenderer()->setAttribute("method", "get");
         $ksc->getForm()->getRenderer()->setAttribute("action", SITE_ROOT . "products.php");
         $ksc->getForm()->setCompareExpression("relation.inventory_attributes", array("%:{keyword}|%", "%:{keyword}"));

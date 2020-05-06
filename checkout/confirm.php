@@ -20,7 +20,7 @@ class RequireInvoiceInputForm extends InputForm
         parent::__construct();
         $field = DataInputFactory::Create(DataInputFactory::CHECKBOX, "require_invoice", "Да се издаде фактура", 0);
 
-        $field->getRenderer()->setFieldAttribute("onClick", "javascript:this.form.submit()");
+        $field->getRenderer()->setInputAttribute("onClick", "javascript:this.form.submit()");
         $this->addInput($field);
     }
 }
@@ -56,7 +56,7 @@ class OrderNoteInputForm extends InputForm
     {
         parent::__construct();
         $field = DataInputFactory::Create(DataInputFactory::TEXTAREA, "note", "Забележка", 0);
-        $field->getRenderer()->setFieldAttribute("maxlength", "200");
+        $field->getRenderer()->setInputAttribute("maxlength", "200");
         $this->addInput($field);
     }
 }

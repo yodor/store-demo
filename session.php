@@ -1,28 +1,19 @@
 <?php
-// define("DEBUG_OUTPUT", 0); //enable debugging output using error_log
+define("DEBUG_OUTPUT", 1); //enable debugging output using error_log
 
-//uncomment below if deploying in a subfolder of document root
-$install_path = dirname(__FILE__);
 
-//additional folders to add to the include_path if doucument root is different from visible exported web space ie  ~username/ 
-//$local_include_path = dirname(__FILE__);
+$install_path = __DIR__;
 
-include_once("lib/config/sparkbox.php");
-// include_once("global_beans.php");
+$includes = array();
+$includes[] = realpath($install_path. "../../sparkbox/lib" ); //sparkbox
+$includes[] = realpath($install_path); //local classes
+$includes[] = "."; //current www folder
+ini_set("include_path", implode(PATH_SEPARATOR, $includes));
+//echo ini_get("include_path");
 
-// echo "Install Path: ".INSTALL_PATH;
-// echo "<BR>";
-// echo "Lib Path: ".LIB_PATH;
-// echo "<BR>";
-// echo "Site Root URL: ".SITE_ROOT;
-// echo "<BR>";
-// echo "Lib Root URL: ".LIB_ROOT;
-// echo "<BR>";
-// echo "Cache Root: ".CACHE_ROOT;
-// echo "<BR>";
-// 
-// $defines->dump();
+include_once("sparkbox.php");
 
+//$defines->dump();
 function formatPrice($price)
 {
     return sprintf("%0.2f лв", $price);

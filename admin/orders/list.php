@@ -1,7 +1,7 @@
 <?php
-include_once("lib/components/TableView.php");
+include_once("components/TableView.php");
 
-include_once("lib/beans/UsersBean.php");
+include_once("beans/UsersBean.php");
 include_once("class/beans/ClientAddressesBean.php");
 include_once("class/beans/EkontAddressesBean.php");
 include_once("class/beans/InvoiceDetailsBean.php");
@@ -12,11 +12,11 @@ include_once("class/components/renderers/cells/OrderDeliveryCellRenderer.php");
 include_once("class/components/renderers/cells/OrderClientCellRenderer.php");
 include_once("class/components/renderers/cells/OrderInvoiceCellRenderer.php");
 
-include_once("lib/components/renderers/cells/BooleanFieldCellRenderer.php");
-include_once("lib/components/renderers/cells/DateFieldCellRenderer.php");
+include_once("components/renderers/cells/BooleanFieldCellRenderer.php");
+include_once("components/renderers/cells/DateFieldCellRenderer.php");
 
-include_once("lib/components/KeywordSearchComponent.php");
-include_once("lib/iterators/SQLQuery.php");
+include_once("components/KeywordSearchComponent.php");
+include_once("iterators/SQLQuery.php");
 
 
 $ekont_addresses = new EkontAddressesBean();

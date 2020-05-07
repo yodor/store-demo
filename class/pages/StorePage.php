@@ -1,20 +1,20 @@
 <?php
-include_once("lib/pages/SparkPage.php");
+include_once("pages/SparkPage.php");
 
-include_once("lib/utils/MainMenu.php");
-include_once("lib/components/MenuBarComponent.php");
-include_once("lib/components/KeywordSearchComponent.php");
+include_once("utils/MainMenu.php");
+include_once("components/MenuBarComponent.php");
+include_once("components/KeywordSearchComponent.php");
 
-include_once("lib/forms/InputForm.php");
-include_once("lib/forms/renderers/FormRenderer.php");
-include_once("lib/forms/processors/FormProcessor.php");
-include_once("lib/input/DataInputFactory.php");
+include_once("forms/InputForm.php");
+include_once("forms/renderers/FormRenderer.php");
+include_once("forms/processors/FormProcessor.php");
+include_once("input/DataInputFactory.php");
 
-include_once("lib/beans/MenuItemsBean.php");
+include_once("beans/MenuItemsBean.php");
 include_once("class/beans/SectionsBean.php");
 
 include_once("class/utils/Cart.php");
-include_once("lib/auth/UserAuthenticator.php");
+include_once("auth/UserAuthenticator.php");
 
 class StorePage extends SparkPage
 {

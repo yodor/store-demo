@@ -1,13 +1,13 @@
 <?php
 include_once("session.php");
 include_once("class/pages/DemoPage.php");
-include_once("lib/beans/DynamicPagePhotosBean.php");
-// include_once("lib/beans/DynamicPagesBean.php");
-include_once("lib/beans/MenuItemsBean.php");
+include_once("beans/DynamicPagePhotosBean.php");
+// include_once("beans/DynamicPagesBean.php");
+include_once("beans/MenuItemsBean.php");
 
 // function dumpJS()
 // {
-//   echo "<script type='text/javascript' src='".SITE_ROOT."lib/js/GalleryView.js'></script>";
+//   echo "<script type='text/javascript' src='".SITE_ROOT."js/GalleryView.js'></script>";
 //   echo "\n";
 // }
 
@@ -25,7 +25,7 @@ $page_id = (int)$_GET["page_id"];
 
 try {
     @include_once("class/beans/$page_class.php");
-    @include_once("lib/beans/$page_class.php");
+    @include_once("beans/$page_class.php");
     $b = new $page_class;
 
     $prkey = $b->key();

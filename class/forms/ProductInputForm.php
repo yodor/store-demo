@@ -1,6 +1,6 @@
 <?php
-include_once("lib/forms/InputForm.php");
-include_once("lib/input/DataInputFactory.php");
+include_once("forms/InputForm.php");
+include_once("input/DataInputFactory.php");
 
 include_once("class/beans/BrandsBean.php");
 include_once("class/beans/SectionsBean.php");
@@ -12,7 +12,7 @@ include_once("class/beans/ProductPhotosBean.php");
 
 include_once("class/beans/ClassAttributeValuesBean.php");
 include_once("class/input/renderers/ClassAttributeField.php");
-include_once("lib/input/transactors/CustomFieldTransactor.php");
+include_once("input/transactors/CustomFieldTransactor.php");
 
 
 class ProductInputForm extends InputForm

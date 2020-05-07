@@ -1,24 +1,16 @@
 <?php
-include_once("lib/mailers/Mailer.php");
-include_once("lib/beans/UsersBean.php");
+include_once("mailers/Mailer.php");
+include_once("beans/UsersBean.php");
 
 class ForgotPasswordMailer extends Mailer
 {
 
-    public function __construct($email, $random_pass)
+    public function __construct(string $email, string $random_pass)
     {
 
-<<<<<<< HEAD
         $users = new UsersBean();
         $userID = $users->email2id($email);
         $user_row = $users->getByID($userID);
-        $user_details = new UserDetailsBean();
-        $ud_row = $user_details->getByRef("userID", $userID);
-=======
-	$users = new UsersBean();
-	$userID = $users->email2id($email);
-	$user_row = $users->getByID($userID);
->>>>>>> origin/master
 
         $this->to = $user_row["email"];
 
@@ -29,7 +21,6 @@ class ForgotPasswordMailer extends Mailer
         $message .= "Изпращаме Ви това съобщение във връзка с Вашата заявка за подновяване на паролата на " . SITE_DOMAIN . "";
 
         $message .= "\r\n\r\n<br><br>";
-
 
         $message .= "Може да ползвате следните име и парола за достъп: ";
         $message .= "<br><br>\r\n\r\n";
@@ -42,9 +33,7 @@ class ForgotPasswordMailer extends Mailer
         $message .= "Натиснете <a href='" . SITE_URL . SITE_ROOT . "account/login.php'>Тук</a> за вход или въведете слдения URL във Вашият браузър: ";
         $message .= SITE_URL . SITE_ROOT . "login.php";
 
-
         $message .= "<br><br>\r\n\r\n";
-
 
         $message .= "<BR><BR>\r\n\r\nС Уважение,<BR>\r\n";
         $message .= SITE_DOMAIN;
@@ -57,7 +46,6 @@ class ForgotPasswordMailer extends Mailer
 
         $message .= "\r\n\r\n<br><br>";
 
-
         $message .= "You can use the following to access your details: ";
         $message .= "<br><br>\r\n\r\n";
         $message .= "Username: " . $user_row["email"];
@@ -69,9 +57,7 @@ class ForgotPasswordMailer extends Mailer
         $message .= "Click <a href='" . SITE_URL . SITE_ROOT . "account/login.php'>Here</a> login or open this URL in your browser window: ";
         $message .= SITE_URL . SITE_ROOT . "login.php";
 
-
         $message .= "<br><br>\r\n\r\n";
-
 
         $message .= "<BR><BR>\r\n\r\nSincerely,<BR>\r\n";
         $message .= SITE_DOMAIN;
@@ -81,9 +67,5 @@ class ForgotPasswordMailer extends Mailer
     }
 
 }
-<<<<<<< HEAD
 
 ?>
-=======
-?>
->>>>>>> origin/master

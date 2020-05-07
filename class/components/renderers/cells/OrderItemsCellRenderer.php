@@ -1,25 +1,25 @@
 <?php
-include_once("lib/components/Component.php");
-include_once("lib/components/renderers/ICellRenderer.php");
-include_once("lib/components/TableColumn.php");
+include_once("components/renderers/cells/TableCellRenderer.php");
 include_once("class/beans/OrderItemsBean.php");
 
-class OrderItemsCellRenderer extends TableCellRenderer implements ICellRenderer
+class OrderItemsCellRenderer extends TableCellRenderer
 {
 
-    public function renderCell(array &$row, TableColumn $tc)
+    protected $orderID = -1;
+
+    public function setData(array &$row, TableColumn $tc)
     {
+        parent::setData($row, $tc);
+        $this->orderID = $row["orderID"];
 
-        $this->processAttributes($row, $tc);
+    }
 
-        $this->startRender();
-
-        $orderID = $row["orderID"];
-
+    protected function renderImpl()
+    {
 
         global $order_items;
 
-        $qry = $order_items->queryField("orderID", $orderID);
+        $qry = $order_items->queryField("orderID", $this->orderID);
         $qry->select->order_by = " position ASC ";
         $qry->exec();
 
@@ -80,7 +80,7 @@ class OrderItemsCellRenderer extends TableCellRenderer implements ICellRenderer
 
         echo "</div>";
 
-        $this->finishRender();
+
     }
 
 }

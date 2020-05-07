@@ -1,5 +1,5 @@
 <?php
-include_once("lib/beans/DatedPublicationBean.php");
+include_once("beans/DatedPublicationBean.php");
 
 class NewsItemsBean extends DatedPublicationBean
 {

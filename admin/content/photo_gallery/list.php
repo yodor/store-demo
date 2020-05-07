@@ -4,7 +4,7 @@ include_once("class/pages/AdminPage.php");
 
 include_once("class/beans/GalleryPhotosBean.php");
 
-include_once("lib/components/GalleryView.php");
+include_once("components/GalleryView.php");
 
 
 $menu = array();

@@ -1,8 +1,8 @@
 <?php
 include_once("session.php");
 include_once("class/pages/AdminPage.php");
-include_once("lib/forms/MenuItemInputForm.php");
-include_once("lib/beans/MenuItemsBean.php");
+include_once("forms/MenuItemInputForm.php");
+include_once("beans/MenuItemsBean.php");
 
 
 $menu = array();

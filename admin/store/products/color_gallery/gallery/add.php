@@ -4,7 +4,7 @@ include_once("class/pages/AdminPage.php");
 include_once("class/beans/ProductColorsBean.php");
 include_once("class/beans/ProductColorPhotosBean.php");
 
-include_once("lib/forms/PhotoInputForm.php");
+include_once("forms/PhotoInputForm.php");
 
 
 $ref_key = "";

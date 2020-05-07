@@ -8,7 +8,7 @@ include_once("class/beans/OrderItemsBean.php");
 include_once("class/beans/ProductsBean.php");
 include_once("class/beans/ProductInventoryBean.php");
 include_once("class/beans/ProductColorPhotosBean.php");
-include_once("lib/beans/ConfigBean.php");
+include_once("beans/ConfigBean.php");
 
 
 class OrderProcessor {

@@ -1,5 +1,5 @@
 <?php
-include_once("lib/beans/DBViewBean.php");
+include_once("beans/DBViewBean.php");
 
 class InventoryColorsView extends DBViewBean
 {

@@ -2,8 +2,8 @@
 include_once("session.php");
 include_once("class/pages/AdminPage.php");
 include_once("class/beans/NewsItemsBean.php");
-include_once("lib/components/TableView.php");
-include_once("lib/components/renderers/cells/TableImageCellRenderer.php");
+include_once("components/TableView.php");
+include_once("components/renderers/cells/TableImageCellRenderer.php");
 
 $menu = array();
 

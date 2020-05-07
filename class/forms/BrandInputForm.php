@@ -1,7 +1,7 @@
 <?php
-include_once("lib/forms/InputForm.php");
+include_once("forms/InputForm.php");
 include_once("class/beans/BrandsBean.php");
-include_once("lib/input/validators/URLValidator.php");
+include_once("input/validators/URLValidator.php");
 
 class BrandInputForm extends InputForm
 {

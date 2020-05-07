@@ -4,7 +4,7 @@ $cdir = dirname(__FILE__);
 $realpath = realpath($cdir . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR);
 include_once($realpath . "/session.php");
 
-include_once("lib/buttons/StyledButton.php");
+include_once("buttons/StyledButton.php");
 StyledButton::setDefaultClass("admin_button");
 
 
@@ -18,7 +18,7 @@ foreach ($all_roles as $key => $val) {
 }
 
 
-include_once("lib/utils/MenuItem.php");
+include_once("utils/MenuItem.php");
 $admin_menu = array();
 
 $admin_menu[] = new MenuItem("Магазин", ADMIN_ROOT . "store/index.php", "class:icon_store");

@@ -3,7 +3,7 @@ include_once("session.php");
 include_once("class/pages/AdminPage.php");
 include_once("class/beans/OrdersBean.php");
 include_once("class/handlers/OrderStatusRequestHandler.php");
-include_once("lib/handlers/DeleteItemRequestHandler.php");
+include_once("handlers/DeleteItemRequestHandler.php");
 include_once("class/utils/OrdersQuery.php");
 
 $page = new AdminPage();

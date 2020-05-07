@@ -4,7 +4,7 @@ include_once("session.php");
 include_once("class/pages/DemoPage.php");
 
 include_once("class/beans/NewsItemsBean.php");
-include_once("lib/components/PublicationArchiveComponent.php");
+include_once("components/PublicationArchiveComponent.php");
 
 $page = new DemoPage();
 

@@ -6,7 +6,7 @@ include_once("class/beans/ProductPhotosBean.php");
 include_once("class/beans/ProductsBean.php");
 
 
-include_once("lib/components/GalleryView.php");
+include_once("components/GalleryView.php");
 
 $menu = array();
 

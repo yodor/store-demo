@@ -23,26 +23,26 @@
     }
 
     .main_content .column.left {
-<<<<<<< HEAD
+
         text-align: center;
 
         max-width: inherit;
-=======
+
         text-align:center;
         
         max-width:inherit;
         padding-left:20px;
->>>>>>> origin/master
+
     }
 
     .main_content .column.left .categories {
-<<<<<<< HEAD
+
         display: inline-block;
         vertical-align: top;
-=======
+
 /*         display:inline-block; */
 /*         vertical-align:top; */
->>>>>>> origin/master
+
     }
 
     .main_content .column.left .filters {
@@ -71,7 +71,7 @@
     }
     /*.main_content .column.left .panel .caption:after {
         content:"";
-        background-image: url("../lib/images/menu.png");
+        background-image: url("../images/menu.png");
         background-size: contain;
         min-width:35px;
         min-height:35px;

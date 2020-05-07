@@ -1,11 +1,11 @@
 <?php
 include_once("session.php");
-include_once("lib/pages/AdminLoginPage.php");
-include_once("lib/auth/AdminAuthenticator.php");
-include_once("lib/handlers/AuthenticatorRequestHandler.php");
+include_once("pages/AdminLoginPage.php");
+include_once("auth/AdminAuthenticator.php");
+include_once("handlers/AuthenticatorRequestHandler.php");
 
-include_once("lib/forms/AuthForm.php");
-include_once("lib/forms/renderers/AuthFormRenderer.php");
+include_once("forms/AuthForm.php");
+include_once("forms/renderers/AuthFormRenderer.php");
 
 
 $page = new AdminLoginPage();
@@ -18,23 +18,25 @@ $req->setSuccessUrl(SITE_ROOT . "admin/index.php");
 
 RequestController::addRequestHandler($req);
 
-
 $af = new AuthForm();
 
 $afr = new AuthFormRenderer();
 
 
-$afr->setAttribute("name", "admin_auth");
+$afr->setAttribute("name", "auth");
 $afr->setForm($af);
-$afr->setAuthContext($auth->name());
+
 $afr->getSubmitButton()->setClassName("admin_button orange");
 
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 // header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
 header("Expires: 0");
 
-
 $page->startRender();
+
+//set the token after RequestController processHandlers is done
+$af->getInput("rand")->setValue($auth->createLoginToken());
+
 $page->setPreferredTitle("Login");
 
 echo "<div class='login_component'>";
@@ -45,7 +47,7 @@ echo "<div class='login_component'>";
 
 echo "<span class='inner'>";
 
-echo "<span class='caption'>" . tr("Администрация") . "</span>";
+echo "<span class='caption'>Store Administration</span>";
 $afr->renderForm($af);
 echo "</span>";
 
@@ -53,4 +55,5 @@ echo "</span>";
 echo "</div>";
 
 $page->finishRender();
+
 ?>

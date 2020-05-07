@@ -1,5 +1,5 @@
 <?php
-include_once("lib/handlers/RequestHandler.php");
+include_once("handlers/RequestHandler.php");
 include_once("class/beans/ProductsBean.php");
 include_once("class/beans/ProductFeaturesBean.php");
 include_once("class/beans/ProductPhotosBean.php");

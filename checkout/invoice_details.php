@@ -5,7 +5,7 @@ include_once("class/pages/CheckoutPage.php");
 include_once("class/forms/InvoiceDetailsInputForm.php");
 include_once("class/beans/InvoiceDetailsBean.php");
 include_once("class/forms/processors/InvoiceDetailsFormProcessor.php");
-include_once("lib/db/DBTransactor.php");
+include_once("db/DBTransactor.php");
 
 
 $page = new CheckoutPage();

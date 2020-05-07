@@ -1,5 +1,5 @@
 <?php
-include_once("lib/components/MLTagComponent.php");
+include_once("components/MLTagComponent.php");
 include_once("class/utils/Cart.php");
 include_once("class/beans/ProductPhotosBean.php");
 include_once("class/beans/ProductColorPhotosBean.php");

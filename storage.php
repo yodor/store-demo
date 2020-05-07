@@ -6,6 +6,6 @@ define("PERSISTENT_DB", 1);
 include_once("session.php");
 Session::Close();
 
-include_once("lib/storage/BeanDataRequest.php");
+include_once("storage/BeanDataRequest.php");
 $storage = new BeanDataRequest();
 ?>

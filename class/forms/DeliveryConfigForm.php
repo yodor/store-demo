@@ -1,7 +1,7 @@
 <?php
-include_once("lib/forms/InputForm.php");
+include_once("forms/InputForm.php");
 include_once("class/utils/Cart.php");
-include_once("lib/input/validators/NumericValidator.php");
+include_once("input/validators/NumericValidator.php");
 
 class DeliveryConfigForm extends InputForm
 {

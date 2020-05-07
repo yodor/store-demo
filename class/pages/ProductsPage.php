@@ -1,7 +1,7 @@
 <?php
 include_once("class/pages/StorePage.php");
 include_once("class/utils/ProductsQuery.php");
-include_once("lib/components/renderers/ActionRenderer.php");
+include_once("components/renderers/ActionRenderer.php");
 include_once("class/beans/ProductCategoriesBean.php");
 
 

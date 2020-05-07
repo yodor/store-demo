@@ -1,8 +1,8 @@
 <?php
 include_once("session.php");
 include_once("class/pages/AdminPage.php");
-include_once("lib/forms/AdminUserInputForm.php");
-include_once("lib/beans/AdminUsersBean.php");
+include_once("forms/AdminUserInputForm.php");
+include_once("beans/AdminUsersBean.php");
 
 
 $menu = array();
@@ -42,7 +42,7 @@ $view->render();
     });
 </script>
 <script type='text/javascript' src='<?php
-echo SITE_ROOT; ?>lib/js/md5.js'></script>
+echo SITE_ROOT; ?>js/md5.js'></script>
 <script type='text/javascript'>
     function checkForm(frm) {
         try {

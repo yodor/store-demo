@@ -1,5 +1,5 @@
 <?php
-include_once("lib/components/Component.php");
+include_once("components/Component.php");
 include_once("class/Cart.php");
 include_once("class/beans/ProductsBean.php");
 include_once("class/beans/CurrencyRatesBean.php");

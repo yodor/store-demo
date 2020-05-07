@@ -1,12 +1,12 @@
 <?php
 include_once("class/pages/StorePage.php");
-include_once("lib/beans/ConfigBean.php");
+include_once("beans/ConfigBean.php");
 
-include_once("lib/auth/UserAuthenticator.php");
-include_once("lib/beans/UsersBean.php");
+include_once("auth/UserAuthenticator.php");
+include_once("beans/UsersBean.php");
 
-include_once("lib/utils/MainMenu.php");
-include_once("lib/utils/MenuItem.php");
+include_once("utils/MainMenu.php");
+include_once("utils/MenuItem.php");
 
 class AccountPage extends StorePage
 {

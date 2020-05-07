@@ -1,25 +1,29 @@
 <?php
-include_once("lib/components/Component.php");
-include_once("lib/components/renderers/ICellRenderer.php");
-include_once("lib/components/TableColumn.php");
+include_once("components/renderers/cells/TableCellRenderer.php");
 
 include_once("class/utils/Cart.php");
 
-class OrderDeliveryCellRenderer extends TableCellRenderer implements ICellRenderer
+class OrderDeliveryCellRenderer extends TableCellRenderer
 {
 
-    public function renderCell(array &$row, TableColumn $tc)
+    protected $data = null;
+
+    public function setData(array &$row, TableColumn $tc)
     {
-        $this->processAttributes($row, $tc);
+        parent::setData($row, $tc);
+        $this->data = $row;
+    }
 
-        $this->startRender();
+    protected function renderImpl()
+    {
 
-        $orderID = $row["orderID"];
-        $userID = $row["userID"];
+
+        $orderID = $this->data["orderID"];
+        $userID = $this->data["userID"];
 
         echo "<div class='group address_data'>";
 
-        if (strcmp($row["delivery_type"], Cart::DELIVERY_EKONTOFFICE) == 0) {
+        if (strcmp($this->data["delivery_type"], Cart::DELIVERY_EKONTOFFICE) == 0) {
             global $ekont_addresses;
             $row = $ekont_addresses->getByRef("userID", $userID);
             echo "<div class='caption'>" . tr("Офис на еконт") . "</div>";
@@ -61,7 +65,6 @@ class OrderDeliveryCellRenderer extends TableCellRenderer implements ICellRender
 
         echo "</div>";
 
-        $this->finishRender();
     }
 }
 

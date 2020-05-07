@@ -1,24 +1,15 @@
 <?php
-include_once("lib/components/Component.php");
-include_once("lib/components/renderers/ICellRenderer.php");
-include_once("lib/components/TableColumn.php");
+include_once("components/renderers/cells/TableCellRenderer.php");
 
-class OrderClientCellRenderer extends TableCellRenderer implements ICellRenderer
+class OrderClientCellRenderer extends TableCellRenderer
 {
+    protected $userID = -1;
 
-    public function renderCell(array &$row, TableColumn $tc)
+    protected function renderImpl()
     {
-
-        $this->processAttributes($row, $tc);
-
-        $this->startRender();
-
-
-        $userID = (int)$row["userID"];
-
         global $clients;
 
-        $client = $clients->getByID($row["userID"], false, "fullname , email, phone");
+        $client = $clients->getByID($this->userID, false, "fullname , email, phone");
 
         echo "<div class='group client_data'>";
         echo "<div class='item fullname'>";
@@ -34,8 +25,15 @@ class OrderClientCellRenderer extends TableCellRenderer implements ICellRenderer
         echo "<span>" . $client["phone"] . "</span>";
         echo "</div>";
         echo "</div>";
+    }
 
-        $this->finishRender();
+    public function setData(array &$row, TableColumn $tc)
+    {
+
+        parent::setData($row, $tc);
+
+        $this->userID = (int)$row["userID"];
+
     }
 
 }

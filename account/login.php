@@ -2,12 +2,12 @@
 include_once("session.php");
 include_once("class/pages/AccountPage.php");
 
-include_once("lib/handlers/AuthenticatorRequestHandler.php");
+include_once("handlers/AuthenticatorRequestHandler.php");
 
-include_once("lib/forms/AuthForm.php");
-include_once("lib/forms/renderers/AuthFormRenderer.php");
+include_once("forms/AuthForm.php");
+include_once("forms/renderers/AuthFormRenderer.php");
 
-include_once("lib/auth/UserAuthenticator.php");
+include_once("auth/UserAuthenticator.php");
 include_once("class/forms/RegisterClientInputForm.php");
 include_once("class/forms/processors/RegisterClientFormProcessor.php");
 

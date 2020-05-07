@@ -1,8 +1,8 @@
 <?php
 include_once("class/pages/ProductsPage.php");
 include_once("class/utils/ProductsQuery.php");
-include_once("lib/components/NestedSetTreeView2.php");
-include_once("lib/components/renderers/items/TextTreeItemRenderer.php");
+include_once("components/NestedSetTreeView2.php");
+include_once("components/renderers/items/TextTreeItemRenderer.php");
 
 
 class ProductListPage extends ProductsPage

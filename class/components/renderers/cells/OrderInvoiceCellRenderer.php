@@ -1,25 +1,19 @@
 <?php
-include_once("lib/components/Component.php");
-include_once("lib/components/renderers/ICellRenderer.php");
-include_once("lib/components/TableColumn.php");
+include_once("components/renderers/cells/TableCellRenderer.php");
 
-class OrderInvoiceCellRenderer extends TableCellRenderer implements ICellRenderer
+class OrderInvoiceCellRenderer extends TableCellRenderer
 {
 
-    public function renderCell(array &$row, TableColumn $tc)
+    protected $userID = -1;
+    protected $require_invoice = 0;
+
+    protected function renderImpl()
     {
 
-        $this->processAttributes($row, $tc);
-
-        $this->startRender();
-
-        $userID = (int)$row["userID"];
-        $require_invoice = $row["require_invoice"];
-
-        if ($require_invoice > 0) {
+        if ($this->require_invoice > 0) {
 
             global $invoices;
-            $invoice_details = $invoices->getByRef("userID", $userID);
+            $invoice_details = $invoices->getByRef("userID", $this->userID);
 
             echo "<div class='group invoice_data'>";
             echo "<div class='item company_name'>";
@@ -60,7 +54,15 @@ class OrderInvoiceCellRenderer extends TableCellRenderer implements ICellRendere
         else {
             echo tr("Без");
         }
-        $this->finishRender();
+    }
+
+    public function setData(array &$row, TableColumn $tc)
+    {
+        parent::setData($row, $tc);
+
+        $this->userID = (int)$row["userID"];
+        $this->require_invoice = (int)$row["require_invoice"];
+
     }
 
 }

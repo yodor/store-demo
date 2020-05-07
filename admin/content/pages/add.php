@@ -1,8 +1,8 @@
 <?php
 include_once("session.php");
 include_once("class/pages/AdminPage.php");
-include_once("lib/forms/DynamicPageInputForm.php");
-include_once("lib/beans/DynamicPagesBean.php");
+include_once("forms/DynamicPageInputForm.php");
+include_once("beans/DynamicPagesBean.php");
 
 
 $menu = array();

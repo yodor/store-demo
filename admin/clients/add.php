@@ -2,7 +2,7 @@
 include_once("session.php");
 include_once("class/pages/AdminPage.php");
 include_once("class/forms/RegisterClientInputForm.php");
-include_once("lib/beans/UsersBean.php");
+include_once("beans/UsersBean.php");
 
 
 $menu = array();

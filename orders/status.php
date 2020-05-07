@@ -4,8 +4,8 @@ include_once("class/pages/ProductsPage.php");
 
 include_once("class/beans/OrdersBean.php");
 
-include_once("lib/forms/processors/FormProcessor.php");
-include_once("lib/forms/renderers/FormRenderer.php");
+include_once("forms/processors/FormProcessor.php");
+include_once("forms/renderers/FormRenderer.php");
 
 
 include_once("class/forms/OrderStatusInputForm.php");

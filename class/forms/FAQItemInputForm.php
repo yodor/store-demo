@@ -1,7 +1,7 @@
 <?php
-include_once("lib/forms/InputForm.php");
-include_once("lib/input/DataInputFactory.php");
-include_once("lib/iterators/DBEnumIterator.php");
+include_once("forms/InputForm.php");
+include_once("input/DataInputFactory.php");
+include_once("iterators/DBEnumIterator.php");
 
 class FAQItemInputForm extends InputForm
 {

@@ -5,9 +5,9 @@ include_once("class/pages/ProductsPage.php");
 include_once("class/beans/OrdersBean.php");
 
 include_once("class/forms/OrderAddressInputForm.php");
-include_once("lib/beans/UsersBean.php");
+include_once("beans/UsersBean.php");
 include_once("class/beans/UserDetailsBean.php");
-include_once("lib/auth/Authenticator.php");
+include_once("auth/Authenticator.php");
 
 include_once("class/mailers/RegisterDetailsPasswordMailer.php");
 include_once("class/mailers/OrderConfirmedAdminMailer.php");

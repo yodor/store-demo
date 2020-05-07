@@ -1,7 +1,7 @@
 <?php
-include_once("lib/forms/processors/FormProcessor.php");
-include_once("lib/beans/DBTableBean.php");
-include_once("lib/db/DBTransactor.php");
+include_once("forms/processors/FormProcessor.php");
+include_once("beans/DBTableBean.php");
+include_once("db/DBTransactor.php");
 
 class ClientAddressFormProcessor extends FormProcessor
 {

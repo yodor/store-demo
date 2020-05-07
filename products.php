@@ -7,10 +7,10 @@ include_once("class/pages/ProductListPage.php");
 
 include_once("class/beans/ProductsBean.php");
 include_once("class/beans/ProductPhotosBean.php");
-include_once("lib/components/TableView.php");
+include_once("components/TableView.php");
 
-include_once("lib/iterators/SQLQuery.php");
-include_once("lib/utils/RelatedSourceFilterProcessor.php");
+include_once("iterators/SQLQuery.php");
+include_once("utils/RelatedSourceFilterProcessor.php");
 include_once("class/beans/ProductColorPhotosBean.php");
 include_once("class/utils/filters/ProductFilters.php");
 

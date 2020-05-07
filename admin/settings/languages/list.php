@@ -1,7 +1,7 @@
 <?php
 include_once("session.php");
 include_once("class/pages/AdminPage.php");
-include_once("lib/beans/LanguagesBean.php");
+include_once("beans/LanguagesBean.php");
 
 
 $page = new AdminPage("Languages");

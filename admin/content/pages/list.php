@@ -1,9 +1,9 @@
 <?php
 include_once("session.php");
 include_once("class/pages/AdminPage.php");
-include_once("lib/beans/DynamicPagesBean.php");
-include_once("lib/components/renderers/cells/BooleanFieldCellRenderer.php");
-include_once("lib/components/renderers/cells/TableImageCellRenderer.php");
+include_once("beans/DynamicPagesBean.php");
+include_once("components/renderers/cells/BooleanFieldCellRenderer.php");
+include_once("components/renderers/cells/TableImageCellRenderer.php");
 
 $menu = array();
 

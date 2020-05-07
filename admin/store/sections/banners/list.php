@@ -6,7 +6,7 @@ include_once("class/beans/SectionBannersBean.php");
 include_once("class/beans/SectionsBean.php");
 
 
-include_once("lib/components/GalleryView.php");
+include_once("components/GalleryView.php");
 
 $menu = array();
 

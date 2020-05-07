@@ -1,8 +1,8 @@
 <?php
 include_once("session.php");
 include_once("class/pages/AdminPage.php");
-include_once("lib/beans/LanguagesBean.php");
-include_once("lib/beans/SiteTextsBean.php");
+include_once("beans/LanguagesBean.php");
+include_once("beans/SiteTextsBean.php");
 
 $page = new AdminPage();
 $page->checkAccess(ROLE_SETTINGS_MENU);

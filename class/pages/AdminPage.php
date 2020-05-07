@@ -1,10 +1,10 @@
 <?php
-include_once("lib/pages/AdminPageLib.php");
-include_once("lib/components/MenuBarComponent.php");
+include_once("pages/AdminPageLib.php");
+include_once("components/MenuBarComponent.php");
 
-include_once("lib/components/renderers/cells/BeanFieldCellRenderer.php");
-include_once("lib/components/renderers/cells/CallbackTableCellRenderer.php");
-include_once("lib/components/renderers/cells/BooleanFieldCellRenderer.php");
+include_once("components/renderers/cells/BeanFieldCellRenderer.php");
+include_once("components/renderers/cells/CallbackTableCellRenderer.php");
+include_once("components/renderers/cells/BooleanFieldCellRenderer.php");
 
 class AdminPage extends AdminPageLib
 {

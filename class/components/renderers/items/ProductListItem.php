@@ -1,7 +1,7 @@
 <?php
 // include_once("class/beans/SellableProductsBean.php");
-include_once("lib/components/renderers/items/ItemRendererImpl.php");
-include_once("lib/storage/StorageItem.php");
+include_once("components/renderers/items/ItemRendererImpl.php");
+include_once("storage/StorageItem.php");
 include_once("class/beans/ProductColorPhotosBean.php");
 
 class ProductListItem extends ItemRendererImpl implements IHeadRenderer {

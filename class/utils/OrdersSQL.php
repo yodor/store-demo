@@ -1,5 +1,5 @@
 <?php
-include_once("lib/utils/SQLSelect.php");
+include_once("utils/SQLSelect.php");
 
 class OrdersSQL extends SQLSelect
 {

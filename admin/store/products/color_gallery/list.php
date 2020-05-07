@@ -8,10 +8,10 @@ include_once("class/beans/ProductColorsBean.php");
 include_once("class/beans/ProductInventoryBean.php");
 include_once("class/beans/ProductColorPhotosBean.php");
 
-include_once("lib/components/TableView.php");
-include_once("lib/components/renderers/cells/TableImageCellRenderer.php");
-include_once("lib/components/KeywordSearchComponent.php");
-include_once("lib/iterators/SQLQuery.php");
+include_once("components/TableView.php");
+include_once("components/renderers/cells/TableImageCellRenderer.php");
+include_once("components/KeywordSearchComponent.php");
+include_once("iterators/SQLQuery.php");
 
 
 $page = new AdminPage();

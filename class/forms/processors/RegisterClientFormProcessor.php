@@ -1,8 +1,8 @@
 <?php
-include_once("lib/forms/processors/FormProcessor.php");
-include_once("lib/forms/InputForm.php");
-include_once("lib/beans/UsersBean.php");
-include_once("lib/auth/Authenticator.php");
+include_once("forms/processors/FormProcessor.php");
+include_once("forms/InputForm.php");
+include_once("beans/UsersBean.php");
+include_once("auth/Authenticator.php");
 include_once("class/mailers/RegisterCustomerPasswordMailer.php");
 
 class RegisterClientFormProcessor extends FormProcessor

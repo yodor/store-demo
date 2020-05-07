@@ -6,7 +6,7 @@ include_once("class/beans/ProductColorPhotosBean.php");
 include_once("class/beans/ProductColorsBean.php");
 
 
-include_once("lib/components/GalleryView.php");
+include_once("components/GalleryView.php");
 
 
 $rc = new ReferenceKeyPageChecker(new ProductColorsBean(), "../list.php" . queryString($_GET));

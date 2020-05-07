@@ -2,8 +2,8 @@
 include_once("session.php");
 include_once("class/pages/AdminPage.php");
 include_once("class/beans/ProductCategoriesBean.php");
-include_once("lib/components/NestedSetTreeView.php");
-include_once("lib/components/renderers/items/TextTreeItemRenderer.php");
+include_once("components/NestedSetTreeView.php");
+include_once("components/renderers/items/TextTreeItemRenderer.php");
 
 
 $menu = array();

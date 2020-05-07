@@ -1,8 +1,8 @@
 <?php
-include_once("lib/mailers/Mailer.php");
+include_once("mailers/Mailer.php");
 include_once("class/beans/OrdersBean.php");
 include_once("class/beans/OrderItemsBean.php");
-include_once("lib/beans/UsersBean.php");
+include_once("beans/UsersBean.php");
 include_once("class/utils/Cart.php");
 
 class OrderConfirmationMailer extends Mailer

@@ -2,10 +2,10 @@
 include_once("session.php");
 include_once("class/pages/AdminPage.php");
 
-include_once("lib/beans/MenuItemsBean.php");
+include_once("beans/MenuItemsBean.php");
 
-include_once("lib/components/NestedSetTreeView2.php");
-include_once("lib/components/renderers/items/TextTreeItemRenderer.php");
+include_once("components/NestedSetTreeView2.php");
+include_once("components/renderers/items/TextTreeItemRenderer.php");
 
 $menu = array();
 

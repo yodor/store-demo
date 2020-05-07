@@ -1,13 +1,13 @@
 <?php
 include_once("session.php");
-include_once("lib/input/DataInputFactory.php");
-include_once("lib/pages/AdminLoginPage.php");
+include_once("input/DataInputFactory.php");
+include_once("pages/AdminLoginPage.php");
 
-include_once("lib/input/validators/EmailValidator.php");
-include_once("lib/beans/AdminUsersBean.php");
+include_once("input/validators/EmailValidator.php");
+include_once("beans/AdminUsersBean.php");
 
 
-include_once("lib/mailers/ForgotPasswordMailer.php");
+include_once("mailers/ForgotPasswordMailer.php");
 
 $page = new AdminLoginPage();
 

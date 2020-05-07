@@ -2,13 +2,13 @@
 include_once("session.php");
 include_once("class/pages/AdminPage.php");
 
-include_once("lib/handlers/DeleteItemRequestHandler.php");
-include_once("lib/handlers/ToggleFieldRequestHandler.php");
+include_once("handlers/DeleteItemRequestHandler.php");
+include_once("handlers/ToggleFieldRequestHandler.php");
 
-include_once("lib/components/TableView.php");
-include_once("lib/components/KeywordSearchComponent.php");
-include_once("lib/iterators/SQLQuery.php");
-include_once("lib/beans/UsersBean.php");
+include_once("components/TableView.php");
+include_once("components/KeywordSearchComponent.php");
+include_once("iterators/SQLQuery.php");
+include_once("beans/UsersBean.php");
 
 $menu = array();
 

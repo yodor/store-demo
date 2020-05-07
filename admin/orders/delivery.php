@@ -3,9 +3,9 @@ include_once("session.php");
 include_once("class/pages/AdminPage.php");
 include_once("class/forms/DeliveryConfigForm.php");
 
-include_once("lib/beans/ConfigBean.php");
-include_once("lib/forms/processors/ConfigFormProcessor.php");
-include_once("lib/forms/renderers/FormRenderer.php");
+include_once("beans/ConfigBean.php");
+include_once("forms/processors/ConfigFormProcessor.php");
+include_once("forms/renderers/FormRenderer.php");
 
 
 $page = new AdminPage();

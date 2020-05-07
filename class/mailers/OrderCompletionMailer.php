@@ -1,5 +1,5 @@
 <?php
-include_once("lib/mailers/Mailer.php");
+include_once("mailers/Mailer.php");
 include_once("class/beans/OrdersBean.php");
 
 class OrderCompletionMailer extends Mailer

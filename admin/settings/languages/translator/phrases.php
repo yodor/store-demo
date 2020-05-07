@@ -2,11 +2,11 @@
 include_once("session.php");
 include_once("class/pages/AdminPage.php");
 
-include_once("lib/components/renderers/cells/CallbackTableCellRenderer.php");
-include_once("lib/components/KeywordSearchComponent.php");
-include_once("lib/beans/LanguagesBean.php");
-include_once("lib/panels/PhraseTranslationDialog.php");
-include_once("lib/iterators/SQLQuery.php");
+include_once("components/renderers/cells/CallbackTableCellRenderer.php");
+include_once("components/KeywordSearchComponent.php");
+include_once("beans/LanguagesBean.php");
+include_once("panels/PhraseTranslationDialog.php");
+include_once("iterators/SQLQuery.php");
 
 
 $page = new AdminPage();

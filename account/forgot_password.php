@@ -2,11 +2,11 @@
 include_once("session.php");
 include_once("class/pages/AccountPage.php");
 
-include_once("lib/beans/UsersBean.php");
+include_once("beans/UsersBean.php");
 include_once("class/mailers/ForgotPasswordMailer.php");
 include_once("class/forms/ForgotPasswordInputForm.php");
 
-include_once("lib/auth/Authenticator.php");
+include_once("auth/Authenticator.php");
 
 
 class ForgotPasswordProcessor extends FormProcessor

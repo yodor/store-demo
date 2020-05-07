@@ -2,8 +2,8 @@
 include_once("session.php");
 include_once("class/pages/AdminPage.php");
 
-include_once("lib/beans/LanguagesBean.php");
-include_once("lib/forms/LanguageInputForm.php");
+include_once("beans/LanguagesBean.php");
+include_once("forms/LanguageInputForm.php");
 
 $menu = array();
 

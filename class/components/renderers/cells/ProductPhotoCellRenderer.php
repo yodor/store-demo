@@ -1,6 +1,6 @@
 <?php
 
-include_once("lib/components/renderers/cells/TableImageCellRenderer.php");
+include_once("components/renderers/cells/TableImageCellRenderer.php");
 
 class ProductPhotoCellRenderer extends TableImageCellRenderer
 {

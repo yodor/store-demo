@@ -4,7 +4,7 @@ include_once("session.php");
 include_once("class/pages/AdminPage.php");
 include_once("class/beans/GalleryPhotosBean.php");
 
-include_once("lib/forms/PhotoInputForm.php");
+include_once("forms/PhotoInputForm.php");
 
 
 $page = new AdminPage();

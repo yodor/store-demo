@@ -1,11 +1,11 @@
 <?php
 include_once("session.php");
 include_once("class/pages/AdminPage.php");
-include_once("lib/beans/AdminUsersBean.php");
-include_once("lib/components/renderers/cells/CallbackTableCellRenderer.php");
+include_once("beans/AdminUsersBean.php");
+include_once("components/renderers/cells/CallbackTableCellRenderer.php");
 
-include_once("lib/handlers/DeleteItemRequestHandler.php");
-include_once("lib/handlers/ToggleFieldRequestHandler.php");
+include_once("handlers/DeleteItemRequestHandler.php");
+include_once("handlers/ToggleFieldRequestHandler.php");
 
 $menu = array();
 

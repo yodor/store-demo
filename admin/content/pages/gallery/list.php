@@ -2,11 +2,11 @@
 include_once("session.php");
 include_once("class/pages/AdminPage.php");
 
-include_once("lib/beans/DynamicPagePhotosBean.php");
-include_once("lib/beans/DynamicPagesBean.php");
+include_once("beans/DynamicPagePhotosBean.php");
+include_once("beans/DynamicPagesBean.php");
 
 
-include_once("lib/components/GalleryView.php");
+include_once("components/GalleryView.php");
 
 
 $rc = new ReferenceKeyPageChecker(new DynamicPagesBean(), "../list.php");

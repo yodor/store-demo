@@ -13,8 +13,8 @@ $page = new AdminLoginPage();
 $auth = new AdminAuthenticator();
 
 $req = new AuthenticatorRequestHandler($auth, "doLogin");
-$req->setCancelUrl(SITE_ROOT . "admin/login.php");
-$req->setSuccessUrl(SITE_ROOT . "admin/index.php");
+$req->setCancelUrl(LOCAL . "admin/login.php");
+$req->setSuccessUrl(LOCAL . "admin/index.php");
 
 RequestController::addRequestHandler($req);
 
@@ -42,7 +42,7 @@ $page->setPreferredTitle("Login");
 echo "<div class='login_component'>";
 
 //   echo "<div style='float:left'>";
-//   echo "<img src='".SITE_ROOT."admin/pics/admin_logo.png'>";
+//   echo "<img src='".LOCAL."admin/pics/admin_logo.png'>";
 //   echo "</div>";
 
 echo "<span class='inner'>";

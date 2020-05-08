@@ -20,7 +20,7 @@ $sellable = array();
 
 $landing_sellable = array();
 
-$db = DBDriver::get();
+$db = DBConnections::Get();
 $res = NULL;
 try {
 
@@ -194,8 +194,8 @@ echo "<div class='column details'>";
 echo "<div class='images'>";
 
 //main image
-$gallery_href = STORAGE_HREF."?cmd=image&width=500&height=500";
-$big_href = STORAGE_HREF."?cmd=image";
+$gallery_href = STORAGE_LOCAL."?cmd=image&width=500&height=500";
+$big_href = STORAGE_LOCAL."?cmd=image";
 echo "<div class='image_big' source='$gallery_href' >";
 echo "<a class='image_popup' href='' source='$big_href'><img src='$big_href'></a>";
 echo "</div>";
@@ -205,7 +205,7 @@ echo "<div class='image_gallery'>";
 foreach ($galleries as $pclrID=>$gallery) {
     echo "<div class='list' pclrID='$pclrID'>";
     foreach ($gallery as $key=>$item) {
-        $href_source = STORAGE_HREF."?cmd=image&width=50&height=50";
+        $href_source = STORAGE_LOCAL."?cmd=image&width=50&height=50";
 
         $href=$href_source."&class=".$item["class"]."&id=".$item["id"];
 
@@ -354,7 +354,7 @@ echo "</div>"; //column details
 
     var attributes = <?php echo json_encode($attributes);?>
 
-        addLoadEvent(function(){
+        onPageLoad(function(){
 
 //   var first_color = $(".color_chooser .color_button").first();
 //   changeColor(first_color.attr("pclrID"));

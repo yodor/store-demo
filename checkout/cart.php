@@ -25,7 +25,7 @@ if (isset($_GET["addItem"])) {
 
         if ($item["stock_amount"] < 1) {
             Session::SetAlert(tr("Съжаляваме в момента няма наличност от този артикул"));
-            header("Location: " . SITE_ROOT . "details.php?prodID=$prodID&piID=$piID");
+            header("Location: " . LOCAL . "details.php?prodID=$prodID&piID=$piID");
             exit;
         }
         if ($item["stock_amount"] - $page->getCart()->getItemQty($piID) - 1 < 0) {
@@ -105,7 +105,7 @@ if ($page->total) {
 
     echo "<div class='slot left'>";
     echo "<a href='cart.php?clear'>";
-    echo "<img src='" . SITE_ROOT . "images/cart_clear.png'>";
+    echo "<img src='" . LOCAL . "images/cart_clear.png'>";
     echo "<div class='DefaultButton checkout_button'  >" . tr("Изпразни кошницата") . "</div>";
     echo "</a>";
     echo "</div>";
@@ -120,7 +120,7 @@ if ($page->total) {
 
     echo "<div class='slot right'>";
     echo "<a href='customer.php'>";
-    echo "<img src='" . SITE_ROOT . "images/cart_checkout.png'>";
+    echo "<img src='" . LOCAL . "images/cart_checkout.png'>";
     echo "<div class='DefaultButton checkout_button'  >" . tr("Каса") . "</div>";
     echo "</a>";
     echo "</div>";

@@ -17,7 +17,7 @@ $page->addAction($action_back);
 
 $view = new InputFormView(new StoreSizesBean(), new StoreSizeInputForm());
 
-// $view->getTransactor()->assignInsertValue("insert_date", DBDriver::get()->dateTime());
+// $view->getTransactor()->assignInsertValue("insert_date", DBConnections::get()->dateTime());
 // $view->getTransactor()->appendValue("prodID", $ensure_product->ref_id);
 
 // $view->setCaption("Product Name: ".$ensure_product->ref_row["product_name"]);

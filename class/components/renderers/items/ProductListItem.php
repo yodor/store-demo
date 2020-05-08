@@ -4,7 +4,7 @@ include_once("components/renderers/items/ItemRendererImpl.php");
 include_once("storage/StorageItem.php");
 include_once("class/beans/ProductColorPhotosBean.php");
 
-class ProductListItem extends ItemRendererImpl implements IHeadRenderer {
+class ProductListItem extends ItemRendererImpl implements IHeadContents {
 
 
     protected $colors = null;
@@ -36,7 +36,7 @@ class ProductListItem extends ItemRendererImpl implements IHeadRenderer {
     public function requiredStyle()
     {
         $arr = parent::requiredStyle();
-        $arr[] = SITE_ROOT."css/ProductListItem.css";
+        $arr[] = LOCAL."css/ProductListItem.css";
         return $arr;
     }
 
@@ -85,8 +85,8 @@ class ProductListItem extends ItemRendererImpl implements IHeadRenderer {
 
         // 	cho $this->sel->getSQL();
 
-        $product_href = SITE_ROOT."details.php?prodID={$this->item["prodID"]}";
-        $item_href = SITE_ROOT."details.php?prodID={$this->item["prodID"]}&piID=";
+        $product_href = LOCAL."details.php?prodID={$this->item["prodID"]}";
+        $item_href = LOCAL."details.php?prodID={$this->item["prodID"]}&piID=";
 
         $item_href_main = $item_href.$this->item["piID"];
         echo "<a href='$item_href_main' class='product_link'>";
@@ -107,7 +107,7 @@ class ProductListItem extends ItemRendererImpl implements IHeadRenderer {
 
             echo "<div class='color_chips'>";
 
-            $db = DBDriver::get();
+            $db = DBConnections::get();
 
             foreach ($this->colors as $idx=>$pclrID) {
 

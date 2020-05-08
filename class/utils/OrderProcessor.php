@@ -36,7 +36,7 @@ class OrderProcessor {
         $auth_userID = (int)$_SESSION[CONTEXT_USER]["id"];
         if ($auth_userID!=$userID) throw new Exception("Изисква регистриран потребител");
 
-        $db = DBDriver::get();
+        $db = DBConnections::Factory();
         $orderID = -1;
 
         try {
@@ -141,16 +141,16 @@ class OrderProcessor {
                 $order_item["orderID"] = $orderID;
                 $order_item["product"] = $product_details;
                 $order_item["prodID"] = $prodID;
-                $order_item["photo"] = DBDriver::get()->escape($item_photo);
+                $order_item["photo"] = DBConnections::get()->escape($item_photo);
 
-                $itemID = $order_items->insertRecord($order_item, $db);
+                $itemID = $order_items->insert($order_item, $db);
                 if ($itemID<1)throw new Exception("Unable to insert order item: ".$db->getError());
 
                 $inventory_update = array(
                     "stock_amount"=>($item["stock_amount"]-$qty),
                     "order_counter"=>($item["order_counter"]+1)
                 );
-                if (!$inventory->updateRecord($piID, $inventory_update, $db)) throw new Exception("Unable to update inventory statistics: ".$db->getError());
+                if (!$inventory->update($piID, $inventory_update, $db)) throw new Exception("Unable to update inventory statistics: ".$db->getError());
 
                 $pos++;
             }

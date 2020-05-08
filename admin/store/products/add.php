@@ -23,7 +23,7 @@ Session::Set("brands.list", $page->getPageURL());
 Session::Set("classes.list", $page->getPageURL());
 
 
-$view->getTransactor()->assignInsertValue("insert_date", DBDriver::Get()->dateTime());
+$view->getTransactor()->assignInsertValue("insert_date", DBConnections::Get()->dateTime());
 
 $view->processInput();
 

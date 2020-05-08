@@ -10,7 +10,7 @@ class HeaderCartPanel extends Component
 
     public function renderImpl()
     {
-        echo "<a href='" . SITE_ROOT . "checkout/cart.php'>";
+        echo "<a href='" . LOCAL . "checkout/cart.php'>";
 
         echo "<div class='cell icon'>";
         echo "<div class='cart_icon'></div>";

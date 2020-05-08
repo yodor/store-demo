@@ -42,7 +42,7 @@ class SourceRelatedField extends DataSourceField
     public function requiredStyle()
     {
         $arr = parent::requiredStyle();
-        $arr[] = SITE_ROOT . "css/SourceRelatedField.css";
+        $arr[] = LOCAL . "css/SourceRelatedField.css";
         return $arr;
     }
 

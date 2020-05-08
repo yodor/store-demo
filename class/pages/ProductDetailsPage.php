@@ -13,10 +13,10 @@ class ProductDetailsPage extends ProductsPage
         parent::__construct();
         $this->list_item = new ProductListItem();
 
-        $this->addCSS(SITE_ROOT . "css/product_details.css");
-        $this->addCSS(SITE_ROOT."css/product_details.css");
+        $this->addCSS(LOCAL . "css/product_details.css");
+        $this->addCSS(LOCAL."css/product_details.css");
 
-        $this->addJS(SITE_ROOT . "js/product_details.js");
+        $this->addJS(LOCAL . "js/product_details.js");
     }
 
 
@@ -77,13 +77,13 @@ class ProductDetailsPage extends ProductsPage
         echo "<div class='caption'>" . tr("Още продукти от тази категория") . "</div>";
 
 
-        $sel = new ProductsQuery();
+        $sel = new ProductsSQL();
         $sel->order_by = " pi.view_counter ";
         $sel->group_by = " pi.prodID, pi.color ";
         $sel->limit = "4";
         $sel->where = " p.section='{$this->section}' AND p.catID='{$this->sellable["catID"]}' ";
 
-        $db = DBDriver::Get();
+        $db = DBConnections::Get();
 
         //         echo $sel->getSQL();
         $res = $db->query($sel->getSQL());
@@ -101,13 +101,13 @@ class ProductDetailsPage extends ProductsPage
         echo "<div class='caption'>" . tr("Най-продавани от тази секция") . "</div>";
 
 
-        $sel = new ProductsQuery();
+        $sel = new ProductsSQL();
         $sel->order_by = " pi.order_counter ";
         $sel->group_by = " pi.prodID, pi.color ";
         $sel->limit = "4";
         $sel->where = " p.section='{$this->section}'  ";
 
-        $db = DBDriver::Get();
+        $db = DBConnections::Get();
 
         //         echo $sel->getSQL();
         $res = $db->query($sel->getSQL());

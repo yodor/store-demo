@@ -30,8 +30,8 @@ class ForgotPasswordMailer extends Mailer
 
         $message .= "<br><br>\r\n\r\n";
 
-        $message .= "Натиснете <a href='" . SITE_URL . SITE_ROOT . "account/login.php'>Тук</a> за вход или въведете слдения URL във Вашият браузър: ";
-        $message .= SITE_URL . SITE_ROOT . "login.php";
+        $message .= "Натиснете <a href='" . SITE_URL . LOCAL . "account/login.php'>Тук</a> за вход или въведете слдения URL във Вашият браузър: ";
+        $message .= SITE_URL . LOCAL . "login.php";
 
         $message .= "<br><br>\r\n\r\n";
 
@@ -54,8 +54,8 @@ class ForgotPasswordMailer extends Mailer
 
         $message .= "<br><br>\r\n\r\n";
 
-        $message .= "Click <a href='" . SITE_URL . SITE_ROOT . "account/login.php'>Here</a> login or open this URL in your browser window: ";
-        $message .= SITE_URL . SITE_ROOT . "login.php";
+        $message .= "Click <a href='" . SITE_URL . LOCAL . "account/login.php'>Here</a> login or open this URL in your browser window: ";
+        $message .= SITE_URL . LOCAL . "login.php";
 
         $message .= "<br><br>\r\n\r\n";
 

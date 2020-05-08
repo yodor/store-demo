@@ -85,7 +85,7 @@ class ClassAttributeField extends DataSourceField
     public function requiredStyle()
     {
         $arr = parent::requiredStyle();
-        $arr[] = SITE_ROOT . "css/ClassAttributeField.css";
+        $arr[] = LOCAL . "css/ClassAttributeField.css";
         return $arr;
     }
 

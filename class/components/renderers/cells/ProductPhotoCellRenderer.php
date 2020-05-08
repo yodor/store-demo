@@ -4,13 +4,8 @@ include_once("components/renderers/cells/TableImageCellRenderer.php");
 
 class ProductPhotoCellRenderer extends TableImageCellRenderer
 {
-    public function __construct($render_mode = IPhotoRenderer::RENDER_CROP, $width = 48, $height = -1)
-    {
-        parent::__construct(NULL, $render_mode, $width, $height);
 
-    }
-
-    protected function constructItems($row, TableColumn $tc)
+    protected function constructItems()
     {
         $this->items = array();
 

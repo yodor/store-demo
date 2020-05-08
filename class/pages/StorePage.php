@@ -61,7 +61,7 @@ class StorePage extends SparkPage
 
 
         if (isset($_GET["section"])) {
-            $section = DBDriver::Get()->escape($_GET["section"]);
+            $section = DBConnections::Get()->escape($_GET["section"]);
             $qry = $this->sections->queryField("section_title", $section, 1);
             $num = $qry->exec();
             if ($num < 1) {
@@ -78,12 +78,12 @@ class StorePage extends SparkPage
         $ksc = new KeywordSearchComponent($search_fields, "relation");
         $ksc->getForm()->getInput("keyword")->getRenderer()->setInputAttribute("placeholder", "Търси ...");
         $ksc->getForm()->getRenderer()->setAttribute("method", "get");
-        $ksc->getForm()->getRenderer()->setAttribute("action", SITE_ROOT . "products.php");
+        $ksc->getForm()->getRenderer()->setAttribute("action", LOCAL . "products.php");
         $ksc->getForm()->setCompareExpression("relation.inventory_attributes", array("%:{keyword}|%", "%:{keyword}"));
         $this->keyword_search = $ksc;
 
 
-        $this->addCSS(SITE_ROOT . "css/store.css");
+        $this->addCSS(LOCAL . "/css/store.css");
         $this->addCSS("//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css");
 
         $this->addJS("//code.jquery.com/ui/1.11.4/jquery-ui.js");
@@ -127,15 +127,15 @@ class StorePage extends SparkPage
         echo "<div class='links'>";
         echo "<div class='login_pane'>";
         if ($this->context) {
-            echo "<a href='" . SITE_ROOT . "account/' class='account_link'>{$this->client_name}</a>";
+            echo "<a href='" . LOCAL . "account/' class='account_link'>{$this->client_name}</a>";
         }
         else {
-            echo "<a href='" . SITE_ROOT . "account/login.php' class='account_link'>" . tr("Вход") . " / " . tr("Регистрация") . "</a>";
+            echo "<a href='" . LOCAL . "account/login.php' class='account_link'>" . tr("Вход") . " / " . tr("Регистрация") . "</a>";
         }
         echo "</div>";
 
-        echo "<a href='" . SITE_ROOT . "checkout/cart.php' class='checkout_link'>" . tr("Кошница") . " (" . $this->cart->getItemCount() . ")</a>";
-        echo "<a href='" . SITE_ROOT . "contacts.php' class='contacts_link'>" . tr("Контакти") . "</a>";
+        echo "<a href='" . LOCAL . "checkout/cart.php' class='checkout_link'>" . tr("Кошница") . " (" . $this->cart->getItemCount() . ")</a>";
+        echo "<a href='" . LOCAL . "contacts.php' class='contacts_link'>" . tr("Контакти") . "</a>";
 
         echo "</div>";
 
@@ -148,7 +148,7 @@ class StorePage extends SparkPage
 
         echo "<div class='clear'></div>";
 
-        echo "<a class='logo' href='" . SITE_ROOT . "'></a>";
+        echo "<a class='logo' href='" . LOCAL . "'></a>";
         echo "</div>";
 
         echo "</div>";
@@ -199,8 +199,8 @@ class StorePage extends SparkPage
         echo "</div>";//menu
 
         echo "<div class='other'>";
-        echo "<a href='" . SITE_ROOT . "terms_usage.php'>" . tr("Условия за ползване") . "</a>";
-        echo "<a href='" . SITE_ROOT . "terms_delivery.php'>" . tr("Условия за доставка") . "</a>";
+        echo "<a href='" . LOCAL . "terms_usage.php'>" . tr("Условия за ползване") . "</a>";
+        echo "<a href='" . LOCAL . "terms_delivery.php'>" . tr("Условия за доставка") . "</a>";
         echo "</div>";
 
         echo "</div>";

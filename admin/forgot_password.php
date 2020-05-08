@@ -32,8 +32,8 @@ if (isset($_POST["request_password"])) {
         $users = new AdminUsersBean();
 
         $random_pass = Authenticator::RandomToken(8);
-        $fpm = new ForgotPasswordMailer($fp->getValue(), $random_pass, SITE_DOMAIN . SITE_ROOT . "admin/login.php");
-        $db = DBDriver::Get();
+        $fpm = new ForgotPasswordMailer($fp->getValue(), $random_pass, SITE_DOMAIN . LOCAL . "admin/login.php");
+        $db = DBConnections::Factory();
         try {
             $db->transaction();
 

@@ -196,7 +196,7 @@ function addToCart() {
     if (stock_amount < 1) {
         showAlert("В момента няма наличност от този артикул");
     } else {
-        window.location.href = SITE_ROOT + "checkout/cart.php?addItem&piID=" + selected_piID;
+        window.location.href = LOCAL + "checkout/cart.php?addItem&piID=" + selected_piID;
     }
 
 

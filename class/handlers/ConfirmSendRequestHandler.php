@@ -29,7 +29,7 @@ class ConfirmSendRequestHandler extends RequestHandler
     {
 
 
-        $db = DBDriver::Get();
+        //$db = DBConnections::Get();
 
 
         try {
@@ -54,7 +54,7 @@ class ConfirmSendRequestHandler extends RequestHandler
         }
         catch (Exception $e) {
 
-            $db->rollback();
+            //$db->rollback();
             throw $e;
         }
 

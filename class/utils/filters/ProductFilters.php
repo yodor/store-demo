@@ -126,8 +126,8 @@ class InventoryAttributeFilter implements IQueryFilter
                 $sel_current->from = "";
 
                 //TODO: handle multiple values inside $filter_value - comma separated
-                $ia_name = DBDriver::Get()->escape($name_value[0]);
-                $ia_value = DBDriver::Get()->escape($name_value[1]);
+                $ia_name = DBConnections::Get()->escape($name_value[0]);
+                $ia_value = DBConnections::Get()->escape($name_value[1]);
 
                 $sel_current->where = " (relation.inventory_attributes LIKE '$ia_name:$ia_value|%' OR relation.inventory_attributes LIKE '%|$ia_name:$ia_value|%' OR relation.inventory_attributes LIKE '%|$ia_name:$ia_value' OR relation.inventory_attributes LIKE '$ia_name:$ia_value') ";
 

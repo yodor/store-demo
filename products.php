@@ -17,6 +17,7 @@ include_once("class/utils/filters/ProductFilters.php");
 include_once("class/components/renderers/items/ProductListItem.php");
 include_once("class/components/renderers/cells/ProductPhotoCellRenderer.php");
 
+include_once("iterators/ArrayDataIterator.php");
 
 $page = new ProductListPage();
 
@@ -84,7 +85,7 @@ $tree_selector = $bean->listTreeRelation($product_selector, "relation", "prodID"
 // echo $tree_selector->getSQL();
 
 //set the query
-$treeView->setSelectQuery($tree_selector);
+$treeView->setSelect($tree_selector);
 
 $nodeID = $treeView->getSelectedID();
 
@@ -168,7 +169,7 @@ $price_info["price_range"] = $proc->applyFiltersOn($treeView, $price_select, "pr
 
 
 
-$db = DBDriver::get();
+$db = DBConnections::Get();
 $res = $db->query($price_select->getSQL());
 if (!$res) throw new Exception ($db->getError());
 if ($row = $db->fetch($res)) {
@@ -250,7 +251,7 @@ echo "<div class='categories panel'>";
 //   if ($num_filters>0) {
 // 	echo "<a class='ActionRenderer Clear' href='javascript:clearFilters()'>Show All Categories</a>";
 //   }
-echo "<div class='caption'>".tr("Категорий")."</div>";
+echo "<div class='caption'>".tr("Категории")."</div>";
 $treeView->render();
 echo "</div>"; //tree
 
@@ -276,7 +277,7 @@ $rend->list_label = "brand_name";
 $rend->setInputAttribute("onChange", "javascript:filterChanged(this)");
 $field->setValue($brand_value);
 
-$rend->renderField($field);
+$rend->render();
 echo "</div>";//InputComponent
 
 echo "<div class='InputComponent'>";
@@ -289,7 +290,7 @@ $rend->list_label = "color";
 $rend->setInputAttribute("onChange", "javascript:filterChanged(this)");
 $field->setValue($color_value);
 
-$rend->renderField($field);
+$rend->render();
 echo "</div>";//InputComponent
 
 echo "<div class='InputComponent'>";
@@ -302,7 +303,7 @@ $rend->list_label = "size_value";
 $rend->setInputAttribute("onChange", "javascript:filterChanged(this)");
 $field->setValue($size_value);
 
-$rend->renderField($field);
+$rend->render();
 echo "</div>";//InputComponent
 
 echo "<div class='InputComponent Slider'>";
@@ -343,7 +344,7 @@ try {
         $rend->setInputAttribute("filter_group", "ia");
         $field->setValue($item["value"]);
 
-        $rend->renderField($field);
+        $rend->render();
         echo "</div>";//InputComponent
     }
 }

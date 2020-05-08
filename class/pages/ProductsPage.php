@@ -1,9 +1,8 @@
 <?php
 include_once("class/pages/StorePage.php");
-include_once("class/utils/ProductsQuery.php");
-include_once("components/renderers/ActionRenderer.php");
+include_once("class/utils/ProductsSQL.php");
 include_once("class/beans/ProductCategoriesBean.php");
-
+include_once("components/renderers/ActionRenderer.php");
 
 class ProductsPage extends StorePage
 {
@@ -66,7 +65,7 @@ class ProductsPage extends StorePage
         //             $actions[]=$back_action;
         //         }
 
-        $actions[] = new Action(tr("Начало"), SITE_ROOT . "index.php", array());
+        $actions[] = new Action(tr("Начало"), LOCAL . "index.php", array());
 
 
         $category_path = $this->getCategoryPath();
@@ -74,7 +73,7 @@ class ProductsPage extends StorePage
         foreach ($category_path as $idx => $category) {
             $qarr["section"] = $this->section;
             $qarr["catID"] = $category["catID"];
-            $link = SITE_ROOT . "products.php" . queryString($qarr);
+            $link = LOCAL . "products.php" . queryString($qarr);
             $actions[] = new Action($category["category_name"], $link, array());
         }
 

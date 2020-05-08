@@ -22,7 +22,7 @@ class RegisterCustomerPasswordMailer extends Mailer
         $message .= "<br>\r\n";
         $message .= "Password: " . $random_pass;
         $message .= "<br><br>\r\n\r\n";
-        $url = SITE_URL . SITE_ROOT . "account/";
+        $url = SITE_URL . LOCAL . "account/";
         $message .= "Натиснете <a href='$url'>Тук</a> за достъп до страниците за регистрирани клиенти или отворете този URL: ";
         $message .= $url;
 

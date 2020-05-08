@@ -27,7 +27,7 @@ $photos->select()->where = "$ref_key='$ref_id'";
 $form = new PhotoInputForm();
 $field = new DataInput("link", "Link", 1);
 $field->setRenderer(new TextField());
-// $field->content_after = "<a class='ActionRenderer DynamicPageChooser' href='".ADMIN_ROOT."content/pages/list.php?chooser=1'>".tr("Choose Dynamic Page")."</a>";
+// $field->content_after = "<a class='ActionRenderer DynamicPageChooser' href='".ADMIN_LOCAL."content/pages/list.php?chooser=1'>".tr("Choose Dynamic Page")."</a>";
 $form->addInput($field);
 $view = new InputFormView($photos, $form);
 

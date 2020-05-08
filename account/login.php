@@ -17,8 +17,8 @@ $page = new AccountPage(false);
 $auth = new UserAuthenticator();
 
 $req = new AuthenticatorRequestHandler($auth, "doLogin");
-$req->setCancelUrl(SITE_ROOT . "account/login.php");
-$req->setSuccessUrl(SITE_ROOT . "account/index.php");
+$req->setCancelUrl(LOCAL . "account/login.php");
+$req->setSuccessUrl(LOCAL . "account/index.php");
 
 RequestController::addRequestHandler($req);
 

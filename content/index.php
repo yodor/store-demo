@@ -7,7 +7,7 @@ include_once("beans/MenuItemsBean.php");
 
 // function dumpJS()
 // {
-//   echo "<script type='text/javascript' src='".SITE_ROOT."js/GalleryView.js'></script>";
+//   echo "<script type='text/javascript' src='".LOCAL."js/GalleryView.js'></script>";
 //   echo "\n";
 // }
 
@@ -20,7 +20,7 @@ if (!isset($_GET["page_id"]) || !isset($_GET["page_class"])) {
 }
 
 
-$page_class = DBDriver::Get()->escape($_GET["page_class"]);
+$page_class = DBConnections::Get()->escape($_GET["page_class"]);
 $page_id = (int)$_GET["page_id"];
 
 try {
@@ -40,7 +40,7 @@ try {
 }
 catch (Exception $e) {
     Session::SetAlert($e->getMessage());
-    header("Location: " . SITE_ROOT . "home.php");
+    header("Location: " . LOCAL . "home.php");
     exit;
 }
 

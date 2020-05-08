@@ -22,7 +22,7 @@ $view = new InputFormView(new ProductColorsBean(), new ProductColorInputForm($en
 
 Session::Set("color_codes.list", $page->getPageURL());
 
-// $view->getTransactor()->assignInsertValue("insert_date", DBDriver::get()->dateTime());
+// $view->getTransactor()->assignInsertValue("insert_date", DBConnections::get()->dateTime());
 $view->getTransactor()->appendValue("prodID", $ensure_product->ref_id);
 
 

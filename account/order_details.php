@@ -135,7 +135,7 @@ while ($item = $qry->next()) {
         $piID = $item["piID"];
         $prodID = $item["prodID"];
         
-        echo "<a class='item photo' href='".SITE_ROOT."details.php?prodID=$prodID&piID=$piID'>";
+        echo "<a class='item photo' href='".LOCAL."details.php?prodID=$prodID&piID=$piID'>";
             echo $items->getThumb($item["itemID"], 100);
         echo "</a>";
         

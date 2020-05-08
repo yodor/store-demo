@@ -42,7 +42,7 @@ $view->render();
     });
 </script>
 <script type='text/javascript' src='<?php
-echo SITE_ROOT; ?>js/md5.js'></script>
+echo LOCAL; ?>js/md5.js'></script>
 <script type='text/javascript'>
     function checkForm(frm) {
         try {

@@ -25,7 +25,7 @@ $clients = new UsersBean();
 $invoices = new InvoiceDetailsBean();
 $order_items = new OrderItemsBean();
 
-$db = DBDriver::Factory();
+$db = DBConnections::Get();
 
 
 

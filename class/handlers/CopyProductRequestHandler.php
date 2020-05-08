@@ -52,7 +52,7 @@ class CopyProductRequestHandler extends RequestHandler
     {
 
 
-        $db = DBDriver::Factory();
+        $db = DBConnections::Factory();
 
 
         try {

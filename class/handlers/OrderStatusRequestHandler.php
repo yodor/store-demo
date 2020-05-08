@@ -36,7 +36,7 @@ class OrderStatusRequestHandler extends RequestHandler
   {
 
 
-        $db = DBDriver::factory();
+        $db = DBConnections::factory();
 
 
         try {

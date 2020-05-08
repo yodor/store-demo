@@ -19,10 +19,10 @@ if ($page->getUserID() > 0) {
 }
 
 $auth = new UserAuthenticator();
-$auth->setLoginURL(SITE_ROOT . "checkout/customer.php");
+$auth->setLoginURL(LOCAL . "checkout/customer.php");
 $req = new AuthenticatorRequestHandler($auth, "doLogin");
 $req->setCancelUrl($auth->getLoginURL());
-$req->setSuccessUrl(SITE_ROOT . "checkout/delivery.php");
+$req->setSuccessUrl(LOCAL . "checkout/delivery.php");
 
 RequestController::addRequestHandler($req);
 
@@ -36,7 +36,7 @@ $afr = new AuthFormRenderer();
 $afr->setAttribute("name", "client_auth");
 $afr->setForm($af);
 $afr->setAuthContext($auth->name());
-$afr->forgot_password_url = SITE_ROOT . "account/forgot_password.php";
+$afr->forgot_password_url = LOCAL . "account/forgot_password.php";
 
 $form = new RegisterClientInputForm();
 
@@ -98,20 +98,20 @@ echo "<div class='navigation'>";
 
 echo "<div class='slot left'>";
 echo "<a href='cart.php'>";
-echo "<img src='" . SITE_ROOT . "images/cart_edit.png'>";
+echo "<img src='" . LOCAL . "images/cart_edit.png'>";
 echo "<div class='DefaultButton checkout_button' >" . tr("Назад") . "</div>";
 echo "</a>";
 echo "</div>";
 
 echo "<div class='slot center'>";
 //     echo "<div class='note'>";
-//         echo "<i>".tr("Натискайки бутона 'Продължи' Вие се съгласявате с нашите")."&nbsp;"."<a  href='".SITE_ROOT."terms.php'>".tr("Условия за ползване")."</a></i>";
+//         echo "<i>".tr("Натискайки бутона 'Продължи' Вие се съгласявате с нашите")."&nbsp;"."<a  href='".LOCAL."terms.php'>".tr("Условия за ползване")."</a></i>";
 //     echo "</div>";
 echo "</div>";
 
 echo "<div class='slot right'>";
 echo "<a href='javascript:document.forms.RegisterClient.submit();'>";
-echo "<img src='" . SITE_ROOT . "images/cart_checkout.png'>";
+echo "<img src='" . LOCAL . "images/cart_checkout.png'>";
 echo "<div class='DefaultButton checkout_button'>" . tr("Продължи") . "</div>";
 echo "</a>";
 echo "</div>";

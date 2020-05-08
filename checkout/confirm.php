@@ -218,20 +218,20 @@ echo "<div class='navigation'>";
 
 echo "<div class='slot left'>";
 echo "<a href='cart.php'>";
-echo "<img src='" . SITE_ROOT . "images/cart_edit.png'>";
+echo "<img src='" . LOCAL . "images/cart_edit.png'>";
 echo "<div class='DefaultButton checkout_button' >" . tr("Назад") . "</div>";
 echo "</a>";
 echo "</div>";
 
 echo "<div class='slot center'>";
 echo "<div class='note'>";
-echo "<i>" . tr("Натискайки бутона 'Потвърди поръчка' Вие се съгласявате с нашите") . "&nbsp;" . "<a  href='" . SITE_ROOT . "terms_usage.php'>" . tr("Условия за ползване") . "</a>&nbsp; " . tr("и") . "&nbsp<a  href='" . SITE_ROOT . "terms_delivery.php'>" . tr("Условия за доставка") . "</a></i>";
+echo "<i>" . tr("Натискайки бутона 'Потвърди поръчка' Вие се съгласявате с нашите") . "&nbsp;" . "<a  href='" . LOCAL . "terms_usage.php'>" . tr("Условия за ползване") . "</a>&nbsp; " . tr("и") . "&nbsp<a  href='" . LOCAL . "terms_delivery.php'>" . tr("Условия за доставка") . "</a></i>";
 echo "</div>";
 echo "</div>";
 
 echo "<div class='slot right'>";
 echo "<a href='javascript:document.forms.OrderNote.submit()'>";
-echo "<img src='" . SITE_ROOT . "images/cart_checkout.png'>";
+echo "<img src='" . LOCAL . "images/cart_checkout.png'>";
 echo "<div class='DefaultButton checkout_button'  >" . tr("Потвърди поръчка") . "</div>";
 echo "</a>";
 echo "</div>";

@@ -36,7 +36,7 @@ if (isset($_GET["copyID"])) {
 $view = new InputFormView($bean, $form);
 $view->reload_url = Session::Get("inventory.list");
 
-// $view->getTransactor()->assignInsertValue("insert_date", DBDriver::get()->dateTime());
+// $view->getTransactor()->assignInsertValue("insert_date", DBConnections::get()->dateTime());
 $view->getTransactor()->appendValue("prodID", $prodID);
 
 

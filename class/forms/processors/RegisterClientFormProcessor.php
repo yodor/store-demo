@@ -45,7 +45,7 @@ class RegisterClientFormProcessor extends FormProcessor
 
             $urow["password"] = md5($password);
             $urow["is_confirmed"] = 1;
-            $urow["date_signup"] = DBDriver::Factory()->dateTime();
+            $urow["date_signup"] = DBConnections::Get()->dateTime();
 
             $auth = new UserAuthenticator();
 

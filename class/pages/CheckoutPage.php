@@ -19,7 +19,7 @@ class CheckoutPage extends StorePage
 
         $this->ccmp = new CartComponent();
 
-        $this->addCSS(SITE_ROOT."css/checkout.css");
+        $this->addCSS(LOCAL."css/checkout.css");
     }
 
     public function drawCartItems($heading_text = "")

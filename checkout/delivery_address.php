@@ -71,7 +71,7 @@ echo "<div class='navigation'>";
 
     echo "<div class='slot left'>";
         echo "<a href='delivery.php'>";
-        echo "<img src='".SITE_ROOT."images/cart_edit.png'>";
+        echo "<img src='".LOCAL."images/cart_edit.png'>";
         echo "<div class='DefaultButton checkout_button' >".tr("Назад")."</div>";
         echo "</a>";
     echo "</div>";
@@ -81,7 +81,7 @@ echo "</div>";
 
 echo "<div class='slot right'>";
 echo "<a href='javascript:document.forms.ClientAddress.submit();'>";
-echo "<img src='" . SITE_ROOT . "images/cart_checkout.png'>";
+echo "<img src='" . LOCAL . "images/cart_checkout.png'>";
 echo "<div class='DefaultButton checkout_button'  >" . tr("Продължи") . "</div>";
 echo "</a>";
 echo "</div>";

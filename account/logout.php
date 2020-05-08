@@ -5,7 +5,7 @@ include_once("auth/UserAuthenticator.php");
 $auth = new UserAuthenticator();
 $auth->logout();
 
-header("Location: " . SITE_ROOT);
+header("Location: " . LOCAL);
 exit;
 
 ?>

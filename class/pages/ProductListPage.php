@@ -1,6 +1,6 @@
 <?php
 include_once("class/pages/ProductsPage.php");
-include_once("class/utils/ProductsQuery.php");
+include_once("class/utils/ProductsSQL.php");
 include_once("components/NestedSetTreeView2.php");
 include_once("components/renderers/items/TextTreeItemRenderer.php");
 
@@ -26,8 +26,8 @@ class ProductListPage extends ProductsPage
 
         $this->treeView = $treeView;
 
-        $this->addCSS(SITE_ROOT . "css/product_list.css?ver=1.0");
-        $this->addJS(SITE_ROOT . "js/product_list.js?ver=1.2");
+        $this->addCSS(LOCAL . "css/product_list.css?ver=1.0");
+        $this->addJS(LOCAL . "js/product_list.js?ver=1.2");
 
     }
 

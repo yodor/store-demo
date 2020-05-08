@@ -12,7 +12,7 @@ if (isset($_SESSION["upload_control_removed"])) {
     unset($_SESSION["upload_control_removed"]);
 }
 
-header("Location: " . SITE_ROOT . "admin/");
+header("Location: " . LOCAL . "admin/");
 exit;
 
 ?>

@@ -6,7 +6,7 @@ include_once("class/beans/ProductColorPhotosBean.php");
 include_once("class/beans/ProductsBean.php");
 include_once("class/beans/ProductInventoryBean.php");
 
-class CartComponent extends MLTagComponent implements IHeadRenderer
+class CartComponent extends MLTagComponent implements IHeadContents
 {
     protected $cart = NULL;
     protected $heading_text = "";
@@ -38,7 +38,7 @@ class CartComponent extends MLTagComponent implements IHeadRenderer
     public function requiredStyle()
     {
         $arr = parent::requiredStyle();
-        $arr[] = SITE_ROOT."css/CartComponent.css";
+        $arr[] = LOCAL."css/CartComponent.css";
         return $arr;
     }
 
@@ -93,7 +93,7 @@ class CartComponent extends MLTagComponent implements IHeadRenderer
         //only one photo here
         echo "<td field='product_photo'>";
 
-        echo "<a href='".SITE_ROOT."details.php?prodID=$prodID&piID=$piID'>";
+        echo "<a href='".LOCAL."details.php?prodID=$prodID&piID=$piID'>";
         $pclrID = $item["pclrID"];
         $pclrpID = $this->photos->getFirstPhotoID($pclrID);
 

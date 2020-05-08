@@ -9,6 +9,7 @@ class NewsItemInputForm extends InputForm
     public function __construct()
     {
 
+        parent::__construct();
 
         $field = DataInputFactory::Create(DataInputFactory::TEXT, "item_title", "Заглавие", 1);
         $this->addInput($field);

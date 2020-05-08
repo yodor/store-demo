@@ -11,16 +11,11 @@ include_once("utils/MenuItem.php");
 class AccountPage extends StorePage
 {
     protected $account_menu = NULL;
+    protected $authorized_access = TRUE;
 
-    public function __construct($need_auth = true)
+    public function __construct($authorized_access = TRUE)
     {
-
-
-        if ($need_auth) {
-
-            $this->auth = new UserAuthenticator();
-
-        }
+        $this->authorized_access = $authorized_access;
 
         parent::__construct();
 
@@ -36,7 +31,7 @@ class AccountPage extends StorePage
 
         $this->account_menu->setMenuItems($items);
 
-        $this->addCSS(LOCAL."css/account.css");
+        $this->addCSS(LOCAL . "css/account.css");
     }
 
     public function startRender()

@@ -132,6 +132,7 @@ $view->addColumn(new TableColumn("actions", "Actions"));
 
 $view->getColumn("pclrID")->setCellRenderer(new TableImageCellRenderer(new ProductColorPhotosBean(),  -1, 64));
 $view->getColumn("pclrID")->getCellRenderer()->setSourceIteratorKey("pclrID");
+$view->getColumn("pclrID")->getCellRenderer()->setBlobField("photo");
 $view->getColumn("pclrID")->getHeaderCellRenderer()->setSortable(false);
 
 // $view->getColumn("photo")->setCellRenderer(new TableImageCellRenderer(new ProductInventoryPhotosBean(), TableImageCellRenderer::RENDER_THUMB, -1, 48));

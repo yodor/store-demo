@@ -27,10 +27,10 @@ class OrderClientCellRenderer extends TableCellRenderer
         echo "</div>";
     }
 
-    public function setData(array &$row, TableColumn $tc)
+    public function setData(array &$row)
     {
 
-        parent::setData($row, $tc);
+        parent::setData($row);
 
         $this->userID = (int)$row["userID"];
 

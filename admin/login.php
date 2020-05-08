@@ -18,6 +18,7 @@ $req->setSuccessUrl(LOCAL . "admin/index.php");
 
 RequestController::addRequestHandler($req);
 
+
 $af = new AuthForm();
 
 $afr = new AuthFormRenderer();
@@ -32,10 +33,12 @@ header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 // header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
 header("Expires: 0");
 
+
 $page->startRender();
 
 //set the token after RequestController processHandlers is done
 $af->getInput("rand")->setValue($auth->createLoginToken());
+
 
 $page->setPreferredTitle("Login");
 
@@ -47,7 +50,7 @@ echo "<div class='login_component'>";
 
 echo "<span class='inner'>";
 
-echo "<span class='caption'>Store Administration</span>";
+echo "<span class='caption'>Administration</span>";
 $afr->renderForm($af);
 echo "</span>";
 
@@ -55,5 +58,4 @@ echo "</span>";
 echo "</div>";
 
 $page->finishRender();
-
 ?>

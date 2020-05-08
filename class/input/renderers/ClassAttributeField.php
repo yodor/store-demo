@@ -15,7 +15,6 @@ class ClassAttributeItem extends DataSourceItem
 
         echo "<input data='foreign_key' type='hidden' name='fk_{$this->name}' value='caID:{$this->id}'>";
 
-
         echo "<label data='attribute_unit'>" . $this->data_row["unit"] . "</label>";
     }
 

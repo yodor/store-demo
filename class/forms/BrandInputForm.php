@@ -9,6 +9,8 @@ class BrandInputForm extends InputForm
 
     public function __construct()
     {
+        parent::__construct();
+
         $field = DataInputFactory::Create(DataInputFactory::TEXT, "brand_name", "Име на марка", 1);
         $this->addInput($field);
 

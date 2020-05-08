@@ -153,7 +153,7 @@ foreach ($sellable as $pos=>$row) {
 
     //use the color chip from product color scheme
     if ((int)$row["have_chip"]>0) {
-        $item = array("id"=>$pclrID, "class"=>"ProductColorsBean&bean_field=color_photo");
+        $item = array("id"=>$pclrID, "class"=>"ProductColorsBean&field=color_photo");
         $color_chips[$pclrID] = $item;
     }
     else {

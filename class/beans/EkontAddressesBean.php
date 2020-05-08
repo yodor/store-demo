@@ -8,12 +8,16 @@ class EkontAddressesBean extends DBTableBean
  `office` varchar(255) NOT NULL,
  `userID` int(11) unsigned NOT NULL,
  PRIMARY KEY (`eoID`),
- UNIQUE KEY `userID` (`userID`),
+ UNIQUE KEY `userID` (`userID`) USING BTREE,
  CONSTRAINT `ekont_addresses_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8
 ";
 
-
+    /**
+     * EkontAddressesBean constructor.
+     * Preferred users' 'Ekont' address
+     * @throws Exception
+     */
     public function __construct()
     {
         parent::__construct("ekont_addresses");

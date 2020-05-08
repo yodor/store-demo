@@ -72,7 +72,7 @@
 }
 
 .CheckoutPage.delivery_ekont .item.ekont_office + .item.ekont_locator {
-    display: none;
+    display: block;
 }
 
 .CheckoutPage.delivery_ekont FORM[name='EkontOffice'] {

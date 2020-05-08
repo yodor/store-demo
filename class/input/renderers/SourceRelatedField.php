@@ -24,9 +24,9 @@ class SourceAttributeItem extends DataSourceItem
 class SourceRelatedField extends DataSourceField
 {
 
-    public function __construct()
+    public function __construct(DataInput $input)
     {
-        parent::__construct();
+        parent::__construct($input);
         $this->setItemRenderer(new SourceAttributeItem());
 
         //       RequestController::addAjaxHandler(new SourceRelatedFieldAjaxHandler());
@@ -49,13 +49,14 @@ class SourceRelatedField extends DataSourceField
     protected function renderItems()
     {
 
-
         if ( $this->iterator->count() < 1) {
             echo tr("No optional attributes");
             return;
         }
 
-        $this->list_key = $this->field->getName();
+        //$this->list_key = $this->input->getName();
+
+        //$this->list_key = "caID";
 
         parent::renderItems();
     }

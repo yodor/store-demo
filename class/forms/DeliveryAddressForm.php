@@ -1,23 +1,27 @@
 <?php
 include_once("forms/InputForm.php");
+include_once("iterators/ArrayDataIterator.php");
 
 class DeliveryAddressForm extends InputForm
 {
 
     public function __construct()
     {
+        parent::__construct();
 
-        $aw1 = new ArrayDataIterator(array(Cart::DELIVERY_USERADDRESS => "Моят регистриран адрес", Cart::DELIVERY_EKONTOFFICE => "До офис на Еконт"), "item_id", "item_value");
-        $f12 = new DataInput("delivery_type", "Изберете адрес", 1);
-        $r12 = new RadioField();
-        $r12->setIterator($aw1);
-        $r12->list_key = "item_id";
-        $r12->list_label = "item_value";
-        $f12->setRenderer($r12);
-        $f12->setValidator(new EmptyValueValidator());
-        $f12->setProcessor(new BeanPostProcessor());
+        $data = new ArrayDataIterator(array(Cart::DELIVERY_USERADDRESS => "Моят регистриран адрес", Cart::DELIVERY_EKONTOFFICE => "До офис на Еконт"));
 
-        $this->addInput($f12);
+        $field = new DataInput("delivery_type", "Изберете адрес", 1);
+
+        $radio = new RadioField($field);
+        $radio->setIterator($data);
+        $radio->list_key = ArrayDataIterator::KEY_ID;
+        $radio->list_label = ArrayDataIterator::KEY_VALUE;
+
+        $field->setValidator(new EmptyValueValidator());
+        $field->setProcessor(new BeanPostProcessor());
+
+        $this->addInput($field);
 
     }
 

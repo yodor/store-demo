@@ -18,22 +18,16 @@ include_once("components/renderers/cells/DateFieldCellRenderer.php");
 include_once("components/KeywordSearchComponent.php");
 include_once("iterators/SQLQuery.php");
 
-
 $ekont_addresses = new EkontAddressesBean();
 $client_addresses = new ClientAddressesBean();
 $clients = new UsersBean();
 $invoices = new InvoiceDetailsBean();
 $order_items = new OrderItemsBean();
 
-$db = DBConnections::Get();
-
-
-
-
+$db = DBConnections::Factory();
 
 $search_fields = array("orderID", "items");
 $scomp = new KeywordSearchComponent($search_fields);
-
 
 $filter = $scomp->filterSelect();
 if ($filter) {
@@ -44,34 +38,31 @@ $caption = "Orders List";
 
 // if (isset($_GET["filter"])) {
 //   $fsel = false;
-//   
+//
 //   $filter = $db->escapeString($_GET["filter"]);
 //   if (strcmp($filter, "completed")==0) {
 // 	$fsel = new SelectQuery();
 // 	$fsel->where = " is_complete=1 ";
 // 	$fsel->fields = "";
-// 	
+//
 // 	$caption.=" - Completed";
 //   }
 //   else if (strcmp($filter, "confirmed")==0) {
 // 	$fsel = new SelectQuery();
 // 	$fsel->where = " is_complete=0 AND is_confirmed=1 ";
 // 	$fsel->fields = "";
-// 	
+//
 // 	$caption.=" - Confirmed";
 //   }
 //   if ($fsel) {
 //     $sel = $sel->combineWith($fsel);
-//     
+//
 //   }
 // }
 
-
 // echo $sel->getSQL();
 
-
 $view = new TableView(new SQLQuery($sel, "orderID"));
-
 
 $view->setCaption($caption);
 
@@ -112,18 +103,24 @@ $act = new ActionsTableCellRenderer();
 
 // $act->addAction(
 //   $h1->createAction("Маркирай изпратена","?cmd=confirm_send",  "return (\$row['status']>0 && \$row['is_complete']<1);")
-//   
-// ); 
-// 
-
-$act->addAction(new Action("Потвърди изпълнение", "?cmd=confirm_send", array(new ActionParameter("orderID", "orderID"))));
-
-
-$act->addAction(new RowSeparatorAction());
-$act->addAction($h_delete->createAction());
+//
+// );
+//
+// $act->addAction(
+//   new Action(
+// 	"Потвърди изпълнение", "?cmd=confirm_send",
+// 	array(
+// 	  new ActionParameter("orderID", "orderID"),
+// 	)
+//
+// // 	"return (\$row['is_confirmed']<1 && \$row['is_complete']<1);"
+//   )
+//
+// );
+// $act->addAction(  new RowSeparatorAction() );
+// $act->addAction( $h_delete->createAction() );
 // $act->addAction(  new RowSeparatorAction() );
 
 $view->getColumn("actions")->setCellRenderer($act);
-
 
 ?>

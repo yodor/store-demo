@@ -73,10 +73,9 @@ class OrderNoteFormProcessor extends FormProcessor
         $page = HTMLPage::Instance();
         $cart = $page->getCart();
 
-
         $cart->setNote($form->getInput("note")->getValue());
 
-        header("Location: complete.php");
+        header("Location: finalize.php");
         exit;
     }
 }
@@ -242,6 +241,6 @@ echo "</div>";
 
 Session::set("checkout.navigation.back", $page->getPageURL());
 
-$page->finishPage();
+$page->finishRender();
 
 ?>

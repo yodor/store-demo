@@ -100,7 +100,7 @@ class ProductListItem extends ItemRendererImpl implements IHeadContents {
 
         echo "<div class='colors_container'>";
 
-        $num_colors = count($this->colors);
+        $num_colors = is_array($this->colors) ? count($this->colors) : 0;
         if ($num_colors>0) {
 
             echo "<div class='colors'>".$num_colors." ".($num_colors>1 ? tr("цвята") : tr("цвят"))."</div>";
@@ -125,7 +125,7 @@ class ProductListItem extends ItemRendererImpl implements IHeadContents {
 
                     //use color chip if any
                     if ($prow["have_chip"]>0) {
-                        $chip_class = "ProductColorsBean&bean_field=color_photo";
+                        $chip_class = "ProductColorsBean&field=color_photo";
                         $chip_id = $pclrID;
                     }
                     //use the product photo if no color photo is set

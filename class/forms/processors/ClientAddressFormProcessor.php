@@ -11,7 +11,7 @@ class ClientAddressFormProcessor extends FormProcessor
 
 
 
-    public function setUserID($userID)
+    public function setUserID(int $userID) : void
     {
         $this->userID = $userID;
     }

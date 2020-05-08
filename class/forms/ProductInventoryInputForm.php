@@ -1,6 +1,7 @@
 <?php
 include_once("forms/InputForm.php");
 include_once("input/DataInputFactory.php");
+include_once("input/renderers/ArrayField.php");
 include_once("class/beans/ProductsBean.php");
 include_once("class/beans/ClassAttributesBean.php");
 include_once("class/beans/ProductColorsBean.php");
@@ -9,7 +10,7 @@ include_once("class/beans/InventoryAttributeValuesBean.php");
 
 include_once("class/input/renderers/ClassAttributeField.php");
 include_once("class/input/renderers/SourceRelatedField.php");
-
+include_once("class/beans/ProductCategoriesBean.php");
 
 class ProductInventoryInputForm extends InputForm
 {
@@ -20,8 +21,10 @@ class ProductInventoryInputForm extends InputForm
     public function __construct()
     {
 
+        parent::__construct();
+
         $field = DataInputFactory::Create(DataInputFactory::SELECT, "pclrID", "Цветова схема", 0);
-        $colors = new ProductCategoriesBean();
+        $colors = new ProductColorsBean();
         $field->getRenderer()->setIterator($colors->query());
 
         $field->getRenderer()->list_key = "pclrID";
@@ -55,31 +58,31 @@ class ProductInventoryInputForm extends InputForm
         $field = DataInputFactory::Create(DataInputFactory::TEXT, "weight", "Тегло", 0);
         $this->addInput($field);
 
+        ////
         $field = new ArrayDataInput("value", "Атрибути на класа", 0);
         $field->allow_dynamic_addition = false;
-        $field->source_label_visible = true;
 
+        $field->source_label_visible = true;
 
         $field->getValueTransactor()->process_datasource_foreign_keys = true;
 
         $bean1 = new InventoryAttributeValuesBean();
         $field->setSource($bean1);
 
-
-        $rend = new SourceRelatedField();
+        $rend = new SourceRelatedField($field);
 
         $bean = new ClassAttributesBean();
         $rend->setIterator($bean->query());
 
-        $rend->list_key = "caID";
+        $rend->list_key = "value";
         $rend->list_label = "attribute_name";
 
-        $field->setRenderer($rend);
+        //new ArrayField($rend);
 
         $this->addInput($field);
     }
 
-    public function setProductID($prodID)
+    public function setProductID(int $prodID)
     {
         $this->prodID = (int)$prodID;
 
@@ -92,17 +95,20 @@ class ProductInventoryInputForm extends InputForm
         $prods = new ProductsBean();
         $this->product = $prods->getByID($this->prodID);
 
-
         $value_field = $this->getInput("value");
 
         $rend = $value_field->getRenderer();
 
+        //$rend = $arr_rend->getItemRenderer();
+
         $rend->setCaption(tr("Продуктов клас") . ": " . $this->product["class_name"]);
 
+        $sel = $rend->getIterator()->select;
+        $sel->where = " ca.class_name='{$this->product["class_name"]}' ";
+        $sel->from = $rend->getIterator()->name()." ca LEFT JOIN attributes attr ON attr.name = ca.attribute_name ";
+        $sel->fields = " ca.*, attr.unit as attribute_unit, attr.type attribute_type ";
 
-        $rend->getIterator()->select->where = " ca.class_name='". $this->product["class_name"]."' ";
-        $rend->getIterator()->select->from.= " ca LEFT JOIN attributes attr ON attr.name = ca.attribute_name ";
-        $rend->getIterator()->select->fields = " ca.*, attr.unit as attribute_unit, attr.type attribute_type ";
+        //debug($sel->getSQL());
 
         $this->getInput("price")->setValue($this->product["price"]);
         $this->getInput("buy_price")->setValue($this->product["buy_price"]);
@@ -111,7 +117,7 @@ class ProductInventoryInputForm extends InputForm
 
     }
 
-    public function loadBeanData($editID, DBTableBean $bean)
+    public function loadBeanData(int $editID, DBTableBean $bean)
     {
 
         $item_row = parent::loadBeanData($editID, $bean);
@@ -120,10 +126,17 @@ class ProductInventoryInputForm extends InputForm
 
         $rend = $value_field->getRenderer();
 
-        $rend->getIterator()->select->from.=" ca LEFT JOIN inventory_attribute_values iav ON iav.caID = ca.caID AND iav.piID=$editID LEFT JOIN attributes attr ON attr.name = ca.attribute_name ";
-        $rend->getIterator()->select->where = " ca.class_name='". $this->product["class_name"]."'";
-        $rend->getIterator()->select->fields = " ca.*, iav.value, attr.unit as attribute_unit, attr.type attribute_type ";
+        $sel = $rend->getIterator()->select;
 
+        $sel->from = $rend->getIterator()->name()." ca LEFT 
+        JOIN inventory_attribute_values iav ON iav.caID = ca.caID AND iav.piID='$editID' LEFT 
+        JOIN attributes attr ON attr.name = ca.attribute_name ";
+
+        $sel->where = " ca.class_name='{$this->product["class_name"]}'";
+
+        $sel->fields = " ca.*, iav.value, attr.unit as attribute_unit, attr.type attribute_type ";
+
+        //debug($sel->getSQL());
     }
 
     public function loadPostData(array $arr) : void

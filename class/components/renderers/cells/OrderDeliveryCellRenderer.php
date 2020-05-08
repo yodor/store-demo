@@ -8,9 +8,9 @@ class OrderDeliveryCellRenderer extends TableCellRenderer
 
     protected $data = null;
 
-    public function setData(array &$row, TableColumn $tc)
+    public function setData(array &$row)
     {
-        parent::setData($row, $tc);
+        parent::setData($row);
         $this->data = $row;
     }
 

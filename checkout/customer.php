@@ -19,9 +19,9 @@ if ($page->getUserID() > 0) {
 }
 
 $auth = new UserAuthenticator();
-$auth->setLoginURL(LOCAL . "checkout/customer.php");
+
 $req = new AuthenticatorRequestHandler($auth, "doLogin");
-$req->setCancelUrl($auth->getLoginURL());
+$req->setCancelUrl(LOCAL . "checkout/customer.php");
 $req->setSuccessUrl(LOCAL . "checkout/delivery.php");
 
 RequestController::addRequestHandler($req);
@@ -35,7 +35,7 @@ $af = new AuthForm();
 $afr = new AuthFormRenderer();
 $afr->setAttribute("name", "client_auth");
 $afr->setForm($af);
-$afr->setAuthContext($auth->name());
+
 $afr->forgot_password_url = LOCAL . "account/forgot_password.php";
 
 $form = new RegisterClientInputForm();
@@ -64,6 +64,9 @@ header("Expires: 0");
 
 $page->startRender();
 $page->setPreferredTitle(tr("Клиенти"));
+
+//set the token after RequestController processHandlers is done
+$af->getInput("rand")->setValue($auth->createLoginToken());
 
 
 echo "<div class='item login'>";

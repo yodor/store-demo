@@ -8,14 +8,15 @@ class FAQItemInputForm extends InputForm
 
     public function __construct()
     {
+        parent::__construct();
 
         $field = DataInputFactory::Create(DataInputFactory::SELECT, "section", "Секция", 1);
 
-        $enm = new DBEnumIterator("faq_items", "section");
+        $data = new DBEnumIterator("faq_items", "section");
         $rend = $field->getRenderer();
-        $rend->setIterator($enm);
-        $rend->list_key = "section";
-        $rend->list_label = "section";
+        $rend->setIterator($data);
+        $rend->list_key = ArrayDataIterator::KEY_VALUE;
+        $rend->list_label = ArrayDataIterator::KEY_VALUE;
 
         $this->addInput($field);
 

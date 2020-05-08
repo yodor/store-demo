@@ -14,12 +14,12 @@ include_once("class/beans/ClassAttributeValuesBean.php");
 include_once("class/input/renderers/ClassAttributeField.php");
 include_once("input/transactors/CustomFieldTransactor.php");
 
-
 class ProductInputForm extends InputForm
 {
 
     public function __construct()
     {
+        parent::__construct();
 
         $field = DataInputFactory::Create(DataInputFactory::SELECT, "section", "Секция", 1);
         $rend = $field->getRenderer();
@@ -54,29 +54,8 @@ class ProductInputForm extends InputForm
         $rend->list_label = "class_name";
         $this->addInput($field);
 
-
         $field = DataInputFactory::Create(DataInputFactory::TEXT, "product_name", "Име на продукта", 1);
         $this->addInput($field);
-
-        //         $field = DataInputFactory::CreateField(DataInputFactory::TEXTFIELD, "product_code", "Product Code", 1);
-        // 	$this->addField($field);
-
-
-        // 	$field = DataInputFactory::CreateField(DataInputFactory::TEXTFIELD, "price", "Price", 0);
-        // 	$this->addField($field);
-        //
-        // 	$field = DataInputFactory::CreateField(DataInputFactory::TEXTFIELD, "buy_price", "Buy Price", 0);
-        // 	$this->addField($field);
-        //
-        // 	$field = DataInputFactory::CreateField(DataInputFactory::TEXTFIELD, "old_price", "Old Price", 0);
-        // 	$this->addField($field);
-        //
-        // 	$field = DataInputFactory::CreateField(DataInputFactory::TEXTFIELD, "weight", "Weight", 0);
-        // 	$this->addField($field);
-
-
-        // 	$field = DataInputFactory::CreateField(DataInputFactory::TEXTFIELD, "stock_amount", "Stock Amount", 1);
-        // 	$this->addField($field);
 
         $field = DataInputFactory::Create(DataInputFactory::CHECKBOX, "visible", "Видим (в продажба)", 0);
         $this->addInput($field);
@@ -87,50 +66,28 @@ class ProductInputForm extends InputForm
         $field = DataInputFactory::Create(DataInputFactory::MCE_TEXTAREA, "product_summary", "Описание", 0);
         $this->addInput($field);
 
-
         // 	$field = DataInputFactory::CreateField(DataInputFactory::MCE_TEXTAREA, "product_description", "Product Description", 0);
         // 	$this->addField($field);
-
 
         $field = DataInputFactory::Create(DataInputFactory::TEXTAREA, "keywords", "Ключови думи", 0);
         $this->addInput($field);
 
-
-        // 	$input = DataInputFactory::CreateField(DataInputFactory::SESSION_IMAGE, "photo","Photo", 0);
-        // 	$input->setSource(new ProductPhotosBean());
-        // 	$input->transact_mode = InputField::TRANSACT_OBJECT;
-        // 	$input->getValueTransactor()->max_slots = 4;
-        // 	$this->addField($input);
-
         $field1 = new ArrayDataInput("feature", "Характеристики", 0);
-        $field1->allow_dynamic_addition = true;
-        $field1->source_label_visible = true;
+        $field1->allow_dynamic_addition = TRUE;
+        $field1->source_label_visible = TRUE;
 
         $features_source = new ProductFeaturesBean();
         $field1->setSource($features_source);
 
-        $renderer = new TextField();
+        $renderer = new TextField($field1);
         $renderer->setIterator($features_source->query());
-        $field1->setRenderer($renderer);
 
         $field1->setValidator(new EmptyValueValidator());
         $field1->setProcessor(new BeanPostProcessor());
 
+        new ArrayField($renderer);
+
         $this->addInput($field1);
-
-
-        // 	$field = new ArrayInputField("value", "Optional Attributes", 0);
-        // 	$field->allow_dynamic_addition = false;
-        // 	$field->source_label_visible = true;
-        // 	$field->getValueTransactor()->process_datasource_foreign_keys = true;
-        //
-        // 	$bean1 = new ClassAttributeValuesBean();
-        // 	$field->setSource($bean1);
-        //
-        // 	$rend = new ClassAttributeField();
-        // 	$field->setRenderer($rend);
-        //
-        // 	$this->addField($field);
 
 
     }
@@ -140,17 +97,17 @@ class ProductInputForm extends InputForm
 
         parent::loadBeanData($editID, $bean);
 
-        //       $renderer = $this->getField("value")->getRenderer();
-        //       $renderer->setCategoryID($this->getField("catID")->getValue());
+        //       $renderer = $this->getInput("value")->getRenderer();
+        //       $renderer->setCategoryID($this->getInput("catID")->getValue());
         //       $renderer->setProductID($editID);
 
     }
 
-    public function loadPostData(array $arr) : void
+    public function loadPostData(array $arr): void
     {
         parent::loadPostData($arr);
 
-        //       $renderer = $this->getField("value")->getRenderer();
+        //       $renderer = $this->getInput("value")->getRenderer();
         //       $renderer->setCategoryID($arr["catID"]);
 
     }

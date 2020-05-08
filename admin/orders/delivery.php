@@ -11,7 +11,7 @@ include_once("forms/renderers/FormRenderer.php");
 $page = new AdminPage();
 $page->checkAccess(ROLE_ORDERS_MENU);
 
-$config = ConfigBean::Factory();
+$config = ConfigBean::factory();
 $config->setSection("delivery_prices");
 
 $form = new DeliveryConfigForm();
@@ -31,15 +31,16 @@ $form->setProcessor($proc);
 $proc->processForm($form);
 
 if ($proc->getStatus() === IFormProcessor::STATUS_OK) {
-    Session::SetAlert("Configuration Updated");
+    Session::set("alert", "Configuration Updated");
     //   header("Location: delivery.php");
     //   exit;
 }
 else if ($proc->getStatus() === IFormProcessor::STATUS_ERROR) {
-    Session::SetAlert($proc->getMessage());
+    Session::set("alert", $proc->getMessage());
     //   header("Location: delivery.php");
     //   exit;
 }
+
 
 
 $page->startRender();

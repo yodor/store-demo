@@ -14,7 +14,7 @@ class InvoiceDetailsFormProcessor extends FormProcessor
         $this->editID = $editID;
     }
 
-    public function setUserID($userID)
+    public function setUserID(int $userID)
     {
         $this->userID = (int)$userID;
     }

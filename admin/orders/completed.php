@@ -4,7 +4,7 @@ include_once("class/pages/AdminPage.php");
 include_once("class/beans/OrdersBean.php");
 // include_once("class/handlers/ConfirmSendRequestHandler.php");
 include_once("handlers/DeleteItemRequestHandler.php");
-include_once("class/utils/OrdersQuery.php");
+include_once("class/utils/OrdersSQL.php");
 
 $page = new AdminPage();
 $page->checkAccess(ROLE_ORDERS_MENU);
@@ -18,7 +18,7 @@ $bean = new OrdersBean();
 
 $sel = new OrdersSQL();
 
-$sel->where = " o.status='" . OrdersBean::STATUS_COMPLETED . "' ";
+$sel->where = " o.status='".OrdersBean::STATUS_COMPLETED."' ";
 
 
 include_once("list.php");

@@ -10,6 +10,8 @@ include_once("class/beans/ProductPhotosBean.php");
 include_once("components/TableView.php");
 
 include_once("iterators/SQLQuery.php");
+include_once("iterators/ArrayDataIterator.php");
+
 include_once("utils/RelatedSourceFilterProcessor.php");
 include_once("class/beans/ProductColorPhotosBean.php");
 include_once("class/utils/filters/ProductFilters.php");
@@ -17,7 +19,6 @@ include_once("class/utils/filters/ProductFilters.php");
 include_once("class/components/renderers/items/ProductListItem.php");
 include_once("class/components/renderers/cells/ProductPhotoCellRenderer.php");
 
-include_once("iterators/ArrayDataIterator.php");
 
 $page = new ProductListPage();
 
@@ -115,7 +116,7 @@ if (strcmp_isset("view", "list", $_GET)) {
     $view->addColumn(new TableColumn("colors","Цветове"));
     //   $view->addColumn(new TableColumn("color_ids","Colors"));
 
-    $view->getColumn("pclrpID")->setCellRenderer(new ProductPhotoCellRenderer(-1, 48));
+    $view->getColumn("pclrpID")->setCellRenderer(new ProductPhotoCellRenderer(TableImageCellRenderer::RENDER_THUMB, -1, 48));
     $view->getColumn("pclrpID")->getHeaderCellRenderer()->setSortable(false);
 }
 else {
@@ -251,7 +252,7 @@ echo "<div class='categories panel'>";
 //   if ($num_filters>0) {
 // 	echo "<a class='ActionRenderer Clear' href='javascript:clearFilters()'>Show All Categories</a>";
 //   }
-echo "<div class='caption'>".tr("Категории")."</div>";
+echo "<div class='caption'>".tr("Категорий")."</div>";
 $treeView->render();
 echo "</div>"; //tree
 
@@ -278,6 +279,7 @@ $rend->setInputAttribute("onChange", "javascript:filterChanged(this)");
 $field->setValue($brand_value);
 
 $rend->render();
+
 echo "</div>";//InputComponent
 
 echo "<div class='InputComponent'>";
@@ -355,7 +357,7 @@ catch (Exception $e) {
 
 echo "</form>";
 
-echo "<button class='DefaultButton' onClick='clearFilters()'>".tr("Изчисти филтрите")."</button>";
+echo "<button class='DefaultButton' onClick='javascript:clearFilters()'>".tr("Изчисти филтрите")."</button>";
 
 echo "</div>";//filters
 

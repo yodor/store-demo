@@ -19,6 +19,7 @@ class ProductColorInputForm extends InputForm
     public function __construct($prodID)
     {
 
+        parent::__construct();
 
         $field = DataInputFactory::Create(DataInputFactory::SELECT, "color", "Цветови код", 1);
 
@@ -35,7 +36,6 @@ class ProductColorInputForm extends InputForm
         $this->addInput($field);
         // 	$field->enableTranslator(true);
 
-
         $input = DataInputFactory::Create(DataInputFactory::SESSION_IMAGE, "color_photo", "Чип за цвета", 0);
         // 	$input->setSource(new ProductPhotosBean());
         // 	$input->transact_mode = InputField::TRANSACT_OBJECT;
@@ -44,7 +44,6 @@ class ProductColorInputForm extends InputForm
         $input->transact_mode = DataInput::TRANSACT_OBJECT;
         $input->getValueTransactor()->max_slots = 1;
         $this->addInput($input);
-
 
         $input = DataInputFactory::Create(DataInputFactory::SESSION_IMAGE, "photo", "Снимки", 0);
         $bean = new ProductColorPhotosBean();
@@ -56,20 +55,6 @@ class ProductColorInputForm extends InputForm
 
         $this->addInput($input);
 
-        // 	$field = new ArrayInputField("value", "Optional Attributes", 0);
-        // 	$field->allow_dynamic_addition = false;
-        // 	$field->source_label_visible = true;
-        // 	$field->getValueTransactor()->process_datasource_foreign_keys = true;
-        //
-        // 	$bean1 = new ClassAttributeValuesBean();
-        // 	$field->setSource($bean1);
-        //
-        // 	$rend = new ClassAttributeField();
-        // 	$field->setRenderer($rend);
-        //
-        // 	$this->addField($field);
-
-
     }
 
     public function loadBeanData($editID, DBTableBean $bean)
@@ -77,15 +62,15 @@ class ProductColorInputForm extends InputForm
 
         $item_row = parent::loadBeanData($editID, $bean);
         //       $pclrID = (int)$item_row["pclrID"];
-        //       $this->getField("photo")->getSource()->setFilter(" pclrID ='$pclrID' ");
+        //       $this->getInput("photo")->getSource()->setFilter(" pclrID ='$pclrID' ");
 
     }
 
-    public function loadPostData(array $arr) : void
+    public function loadPostData(array $arr): void
     {
         parent::loadPostData($arr);
         //       $pclrID = -1;
-        //       $this->getField("photo")->getSource()->setFilter(" pclrID ='$pclrID' ");
+        //       $this->getInput("photo")->getSource()->setFilter(" pclrID ='$pclrID' ");
 
     }
 }

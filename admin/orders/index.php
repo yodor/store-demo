@@ -4,10 +4,7 @@ include_once("class/pages/AdminPage.php");
 
 $page = new AdminPage();
 
-<<<<<<< HEAD
-$menu = array(new MenuItem("Потвърдени", "confirmed.php", "class:orders icon_confirmed"), new MenuItem("Изпратени", "sent.php", "class:orders icon_confirmed"), new MenuItem("Завършени", "completed.php", "class:orders icon_completed"), new MenuItem("Отказани", "canceled.php", "class:orders icon_completed"), new MenuItem("Всички", "all.php", "class:orders icon_all"), new MenuItem("Цени за доставка", "delivery.php", "class:orders icon_delivery"),
 
-=======
 $menu=array(
     new MenuItem("Активни", "active.php", "class:orders icon_confirmed"),
     new MenuItem("Изпратени", "sent.php", "class:orders icon_confirmed"),
@@ -16,7 +13,7 @@ $menu=array(
     new MenuItem("Всички", "all.php", "class:orders icon_all"),
     new MenuItem("Цени за доставка", "delivery.php", "class:orders icon_delivery"),
   
->>>>>>> origin/master
+
 );
 
 

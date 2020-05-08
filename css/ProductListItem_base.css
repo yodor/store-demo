@@ -1,16 +1,12 @@
 .ProductListItem {
     display: inline-block;
 
-    /*  max-width:23%;
-      width:23%;*/
-
     max-width: 275px;
 
-    min-width: 202px;
+    min-width: 275px;
+
     box-sizing: border-box;
     vertical-align: top;
-
-    height: 372px;
 
     margin: 5px;
 }

@@ -56,9 +56,9 @@ class OrderInvoiceCellRenderer extends TableCellRenderer
         }
     }
 
-    public function setData(array &$row, TableColumn $tc)
+    public function setData(array &$row)
     {
-        parent::setData($row, $tc);
+        parent::setData($row);
 
         $this->userID = (int)$row["userID"];
         $this->require_invoice = (int)$row["require_invoice"];

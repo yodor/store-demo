@@ -30,7 +30,6 @@ $afr = new AuthFormRenderer();
 
 $afr->setAttribute("name", "auth");
 $afr->setForm($af);
-$afr->setAuthContext($auth->name());
 
 
 $form = new RegisterClientInputForm();
@@ -60,6 +59,8 @@ header("Expires: 0");
 
 $page->startRender();
 $page->setPreferredTitle(tr("Вход"));
+
+$af->getInput("rand")->setValue($auth->createLoginToken());
 
 
 echo "<div class='caption'>" . tr("Регистрирани клиенти") . "</div>";

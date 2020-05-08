@@ -8,9 +8,6 @@ class OrderOwnerAuthenticator extends UserAuthenticator
     public function authorize(array $user_data = NULL)
     {
 
-        debug("authorize");
-        $is_owner = false;
-
         $context = parent::authorize($user_data);
 
         if ($context != NULL) {
@@ -22,13 +19,19 @@ class OrderOwnerAuthenticator extends UserAuthenticator
 
             $order_userID = (int)$orders->fieldValue($orderID, "userID");
 
-            if ($logged_userID == $order_userID) $is_owner = true;
+            if ($logged_userID == $order_userID) {
+                debug("Authenticated userID is matching the order ownerID");
+                return $context;
+            }
+            debug("Authorized but not owner of this order");
 
-            debug("Authenticated as owner");
-            
+            return NULL;
 
         }
-        return $is_owner;
+
+        debug("Not authorized");
+
+        return $context;
 
     }
 }

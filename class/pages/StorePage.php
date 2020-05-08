@@ -31,14 +31,16 @@ class StorePage extends SparkPage
 
     public $client_name = "";
 
-    public function __construct(Authenticator $auth = NULL)
+    public function __construct()
     {
+        $this->auth = new UserAuthenticator();
+        $this->loginURL = LOCAL."account/login.php";
 
-        parent::__construct($auth);
+        parent::__construct();
 
         if ($this->context) {
 
-            $this->client_name = $this->context[Authenticator::CONTEXT_DATA][UserAuthenticator::DATA_FULLNAME];
+            $this->client_name = $this->context->getData()->get(SessionData::FULLNAME);
 
         }
 
@@ -87,6 +89,8 @@ class StorePage extends SparkPage
         $this->addCSS("//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css");
 
         $this->addJS("//code.jquery.com/ui/1.11.4/jquery-ui.js");
+        $this->addJS(SPARK_LOCAL . "/js/URI.js");
+        $this->addJS(SPARK_LOCAL . "/js/GalleryView.js");
     }
 
     public function getCart()

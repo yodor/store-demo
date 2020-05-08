@@ -8,6 +8,7 @@ class DeliveryConfigForm extends InputForm
 
     public function __construct()
     {
+        parent::__construct();
 
         $field = DataInputFactory::Create(DataInputFactory::TEXT, Cart::DELIVERY_USERADDRESS, Cart::getDeliveryTypeText(Cart::DELIVERY_USERADDRESS), 1);
         $field->setValidator(new NumericValidator());

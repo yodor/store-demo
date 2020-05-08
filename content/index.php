@@ -20,7 +20,7 @@ if (!isset($_GET["page_id"]) || !isset($_GET["page_class"])) {
 }
 
 
-$page_class = DBDriver::Get()->escapeString($_GET["page_class"]);
+$page_class = DBDriver::Get()->escape($_GET["page_class"]);
 $page_id = (int)$_GET["page_id"];
 
 try {

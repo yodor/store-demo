@@ -61,7 +61,7 @@ class StorePage extends SparkPage
 
 
         if (isset($_GET["section"])) {
-            $section = DBDriver::Get()->escapeString($_GET["section"]);
+            $section = DBDriver::Get()->escape($_GET["section"]);
             $qry = $this->sections->queryField("section_title", $section, 1);
             $num = $qry->exec();
             if ($num < 1) {

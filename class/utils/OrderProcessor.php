@@ -141,7 +141,7 @@ class OrderProcessor {
                 $order_item["orderID"] = $orderID;
                 $order_item["product"] = $product_details;
                 $order_item["prodID"] = $prodID;
-                $order_item["photo"] = DBDriver::get()->escapeString($item_photo);
+                $order_item["photo"] = DBDriver::get()->escape($item_photo);
 
                 $itemID = $order_items->insertRecord($order_item, $db);
                 if ($itemID<1)throw new Exception("Unable to insert order item: ".$db->getError());

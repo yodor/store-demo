@@ -29,7 +29,9 @@ class ProductInventoryInputForm extends InputForm
 
         $field->getRenderer()->list_key = "pclrID";
         $field->getRenderer()->list_label = "color";
+
         $field->getValueTransactor()->renderer_source_copy_fields = array("color");
+
         $this->addInput($field);
 
 
@@ -58,7 +60,8 @@ class ProductInventoryInputForm extends InputForm
         $field = DataInputFactory::Create(DataInputFactory::TEXT, "weight", "Тегло", 0);
         $this->addInput($field);
 
-        ////
+        //1. input is taking array of values (ArrayDataInput)
+        //2. renderer is drawing single element with many items (DataSourceField)
         $field = new ArrayDataInput("value", "Атрибути на класа", 0);
         $field->allow_dynamic_addition = false;
 
@@ -77,8 +80,6 @@ class ProductInventoryInputForm extends InputForm
         $rend->list_key = "value";
         $rend->list_label = "attribute_name";
 
-        //new ArrayField($rend);
-
         $this->addInput($field);
     }
 
@@ -95,11 +96,7 @@ class ProductInventoryInputForm extends InputForm
         $prods = new ProductsBean();
         $this->product = $prods->getByID($this->prodID);
 
-        $value_field = $this->getInput("value");
-
-        $rend = $value_field->getRenderer();
-
-        //$rend = $arr_rend->getItemRenderer();
+        $rend = $this->getInput("value")->getRenderer();
 
         $rend->setCaption(tr("Продуктов клас") . ": " . $this->product["class_name"]);
 
@@ -122,9 +119,7 @@ class ProductInventoryInputForm extends InputForm
 
         $item_row = parent::loadBeanData($editID, $bean);
 
-        $value_field = $this->getInput("value");
-
-        $rend = $value_field->getRenderer();
+        $rend = $this->getInput("value")->getRenderer();
 
         $sel = $rend->getIterator()->select;
 
@@ -136,7 +131,6 @@ class ProductInventoryInputForm extends InputForm
 
         $sel->fields = " ca.*, iav.value, attr.unit as attribute_unit, attr.type attribute_type ";
 
-        //debug($sel->getSQL());
     }
 
     public function loadPostData(array $arr) : void

@@ -46,9 +46,9 @@ $select_products = $bean->select();
 $select_products->fields = " 
 SUM(pi.stock_amount) as stock_amount,
 min(pi.price) as price_min, max(pi.price) as price_max,
-group_concat(distinct(size_value) SEPARATOR ';') as sizes, 
+group_concat(distinct(size_value) SEPARATOR '<BR>') as sizes, 
 p.prodID, p.product_name, p.class_name, p.brand_name, p.section, pc.category_name, p.visible, 
-p.price, p.old_price, p.buy_price, cc.pi_ids, replace(cc.colors, '|',';') as colors, cc.color_photos, cc.have_chips, cc.color_ids, cc.product_photos
+p.price, p.old_price, p.buy_price, cc.pi_ids, replace(cc.colors, '|','<BR>') as colors, cc.color_photos, cc.have_chips, cc.color_ids, cc.product_photos
 ";
 
 $select_products->from = " products p LEFT JOIN product_inventory pi ON pi.prodID = p.prodID LEFT JOIN color_chips cc ON cc.prodID = p.prodID JOIN product_categories pc ON pc.catID=p.catID ";
@@ -64,24 +64,24 @@ $view->setDefaultOrder("  p.insert_date DESC  ");
 $view->addColumn(new TableColumn("prodID", "ID"));
 
 $view->addColumn(new TableColumn("section", "Section"));
+$view->addColumn(new TableColumn("class_name", "Class"));
+$view->addColumn(new TableColumn("category_name", "Category"));
+$view->addColumn(new TableColumn("brand_name", "Brand"));
+$view->addColumn(new TableColumn("product_name", "Product Name"));
+
+
 
 $view->addColumn(new TableColumn("photo", "Product Photo"));
 
 $view->addColumn(new TableColumn("color_photos", "Color Gallery"));
 
-$view->addColumn(new TableColumn("product_name", "Product Name"));
-
-$view->addColumn(new TableColumn("category_name", "Category"));
-$view->addColumn(new TableColumn("brand_name", "Brand"));
-$view->addColumn(new TableColumn("class_name", "Class"));
 
 
 // $view->addColumn(new TableColumn("product_code","Product Code"));
 
 
 // $view->addColumn(new TableColumn("buy_price","Buy Price"));
-$view->addColumn(new TableColumn("price_min", "Price Min"));
-$view->addColumn(new TableColumn("price_max", "Price Max"));
+
 // $view->addColumn(new TableColumn("old_price","Old Price"));
 
 $view->addColumn(new TableColumn("colors", "Colors"));
@@ -95,7 +95,10 @@ $view->addColumn(new TableColumn("visible", "Visible"));
 // $view->addColumn(new TableColumn("promotion", "Promotion"));
 
 
-$view->addColumn(new TableColumn("stock_amount", "Stock Amount"));
+$view->addColumn(new TableColumn("stock_amount", "In-stock"));
+
+$view->addColumn(new TableColumn("price_min", "Price Min"));
+$view->addColumn(new TableColumn("price_max", "Price Max"));
 
 
 $view->addColumn(new TableColumn("actions", "Actions"));

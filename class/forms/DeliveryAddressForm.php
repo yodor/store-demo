@@ -9,14 +9,15 @@ class DeliveryAddressForm extends InputForm
     {
         parent::__construct();
 
-        $data = new ArrayDataIterator(array(Cart::DELIVERY_USERADDRESS => "Моят регистриран адрес", Cart::DELIVERY_EKONTOFFICE => "До офис на Еконт"));
+        $data = new ArrayDataIterator(array(Cart::DELIVERY_USERADDRESS => "Моят регистриран адрес",
+                                            Cart::DELIVERY_EKONTOFFICE => "До офис на Еконт"));
 
         $field = new DataInput("delivery_type", "Изберете адрес", 1);
 
         $radio = new RadioField($field);
-        $radio->setIterator($data);
-        $radio->list_key = ArrayDataIterator::KEY_ID;
-        $radio->list_label = ArrayDataIterator::KEY_VALUE;
+        $radio->setItemIterator($data);
+        $radio->getItemRenderer()->setValueKey(ArrayDataIterator::KEY_ID);
+        $radio->getItemRenderer()->setLabelKey(ArrayDataIterator::KEY_VALUE);
 
         $field->setValidator(new EmptyValueValidator());
         $field->setProcessor(new BeanPostProcessor());
@@ -24,7 +25,6 @@ class DeliveryAddressForm extends InputForm
         $this->addInput($field);
 
     }
-
 
 }
 

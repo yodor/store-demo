@@ -3,8 +3,6 @@ include_once("session.php");
 
 include_once("class/pages/ProductListPage.php");
 
-
-
 include_once("class/beans/ProductsBean.php");
 include_once("class/beans/ProductPhotosBean.php");
 include_once("components/TableView.php");
@@ -19,15 +17,12 @@ include_once("class/utils/filters/ProductFilters.php");
 include_once("class/components/renderers/items/ProductListItem.php");
 include_once("class/components/renderers/cells/ProductPhotoCellRenderer.php");
 
-
 $page = new ProductListPage();
 
 $bean = $page->product_categories;
 
 //construct tree view from the source bean and set tree text label field
 $treeView = $page->treeView;
-
-
 
 //construct initial relation query to aggregate with the tree view
 $product_selector = new SQLSelect();
@@ -40,17 +35,11 @@ $inventory_selector->fields = "  ";
 $derived = clone $page->derived;
 $derived->group_by = " pi.prodID, pi.color ";
 
-
-$product_selector->from = " ( ".$derived->getSQL(false, false)." ) as relation ";
+$product_selector->from = " ( " . $derived->getSQL(FALSE, FALSE) . " ) as relation ";
 $product_selector->where = "  ";
-
-
 
 //process get filters
 $proc = new RelatedSourceFilterProcessor("prodID");
-
-
-
 
 $proc->addFilter("keyword", $page->keyword_search);
 
@@ -74,7 +63,7 @@ if ($num_filters) {
 
     $product_selector = $product_selector->combineWith($filter);
 
-    $treeView->open_all = true;
+    $treeView->open_all = TRUE;
 
     //   $inventory_selector = $inventory_selector->combineWith($filter);
 
@@ -90,13 +79,9 @@ $treeView->setSelect($tree_selector);
 
 $nodeID = $treeView->getSelectedID();
 
-
-
-
-
 $product_selector->fields = " relation.* "; //TODO list only needed fields here?
 $product_selector = $bean->childNodesWith($product_selector, $nodeID);
-$product_selector->where.= " AND relation.catID = child.catID ";
+$product_selector->where .= " AND relation.catID = child.catID ";
 $product_selector->group_by = " relation.prodID, relation.color ";
 
 // echo $product_selector->getSQL();
@@ -105,19 +90,19 @@ if (strcmp_isset("view", "list", $_GET)) {
     $view = new TableView(new SQLQuery($product_selector, "piID"));
     // $view->addColumn(new TableColumn("piID","ID"));
     // $view->addColumn(new TableColumn("prodID","ID"));
-    $view->addColumn(new TableColumn("pclrpID","Снимка"));
+    $view->addColumn(new TableColumn("pclrpID", "Снимка"));
     //   $view->addColumn(new TableColumn("product_code","Product Code"));
-    $view->addColumn(new TableColumn("product_name","Продукт"));
-    $view->addColumn(new TableColumn("brand_name","Марка"));
+    $view->addColumn(new TableColumn("product_name", "Продукт"));
+    $view->addColumn(new TableColumn("brand_name", "Марка"));
     // $view->addColumn(new TableColumn("category_name","Category Name"));
-    $view->addColumn(new TableColumn("color","Цвят"));
-    $view->addColumn(new TableColumn("sell_price","Цена"));
+    $view->addColumn(new TableColumn("color", "Цвят"));
+    $view->addColumn(new TableColumn("sell_price", "Цена"));
     // $view->addColumn(new TableColumn("size_values","Sizing"));
-    $view->addColumn(new TableColumn("colors","Цветове"));
+    $view->addColumn(new TableColumn("colors", "Цветове"));
     //   $view->addColumn(new TableColumn("color_ids","Colors"));
 
     $view->getColumn("pclrpID")->setCellRenderer(new ProductPhotoCellRenderer(TableImageCellRenderer::RENDER_THUMB, -1, 48));
-    $view->getColumn("pclrpID")->getHeaderCellRenderer()->setSortable(false);
+    $view->getColumn("pclrpID")->getHeaderCellRenderer()->setSortable(FALSE);
 }
 else {
     $view = new ListView(new SQLQuery($product_selector, "piID"));
@@ -130,12 +115,12 @@ $view->getPaginator()->addSortField($sort_prod);
 $sort_price = new PaginatorSortField("relation.sell_price", "Цена");
 $view->getPaginator()->addSortField($sort_price);
 
-$view->getTopPaginator()->view_modes_enabled = true;
+$view->getTopPaginator()->view_modes_enabled = TRUE;
 // $view->setCaption("Products List");
 
 $derived = clone $page->derived;
 
-$derived_table = $derived->getSQL(false,false);
+$derived_table = $derived->getSQL(FALSE, FALSE);
 
 //prepare filter fields source data
 $brand_select = new SQLSelect();
@@ -166,9 +151,7 @@ $price_select->fields = " min(sell_price) as price_min, max(sell_price) as price
 $price_select->from = " ($derived_table) as relation ";
 
 //apply the other filters but skip self - slider shows always min-max of all products
-$price_info["price_range"] = $proc->applyFiltersOn($treeView, $price_select, "price_range", true);
-
-
+$price_info["price_range"] = $proc->applyFiltersOn($treeView, $price_select, "price_range", TRUE);
 
 $db = DBConnections::Get();
 $res = $db->query($price_select->getSQL());
@@ -188,14 +171,14 @@ try {
     $ia_name_select->from = " ($derived_table) as relation  ";
     $ia_name_select->where = "   ";
 
-    $proc->applyFiltersOn($treeView, $ia_name_select, "ia", true);
+    $proc->applyFiltersOn($treeView, $ia_name_select, "ia", TRUE);
 
     $ia_name_select->fields = " distinct(relation.ia_name) as ia_name ";
     $ia_name_select->combineSection("where", "  relation.ia_name  IS NOT NULL");
     // 		echo $ia_name_select->getSQL();
 
     $res = $db->query($ia_name_select->getSQL());
-    if (!$res) throw new Exception ("Unable to query inventory attributes: ".$db->getError());
+    if (!$res) throw new Exception ("Unable to query inventory attributes: " . $db->getError());
     while ($row = $db->fetch($res)) {
         $name = $row["ia_name"];
         $sel = new SQLSelect();
@@ -214,19 +197,19 @@ try {
         //parse value into name pairs - ia=Материал:1|Години:1
         if ($value) {
             $ia_values = explode("|", $value);
-            if (count($ia_values)>0) {
-                foreach ($ia_values as $pos=>$filter_value) {
+            if (count($ia_values) > 0) {
+                foreach ($ia_values as $pos => $filter_value) {
                     if (!$filter_value) continue;
                     $group = explode(":", $filter_value);
-                    if (is_array($group) && count($group)==2) {
-                        if (strcmp($name,$group[0])==0) {
+                    if (is_array($group) && count($group) == 2) {
+                        if (strcmp($name, $group[0]) == 0) {
                             $value = $group[1];
                         }
                     }
                 }
             }
         }
-        $dyn_filters[$name] = array("select"=>$sel, "value"=>$value);
+        $dyn_filters[$name] = array("select" => $sel, "value" => $value);
     }
 }
 catch (Exception $e) {
@@ -236,9 +219,7 @@ catch (Exception $e) {
 }
 if (is_resource($res)) $db->free($res);
 
-
 $page->startRender();
-
 
 //
 
@@ -252,7 +233,7 @@ echo "<div class='categories panel'>";
 //   if ($num_filters>0) {
 // 	echo "<a class='ActionRenderer Clear' href='javascript:clearFilters()'>Show All Categories</a>";
 //   }
-echo "<div class='caption'>".tr("Категорий")."</div>";
+echo "<div class='caption'>" . tr("Категорий") . "</div>";
 $treeView->render();
 echo "</div>"; //tree
 
@@ -265,16 +246,16 @@ echo "</div>"; //tree
 
 //TODO: filters as links option
 echo "<div class='filters panel'>";
-echo "<div class='caption'>".tr("Филтри")."</div>";
+echo "<div class='caption'>" . tr("Филтри") . "</div>";
 echo "<form name='filters' autocomplete='off'>";
 echo "<div class='InputComponent'>";
-echo "<span class='label'>".tr("Марка")."</span>";
+echo "<span class='label'>" . tr("Марка") . "</span>";
 
 $field = DataInputFactory::Create(DataInputFactory::SELECT, "brand_name", "Марка", 0);
 $rend = $field->getRenderer();
-$rend->setIterator(ArrayDataIterator::FromSelect($brand_select, "brand_name", "brand_name"));
-$rend->list_key = "brand_name";
-$rend->list_label = "brand_name";
+$rend->setItemIterator(ArrayDataIterator::FromSelect($brand_select, "brand_name", "brand_name"));
+$rend->getItemRenderer()->setValueKey("brand_name");
+$rend->getItemRenderer()->setLabelKey("brand_name");
 $rend->setInputAttribute("onChange", "javascript:filterChanged(this)");
 $field->setValue($brand_value);
 
@@ -283,12 +264,12 @@ $rend->render();
 echo "</div>";//InputComponent
 
 echo "<div class='InputComponent'>";
-echo "<span class='label'>".tr("Цвят")."</span>";
+echo "<span class='label'>" . tr("Цвят") . "</span>";
 $field = DataInputFactory::Create(DataInputFactory::SELECT, "color", "Цвят", 0);
 $rend = $field->getRenderer();
-$rend->setIterator(ArrayDataIterator::FromSelect($color_select, "color", "color"));
-$rend->list_key = "color";
-$rend->list_label = "color";
+$rend->setItemIterator(ArrayDataIterator::FromSelect($color_select, "color", "color"));
+$rend->getItemRenderer()->setValueKey("color");
+$rend->getItemRenderer()->setLabelKey("color");
 $rend->setInputAttribute("onChange", "javascript:filterChanged(this)");
 $field->setValue($color_value);
 
@@ -296,12 +277,12 @@ $rend->render();
 echo "</div>";//InputComponent
 
 echo "<div class='InputComponent'>";
-echo "<span class='label'>".tr("Размер")."</span>";
+echo "<span class='label'>" . tr("Размер") . "</span>";
 $field = DataInputFactory::Create(DataInputFactory::SELECT, "size_value", "Размер", 0);
 $rend = $field->getRenderer();
-$rend->setIterator(ArrayDataIterator::FromSelect($size_select, "size_value", "size_value"));
-$rend->list_key = "size_value";
-$rend->list_label = "size_value";
+$rend->setItemIterator(ArrayDataIterator::FromSelect($size_select, "size_value", "size_value"));
+$rend->getItemRenderer()->setValueKey("size_value");
+$rend->getItemRenderer()->setLabelKey("size_value");
 $rend->setInputAttribute("onChange", "javascript:filterChanged(this)");
 $field->setValue($size_value);
 
@@ -309,13 +290,13 @@ $rend->render();
 echo "</div>";//InputComponent
 
 echo "<div class='InputComponent Slider'>";
-echo "<span class='label'>".tr("Цена")."</span>";
+echo "<span class='label'>" . tr("Цена") . "</span>";
 $value_min = $price_info["min"];
 $value_max = $price_info["max"];
 
 if ($price_info["price_range"]) {
     $price_range = explode("|", trim($price_info["price_range"]));
-    if (count($price_range)==2) {
+    if (count($price_range) == 2) {
         $value_min = (float)$price_range[0];
         $value_max = (float)$price_range[1];
     }
@@ -332,16 +313,16 @@ echo "</div>";
 echo "</div>";//InputComponent
 
 try {
-    foreach($dyn_filters as $name=>$item) {
+    foreach ($dyn_filters as $name => $item) {
         echo "<div class='InputComponent'>";
-        echo "<span class='label'>".tr($name)."</span>";
+        echo "<span class='label'>" . tr($name) . "</span>";
         $field = DataInputFactory::Create(DataInputFactory::SELECT, "$name", "$name", 0);
         $rend = $field->getRenderer();
         $sel = $item["select"];
         // 		echo $sel->getSQL();
-        $rend->setIterator(ArrayDataIterator::FromSelect($item["select"], "ia_value", "ia_value"));
-        $rend->list_key = "ia_value";
-        $rend->list_label = "ia_value";
+        $rend->setItemIterator(ArrayDataIterator::FromSelect($item["select"], "ia_value", "ia_value"));
+        $rend->getItemRenderer()->setValueKey("ia_value");
+        $rend->getItemRenderer()->setLabelKey("ia_value");
         $rend->setInputAttribute("onChange", "javascript:filterChanged(this, 'ia', true)");
         $rend->setInputAttribute("filter_group", "ia");
         $field->setValue($item["value"]);
@@ -354,10 +335,9 @@ catch (Exception $e) {
     echo $e;
 }
 
-
 echo "</form>";
 
-echo "<button class='DefaultButton' onClick='javascript:clearFilters()'>".tr("Изчисти филтрите")."</button>";
+echo "<button class='DefaultButton' onClick='javascript:clearFilters()'>" . tr("Изчисти филтрите") . "</button>";
 
 echo "</div>";//filters
 
@@ -374,7 +354,6 @@ echo "<div class='clear'></div>";
 $view->render();
 
 echo "</div>";
-
 
 Session::set("shopping.list", $page->getPageURL());
 

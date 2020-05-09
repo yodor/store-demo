@@ -1,9 +1,9 @@
 <?php
-include_once("input/renderers/DataSourceField.php");
-include_once("input/renderers/DataSourceItem.php");
+include_once("input/renderers/DataIteratorField.php");
+include_once("input/renderers/DataIteratorItem.php");
 include_once("class/beans/ClassAttributesBean.php");
 
-class ClassAttributeItem extends DataSourceItem
+class ClassAttributeItem extends DataIteratorItem
 {
 
     public function renderImpl()
@@ -15,7 +15,7 @@ class ClassAttributeItem extends DataSourceItem
 
         echo "<input data='foreign_key' type='hidden' name='fk_{$this->name}' value='caID:{$this->id}'>";
 
-        echo "<label data='attribute_unit'>" . $this->data_row["unit"] . "</label>";
+        echo "<label data='attribute_unit'>" . $this->data["unit"] . "</label>";
     }
 
 }
@@ -62,7 +62,7 @@ class ClassAttributeFieldAjaxHandler extends JSONRequestHandler
     }
 }
 
-class ClassAttributeField extends DataSourceField
+class ClassAttributeField extends DataIteratorField
 {
 
     protected $catID = -1;
@@ -74,9 +74,9 @@ class ClassAttributeField extends DataSourceField
         $this->setItemRenderer(new ClassAttributeItem());
 
         $cab = new ClassAttributesBean();
-        $this->setIterator($cab->query());
-        $this->list_key = "caID";
-        $this->list_label = "attribute_name";
+        $this->setItemIterator($cab->query());
+        $this->getItemRenderer()->setValueKey("caID");
+        $this->getItemRenderer()->setLabelKey("attribute_name");
 
         RequestController::addAjaxHandler(new ClassAttributeFieldAjaxHandler());
     }
@@ -131,7 +131,7 @@ class ClassAttributeField extends DataSourceField
             return;
         }
 
-        $this->list_key = $this->field->getName();
+        $this->getItemRenderer()->setValueKey($this->input->getName());
 
         parent::renderItems();
     }
@@ -156,7 +156,7 @@ class ClassAttributeField extends DataSourceField
                         function (request_result) {
                             var result = request_result.json_result;
                             var html = result.contents;
-                            $(".ClassAttributeField[field='<?php echo $this->field->getName();?>']").html(html);
+                            $(".ClassAttributeField[field='<?php echo $this->input->getName();?>']").html(html);
                         },
                         function (request_error) {
                             showAlert(request_error.description);

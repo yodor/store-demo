@@ -1,9 +1,9 @@
 <?php
-include_once("input/renderers/DataSourceField.php");
-include_once("input/renderers/DataSourceItem.php");
+include_once("input/renderers/DataIteratorField.php");
+include_once("input/renderers/DataIteratorItem.php");
 include_once("class/beans/ClassAttributesBean.php");
 
-class SourceAttributeItem extends DataSourceItem
+class SourceAttributeItem extends DataIteratorItem
 {
 
     //TODO: add methods to set 'caID' string and attribute_unit
@@ -15,13 +15,13 @@ class SourceAttributeItem extends DataSourceItem
 
         echo "<input data='foreign_key' type='hidden' name='fk_{$this->name}' value='caID:{$this->id}'>";
 
-        echo "<label class='SourceAttributeUnit' data='attribute_unit'>" . $this->data_row["attribute_unit"] . "</label>";
+        echo "<label class='SourceAttributeUnit' data='attribute_unit'>" . $this->data["attribute_unit"] . "</label>";
     }
 
 }
 
 
-class SourceRelatedField extends DataSourceField
+class IteratorRelatedField extends DataIteratorField
 {
 
     public function __construct(DataInput $input)
@@ -33,9 +33,9 @@ class SourceRelatedField extends DataSourceField
 
     }
 
-    public function setIterator(IDataIterator $query)
+    public function setItemIterator(IDataIterator $query)
     {
-        parent::setIterator($query);
+        parent::setItemIterator($query);
         $this->addClassName(get_class($query));
     }
 

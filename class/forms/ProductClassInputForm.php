@@ -26,9 +26,9 @@ class ProductClassInputForm extends InputForm
         $attribs = new AttributesBean();
 
         $rend = new SelectField($field1);
-        $rend->setIterator($attribs->query());
-        $rend->list_key = "name";
-        $rend->list_label = "name";
+        $rend->setItemIterator($attribs->query());
+        $rend->getItemRenderer()->setValueKey("name");
+        $rend->getItemRenderer()->setLabelKey("name");
 
         $field1->setValidator(new EmptyValueValidator());
 

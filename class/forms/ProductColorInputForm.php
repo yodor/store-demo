@@ -25,13 +25,13 @@ class ProductColorInputForm extends InputForm
 
         $rend = $field->getRenderer();
         $scb = new StoreColorsBean();
-        $rend->setIterator($scb->query());
-        $rend->list_label = "color";
-        $rend->list_key = "color";
+        $rend->setItemIterator($scb->query());
+        $rend->getItemRenderer()->setValueKey("color");
+        $rend->getItemRenderer()->setLabelKey("color");
         $rend->addon_content = "<a class='ActionRenderer' action='new' href='../../colors/add.php'>" . tr("Нов цветови код") . "</a>";
 
         $opt = $rend->getItemRenderer();
-        $opt->addDataRowAttribute("color_code");
+        $opt->addDataAttribute("color_code");
 
         $this->addInput($field);
         // 	$field->enableTranslator(true);

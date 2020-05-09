@@ -24,34 +24,34 @@ class ProductInputForm extends InputForm
         $field = DataInputFactory::Create(DataInputFactory::SELECT, "section", "Секция", 1);
         $rend = $field->getRenderer();
         $sb = new SectionsBean();
-        $rend->setIterator($sb->query());
-        $rend->list_key = "section_title";
-        $rend->list_label = "section_title";
+        $rend->setItemIterator($sb->query());
+        $rend->getItemRenderer()->setValueKey("section_title");
+        $rend->getItemRenderer()->setLabelKey("section_title");
         $this->addInput($field);
 
         $field = DataInputFactory::Create(DataInputFactory::NESTED_SELECT, "catID", "Категория", 1);
         $bean1 = new ProductCategoriesBean();
         $rend = $field->getRenderer();
-        $rend->setIterator($bean1->query());
-        $rend->list_key = "catID";
-        $rend->list_label = "category_name";
+        $rend->setItemIterator($bean1->query());
+        $rend->getItemRenderer()->setValueKey("catID");
+        $rend->getItemRenderer()->setLabelKey("category_name");
 
         $this->addInput($field);
 
         $field = DataInputFactory::Create(DataInputFactory::SELECT, "brand_name", "Марка", 1);
         $rend = $field->getRenderer();
         $brands = new BrandsBean();
-        $rend->setIterator($brands->query());
-        $rend->list_key = "brand_name";
-        $rend->list_label = "brand_name";
+        $rend->setItemIterator($brands->query());
+        $rend->getItemRenderer()->setValueKey("brand_name");
+        $rend->getItemRenderer()->setLabelKey("brand_name");
         $this->addInput($field);
 
         $field = DataInputFactory::Create(DataInputFactory::SELECT, "class_name", "Продуктов клас", 0);
         $rend = $field->getRenderer();
         $pcb = new ProductClassesBean();
-        $rend->setIterator($pcb->query());
-        $rend->list_key = "class_name";
-        $rend->list_label = "class_name";
+        $rend->setItemIterator($pcb->query());
+        $rend->getItemRenderer()->setValueKey("class_name");
+        $rend->getItemRenderer()->setLabelKey("class_name");
         $this->addInput($field);
 
         $field = DataInputFactory::Create(DataInputFactory::TEXT, "product_name", "Име на продукта", 1);
@@ -80,7 +80,7 @@ class ProductInputForm extends InputForm
         $field1->setSource($features_source);
 
         $renderer = new TextField($field1);
-        $renderer->setIterator($features_source->query());
+        $renderer->setItemIterator($features_source->query());
 
         $field1->setValidator(new EmptyValueValidator());
         $field1->setProcessor(new BeanPostProcessor());
@@ -88,7 +88,6 @@ class ProductInputForm extends InputForm
         new ArrayField($renderer);
 
         $this->addInput($field1);
-
 
     }
 

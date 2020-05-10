@@ -1,6 +1,5 @@
 <?php
-define("DEBUG_OUTPUT", 1); //enable debugging output using error_log
-
+$GLOBALS["DEBUG_OUTPUT"] = 1;
 
 $install_path = __DIR__;
 

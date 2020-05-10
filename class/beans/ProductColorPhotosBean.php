@@ -21,10 +21,9 @@ class ProductColorPhotosBean extends OrderedDataBean
     }
 
     //return pclrpID
-    public function getFirstPhotoID($pclrID)
+    public function getFirstPhotoID(int $pclrID = -1)
     {
 
-        $pclrpID = -1;
         $qry = $this->queryField("pclrID", $pclrID);
         $qry->select->fields = $this->key();
         $qry->select->order_by = " position ASC ";

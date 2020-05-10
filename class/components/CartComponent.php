@@ -94,8 +94,11 @@ class CartComponent extends MLTagComponent implements IHeadContents
         echo "<td field='product_photo'>";
 
         echo "<a href='".LOCAL."details.php?prodID=$prodID&piID=$piID'>";
-        $pclrID = $item["pclrID"];
-        $pclrpID = $this->photos->getFirstPhotoID($pclrID);
+        $pclrID = (int)$item["pclrID"];
+        $pclrpID = -1;
+        if ($pclrID>0) {
+            $pclrpID = $this->photos->getFirstPhotoID($pclrID);
+        }
 
         //try product gallery photos
         if ($pclrpID<1) {

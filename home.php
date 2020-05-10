@@ -12,7 +12,7 @@ $item = new ProductListItem();
 
 $page->startRender();
 
-$section_banners = new SectionBannersBean();
+$banners = new SectionBannersBean();
 
 $qry = $page->sections->query();
 $qry->select->order_by = " position ASC ";
@@ -22,36 +22,42 @@ $sel->order_by = " pi.order_counter DESC, pi.view_counter DESC ";
 $sel->group_by = " pi.prodID, pi.color ";
 $sel->limit = "4";
 
-$prodQry = new SQLQuery($sel, "p.prodID");
-
 $qry->exec();
 
 //TODO list only sections with products
-while ($section_row = $qry->next()) {
+while ($section = $qry->next()) {
 
-    $section = $section_row["section_title"];
-    $secID = $section_row["secID"];
-    echo "<div class='section $section'>";
+    $sectionName = $section["section_title"];
+    $secID = $section["secID"];
 
-    echo "<a class='caption' href='" . LOCAL . "products.php?section=$section'>$section</a>";
+    $sel->where = " p.section='$sectionName' ";
 
-    $qry1 = $section_banners->queryField("secID", $secID, 1);
+    $prodQry = new SQLQuery($sel, "p.prodID");
+    $num = $prodQry->exec();
+    if ($num < 1) continue;
+
+    echo "<div class='section $sectionName'>";
+
+    $secion_url = LOCAL . "products.php?section=$sectionName";
+    echo "<a class='caption' href='$secion_url'>$sectionName</a>";
+
+    $qry1 = $banners->queryField("secID", $secID, 1);
     $qry1->select->order_by = " RAND() ";
     $qry1->select->fields = " sbID, caption, link, position ";
     $num = $qry1->exec();
 
-    if ($banner_row = $qry1->next()) {
-        echo "<a class='banner' href='" . LOCAL . "{$banner_row["link"]}'>";
-        $img_href = StorageItem::Image($banner_row["sbID"], $section_banners);
+    if ($banner = $qry1->next()) {
+        $banner_url = $secion_url;
+        if ($banner["link"]) {
+            $banner_url = $banner["link"];
+        }
+        echo "<a class='banner' href='$banner_url'>";
+        $img_href = StorageItem::Image($banner["sbID"], $banners);
         echo "<img width='100%' src='$img_href'>";
         echo "</a>";
     }
 
     echo "<div class='products'>";
-
-    $prodQry->select->where = " p.section='$section' ";
-    $prodQry->select->limit = "4";
-    $prodQry->exec();
 
     while ($row = $prodQry->next()) {
         $item->setItem($row);

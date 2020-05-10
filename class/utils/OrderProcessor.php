@@ -119,8 +119,11 @@ class OrderProcessor
                 //try inventory image raw data else product photos
                 $item_photo = NULL;
 
-                $pclrID = $item["pclrID"];
-                $pclrpID = $photos->getFirstPhotoID($pclrID);
+                $pclrID = (int)$item["pclrID"];
+                $pclrpID = -1;
+                if ($pclrID>0) {
+                    $pclrpID = $photos->getFirstPhotoID($pclrID);
+                }
 
                 try {
                     debug("Doing copy of product photos to order ");

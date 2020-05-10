@@ -43,7 +43,7 @@ class ProductDetailsPage extends ProductsPage
     {
         //$this->selectActiveMenus = false;
         $main_menu = $this->menu_bar->getMainMenu();
-        $main_menu->setUnselectedAll();
+        $main_menu->unselectAll();
 
         $items = $main_menu->getMenuItems();
         foreach ($items as $idx => $item) {

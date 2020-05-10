@@ -1,6 +1,6 @@
 <?php
 include_once("input/renderers/DataIteratorField.php");
-include_once("input/renderers/DataIteratorItem.php");
+include_once("components/renderers/items/DataIteratorItem.php");
 include_once("class/beans/ClassAttributesBean.php");
 
 class ClassAttributeItem extends DataIteratorItem

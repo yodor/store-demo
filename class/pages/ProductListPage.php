@@ -1,8 +1,8 @@
 <?php
 include_once("class/pages/ProductsPage.php");
 include_once("class/utils/ProductsSQL.php");
-include_once("components/NestedSetTreeView2.php");
-include_once("components/renderers/items/TextTreeItemRenderer.php");
+include_once("components/NestedSetTreeView.php");
+include_once("components/renderers/items/TextTreeItem.php");
 
 
 class ProductListPage extends ProductsPage
@@ -14,15 +14,17 @@ class ProductListPage extends ProductsPage
     {
         parent::__construct();
 
+        //renderer for the tree view
+        $ir = new TextTreeItem();
+        $ir->setLabelKey("category_name");
+
         $treeView = new NestedSetTreeView();
-        $treeView->setSource($this->product_categories);
+        $treeView->setItemRenderer($ir);
+
+        $treeView->setItemIterator(new SQLQuery($this->product_categories->listTreeSelect(), $this->product_categories->key(), $this->product_categories->getTableName()));
+
         $treeView->setName("products_tree");
         $treeView->open_all = false;
-        $treeView->list_label = "category_name";
-
-        //renderer for the tree view
-        $ir = new TextTreeItemRenderer();
-        $treeView->setItemRenderer($ir);
 
         $this->treeView = $treeView;
 

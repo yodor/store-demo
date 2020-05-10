@@ -2,8 +2,8 @@
 include_once("session.php");
 include_once("class/pages/AdminPage.php");
 include_once("class/beans/ProductCategoriesBean.php");
-include_once("components/NestedSetTreeView.php");
-include_once("components/renderers/items/TextTreeItemRenderer.php");
+include_once("components/NestedSetTreeView_old.php");
+include_once("components/renderers/items/TextTreeItem.php");
 
 
 $menu = array();
@@ -25,21 +25,21 @@ $h_delete = new DeleteItemRequestHandler($bean);
 RequestController::addRequestHandler($h_delete);
 
 
-$ir = new TextTreeItemRenderer();
+$ir = new TextTreeItem();
 $ir->addAction(new Action("Up", "?cmd=reposition&type=left", array(new ActionParameter("item_id", $bean->key()))));
 $ir->addAction(new Action("Down", "?cmd=reposition&type=right", array(new ActionParameter("item_id", $bean->key()))));
 
 $ir->addAction(new Action("Edit", "add.php", array(new ActionParameter("editID", $bean->key()))));
 $ir->addAction($h_delete->createAction());
 
+$ir->setLabelKey("category_name");
 
 $tv = new NestedSetTreeView();
-$tv->setSource($bean);
-$tv->setName("ProductCategores");
-
-// $tv->select_qry->group_by = "  node.menuID ";
 $tv->setItemRenderer($ir);
 
+$tv->setItemIterator(new SQLQuery($bean->listTreeSelect(), $bean->key(), $bean->getTableName()));
+
+$tv->setName("ProductCategores");
 
 Session::Set("categories.list", $page->getPageURL());
 

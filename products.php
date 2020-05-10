@@ -39,7 +39,7 @@ $product_selector->from = " ( " . $derived->getSQL(FALSE, FALSE) . " ) as relati
 $product_selector->where = "  ";
 
 //process get filters
-$proc = new RelatedSourceFilterProcessor("prodID");
+$proc = new RelatedSourceFilterProcessor($bean,"prodID");
 
 $proc->addFilter("keyword", $page->keyword_search);
 
@@ -74,8 +74,9 @@ if ($num_filters) {
 $tree_selector = $bean->listTreeRelation($product_selector, "relation", "prodID", " count(relation.prodID) as related_count ");
 // echo $tree_selector->getSQL();
 
-//set the query
-$treeView->setSelect($tree_selector);
+//set the the iterator
+$treeView->setItemIterator(new SQLQuery($tree_selector, $bean->key(), $bean->getTableName()));
+
 
 $nodeID = $treeView->getSelectedID();
 
@@ -233,7 +234,7 @@ echo "<div class='categories panel'>";
 //   if ($num_filters>0) {
 // 	echo "<a class='ActionRenderer Clear' href='javascript:clearFilters()'>Show All Categories</a>";
 //   }
-echo "<div class='caption'>" . tr("Категорий") . "</div>";
+echo "<div class='caption'>" . tr("Категории") . "</div>";
 $treeView->render();
 echo "</div>"; //tree
 

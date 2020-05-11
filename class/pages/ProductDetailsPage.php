@@ -31,7 +31,7 @@ class ProductDetailsPage extends ProductsPage
         $title = array();
         $title[] = $this->sellable["section"];
 
-        $category_path = $this->product_categories->parentCategories($this->sellable["catID"]);
+        $category_path = $this->product_categories->getParentNodes($this->sellable["catID"], array("category_name"));
         foreach ($category_path as $idx => $catinfo) {
             $title[] = $catinfo["category_name"];
         }
@@ -56,7 +56,7 @@ class ProductDetailsPage extends ProductsPage
 
     public function getCategoryPath()
     {
-        return $this->product_categories->parentCategories($this->sellable["catID"]);
+        return $this->product_categories->getParentNodes($this->sellable["catID"], array("category_name"));
     }
 
 

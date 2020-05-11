@@ -19,19 +19,19 @@ $action_back->setAttribute("action", "back");
 $action_back->setAttribute("title", "Back to Sections");
 $page->addAction($action_back);
 
-$rc = new ReferenceKeyPageChecker(new SectionsBean(), "../list.php");
+$rc = new RequestBeanKey(new SectionsBean(), "../list.php");
 
 
-$action_add = new Action("", "add.php?" . $rc->ref_key . "=" . $rc->ref_id, array());
+$action_add = new Action("", "add.php?" . $rc->key . "=" . $rc->id, array());
 $action_add->setAttribute("action", "add");
 $action_add->setAttribute("title", "Add Photo");
 $page->addAction($action_add);
 
 
-$page->setCaption(tr("Banners Gallery") . ": " . $rc->ref_row["section_title"]);
+$page->setCaption(tr("Banners Gallery") . ": " . $rc->data["section_title"]);
 
 $bean = new SectionBannersBean();
-$bean->select()->where = $rc->ref_key . "='" . $rc->ref_id . "'";
+$bean->select()->where = $rc->key . "='" . $rc->id . "'";
 
 
 $h_delete = new DeleteItemRequestHandler($bean);
@@ -43,7 +43,7 @@ RequestController::addRequestHandler($h_repos);
 $gv = new GalleryView();
 $gv->blob_field = "photo";
 
-$gv->initView($bean, "add.php", $rc->ref_key, $rc->ref_id);
+$gv->initView($bean, "add.php", $rc->key, $rc->id);
 
 Session::Set("section.banners.list", $page->getPageURL());
 

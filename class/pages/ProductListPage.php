@@ -21,7 +21,11 @@ class ProductListPage extends ProductsPage
         $treeView = new NestedSetTreeView();
         $treeView->setItemRenderer($ir);
 
-        $treeView->setItemIterator(new SQLQuery($this->product_categories->listTreeSelect(), $this->product_categories->key(), $this->product_categories->getTableName()));
+        $treeSelect = $this->product_categories->selectTree(array("category_name"));
+
+        $treeQry = new SQLQuery($treeSelect, $this->product_categories->key(), $this->product_categories->getTableName());
+
+        $treeView->setItemIterator($treeQry);
 
         $treeView->setName("products_tree");
         $treeView->open_all = false;
@@ -39,7 +43,7 @@ class ProductListPage extends ProductsPage
         $title = array();
         $title[] = $this->getSection();
         if ($nodeID > 0) {
-            $category_path = $this->product_categories->parentCategories($nodeID);
+            $category_path = $this->product_categories->getParentNodes($nodeID, array("category_name"));
             foreach ($category_path as $idx => $catinfo) {
                 $title[] = $catinfo["category_name"];
             }
@@ -56,7 +60,7 @@ class ProductListPage extends ProductsPage
         $nodeID = $this->treeView->getSelectedID();
 
         if ($nodeID > 0) {
-            $category_path = $this->product_categories->parentCategories($nodeID);
+            $category_path = $this->product_categories->getParentNodes($nodeID, array("category_name"));
         }
 
         return $category_path;

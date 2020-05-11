@@ -2,7 +2,7 @@
 include_once("session.php");
 include_once("class/pages/AdminPage.php");
 include_once("class/beans/ProductCategoriesBean.php");
-include_once("components/NestedSetTreeView_old.php");
+include_once("components/NestedSetTreeView.php");
 include_once("components/renderers/items/TextTreeItem.php");
 
 
@@ -37,7 +37,7 @@ $ir->setLabelKey("category_name");
 $tv = new NestedSetTreeView();
 $tv->setItemRenderer($ir);
 
-$tv->setItemIterator(new SQLQuery($bean->listTreeSelect(), $bean->key(), $bean->getTableName()));
+$tv->setItemIterator(new SQLQuery($bean->selectTree(array("category_name")), $bean->key(), $bean->getTableName()));
 
 $tv->setName("ProductCategores");
 

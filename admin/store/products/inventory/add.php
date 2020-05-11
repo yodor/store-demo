@@ -18,8 +18,8 @@ $page->addAction($action_back);
 Session::Set("sizing.list", $page->getPageURL());
 Session::Set("product.color_scheme", $page->getPageURL());
 
-$ensure_product = new ReferenceKeyPageChecker(new ProductsBean(), "../list.php");
-$prodID = (int)$ensure_product->ref_id;
+$ensure_product = new RequestBeanKey(new ProductsBean(), "../list.php");
+$prodID = (int)$ensure_product->id;
 
 
 $form = new ProductInventoryInputForm();
@@ -40,7 +40,7 @@ $view->reload_url = Session::Get("inventory.list");
 $view->getTransactor()->appendValue("prodID", $prodID);
 
 
-$page->setCaption("Inventory: " . $ensure_product->ref_row["product_name"]);
+$page->setCaption("Inventory: " . $ensure_product->data["product_name"]);
 
 
 $view->processInput(); //redirect on successfully add or edit?

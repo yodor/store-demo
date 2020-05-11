@@ -71,7 +71,7 @@ if ($num_filters) {
 //
 
 //construct the aggregated tree query
-$tree_selector = $bean->listTreeRelation($product_selector, "relation", "prodID", " count(relation.prodID) as related_count ");
+$tree_selector = $bean->selectTreeRelation($product_selector, "relation", "prodID", "prodID", array("category_name"));
 // echo $tree_selector->getSQL();
 
 //set the the iterator
@@ -81,8 +81,8 @@ $treeView->setItemIterator(new SQLQuery($tree_selector, $bean->key(), $bean->get
 $nodeID = $treeView->getSelectedID();
 
 $product_selector->fields = " relation.* "; //TODO list only needed fields here?
-$product_selector = $bean->childNodesWith($product_selector, $nodeID);
-$product_selector->where .= " AND relation.catID = child.catID ";
+$product_selector = $bean->selectChildNodesWith($product_selector, $nodeID);
+
 $product_selector->group_by = " relation.prodID, relation.color ";
 
 // echo $product_selector->getSQL();

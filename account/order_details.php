@@ -117,7 +117,7 @@ while ($item = $qry->next()) {
     $prodID = $item["prodID"];
 
     echo "<a class='item photo' href='".LOCAL."/details.php?prodID=$prodID&piID=$piID'>";
-    echo $items->getThumb($item["itemID"], 100);
+    echo StorageItem::Image($item["itemID"], get_class($items), 100,100);
     echo "</a>";
 
     echo "<div class='item product'>";

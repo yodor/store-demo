@@ -29,11 +29,11 @@ $prodID = -1;
 
 try {
 
-    $rc = new ReferenceKeyPageChecker(new ProductsBean(), false);
+    $rc = new RequestBeanKey(new ProductsBean(), false);
     //   $menu=array(
     // 	  new MenuItem("Add Inventory", "add.php".$rc->qrystr, "list-add.png"),
     //   );
-    $prodID = (int)$rc->ref_id;
+    $prodID = (int)$rc->id;
 
     $action_add = new Action("", "add.php?prodID=$prodID", array());
     $action_add->setAttribute("action", "add");
@@ -82,7 +82,7 @@ $select_inventory->group_by = " pi.piID ";
 
 if ($prodID > 0) {
     $select_inventory->where = " pi.prodID = '$prodID' ";
-    $page->caption = tr("Inventory") . ": " . $rc->ref_row["product_name"];
+    $page->caption = tr("Inventory") . ": " . $rc->data["product_name"];
 }
 else {
     $page->caption = tr("All Products Inventory");

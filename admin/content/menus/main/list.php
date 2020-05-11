@@ -38,7 +38,7 @@ $tv = new NestedSetTreeView();
 $tv->setItemRenderer($ir);
 $tv->setName("MenuItemsBean");
 
-$tv->setItemIterator(new SQLQuery($bean->listTreeSelect(), $bean->key(), $bean->getTableName()));
+$tv->setItemIterator(new SQLQuery($bean->selectTree(array("menu_title")), $bean->key(), $bean->getTableName()));
 
 $page->startRender($menu);
 

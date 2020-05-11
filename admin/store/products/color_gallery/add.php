@@ -15,18 +15,18 @@ $action_back->setAttribute("action", "back");
 $action_back->setAttribute("title", "Back to Colors List");
 $page->addAction($action_back);
 
-$ensure_product = new ReferenceKeyPageChecker(new ProductsBean(), "../list.php");
+$ensure_product = new RequestBeanKey(new ProductsBean(), "../list.php");
 
 
-$view = new InputFormView(new ProductColorsBean(), new ProductColorInputForm($ensure_product->ref_id));
+$view = new InputFormView(new ProductColorsBean(), new ProductColorInputForm($ensure_product->id));
 
 Session::Set("color_codes.list", $page->getPageURL());
 
 // $view->getTransactor()->assignInsertValue("insert_date", DBConnections::get()->dateTime());
-$view->getTransactor()->appendValue("prodID", $ensure_product->ref_id);
+$view->getTransactor()->appendValue("prodID", $ensure_product->id);
 
 
-$page->setCaption("Color Scheme: " . $ensure_product->ref_row["product_name"]);
+$page->setCaption("Color Scheme: " . $ensure_product->data["product_name"]);
 
 $view->processInput();
 

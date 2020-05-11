@@ -9,7 +9,7 @@ include_once("beans/DynamicPagesBean.php");
 include_once("components/GalleryView.php");
 
 
-$rc = new ReferenceKeyPageChecker(new DynamicPagesBean(), "../list.php");
+$rc = new RequestBeanKey(new DynamicPagesBean(), "../list.php");
 
 
 $menu = array(//     new MenuItem("Add Photo","add.php".$rc->qrystr, "list-add.png")
@@ -27,7 +27,7 @@ $action_add->setAttribute("title", "Add Photo");
 $page->addAction($action_add);
 
 $bean = new DynamicPagePhotosBean();
-$bean->select()->where = $rc->ref_key . "='" . $rc->ref_id . "'";
+$bean->select()->where = $rc->key . "='" . $rc->id . "'";
 
 $h_delete = new DeleteItemRequestHandler($bean);
 RequestController::addRequestHandler($h_delete);
@@ -38,7 +38,7 @@ RequestController::addRequestHandler($h_repos);
 $gv = new GalleryView();
 $gv->blob_field = "photo";
 
-$gv->initView($bean, "add.php", $rc->ref_key, $rc->ref_id);
+$gv->initView($bean, "add.php", $rc->key, $rc->id);
 
 $page->startRender($menu);
 

@@ -40,6 +40,7 @@ class OrderProcessor
             $db->transaction();
 
             $inventory = new ProductInventoryBean();
+            $inventory->setDB($db);
 
             $orders = new OrdersBean();
             $eab = new EkontAddressesBean();
@@ -90,7 +91,7 @@ class OrderProcessor
 
             foreach ($items as $piID => $qty) {
 
-                $item = $inventory->getByID($piID, $db, " price ");
+                $item = $inventory->getByID($piID, array("price"));
                 $line_total = (float)sprintf("%0.2f", ($qty * $item["price"]));
                 $order_total = $order_total + $line_total;
 
@@ -103,16 +104,18 @@ class OrderProcessor
 
             $order_items = new OrderItemsBean();
             $products = new ProductsBean();
+            $products->setDB($db);
+
             $photos = new ProductColorPhotosBean();
             $gallery_photos = new ProductPhotosBean();
 
             $pos = 1;
             foreach ($items as $piID => $qty) {
 
-                $item = $inventory->getByID($piID, $db);
+                $item = $inventory->getByID($piID);
                 $prodID = (int)$item["prodID"];
 
-                $product = $products->getByID($prodID, $db, " prodID, brand_name, product_name ");
+                $product = $products->getByID($prodID, array("prodID", "brand_name", "product_name"));
 
                 $product_details = "Продукт||{$product["product_name"]}//Цвят||{$item["color"]}//Размер||{$item["size_value"]}//Марка||{$product["brand_name"]}//Код|| {$piID}-{$prodID}";
 

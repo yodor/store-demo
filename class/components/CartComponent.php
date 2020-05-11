@@ -1,12 +1,12 @@
 <?php
-include_once("components/MLTagComponent.php");
+include_once("components/Component.php");
 include_once("class/utils/Cart.php");
 include_once("class/beans/ProductPhotosBean.php");
 include_once("class/beans/ProductColorPhotosBean.php");
 include_once("class/beans/ProductsBean.php");
 include_once("class/beans/ProductInventoryBean.php");
 
-class CartComponent extends MLTagComponent implements IHeadContents
+class CartComponent extends Component implements IHeadContents
 {
     protected $cart = NULL;
     protected $heading_text = "";
@@ -103,10 +103,10 @@ class CartComponent extends MLTagComponent implements IHeadContents
         //try product gallery photos
         if ($pclrpID<1) {
             $ppID = $this->gallery_photos->getFirstPhotoID($prodID);
-            echo $this->gallery_photos->getThumb($ppID, 100);
+            echo StorageItem::Image($ppID, get_class($this->gallery_photos), 100,100);
         }
         else {
-            echo $this->photos->getThumb($pclrpID, 100);
+            echo StorageItem::Image($pclrpID, get_class($this->photos), 100,100);
         }
         echo "</a>";
 

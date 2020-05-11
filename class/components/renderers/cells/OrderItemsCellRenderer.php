@@ -40,7 +40,7 @@ class OrderItemsCellRenderer extends TableCellRenderer
 
             echo "<div class='item photo'>";
             echo "<label>";
-            echo $order_items->getThumb($itemID, 100);
+            echo StorageItem::Image($itemID, get_class($order_items), 100,100);
             echo "</label>";
 
             echo "</div>";

@@ -90,7 +90,7 @@ class StorePage extends SparkPage
 
         $this->addJS("//code.jquery.com/ui/1.11.4/jquery-ui.js");
         $this->addJS(SPARK_LOCAL . "/js/URI.js");
-        $this->addJS(SPARK_LOCAL . "/js/GalleryView.js");
+
     }
 
     public function getCart()

@@ -5,12 +5,6 @@ include_once("beans/DynamicPagePhotosBean.php");
 // include_once("beans/DynamicPagesBean.php");
 include_once("beans/MenuItemsBean.php");
 
-// function dumpJS()
-// {
-//   echo "<script type='text/javascript' src='".LOCAL."js/GalleryView.js'></script>";
-//   echo "\n";
-// }
-
 $page = new DemoPage();
 
 
@@ -93,7 +87,7 @@ if ($num_photos && $dpprow = $qry->next()) {
 
     $img_href = StorageItem::Image($photo_id, $dpp);
 
-    echo "<a class='image_popup' href='$img_href' rel='DynamicPagePhotosBean'>";
+    echo "<a class='ImagePopup' href='$img_href' rel='DynamicPagePhotosBean'>";
     echo "<img src='$img_href' >";
     echo "</a>";
 

@@ -15,7 +15,7 @@ class OrderStatusMailer extends Mailer
         $userID = (int)$order["userID"];
 
         $users = new UsersBean();
-        $user = $users->getByID($userID, false, " userID, fullname, email, phone ");
+        $user = $users->getByID($userID, array("userID", "fullname", "email", "phone"));
         
         $this->to = $user["email"];
 

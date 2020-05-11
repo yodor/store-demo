@@ -23,14 +23,14 @@ $action_back->setAttribute("title", "Back to Products");
 $page->addAction($action_back);
 
 
-$rc = new ReferenceKeyPageChecker(new ProductsBean(), "../list.php");
+$rc = new RequestBeanKey(new ProductsBean(), "../list.php");
 
 
 $menu = array(//    new MenuItem("Color Gallery", "list.php".$rc->qrystr, "list-add.png"),
               //    new MenuItem("Add Gallery", "add.php".$rc->qrystr, "list-add.png")
 );
 
-$action_add = new Action("", "add.php?" . $rc->ref_key . "=" . $rc->ref_id, array());
+$action_add = new Action("", "add.php?" . $rc->key . "=" . $rc->id, array());
 $action_add->setAttribute("action", "add");
 $action_add->setAttribute("title", "Add Color Scheme");
 $page->addAction($action_add);
@@ -49,10 +49,10 @@ RequestController::addRequestHandler($h_delete);
 $select_colors = $bean->select();
 $select_colors->fields = " pclr.*, p.product_name ";
 $select_colors->from = " product_colors pclr LEFT JOIN products p ON p.prodID = pclr.prodID ";
-$select_colors->where = " pclr.prodID = " . $rc->ref_id;
+$select_colors->where = " pclr.prodID = " . $rc->id;
 
 
-$page->setCaption(tr("Color Scheme") . ": " . $rc->ref_row["product_name"]);
+$page->setCaption(tr("Color Scheme") . ": " . $rc->data["product_name"]);
 
 
 // $ksc->processSearch($select_products);

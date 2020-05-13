@@ -53,17 +53,16 @@ $page = new ProductsPage();
 $form = new OrderStatusInputForm();
 
 
-$tfr = new FormRenderer();
+$tfr = new FormRenderer($form);
 $tfr->setName("OrderStatus");
 
-$form->setRenderer($tfr);
 
 $proc = new OrderStatusProcessor();
 
 $form->setProcessor($proc);
 
 
-$proc->processForm($form);
+$proc->process($form);
 
 
 if ($proc->getStatus() == IFormProcessor::STATUS_ERROR) {

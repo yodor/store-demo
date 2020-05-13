@@ -1,8 +1,8 @@
 @media (max-width: 720px) {
-    .ListView {
+    .ItemView {
         display:block;
     }
-    .ListView .viewport {
+    .ItemView .viewport {
         text-align:center;
         
     }
@@ -56,7 +56,7 @@
 /*         display:none; */
 /*         float:left; */
     }
-    .main_content .column.product_list .ListView {
+    .main_content .column.product_list .ItemView {
          margin-top:20px;
     }
    /* .main_content .column.left .panel * {
@@ -120,11 +120,11 @@
   max-width: 100% !important;
   width:100% !important;
 }
-.ListView {
+.ItemView {
   display:block !important;
   max-width: 100% !important;
 }
-.ListView .viewport {
+.ItemView .viewport {
   text-align:center;
 }
 .ProductListItem {

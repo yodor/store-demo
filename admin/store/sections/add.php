@@ -15,7 +15,7 @@ $action_back->setAttribute("action", "back");
 $action_back->setAttribute("title", "Back to Sections");
 $page->addAction($action_back);
 
-$view = new InputFormView(new SectionsBean(), new SectionInputForm());
+$view = new BeanFormEditor(new SectionsBean(), new SectionInputForm());
 
 $view->processInput();
 

@@ -1,5 +1,5 @@
 <?php
-// define("DEBUG_OUTPUT", 1);
+// $GLOBALS["DEBUG_OUTPUT"] = 1;
 
 include_once("class/utils/Cart.php");
 include_once("class/beans/OrdersBean.php");

@@ -18,9 +18,8 @@ $page->addAction($action_back);
 Session::Set("sizing.list", $page->getPageURL());
 Session::Set("product.color_scheme", $page->getPageURL());
 
-$ensure_product = new RequestBeanKey(new ProductsBean(), "../list.php");
-$prodID = (int)$ensure_product->id;
-
+$ensure_product = new RequestBeanKey(new ProductsBean(), "../list.php", array("product_name"));
+$prodID = (int)$ensure_product->getID();
 
 $form = new ProductInventoryInputForm();
 $form->setProductID($prodID);
@@ -33,15 +32,13 @@ if (isset($_GET["copyID"])) {
 
 }
 
-$view = new InputFormView($bean, $form);
+$view = new BeanFormEditor($bean, $form);
 $view->reload_url = Session::Get("inventory.list");
 
 // $view->getTransactor()->assignInsertValue("insert_date", DBConnections::get()->dateTime());
 $view->getTransactor()->appendValue("prodID", $prodID);
 
-
-$page->setCaption("Inventory: " . $ensure_product->data["product_name"]);
-
+$page->setCaption("Inventory: " . $ensure_product->getData("product_name"));
 
 $view->processInput(); //redirect on successfully add or edit?
 
@@ -56,6 +53,5 @@ $page->renderPageCaption();
 $view->render();
 
 $page->finishRender();
-
 
 ?>

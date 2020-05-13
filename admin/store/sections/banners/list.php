@@ -5,7 +5,6 @@ include_once("class/pages/AdminPage.php");
 include_once("class/beans/SectionBannersBean.php");
 include_once("class/beans/SectionsBean.php");
 
-
 include_once("components/GalleryView.php");
 
 $menu = array();
@@ -19,42 +18,33 @@ $action_back->setAttribute("action", "back");
 $action_back->setAttribute("title", "Back to Sections");
 $page->addAction($action_back);
 
-$rc = new RequestBeanKey(new SectionsBean(), "../list.php");
+$rc = new RequestBeanKey(new SectionsBean(), "../list.php", array("section_title"));
 
-
-$action_add = new Action("", "add.php?" . $rc->key . "=" . $rc->id, array());
+$action_add = new Action("", "add.php" . $rc->getQuery(), array());
 $action_add->setAttribute("action", "add");
 $action_add->setAttribute("title", "Add Photo");
 $page->addAction($action_add);
 
-
-$page->setCaption(tr("Banners Gallery") . ": " . $rc->data["section_title"]);
+$page->setCaption(tr("Banners Gallery") . ": " . $rc->getData("section_title"));
 
 $bean = new SectionBannersBean();
-$bean->select()->where = $rc->key . "='" . $rc->id . "'";
-
+$bean->select()->where = $rc->getURLParameter()->text(TRUE);
 
 $h_delete = new DeleteItemRequestHandler($bean);
 RequestController::addRequestHandler($h_delete);
 $h_repos = new ChangePositionRequestHandler($bean);
 RequestController::addRequestHandler($h_repos);
 
-
-$gv = new GalleryView();
-$gv->blob_field = "photo";
-
-$gv->initView($bean, "add.php", $rc->key, $rc->id);
+$gv = new GalleryView($bean);
+$gv->getActionsCollection()->addURLParameter($rc->getURLParameter());
 
 Session::Set("section.banners.list", $page->getPageURL());
-
 
 $page->startRender($menu);
 $page->renderPageCaption();
 
 $gv->render();
 
-
 $page->finishRender();
-
 
 ?>

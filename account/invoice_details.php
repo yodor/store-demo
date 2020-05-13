@@ -22,15 +22,12 @@ $proc->setEditID($editID);
 $proc->setUserID($page->getUserID());
 $proc->setBean($ccb);
 
-$frend = new FormRenderer();
+$frend = new FormRenderer($form);
 $frend->setName("InvoiceDetails");
 
-$form->setRenderer($frend);
 $form->setProcessor($proc);
-$frend->setForm($form);
 
-
-$proc->processForm($form);
+$proc->process($form);
 
 if ($proc->getStatus() == FormProcessor::STATUS_OK) {
     Session::SetAlert(tr("Детайлите за фактуриране бяха променени успешно"));
@@ -47,7 +44,7 @@ $page->setPreferredTitle(tr("Детайли за фактуриране"));
 echo "<div class='caption'>" . $page->getPreferredTitle() . "</div>";
 
 
-$frend->renderForm($form);
+$frend->render();
 
 $page->finishRender();
 ?>

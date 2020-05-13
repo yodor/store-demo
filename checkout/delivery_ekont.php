@@ -9,12 +9,12 @@ class EkontOfficeFormProcessor extends FormProcessor
     protected $bean = NULL;
     protected $editID = -1;
 
-    public function setBean(DBTableBean $bean): void
+    public function setBean(DBTableBean $bean)
     {
         $this->bean = $bean;
     }
 
-    public function setEditID(int $editID): void
+    public function setEditID(int $editID)
     {
         $this->editID = (int)$editID;
     }
@@ -27,13 +27,13 @@ class EkontOfficeFormProcessor extends FormProcessor
 
         $page = StorePage::Instance();
 
-        $dbt = new DBTransactor();
+        $dbt = new BeanTransactor($this->bean, $this->editID);
         $dbt->appendValue("userID", $page->getUserID());
 
-        $dbt->transactValues($form);
+        $dbt->processForm($form);
 
         //will do insert or update
-        $dbt->processBean($this->bean, $this->editID);
+        $dbt->processBean();
 
         header("Location: confirm.php");
         exit;
@@ -62,12 +62,11 @@ else {
     $form->loadBeanData($editID, $bean);
 }
 
-$frend = new FormRenderer();
+$frend = new FormRenderer($form);
 $frend->setName("EkontOffice");
 
-$frend->setForm($form);
 
-$proc->processForm($form, "office");
+$proc->process($form, "office");
 
 $page->startRender();
 

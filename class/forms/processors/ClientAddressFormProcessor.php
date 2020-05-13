@@ -1,7 +1,7 @@
 <?php
 include_once("forms/processors/FormProcessor.php");
 include_once("beans/DBTableBean.php");
-include_once("db/DBTransactor.php");
+include_once("db/BeanTransactor.php");
 
 class ClientAddressFormProcessor extends FormProcessor
 {
@@ -11,7 +11,7 @@ class ClientAddressFormProcessor extends FormProcessor
 
 
 
-    public function setUserID(int $userID) : void
+    public function setUserID(int $userID)
     {
         $this->userID = $userID;
     }
@@ -26,12 +26,12 @@ class ClientAddressFormProcessor extends FormProcessor
 
         if ($this->userID < 1) throw new Exception("Тази функция изисква регистрация");
 
-        $dbt = new DBTransactor();
+        $dbt = new BeanTransactor($this->bean, $this->editID);
         $dbt->appendValue("userID", $this->userID);
 
-        $dbt->transactValues($form);
+        $dbt->processForm($form);
 
-        $dbt->processBean($this->bean, $this->editID);
+        $dbt->processBean();
 
     }
 }

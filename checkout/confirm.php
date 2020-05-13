@@ -102,23 +102,19 @@ else {
 $reqproc = new RequireInvoiceFormProcessor();
 $reqproc->setBean($idb);
 
-$frend = new FormRenderer();
-$frend->setName("RequestInvoice");
-$frend->setForm($reqform);
+$frend = new FormRenderer($reqform);
 
-$reqproc->processForm($reqform, "require_invoice");
+$reqproc->process($reqform);
 
 
 //order note 
 $noteform = new OrderNoteInputForm();
 $noteform->getInput("note")->setValue($cart->getNote());
 
-$nfrend = new FormRenderer();
-$nfrend->setName("OrderNote");
-$nfrend->setForm($noteform);
+$nfrend = new FormRenderer($noteform);
 
 $noteproc = new OrderNoteFormProcessor();
-$noteproc->processForm($noteform, "note");
+$noteproc->process($noteform);
 
 
 $page->startRender();

@@ -16,7 +16,7 @@ $action_back->setAttribute("action", "back");
 $action_back->setAttribute("title", "Back to Clients");
 $page->addAction($action_back);
 
-$view = new InputFormView(new UsersBean(), new RegisterClientInputForm());
+$view = new BeanFormEditor(new UsersBean(), new RegisterClientInputForm());
 
 // $view->getForm()->getRenderer()->setAttribute("onSubmit", "return checkForm(this)");
 

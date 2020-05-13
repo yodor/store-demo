@@ -27,15 +27,12 @@ $proc->setEditID($editID);
 $proc->setUserID($page->getUserID());
 $proc->setBean($cab);
 
-$frend = new FormRenderer();
+$frend = new FormRenderer($form);
 $frend->setName("ClientAddress");
 
-$form->setRenderer($frend);
 $form->setProcessor($proc);
-$frend->setForm($form);
 
-
-$proc->processForm($form, "submit_item");
+$proc->process($form, "submit_item");
 
 if ($proc->getStatus() == FormProcessor::STATUS_OK) {
     //   Session::set("DeliveryDetailsForm", serialize($dform));

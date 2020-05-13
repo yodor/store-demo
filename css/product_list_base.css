@@ -113,17 +113,17 @@ FORM[name='filters'] {
 
 }
 
-.ListView .viewport {
+.ItemView .viewport {
     margin-left: -5px;
     margin-right: -5px;
 }
 
-.ListView .PaginatorTopComponent {
+.ItemView .PaginatorTopComponent {
     background: none;
     background-color: transparent !important;
 }
 
-.ListView .PaginatorBottomComponent {
+.ItemView .PaginatorBottomComponent {
     background: none;
     background-color: transparent !important;
 }

@@ -13,7 +13,6 @@ include_once("components/renderers/cells/TableImageCellRenderer.php");
 include_once("components/KeywordSearchComponent.php");
 include_once("iterators/SQLQuery.php");
 
-
 $page = new AdminPage();
 $page->checkAccess(ROLE_CONTENT_MENU);
 
@@ -22,15 +21,11 @@ $action_back->setAttribute("action", "back");
 $action_back->setAttribute("title", "Back to Products");
 $page->addAction($action_back);
 
+$rc = new RequestBeanKey(new ProductsBean(), "../list.php", array("product_name"));
 
-$rc = new RequestBeanKey(new ProductsBean(), "../list.php");
+$menu = array();
 
-
-$menu = array(//    new MenuItem("Color Gallery", "list.php".$rc->qrystr, "list-add.png"),
-              //    new MenuItem("Add Gallery", "add.php".$rc->qrystr, "list-add.png")
-);
-
-$action_add = new Action("", "add.php?" . $rc->key . "=" . $rc->id, array());
+$action_add = new Action("", "add.php" . $rc->getQuery(), array());
 $action_add->setAttribute("action", "add");
 $action_add->setAttribute("title", "Add Color Scheme");
 $page->addAction($action_add);
@@ -38,7 +33,6 @@ $page->addAction($action_add);
 $page->setAccessibleTitle("Color Scheme");
 
 $bean = new ProductColorsBean();
-
 
 $h_delete = new DeleteItemRequestHandler($bean);
 RequestController::addRequestHandler($h_delete);
@@ -49,14 +43,11 @@ RequestController::addRequestHandler($h_delete);
 $select_colors = $bean->select();
 $select_colors->fields = " pclr.*, p.product_name ";
 $select_colors->from = " product_colors pclr LEFT JOIN products p ON p.prodID = pclr.prodID ";
-$select_colors->where = " pclr.prodID = " . $rc->id;
+$select_colors->where = " pclr.prodID = " . $rc->getID();
 
-
-$page->setCaption(tr("Color Scheme") . ": " . $rc->data["product_name"]);
-
+$page->setCaption(tr("Color Scheme") . ": " . $rc->getData("product_name"));
 
 // $ksc->processSearch($select_products);
-
 
 $view = new TableView(new SQLQuery($select_colors, $bean->key()));
 $view->setCaption("Color Schemes List");
@@ -74,19 +65,18 @@ $view->addColumn(new TableColumn("color", "Color Name"));
 
 $view->addColumn(new TableColumn("color_photo", "Color Chip"));
 
-
 $view->addColumn(new TableColumn("actions", "Actions"));
 
+$ticr1 = new TableImageCellRenderer(-1, 64);
+$ticr1->setBean(new ProductColorsBean(), "color_photo");
+$view->getColumn("color_photo")->setCellRenderer($ticr1);
+$view->getColumn("color_photo")->getHeaderCellRenderer()->setSortable(FALSE);
 
-$view->getColumn("color_photo")->setCellRenderer(new TableImageCellRenderer(new ProductColorsBean(),  -1, 64));
-$view->getColumn("color_photo")->getCellRenderer()->setBlobField("color_photo");
-$view->getColumn("color_photo")->getHeaderCellRenderer()->setSortable(false);
-
-
-$view->getColumn("photo")->setCellRenderer(new TableImageCellRenderer(new ProductColorPhotosBean(),  -1, 64));
-$view->getColumn("photo")->getCellRenderer()->setListLimit(0);
-$view->getColumn("photo")->getHeaderCellRenderer()->setSortable(false);
-
+$ticr2 = new TableImageCellRenderer(-1, 64);
+$ticr2->setBean(new ProductColorPhotosBean());
+$ticr2->setLimit(0);
+$view->getColumn("photo")->setCellRenderer($ticr2);
+$view->getColumn("photo")->getHeaderCellRenderer()->setSortable(FALSE);
 
 $act = new ActionsTableCellRenderer();
 $act->addAction(new Action("Edit", "add.php", array(new ActionParameter("editID", $bean->key()))));
@@ -101,7 +91,6 @@ $view->getColumn("actions")->setCellRenderer($act);
 
 Session::Set("product.color_scheme", $page->getPageURL());
 
-
 $page->startRender($menu);
 
 $page->renderPageCaption();
@@ -110,6 +99,5 @@ $page->renderPageCaption();
 $view->render();
 
 $page->finishRender();
-
 
 ?>

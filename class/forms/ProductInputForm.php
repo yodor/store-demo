@@ -12,7 +12,6 @@ include_once("class/beans/ProductPhotosBean.php");
 
 include_once("class/beans/ClassAttributeValuesBean.php");
 include_once("class/input/renderers/ClassAttributeField.php");
-include_once("input/transactors/CustomFieldTransactor.php");
 
 class ProductInputForm extends InputForm
 {
@@ -77,13 +76,13 @@ class ProductInputForm extends InputForm
         $field1->source_label_visible = TRUE;
 
         $features_source = new ProductFeaturesBean();
-        $field1->setSource($features_source);
+        $field1->getProcessor()->setTransactBean($features_source);
 
         $renderer = new TextField($field1);
         $renderer->setItemIterator($features_source->query());
 
         $field1->setValidator(new EmptyValueValidator());
-        $field1->setProcessor(new BeanPostProcessor());
+        new InputProcessor($field1);
 
         new ArrayField($renderer);
 
@@ -102,7 +101,7 @@ class ProductInputForm extends InputForm
 
     }
 
-    public function loadPostData(array $arr): void
+    public function loadPostData(array $arr)
     {
         parent::loadPostData($arr);
 

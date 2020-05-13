@@ -7,21 +7,20 @@ include_once("class/forms/processors/RegisterClientFormProcessor.php");
 $page = new AccountPage();
 
 $form = new RegisterClientInputForm();
+$form->setName("RegisterClient");
 $form->loadBeanData($page->getUserID(), new UsersBean());
 
 
-$frend = new FormRenderer(FormRenderer::FIELD_VBOX);
-$frend->setAttribute("name", "RegisterClient");
-$frend->setForm($form);
+$frend = new FormRenderer($form);
+$frend->setLayout(FormRenderer::FIELD_VBOX);
 $frend->getSubmitButton()->setText("Update");
-$form->setRenderer($frend);
 
 
 $proc = new RegisterClientFormProcessor();
 $proc->setEditID($page->getUserID());
 
 
-$proc->processForm($form);
+$proc->process($form);
 
 if ($proc->getStatus() == FormProcessor::STATUS_OK) {
     Session::SetAlert(tr("Профилът беше променен успешно"));
@@ -39,7 +38,7 @@ $page->setPreferredTitle(tr("Клиентски профил"));
 
 echo "<div class='caption'>" . $page->getPreferredTitle() . "</div>";
 
-$frend->renderForm($form);
+$frend->render();
 
 echo "<div class='caption'>" . tr("Парола за достъп") . "</div>";
 

@@ -31,7 +31,7 @@ $act->addAction(
         "Потвърди изпращане", "?cmd=order_status",
         array(
             new ActionParameter("orderID", "orderID"),
-            new ActionParameter("status", OrdersBean::STATUS_SENT,true),
+            new URLParameter("status", OrdersBean::STATUS_SENT),
         )
     )
 
@@ -42,7 +42,7 @@ $act->addAction(
         "Откажи изпращане", "?cmd=order_status",
         array(
             new ActionParameter("orderID", "orderID"),
-            new ActionParameter("status", OrdersBean::STATUS_CANCELED,true),
+            new URLParameter("status", OrdersBean::STATUS_CANCELED),
         )
     )
 

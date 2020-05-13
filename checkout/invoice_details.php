@@ -5,7 +5,7 @@ include_once("class/pages/CheckoutPage.php");
 include_once("class/forms/InvoiceDetailsInputForm.php");
 include_once("class/beans/InvoiceDetailsBean.php");
 include_once("class/forms/processors/InvoiceDetailsFormProcessor.php");
-include_once("db/DBTransactor.php");
+include_once("db/BeanTransactor.php");
 
 
 $page = new CheckoutPage();
@@ -28,15 +28,12 @@ $proc->setEditID($editID);
 $proc->setUserID($page->getUserID());
 $proc->setBean($ccb);
 
-$frend = new FormRenderer();
+$frend = new FormRenderer($form);
 $frend->setName("InvoiceDetails");
 
-$form->setRenderer($frend);
 $form->setProcessor($proc);
-$frend->setForm($form);
 
-
-$proc->processForm($form, "submit_item");
+$proc->process($form, "submit_item");
 
 if ($proc->getStatus() == FormProcessor::STATUS_OK) {
     header("Location: confirm.php");

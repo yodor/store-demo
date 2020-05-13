@@ -15,7 +15,7 @@ $action_back->setAttribute("action", "back");
 $action_back->setAttribute("title", "Back to Brands");
 $page->addAction($action_back);
 
-$view = new InputFormView(new BrandsBean(), new BrandInputForm());
+$view = new BeanFormEditor(new BrandsBean(), new BrandInputForm());
 
 $view->processInput();
 

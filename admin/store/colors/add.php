@@ -14,7 +14,7 @@ $action_back->setAttribute("action", "back");
 $action_back->setAttribute("title", "Back to Color Codes");
 $page->addAction($action_back);
 
-$view = new InputFormView(new StoreColorsBean(), new StoreColorInputForm());
+$view = new BeanFormEditor(new StoreColorsBean(), new StoreColorInputForm());
 
 
 $view->processInput();

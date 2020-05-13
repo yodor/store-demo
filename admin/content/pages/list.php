@@ -7,11 +7,9 @@ include_once("components/renderers/cells/TableImageCellRenderer.php");
 
 $menu = array();
 
-
 $page = new AdminPage();
 
 $page->checkAccess(ROLE_CONTENT_MENU);
-
 
 if (!isset($_GET["chooser"])) {
 
@@ -30,7 +28,6 @@ else {
 
 $page->setAccessibleTitle("Dynamic Pages");
 
-
 $bean = new DynamicPagesBean();
 
 $h_delete = new DeleteItemRequestHandler($bean);
@@ -38,7 +35,6 @@ RequestController::addRequestHandler($h_delete);
 
 $h_repos = new ChangePositionRequestHandler($bean);
 RequestController::addRequestHandler($h_repos);
-
 
 $view = new TableView($bean->query());
 $view->setCaption("Dynamic Pages List");
@@ -59,16 +55,17 @@ $view->addColumn(new TableColumn("actions", "Actions"));
 
 $view->getColumn("visible")->setCellRenderer(new BooleanFieldCellRenderer("Yes", "No"));
 
-$view->getColumn("photo")->setCellRenderer(new TableImageCellRenderer(new DynamicPagesBean(),  -1, 64));
-$view->getColumn("photo")->getHeaderCellRenderer()->setSortable(false);
-
+$ticr = new TableImageCellRenderer(-1, 64);
+$ticr->setBean($bean);
+$view->getColumn("photo")->setCellRenderer($ticr);
+$view->getColumn("photo")->getHeaderCellRenderer()->setSortable(FALSE);
 
 $act = new ActionsTableCellRenderer();
 
 if (isset($_GET["chooser"]) && isset($_SESSION["chooser_return"])) {
 
-
-    $action_chooser = new Action("Choose", $_SESSION["chooser_return"], array(new ActionParameter("page_id", $bean->key()), new ActionParameter("page_class", "DynamicPagesBean", true)));
+    $action_chooser = new Action("Choose", $_SESSION["chooser_return"], array(new ActionParameter("page_id", $bean->key()),
+                                                                              new URLParameter("page_class", "DynamicPagesBean")));
 
     $act->addAction($action_chooser);
 
@@ -80,7 +77,6 @@ else {
     $act->addAction($h_delete->createAction());
 
     $act->addAction(new RowSeparatorAction());
-
 
     $act->addAction(new Action("Photo Gallery", "gallery/list.php", array(new ActionParameter($bean->key(), $bean->key()))));
 
@@ -98,7 +94,6 @@ else {
     $act->addAction(new Action("First", "?cmd=reposition&type=first", $repos_param));
     $act->addAction(new PipeSeparatorAction());
     $act->addAction(new Action("Last", "?cmd=reposition&type=last", $repos_param));
-
 
 }
 

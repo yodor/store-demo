@@ -1,5 +1,5 @@
 <?php
-// define("DEBUG_OUTPUT", 1);
+// $GLOBALS["DEBUG_OUTPUT"] = 1;
 $cdir = dirname(__FILE__);
 $realpath = realpath($cdir . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR);
 include_once($realpath . "/session.php");

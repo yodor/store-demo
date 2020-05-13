@@ -103,14 +103,16 @@ $view->addColumn(new TableColumn("price_max", "Price Max"));
 
 $view->addColumn(new TableColumn("actions", "Actions"));
 
-$view->getColumn("photo")->setCellRenderer(new TableImageCellRenderer(new ProductPhotosBean(), -1, 64));
-$view->getColumn("photo")->getCellRenderer()->setListLimit(1);
-
+$ticr1 = new TableImageCellRenderer(-1, 64);
+$ticr1->setBean(new ProductPhotosBean());
+$ticr1->setLimit(1);
+$view->getColumn("photo")->setCellRenderer($ticr1);
 $view->getColumn("photo")->getHeaderCellRenderer()->setSortable(false);
 
-$view->getColumn("color_photos")->setCellRenderer(new TableImageCellRenderer(new ProductColorPhotosBean(), -1, 64));
-$view->getColumn("color_photos")->getCellRenderer()->setListLimit(0);
-$view->getColumn("color_photos")->getCellRenderer()->setBlobField("photo");
+$ticr2 = new TableImageCellRenderer(-1, 64);
+$ticr2->setBean(new ProductColorPhotosBean(), "photo");
+$ticr2->setLimit(0);
+$view->getColumn("color_photos")->setCellRenderer($ticr2);
 $view->getColumn("color_photos")->getHeaderCellRenderer()->setSortable(false);
 
 $view->getColumn("visible")->setCellRenderer(new BooleanFieldCellRenderer("Yes", "No"));

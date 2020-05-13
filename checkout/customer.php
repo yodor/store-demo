@@ -10,7 +10,6 @@ include_once("handlers/AuthenticatorRequestHandler.php");
 include_once("forms/AuthForm.php");
 include_once("forms/renderers/AuthFormRenderer.php");
 
-
 $page = new CheckoutPage();
 
 if ($page->getUserID() > 0) {
@@ -31,8 +30,8 @@ if ($auth->authorize()) {
     exit;
 }
 
-$af = new AuthForm();
-$afr = new AuthFormRenderer();
+$af = new LoginForm();
+$afr = new LoginFormRenderer($af);
 $afr->setAttribute("name", "client_auth");
 $afr->setForm($af);
 
@@ -40,15 +39,17 @@ $afr->forgot_password_url = LOCAL . "account/forgot_password.php";
 
 $form = new RegisterClientInputForm();
 
-$frender = new FormRenderer(FormRenderer::FIELD_VBOX);
-$frender->setAttribute("name", "RegisterClient");
-$frender->setForm($form);
+$frender = new FormRenderer($form);
+$frender->getSubmitButton()->setName("RegisterClient");
+$frender->getSubmitButton()->setValue("submit");
 
-$form->setRenderer($frender);
+$frender->setLayout(FormRenderer::FIELD_VBOX);
+$frender->setAttribute("name", "RegisterClient");
+
 
 $form->setProcessor(new RegisterClientFormProcessor());
 
-$form->getProcessor()->processForm($form, "RegisterClient");
+$form->getProcessor()->process($form, "RegisterClient");
 
 if ($form->getProcessor()->getStatus() == IFormProcessor::STATUS_ERROR) {
     Session::SetAlert($form->getProcessor()->getMessage());
@@ -68,14 +69,13 @@ $page->setPreferredTitle(tr("Клиенти"));
 //set the token after RequestController processHandlers is done
 $af->getInput("rand")->setValue($auth->createLoginToken());
 
-
 echo "<div class='item login'>";
 
 echo "<div class='caption'>" . tr("Регистрирани Клиенти") . "</div>";
 
 echo "<div class='login_component'>";
 echo "<div class='inner'>";
-$afr->renderForm($af);
+$afr->render();
 echo "</div>";
 echo "</div>";
 
@@ -87,17 +87,14 @@ echo "<div class='item register'>";
 echo "<div class='caption'>" . tr("Нови Клиенти") . "</div>";
 
 echo "<div class='panel'>";
-$frender->startRender();
+
 $frender->renderImpl();
-echo "<input type='hidden' name='RegisterClient' value='submit'>";
-$frender->finishRender();
-echo "</div>";
 
 echo "</div>";
 
+echo "</div>";
 
 echo "<div class='navigation'>";
-
 
 echo "<div class='slot left'>";
 echo "<a href='cart.php'>";
@@ -122,7 +119,6 @@ echo "</div>";
 //
 
 echo "</div>";
-
 
 $page->finishRender();
 ?>

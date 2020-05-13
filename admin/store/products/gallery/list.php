@@ -19,19 +19,18 @@ $action_back->setAttribute("action", "back");
 $action_back->setAttribute("title", "Back to Products");
 $page->addAction($action_back);
 
-$rc = new RequestBeanKey(new ProductsBean(), "../list.php");
+$rc = new RequestBeanKey(new ProductsBean(), "../list.php", array("product_name"));
 
 
-$action_add = new Action("", "add.php?" . $rc->key . "=" . $rc->id, array());
+$action_add = new Action("", "add.php" . $rc->getQuery(), array());
 $action_add->setAttribute("action", "add");
 $action_add->setAttribute("title", "Add Photo");
 $page->addAction($action_add);
 
-
-$page->setCaption(tr("Product Gallery") . ": " . $rc->data["product_name"]);
+$page->setCaption(tr("Product Gallery") . ": " . $rc->getData("product_name"));
 
 $bean = new ProductPhotosBean();
-$bean->select()->where = $rc->key . "='" . $rc->id . "'";
+$bean->select()->where = $rc->getURLParameter()->text(true);
 
 
 $h_delete = new DeleteItemRequestHandler($bean);
@@ -40,10 +39,9 @@ $h_repos = new ChangePositionRequestHandler($bean);
 RequestController::addRequestHandler($h_repos);
 
 
-$gv = new GalleryView();
-$gv->blob_field = "photo";
+$gv = new GalleryView($bean);
 
-$gv->initView($bean, "add.php", $rc->key, $rc->id);
+$gv->getActionsCollection()->addURLParameter($rc->getURLParameter());
 
 Session::Set("products.gallery", $page->getPageURL());
 

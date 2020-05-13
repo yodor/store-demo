@@ -15,7 +15,7 @@ $action_back->setAttribute("action", "back");
 $action_back->setAttribute("title", "Back to Categories");
 $page->addAction($action_back);
 
-$view = new InputFormView(new ProductCategoriesBean(), new ProductCategoryInputForm());
+$view = new BeanFormEditor(new ProductCategoriesBean(), new ProductCategoryInputForm());
 
 $view->processInput();
 

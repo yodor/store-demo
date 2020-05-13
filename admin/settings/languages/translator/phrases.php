@@ -34,7 +34,7 @@ $search_fields = array("value");
 
 $scomp = new KeywordSearchComponent($search_fields);
 
-$scomp->form_prepend = "<input type=hidden name=langID value='$langID'>";
+$scomp->append(new TextComponent("<input type=hidden name=langID value='{$langID}'>"));
 
 // SELECT st.textID, st.value as phrase, t.translated as translation, coalesce(t.trID,-1) as trID, coalesce(t.langID,2) as langID FROM  WHERE 1 having langID=2
 

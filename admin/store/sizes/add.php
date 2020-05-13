@@ -15,7 +15,7 @@ $action_back->setAttribute("action", "back");
 $action_back->setAttribute("title", "Back");
 $page->addAction($action_back);
 
-$view = new InputFormView(new StoreSizesBean(), new StoreSizeInputForm());
+$view = new BeanFormEditor(new StoreSizesBean(), new StoreSizeInputForm());
 
 // $view->getTransactor()->assignInsertValue("insert_date", DBConnections::get()->dateTime());
 // $view->getTransactor()->appendValue("prodID", $ensure_product->ref_id);

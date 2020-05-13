@@ -40,18 +40,16 @@ $form = new DeliveryAddressForm();
 
 
 $proc = new DeliveryAddressProcessor();
-$frend = new FormRenderer();
+$frend = new FormRenderer($form);
 $frend->setName("DeliveryAddress");
 
-$frend->setForm($form);
-$form->setRenderer($frend);
 $form->setProcessor($proc);
 
 $bean = new ClientAddressesBean();
 
 
 
-$proc->processForm($form, "Delivery");
+$proc->process($form, "Delivery");
 
 
 if ($proc->getStatus() == FormProcessor::STATUS_NOT_PROCESSED) {

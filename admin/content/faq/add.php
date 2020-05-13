@@ -10,7 +10,7 @@ $menu = array();
 $page = new AdminPage();
 $page->checkAccess(ROLE_CONTENT_MENU);
 
-$view = new InputFormView(new FAQItemsBean(), new FAQItemInputForm());
+$view = new BeanFormEditor(new FAQItemsBean(), new FAQItemInputForm());
 
 
 $view->processInput();

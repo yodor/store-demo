@@ -6,9 +6,7 @@ include_once("class/beans/GalleryPhotosBean.php");
 
 include_once("components/GalleryView.php");
 
-
 $menu = array();
-
 
 $page = new AdminPage();
 $page->checkAccess(ROLE_CONTENT_MENU);
@@ -20,19 +18,15 @@ $page->addAction($action_add);
 
 $bean = new GalleryPhotosBean();
 
-
 $h_delete = new DeleteItemRequestHandler($bean);
 RequestController::addRequestHandler($h_delete);
 
 $h_repos = new ChangePositionRequestHandler($bean);
 RequestController::addRequestHandler($h_repos);
 
+$gv = new GalleryView($bean);
 
-$gv = new GalleryView();
-$gv->blob_field = "photo";
-$gv->setCaption("Sample Photo Gallery Items");
-$gv->initView($bean, "add.php");
-
+$gv->setCaption("Sample Photo Gallery");
 
 $page->startRender($menu);
 $page->renderPageCaption();
@@ -40,6 +34,5 @@ $page->renderPageCaption();
 $gv->render();
 
 $page->finishRender();
-
 
 ?>

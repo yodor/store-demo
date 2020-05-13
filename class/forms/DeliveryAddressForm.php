@@ -20,7 +20,7 @@ class DeliveryAddressForm extends InputForm
         $radio->getItemRenderer()->setLabelKey(ArrayDataIterator::KEY_VALUE);
 
         $field->setValidator(new EmptyValueValidator());
-        $field->setProcessor(new BeanPostProcessor());
+        new InputProcessor($field);
 
         $this->addInput($field);
 

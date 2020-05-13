@@ -18,17 +18,15 @@ $form = new DeliveryConfigForm();
 $config->loadForm($form);
 
 
-$rend = new FormRenderer();
+$rend = new FormRenderer($form);
 $rend->setClassName("config_form");
-$form->setRenderer($rend);
 
 $proc = new ConfigFormProcessor();
 
 
 $form->setProcessor($proc);
 
-
-$proc->processForm($form);
+$proc->process($form);
 
 if ($proc->getStatus() === IFormProcessor::STATUS_OK) {
     Session::set("alert", "Configuration Updated");
@@ -45,7 +43,7 @@ else if ($proc->getStatus() === IFormProcessor::STATUS_ERROR) {
 
 $page->startRender();
 
-$form->getRenderer()->renderForm($form);
+$rend->render();
 
 $page->finishRender();
 ?>

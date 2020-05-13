@@ -19,9 +19,9 @@ class ProductClassInputForm extends InputForm
 
         $field1 = new ArrayDataInput("attribute_name", "Атрибут", 0);
         $field1->allow_dynamic_addition = TRUE;
-        $field1->setSource(new ClassAttributesBean());
+        $field1->getProcessor()->setTransactBean(new ClassAttributesBean());
         // 	  $field1->getValueTransactor()->process_datasource_foreign_keys = true;
-        $field1->getValueTransactor()->bean_copy_fields = array("class_name");
+        $field1->getProcessor()->bean_copy_fields = array("class_name");
 
         $attribs = new AttributesBean();
 

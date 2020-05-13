@@ -10,7 +10,7 @@ class RegisterClientFormProcessor extends FormProcessor
 
     protected $editID = -1;
 
-    public function setEditID(int $editID) : void
+    public function setEditID(int $editID)
     {
         $this->editID = (int)$editID;
     }

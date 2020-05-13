@@ -32,8 +32,9 @@ $view->addColumn(new TableColumn("item_date", "Date"));
 
 $view->addColumn(new TableColumn("actions", "Actions"));
 
-
-$view->getColumn("photo")->setCellRenderer(new TableImageCellRenderer(new NewsItemsBean(), -1, 128));
+$ticr = new TableImageCellRenderer(-1, 128);
+$ticr->setBean($bean);
+$view->getColumn("photo")->setCellRenderer($ticr);
 $view->getColumn("photo")->getHeaderCellRenderer()->setSortable(false);
 
 $act = new ActionsTableCellRenderer();

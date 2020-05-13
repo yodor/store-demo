@@ -50,7 +50,7 @@ class ClassAttributeFieldAjaxHandler extends JSONRequestHandler
 
 
         $bean1 = new ClassAttributeValuesBean();
-        $field->setSource($bean1);
+        $field->getProcessor()->setTransactBean($bean1);
 
         $rend = new ClassAttributeField($field);
 

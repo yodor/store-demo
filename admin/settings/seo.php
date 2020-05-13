@@ -17,9 +17,9 @@ $form = new SEOConfigForm();
 $config->loadForm($form);
 
 
-$rend = new FormRenderer();
+$rend = new FormRenderer($form);
 $rend->setClassName("config_form");
-$form->setRenderer($rend);
+
 
 $proc = new ConfigFormProcessor();
 
@@ -27,7 +27,7 @@ $proc = new ConfigFormProcessor();
 $form->setProcessor($proc);
 
 
-$proc->processForm($form);
+$proc->process($form);
 
 if ($proc->getStatus() == IFormProcessor::STATUS_OK) {
     Session::SetAlert("Configuration Updated");
@@ -38,7 +38,7 @@ if ($proc->getStatus() == IFormProcessor::STATUS_OK) {
 
 $page->startRender();
 
-$form->getRenderer()->renderForm($form);
+$rend->render();
 
 $page->finishRender();
 ?>

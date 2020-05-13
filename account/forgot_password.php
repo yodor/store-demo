@@ -57,15 +57,14 @@ $users = new UsersBean();
 
 $form = new ForgotPasswordInputForm();
 
-$frend = new FormRenderer();
+$frend = new FormRenderer($form);
 $frend->setName("ForgotPassword");
 $frend->getSubmitButton()->setText(tr("Изпрати"));
-$form->setRenderer($frend);
 
 $proc = new ForgotPasswordProcessor();
 $form->setProcessor($proc);
 
-$proc->processForm($form);
+$proc->process($form);
 
 if ($proc->getStatus() != IFormProcessor::STATUS_NOT_PROCESSED) {
     Session::SetAlert($proc->getMessage());
@@ -89,7 +88,7 @@ echo tr("Вашата нова парола ще бъде изпратена н�
 
 echo "<BR><BR>";
 
-$frend->renderForm($form);
+$frend->render();
 
 echo "</div>";
 

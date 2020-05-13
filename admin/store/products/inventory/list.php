@@ -14,7 +14,6 @@ include_once("class/beans/ProductPhotosBean.php");
 include_once("class/beans/ProductColorPhotosBean.php");
 include_once("class/beans/ProductsBean.php");
 
-
 $page = new AdminPage();
 $page->checkAccess(ROLE_CONTENT_MENU);
 
@@ -29,32 +28,29 @@ $prodID = -1;
 
 try {
 
-    $rc = new RequestBeanKey(new ProductsBean(), false);
+    $rc = new RequestBeanKey(new ProductsBean(), FALSE, array("product_name"));
     //   $menu=array(
     // 	  new MenuItem("Add Inventory", "add.php".$rc->qrystr, "list-add.png"),
     //   );
-    $prodID = (int)$rc->id;
+    $prodID = (int)$rc->getID();
 
     $action_add = new Action("", "add.php?prodID=$prodID", array());
     $action_add->setAttribute("action", "add");
     $action_add->setAttribute("title", "Add Inventory");
     $page->addAction($action_add);
 
-
 }
 catch (Exception $e) {
 
 }
 
-
 $bean = new ProductInventoryBean();
-
 
 $h_delete = new DeleteItemRequestHandler($bean);
 RequestController::addRequestHandler($h_delete);
 
-
-$search_fields = array("product_name", "category_name", "class_name", "product_summary", "keywords", "brand_name", "section", "color", "inventory_attributes");
+$search_fields = array("product_name", "category_name", "class_name", "product_summary", "keywords", "brand_name",
+                       "section", "color", "inventory_attributes");
 $ksc = new KeywordSearchComponent($search_fields);
 $ksc->getForm()->getRenderer()->setAttribute("method", "get");
 
@@ -82,24 +78,22 @@ $select_inventory->group_by = " pi.piID ";
 
 if ($prodID > 0) {
     $select_inventory->where = " pi.prodID = '$prodID' ";
-    $page->caption = tr("Inventory") . ": " . $rc->data["product_name"];
+    $page->caption = tr("Inventory") . ": " . $rc->getData("product_name");
 }
 else {
     $page->caption = tr("All Products Inventory");
 }
 
 $view_inventory = new SQLSelect();
-$view_inventory->from = "(" . $select_inventory->getSQL(false, false) . ") as derived ";
+$view_inventory->from = "(" . $select_inventory->getSQL(FALSE, FALSE) . ") as derived ";
 
 $ksc->processSearch($view_inventory);
-
 
 $view = new TableView(new SQLQuery($view_inventory, "piID"));
 $view->setCaption("Inventory List");
 $view->setDefaultOrder(" prodID DESC ");
 
 $view->addColumn(new TableColumn("piID", "ID"));
-
 
 $view->addColumn(new TableColumn("prodID", "ProdID"));
 
@@ -117,12 +111,10 @@ $view->addColumn(new TableColumn("brand_name", "Brand"));
 
 $view->addColumn(new TableColumn("class_name", "Class"));
 
-
 $view->addColumn(new TableColumn("color", "Color Name"));
 $view->addColumn(new TableColumn("color_code", "Color Code"));
 $view->addColumn(new TableColumn("size_value", "Size"));
 $view->addColumn(new TableColumn("stock_amount", "Stock Amount"));
-
 
 $view->addColumn(new TableColumn("price", "Price"));
 $view->addColumn(new TableColumn("buy_price", "Buy Price"));
@@ -131,43 +123,27 @@ $view->addColumn(new TableColumn("weight", "Weight"));
 
 $view->addColumn(new TableColumn("inventory_attributes", "Attributes"));
 
-
 $view->addColumn(new TableColumn("actions", "Actions"));
 
-// $view->getColumn("product_photo")->setCellRenderer(new TableImageCellRenderer(new ProductPhotosBean(), TableImageCellRenderer::RENDER_THUMB, -1, 48));
-// $view->getColumn("product_photo")->getCellRenderer()->setSourceIteratorKey("prodID");
-// $view->getColumn("product_photo")->getCellRenderer()->setListLimit(1);
-// $view->getColumn("product_photo")->getHeaderCellRenderer()->setSortable(false);
-
-$view->getColumn("pclrID")->setCellRenderer(new TableImageCellRenderer(new ProductColorPhotosBean(),  -1, 64));
-$view->getColumn("pclrID")->getCellRenderer()->setSourceIteratorKey("pclrID");
-$view->getColumn("pclrID")->getCellRenderer()->setBlobField("photo");
-$view->getColumn("pclrID")->getHeaderCellRenderer()->setSortable(false);
+$ticr1 = new TableImageCellRenderer(-1, 64);
+$ticr1->setBean(new ProductColorPhotosBean(), "pclrID");
+$ticr1->setBlobField("photo");
+$view->getColumn("pclrID")->setCellRenderer($ticr1);
+$view->getColumn("pclrID")->getHeaderCellRenderer()->setSortable(FALSE);
 
 $view->getColumn("color_code")->setCellRenderer(new ColorCodeCellRenderer());
 
-// $view->getColumn("photo")->setCellRenderer(new TableImageCellRenderer(new ProductInventoryPhotosBean(), TableImageCellRenderer::RENDER_THUMB, -1, 48));
-// $view->getColumn("photo")->getCellRenderer()->setListLimit(1);
-// $view->getColumn("photo")->getHeaderCellRenderer()->setSortable(false);
-
 $act = new ActionsTableCellRenderer();
-$act->addAction(new Action("Edit", "add.php", array(new ActionParameter("prodID", "prodID"), new ActionParameter("editID", $bean->key()))));
+$act->addAction(new Action("Edit", "add.php", array(new ActionParameter("prodID", "prodID"),
+                                                    new ActionParameter("editID", $bean->key()))));
 $act->addAction(new PipeSeparatorAction());
 $act->addAction($h_delete->createAction());
 
 $act->addAction(new RowSeparatorAction());
 
-$act->addAction(new Action("Add Copy", "add.php", array(new ActionParameter("prodID", "prodID"), new ActionParameter("copyID", $bean->key()))));
+$act->addAction(new Action("Add Copy", "add.php", array(new ActionParameter("prodID", "prodID"),
+                                                        new ActionParameter("copyID", $bean->key()))));
 
-// $act->addAction(
-//       new Action("Photos", "gallery/list.php", 
-// 		array(
-// 		  new ActionParameter($bean->key(), $bean->key()),
-// 		  new ActionParameter("prodID", "prodID")
-// 		)
-//       )
-// );
-//     
 $view->getColumn("actions")->setCellRenderer($act);
 
 Session::Set("products.inventory", $page->getPageURL());
@@ -180,6 +156,5 @@ $ksc->render();
 $view->render();
 
 $page->finishRender();
-
 
 ?>

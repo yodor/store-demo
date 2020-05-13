@@ -1,7 +1,7 @@
 <?php
 include_once("forms/processors/FormProcessor.php");
 include_once("beans/DBTableBean.php");
-include_once("db/DBTransactor.php");
+include_once("db/BeanTransactor.php");
 
 class InvoiceDetailsFormProcessor extends FormProcessor
 {
@@ -9,7 +9,7 @@ class InvoiceDetailsFormProcessor extends FormProcessor
     protected $editID = -1;
     protected $userID = -1;
 
-    public function setEditID(int $editID) : void
+    public function setEditID(int $editID)
     {
         $this->editID = $editID;
     }
@@ -19,7 +19,7 @@ class InvoiceDetailsFormProcessor extends FormProcessor
         $this->userID = (int)$userID;
     }
 
-    public function setBean(DBTableBean $bean) : void
+    public function setBean(DBTableBean $bean)
     {
         $this->bean = $bean;
     }
@@ -33,12 +33,12 @@ class InvoiceDetailsFormProcessor extends FormProcessor
 
         if ($this->userID < 1) throw new Exception("Тази функция изисква регистрация");
 
-        $dbt = new DBTransactor();
+        $dbt = new BeanTransactor($this->bean, $this->editID);
         $dbt->appendValue("userID", $this->userID);
 
-        $dbt->transactValues($form);
+        $dbt->processForm($form);
 
-        $dbt->processBean($this->bean, $this->editID);
+        $dbt->processBean();
 
     }
 }

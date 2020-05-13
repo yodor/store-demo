@@ -6,89 +6,82 @@ include_once("pages/AdminLoginPage.php");
 include_once("input/validators/EmailValidator.php");
 include_once("beans/AdminUsersBean.php");
 
-
 include_once("mailers/ForgotPasswordMailer.php");
+include_once("auth/Authenticator.php");
+include_once("components/InputComponent.php");
+include_once("forms/processors/FormProcessor.php");
+include_once("forms/renderers/FormRenderer.php");
+include_once("components/TextComponent.php");
 
-$page = new AdminLoginPage();
+class ForgotPasswordProcessor extends FormProcessor
+{
+    protected function processImpl(InputForm $form)
+    {
+        parent::processImpl($form);
 
-$ub = new AdminUsersBean();
+        $ub = new AdminUsersBean();
 
-$fp = DataInputFactory::Create(DataInputFactory::EMAIL, "email", "Email", 1);
-$ic = new InputComponent($fp);
+        $email = $form->getInput("email")->getValue();
 
-if (isset($_POST["request_password"])) {
-
-    $fp->loadPostData($_POST);
-    $fp->validate();
-
-    if (!$fp->haveError()) {
-
-        if (!$ub->emailExists($fp->getValue())) {
-            $fp->setError(tr("This email is not registered with us."));
+        if (!$ub->emailExists($email)) {
+            throw new Exception(tr("This email is not registered with us"));
         }
-    }
-    if (!$fp->haveError()) {
 
         $users = new AdminUsersBean();
 
         $random_pass = Authenticator::RandomToken(8);
-        $fpm = new ForgotPasswordMailer($fp->getValue(), $random_pass, SITE_DOMAIN . LOCAL . "admin/login.php");
+        $fpm = new ForgotPasswordMailer($email, $random_pass, SITE_DOMAIN . LOCAL . "admin/login.php");
         $db = DBConnections::Factory();
         try {
             $db->transaction();
 
-            $fpm->send();
-
-            $userID = $users->email2id($fp->getValue());
+            $userID = $users->email2id($email);
             $update_row["password"] = md5($random_pass);
             if (!$users->update($userID, $update_row, $db)) throw new Exception("Unable to update records: " . $db->getError());
 
+            $fpm->send();
+
             $db->commit();
-            Session::SetAlert(tr("Your new password was sent to this email") . ": " . $fp->getValue());
-            header("Location: login.php");
-            exit;
+
         }
         catch (Exception $e) {
             $db->rollback();
-            Session::SetAlert("Error: " . $e->getMessage());
+            throw $e;
         }
 
     }
-
 }
 
+$page = new AdminLoginPage();
+$page->addCSS(SPARK_LOCAL."/css/LoginForm.css");
+
+$form = new InputForm();
+$form->addInput(DataInputFactory::Create(DataInputFactory::EMAIL, "email", "Email", 1));
+
+$frend = new FormRenderer($form);
+$frend->getTextSpace()->append(new TextComponent(tr("Input your registered email")));
+$frend->getSubmitButton()->setText(tr("Send"));
+$frend->addClassName("LoginFormRenderer");
+
+$proc = new ForgotPasswordProcessor();
+
+$proc->process($form);
+
+if ($proc->getStatus() == IFormProcessor::STATUS_OK) {
+    Session::SetAlert(tr("Your new password was sent to your email") . ": " . $form->getInput("email")->getValue());
+    header("Location: login.php");
+    exit;
+}
+else {
+    Session::setAlert($proc->getMessage());
+}
 $page->startRender();
 
+$page->setPreferredTitle(tr("Forgot Password"));
 
-$page->setPreferredTitle("Forgot Password");
+$frend->setCaption(SITE_TITLE."<BR><small>".tr("Administration")."</small>");
 
-echo "<div class='login_component'>";
-
-
-echo "<span class='inner'>";
-
-echo "<span class='caption'>Demo Administration</span>";
-
-
-echo "<BR><BR>";
-echo tr("Input the email you have used on the time of registration");
-echo "<BR><BR>";
-
-echo "<form method=post>";
-$ic->render();
-
-StyledButton::DefaultButton()->renderSubmit("Send");
-
-
-echo "<input type=hidden value='1' name='request_password'>";
-
-echo "</form>";
-
-echo "</span>";
-
-
-echo "</div>";
-
+$frend->render();
 
 $page->finishRender();
 ?>

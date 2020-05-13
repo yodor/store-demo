@@ -16,7 +16,7 @@ $action_back->setAttribute("title", "Back");
 
 $page->addAction($action_back);
 
-$view = new InputFormView(new AttributesBean(), new AttributeInputForm());
+$view = new BeanFormEditor(new AttributesBean(), new AttributeInputForm());
 
 $view->processInput();
 

@@ -4,7 +4,7 @@ include_once("class/pages/AdminPage.php");
 include_once("class/beans/ProductColorsBean.php");
 include_once("class/beans/ProductColorPhotosBean.php");
 
-include_once("forms/PhotoInputForm.php");
+include_once("forms/PhotoForm.php");
 
 
 $ref_key = "";
@@ -24,10 +24,10 @@ $page->addAction($action_back);
 $photos = new ProductColorPhotosBean();
 $photos->select()->where = "$ref_key='$ref_id'";
 
-$view = new InputFormView($photos, new PhotoInputForm());
+$view = new BeanFormEditor($photos, new PhotoForm());
 
 //current version of dynamic page photos table is set to DBROWS
-$view->getForm()->getInput("photo")->transact_mode = DataInput::TRANSACT_OBJECT;
+$view->getForm()->getInput("photo")->getProcessor()->transact_mode = InputProcessor::TRANSACT_OBJECT;
 
 $view->getTransactor()->appendValue($ref_key, $ref_id);
 

@@ -1,7 +1,7 @@
 <?php
 include_once("session.php");
 include_once("class/pages/AdminPage.php");
-include_once("forms/AdminUserInputForm.php");
+include_once("forms/AdminUserForm.php");
 include_once("beans/AdminUsersBean.php");
 
 
@@ -12,7 +12,7 @@ $page = new AdminPage("Add User");
 $page->checkAccess(ROLE_SETTINGS_MENU);
 
 
-$view = new InputFormView(new AdminUsersBean(), new AdminUserInputForm());
+$view = new BeanFormEditor(new AdminUsersBean(), new AdminUserForm());
 
 $view->getForm()->getRenderer()->setAttribute("onSubmit", "return checkForm(this)");
 

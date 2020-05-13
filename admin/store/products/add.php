@@ -15,7 +15,7 @@ $action_back->setAttribute("action", "back");
 $action_back->setAttribute("title", "Back to Products");
 $page->addAction($action_back);
 
-$view = new InputFormView(new ProductsBean(), new ProductInputForm());
+$view = new BeanFormEditor(new ProductsBean(), new ProductInputForm());
 
 //shortcuts for new ...
 Session::Set("categories.list", $page->getPageURL());

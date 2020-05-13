@@ -91,7 +91,7 @@ if (strcmp_isset("view", "list", $_GET)) {
     $view = new TableView(new SQLQuery($product_selector, "piID"));
     // $view->addColumn(new TableColumn("piID","ID"));
     // $view->addColumn(new TableColumn("prodID","ID"));
-    $view->addColumn(new TableColumn("pclrpID", "Снимка"));
+    $view->addColumn(new TableColumn("product_photo", "Снимка"));
     //   $view->addColumn(new TableColumn("product_code","Product Code"));
     $view->addColumn(new TableColumn("product_name", "Продукт"));
     $view->addColumn(new TableColumn("brand_name", "Марка"));
@@ -102,11 +102,11 @@ if (strcmp_isset("view", "list", $_GET)) {
     $view->addColumn(new TableColumn("colors", "Цветове"));
     //   $view->addColumn(new TableColumn("color_ids","Colors"));
 
-    $view->getColumn("pclrpID")->setCellRenderer(new ProductPhotoCellRenderer(TableImageCellRenderer::RENDER_THUMB, -1, 48));
-    $view->getColumn("pclrpID")->getHeaderCellRenderer()->setSortable(FALSE);
+    $view->getColumn("product_photo")->setCellRenderer(new ProductPhotoCellRenderer(-1, 48));
+    $view->getColumn("product_photo")->getHeaderCellRenderer()->setSortable(FALSE);
 }
 else {
-    $view = new ListView(new SQLQuery($product_selector, "piID"));
+    $view = new ItemView(new SQLQuery($product_selector, "piID"));
     $view->setItemRenderer(new ProductListItem());
 }
 $view->items_per_page = 12;

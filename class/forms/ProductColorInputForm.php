@@ -3,15 +3,7 @@ include_once("forms/InputForm.php");
 include_once("input/DataInputFactory.php");
 include_once("class/beans/ProductColorPhotosBean.php");
 include_once("class/beans/StoreColorsBean.php");
-// include_once ("class/beans/BrandsBean.php");
-// include_once ("class/beans/GendersBean.php");
-// include_once ("class/beans/ProductCategoriesBean.php");
-// include_once ("class/beans/ProductFeaturesBean.php");
-// include_once ("class/beans/ProductPhotosBean.php");
-// include_once ("class/beans/ClassAttributeValuesBean.php");
-// 
-// include_once ("class/input/renderers/ClassAttributeField.php");
-// include_once ("input/transactors/CustomFieldTransactor.php");
+
 
 class ProductColorInputForm extends InputForm
 {
@@ -41,17 +33,17 @@ class ProductColorInputForm extends InputForm
         // 	$input->transact_mode = InputField::TRANSACT_OBJECT;
         // 	$input->getValueTransactor()->max_slots = 10;
 
-        $input->transact_mode = DataInput::TRANSACT_OBJECT;
-        $input->getValueTransactor()->max_slots = 1;
+        $input->getProcessor()->transact_mode = InputProcessor::TRANSACT_OBJECT;
+        $input->getProcessor()->max_slots = 1;
         $this->addInput($input);
 
         $input = DataInputFactory::Create(DataInputFactory::SESSION_IMAGE, "photo", "Снимки", 0);
         $bean = new ProductColorPhotosBean();
 
-        $input->setSource($bean);
+        $input->getProcessor()->setTransactBean($bean);
 
-        $input->transact_mode = DataInput::TRANSACT_OBJECT;
-        $input->getValueTransactor()->max_slots = 10;
+        $input->getProcessor()->transact_mode = InputProcessor::TRANSACT_OBJECT;
+        $input->getProcessor()->max_slots = 10;
 
         $this->addInput($input);
 
@@ -66,7 +58,7 @@ class ProductColorInputForm extends InputForm
 
     }
 
-    public function loadPostData(array $arr): void
+    public function loadPostData(array $arr)
     {
         parent::loadPostData($arr);
         //       $pclrID = -1;

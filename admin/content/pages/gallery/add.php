@@ -4,7 +4,7 @@ include_once("class/pages/AdminPage.php");
 include_once("beans/DynamicPagesBean.php");
 include_once("beans/DynamicPagePhotosBean.php");
 
-include_once("forms/PhotoInputForm.php");
+include_once("forms/PhotoForm.php");
 
 
 $ref_key = "";
@@ -19,10 +19,10 @@ $page->checkAccess(ROLE_CONTENT_MENU);
 $event_photos = new DynamicPagePhotosBean();
 $event_photos->select()->where = "$ref_key='$ref_id'";
 
-$view = new InputFormView($event_photos, new PhotoInputForm());
+$view = new BeanFormEditor($event_photos, new PhotoForm());
 
 //current version of dynamic page photos table is set to DBROWS
-$view->getForm()->getInput("photo")->transact_mode = DataInput::TRANSACT_DBROW;
+$view->getForm()->getInput("photo")->getProcessor()->transact_mode = InputProcessor::TRANSACT_DBROW;
 
 $view->getTransactor()->appendValue($ref_key, $ref_id);
 

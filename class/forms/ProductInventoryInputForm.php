@@ -30,7 +30,7 @@ class ProductInventoryInputForm extends InputForm
         $field->getRenderer()->getItemRenderer()->setValueKey("pclrID");
         $field->getRenderer()->getItemRenderer()->setLabelKey("color");
 
-        $field->getValueTransactor()->renderer_source_copy_fields = array("color");
+        $field->getProcessor()->renderer_source_copy_fields = array("color");
 
         $this->addInput($field);
 
@@ -67,10 +67,10 @@ class ProductInventoryInputForm extends InputForm
 
         $field->source_label_visible = true;
 
-        $field->getValueTransactor()->process_datasource_foreign_keys = true;
+        $field->getProcessor()->process_datasource_foreign_keys = true;
 
         $bean1 = new InventoryAttributeValuesBean();
-        $field->setSource($bean1);
+        $field->getProcessor()->setTransactBean($bean1);
 
         $rend = new IteratorRelatedField($field);
 
@@ -133,7 +133,7 @@ class ProductInventoryInputForm extends InputForm
 
     }
 
-    public function loadPostData(array $arr) : void
+    public function loadPostData(array $arr)
     {
         parent::loadPostData($arr);
 

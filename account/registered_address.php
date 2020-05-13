@@ -22,15 +22,12 @@ $proc->setEditID($editID);
 $proc->setUserID($page->getUserID());
 $proc->setBean($cab);
 
-$frend = new FormRenderer();
+$frend = new FormRenderer($form);
 $frend->setName("ClientAddress");
 
-$form->setRenderer($frend);
 $form->setProcessor($proc);
-$frend->setForm($form);
 
-
-$proc->processForm($form);
+$proc->process($form);
 
 if ($proc->getStatus() == FormProcessor::STATUS_OK) {
     Session::SetAlert(tr("Вашият адрес беше успешно променен"));
@@ -47,7 +44,7 @@ $page->setPreferredTitle(tr("Регистриран адрес"));
 echo "<div class='caption'>" . $page->getPreferredTitle() . "</div>";
 
 
-$frend->renderForm($form);
+$frend->render();
 
 $page->finishRender();
 ?>

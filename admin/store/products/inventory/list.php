@@ -129,7 +129,6 @@ $ticr1 = new TableImageCellRenderer(-1, 64);
 $ticr1->setBean(new ProductColorPhotosBean(), "pclrID");
 $ticr1->setBlobField("photo");
 $view->getColumn("pclrID")->setCellRenderer($ticr1);
-$view->getColumn("pclrID")->getHeaderCellRenderer()->setSortable(FALSE);
 
 $view->getColumn("color_code")->setCellRenderer(new ColorCodeCellRenderer());
 
@@ -150,7 +149,7 @@ Session::Set("products.inventory", $page->getPageURL());
 
 $page->startRender($menu);
 
-$page->renderPageCaption();
+
 
 $ksc->render();
 $view->render();

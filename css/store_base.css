@@ -371,7 +371,7 @@ body.mce_browser .FormRenderer .SubmitLine .Buttons {
     display:none;
     
 }
-.DefaultButton {
+.ColorButton {
     background: none;
     color: #0c2226;
     -moz-border-radius: 5px;
@@ -381,13 +381,13 @@ body.mce_browser .FormRenderer .SubmitLine .Buttons {
     text-transform: uppercase;
 }
 
-.DefaultButton:visited {
+.ColorButton:visited {
     color: #0c2226;
     font-weight: normal;
     text-transform: uppercase;
 }
 
-.DefaultButton:hover {
+.ColorButton:hover {
     color: #2b7a88;
     font-weight: normal;
     text-transform: uppercase;

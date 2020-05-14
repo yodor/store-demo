@@ -338,7 +338,7 @@ catch (Exception $e) {
 
 echo "</form>";
 
-echo "<button class='DefaultButton' onClick='javascript:clearFilters()'>" . tr("Изчисти филтрите") . "</button>";
+echo "<button class='ColorButton' onClick='javascript:clearFilters()'>" . tr("Изчисти филтрите") . "</button>";
 
 echo "</div>";//filters
 

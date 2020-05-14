@@ -28,11 +28,11 @@ $proc->setUserID($page->getUserID());
 $proc->setBean($cab);
 
 $frend = new FormRenderer($form);
-$frend->setName("ClientAddress");
+$frend->getSubmitLine()->setEnabled(false);
 
 $form->setProcessor($proc);
 
-$proc->process($form, "submit_item");
+$proc->process($form);
 
 if ($proc->getStatus() == FormProcessor::STATUS_OK) {
     //   Session::set("DeliveryDetailsForm", serialize($dform));
@@ -58,9 +58,7 @@ echo "<div class='delivery_details'>";
 echo "<div class='caption'>" . tr("Адрес за доставка") . "</div>";
 
 
-$frend->startRender();
-
-$frend->renderImpl();
+$frend->render();
 
 // $back_url = Session::get("checkout.navigation.back", $page->getPageURL());
 
@@ -69,20 +67,19 @@ echo "<div class='navigation'>";
     echo "<div class='slot left'>";
         echo "<a href='delivery.php'>";
         echo "<img src='".LOCAL."images/cart_edit.png'>";
-        echo "<div class='DefaultButton checkout_button' >".tr("Назад")."</div>";
+        echo "<div class='ColorButton checkout_button' >".tr("Назад")."</div>";
         echo "</a>";
     echo "</div>";
 
+    echo "<div class='slot center'>";
+    echo "</div>";
 
-echo "</div>";
-
-echo "<div class='slot right'>";
-echo "<a href='javascript:document.forms.ClientAddress.submit();'>";
-echo "<img src='" . LOCAL . "images/cart_checkout.png'>";
-echo "<div class='DefaultButton checkout_button'  >" . tr("Продължи") . "</div>";
-echo "</a>";
-echo "</div>";
-
+    echo "<div class='slot right'>";
+        echo "<a href='javascript:document.forms.ClientAddressInputForm.submit();'>";
+            echo "<img src='" . LOCAL . "images/cart_checkout.png'>";
+            echo "<div class='ColorButton checkout_button'  >" . tr("Продължи") . "</div>";
+        echo "</a>";
+    echo "</div>";
 
 echo "</div>";
 

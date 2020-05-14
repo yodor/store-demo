@@ -70,13 +70,11 @@ $view->addColumn(new TableColumn("actions", "Actions"));
 $ticr1 = new TableImageCellRenderer(-1, 64);
 $ticr1->setBean(new ProductColorsBean(), "color_photo");
 $view->getColumn("color_photo")->setCellRenderer($ticr1);
-$view->getColumn("color_photo")->getHeaderCellRenderer()->setSortable(FALSE);
 
 $ticr2 = new TableImageCellRenderer(-1, 64);
 $ticr2->setBean(new ProductColorPhotosBean());
 $ticr2->setLimit(0);
 $view->getColumn("photo")->setCellRenderer($ticr2);
-$view->getColumn("photo")->getHeaderCellRenderer()->setSortable(FALSE);
 
 $act = new ActionsTableCellRenderer();
 $act->addAction(new Action("Edit", "add.php", array(new ActionParameter("editID", $bean->key()))));
@@ -93,7 +91,7 @@ Session::Set("product.color_scheme", $page->getPageURL());
 
 $page->startRender($menu);
 
-$page->renderPageCaption();
+
 
 // $ksc->render();
 $view->render();

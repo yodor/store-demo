@@ -7,7 +7,7 @@ include_once("class/forms/processors/RegisterClientFormProcessor.php");
 $page = new AccountPage();
 
 $form = new RegisterClientInputForm();
-$form->setName("RegisterClient");
+
 $form->loadBeanData($page->getUserID(), new UsersBean());
 
 
@@ -42,7 +42,7 @@ $frend->render();
 
 echo "<div class='caption'>" . tr("Парола за достъп") . "</div>";
 
-echo "<a class='DefaultButton' href='generate_password.php'>";
+echo "<a class='ColorButton' href='generate_password.php'>";
 echo tr("Генерирай нова парола");
 echo "</a>";
 

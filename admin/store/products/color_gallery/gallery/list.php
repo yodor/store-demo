@@ -44,7 +44,7 @@ Session::Set("color_scheme.photos", $page->getPageURL());
 
 $page->startRender($menu);
 
-$page->renderPageCaption();
+
 
 $gv->render();
 

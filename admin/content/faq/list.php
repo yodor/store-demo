@@ -44,7 +44,7 @@ $view->getColumn("actions")->setCellRenderer($act);
 
 
 $page->startRender($menu);
-$page->renderPageCaption();
+
 
 $view->render();
 

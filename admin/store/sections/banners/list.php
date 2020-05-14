@@ -41,7 +41,7 @@ $gv->getActionsCollection()->addURLParameter($rc->getURLParameter());
 Session::Set("section.banners.list", $page->getPageURL());
 
 $page->startRender($menu);
-$page->renderPageCaption();
+
 
 $gv->render();
 

@@ -6,10 +6,7 @@ include_once("class/beans/ProductColorPhotosBean.php");
 
 include_once("forms/PhotoForm.php");
 
-
-$ref_key = "";
-$ref_val = "";
-$qrystr = refkeyPageCheck(new ProductColorsBean(), "../list.php", $ref_key, $ref_id);
+$rc = new RequestBeanKey(new ProductColorsBean(), "../list.php");
 
 $menu = array();
 
@@ -22,24 +19,17 @@ $action_back->setAttribute("title", "Back to Color Scheme Photos");
 $page->addAction($action_back);
 
 $photos = new ProductColorPhotosBean();
-$photos->select()->where = "$ref_key='$ref_id'";
+$photos->select()->where = $rc->getURLParameter()->text(TRUE);
 
 $view = new BeanFormEditor($photos, new PhotoForm());
 
-//current version of dynamic page photos table is set to DBROWS
-$view->getForm()->getInput("photo")->getProcessor()->transact_mode = InputProcessor::TRANSACT_OBJECT;
-
-$view->getTransactor()->appendValue($ref_key, $ref_id);
+$view->getTransactor()->appendURLParameter($rc->getURLParameter());
 
 $view->processInput();
 
 $page->startRender($menu);
 
-$page->renderPageCaption();
-
 $view->render();
 
 $page->finishRender();
-
-
 ?>

@@ -21,7 +21,7 @@ $view->processInput();
 
 $page->startRender($menu);
 
-$page->renderPageCaption();
+
 
 $view->render();
 

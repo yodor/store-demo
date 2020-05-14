@@ -60,7 +60,7 @@ while ($section = $qry->next()) {
     echo "<div class='products'>";
 
     while ($row = $prodQry->next()) {
-        $item->setItem($row);
+        $item->setStorageItem($row);
         $item->render();
     }
 

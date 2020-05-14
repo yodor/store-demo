@@ -106,14 +106,14 @@ if ($page->total) {
     echo "<div class='slot left'>";
     echo "<a href='cart.php?clear'>";
     echo "<img src='" . LOCAL . "images/cart_clear.png'>";
-    echo "<div class='DefaultButton checkout_button'  >" . tr("Изпразни кошницата") . "</div>";
+    echo "<div class='ColorButton checkout_button'  >" . tr("Изпразни кошницата") . "</div>";
     echo "</a>";
     echo "</div>";
 
     echo "<div class='slot center'>";
     $href = Session::Get("shopping.list");
 
-    echo "<a class='DefaultButton' href='$href'>";
+    echo "<a class='ColorButton' href='$href'>";
     echo tr("Продължи пазаруването");
     echo "</a>";
     echo "</div>";
@@ -121,7 +121,7 @@ if ($page->total) {
     echo "<div class='slot right'>";
     echo "<a href='customer.php'>";
     echo "<img src='" . LOCAL . "images/cart_checkout.png'>";
-    echo "<div class='DefaultButton checkout_button'  >" . tr("Каса") . "</div>";
+    echo "<div class='ColorButton checkout_button'  >" . tr("Каса") . "</div>";
     echo "</a>";
     echo "</div>";
 
@@ -130,7 +130,7 @@ if ($page->total) {
 else {
     $href = Session::Get("shopping.list");
 
-    echo "<a class='DefaultButton' href='$href'>";
+    echo "<a class='ColorButton' href='$href'>";
     echo tr("Продължи пазаруването");
     echo "</a>";
 }

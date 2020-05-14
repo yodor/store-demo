@@ -55,10 +55,8 @@ $view->addColumn(new TableColumn("actions", "Actions"));
 
 $view->getColumn("visible")->setCellRenderer(new BooleanFieldCellRenderer("Yes", "No"));
 
-$ticr = new TableImageCellRenderer(-1, 64);
-$ticr->setBean($bean);
-$view->getColumn("photo")->setCellRenderer($ticr);
-$view->getColumn("photo")->getHeaderCellRenderer()->setSortable(FALSE);
+$view->getColumn("photo")->setCellRenderer(new TableImageCellRenderer());
+
 
 $act = new ActionsTableCellRenderer();
 
@@ -104,7 +102,7 @@ $page->startRender($menu);
 // echo "<div class='page_caption'>";
 // echo tr("Dynamic Pages");
 // echo "</div>";
-$page->renderPageCaption();
+
 
 $view->render();
 if (isset($_GET["chooser"])) unset($_GET["chooser"]);

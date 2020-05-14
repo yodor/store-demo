@@ -133,7 +133,7 @@ echo "<div class='value'>";
 echo tr(Cart::getDeliveryTypeText($cart->getDeliveryType()));
 echo "</div>";
 
-echo "<a class='DefaultButton' href='delivery.php'>";
+echo "<a class='ColorButton' href='delivery.php'>";
 echo tr("Промени");
 echo "</a>";
 
@@ -157,7 +157,7 @@ if (strcmp($cart->getDeliveryType(), Cart::DELIVERY_USERADDRESS) == 0) {
     $form->loadBeanData($row[$bean->key()], $bean);
     $form->renderPlain();
 
-    echo "<a class='DefaultButton' href='delivery_address.php'>";
+    echo "<a class='ColorButton' href='delivery_address.php'>";
     echo tr("Промени");
     echo "</a>";
 
@@ -174,7 +174,7 @@ else if (strcmp($cart->getDeliveryType(), Cart::DELIVERY_EKONTOFFICE) == 0) {
     $form->loadBeanData($row[$bean->key()], $bean);
     $form->renderPlain();
 
-    echo "<a class='DefaultButton' href='delivery_ekont.php'>";
+    echo "<a class='ColorButton' href='delivery_ekont.php'>";
     echo tr("Промени");
     echo "</a>";
 }
@@ -195,7 +195,7 @@ if ($idbrow && $cart->getRequireInvoice()) {
     $idform->loadBeanData($idbrow[$idb->key()], $idb);
     $idform->renderPlain();
 
-    echo "<a class='DefaultButton' href='invoice_details.php'>";
+    echo "<a class='ColorButton' href='invoice_details.php'>";
     echo tr("Промени");
     echo "</a>";
 }
@@ -214,7 +214,7 @@ echo "<div class='navigation'>";
 echo "<div class='slot left'>";
 echo "<a href='cart.php'>";
 echo "<img src='" . LOCAL . "images/cart_edit.png'>";
-echo "<div class='DefaultButton checkout_button' >" . tr("Назад") . "</div>";
+echo "<div class='ColorButton checkout_button' >" . tr("Назад") . "</div>";
 echo "</a>";
 echo "</div>";
 
@@ -227,7 +227,7 @@ echo "</div>";
 echo "<div class='slot right'>";
 echo "<a href='javascript:document.forms.OrderNote.submit()'>";
 echo "<img src='" . LOCAL . "images/cart_checkout.png'>";
-echo "<div class='DefaultButton checkout_button'  >" . tr("Потвърди поръчка") . "</div>";
+echo "<div class='ColorButton checkout_button'  >" . tr("Потвърди поръчка") . "</div>";
 echo "</a>";
 echo "</div>";
 

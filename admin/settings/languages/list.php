@@ -41,7 +41,7 @@ $view->setCaption("Languages List");
 
 $page->startRender($menu);
 
-$page->renderPageCaption();
+
 
 $view->render();
 

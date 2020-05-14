@@ -45,7 +45,7 @@ $view->getColumn("actions")->setCellRenderer($act);
 Session::Set("brands.list", $page->getPageURL());
 
 $page->startRender($menu);
-$page->renderPageCaption();
+
 
 $view->render();
 

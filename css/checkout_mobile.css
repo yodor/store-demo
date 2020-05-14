@@ -25,7 +25,7 @@
         display:inline-block;
         
     }
-    .CheckoutPage.customer .login_component .inner .DefaultButton[type='submit'] {
+    .CheckoutPage.customer .login_component .inner .ColorButton[type='submit'] {
         display:block;
     }
     

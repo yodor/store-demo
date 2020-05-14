@@ -72,7 +72,7 @@ Session::Set("clients.list", $page->getPageURL());
 
 $page->startRender($menu);
 
-$page->renderPageCaption();
+
 
 $scomp->render();
 

@@ -60,7 +60,7 @@ Session::Set("color_codes.list", $page->getPageURL());
 
 $page->startRender($menu);
 
-$page->renderPageCaption();
+
 
 // $ksc->render();
 $view->render();

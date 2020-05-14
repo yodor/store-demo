@@ -23,11 +23,8 @@ $af = new LoginForm();
 
 $afr = new LoginFormRenderer($af, $req);
 
-$afr->setAttribute("name", "auth");
-
 
 $form = new RegisterClientInputForm();
-$form->setName("RegisterClient");
 
 $frender = new FormRenderer($form);
 $frender->setLayout(FormRenderer::FIELD_VBOX);

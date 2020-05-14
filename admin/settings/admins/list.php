@@ -81,7 +81,7 @@ $view->setCaption("Admin Users List");
 
 $page->startRender($menu);
 
-$page->renderPageCaption();
+
 
 $view->render();
 

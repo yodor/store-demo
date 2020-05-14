@@ -48,7 +48,7 @@ if ($copyID > 0) {
 
 $page->startRender($menu);
 
-$page->renderPageCaption();
+
 
 $view->render();
 

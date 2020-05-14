@@ -41,7 +41,7 @@ $view->setCaption("Available Site Phrases");
 
 
 $page->startRender($menu);
-$page->renderPageCaption();
+
 
 $view->render();
 $page->finishRender();

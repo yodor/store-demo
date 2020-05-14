@@ -52,7 +52,7 @@ Session::Set("sizing.list", $page->getPageURL());
 
 $page->startRender($menu);
 
-$page->renderPageCaption();
+
 
 $view->render();
 

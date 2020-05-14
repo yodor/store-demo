@@ -36,11 +36,11 @@
     display: inline-block;
 }
 
-.navigation .DefaultButton {
+.navigation .ColorButton {
     min-width: 205px;
 }
 
-.navigation .DefaultButton.checkout_button {
+.navigation .ColorButton.checkout_button {
     display: block;
 
 }
@@ -109,7 +109,7 @@
 
 }
 
-.CheckoutPage.confirm .item .DefaultButton {
+.CheckoutPage.confirm .item .ColorButton {
     margin-top: 1.1em;
 }
 

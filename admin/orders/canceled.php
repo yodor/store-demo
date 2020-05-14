@@ -28,7 +28,7 @@ include_once("list.php");
 $menu = array();
 
 $page->startRender($menu);
-$page->renderPageCaption();
+
 
 $scomp->render();
 

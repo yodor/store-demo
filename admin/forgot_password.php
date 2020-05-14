@@ -56,11 +56,11 @@ $page = new AdminLoginPage();
 $page->addCSS(SPARK_LOCAL."/css/LoginForm.css");
 
 $form = new InputForm();
-$form->addInput(DataInputFactory::Create(DataInputFactory::EMAIL, "email", "Email", 1));
+$form->addInput(DataInputFactory::Create(DataInputFactory::EMAIL, "email", "Input your registered email", 1));
 
 $frend = new FormRenderer($form);
-$frend->getTextSpace()->append(new TextComponent(tr("Input your registered email")));
-$frend->getSubmitButton()->setText(tr("Send"));
+
+$frend->getSubmitButton()->setText("Send");
 $frend->addClassName("LoginFormRenderer");
 
 $proc = new ForgotPasswordProcessor();

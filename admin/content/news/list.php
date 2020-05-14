@@ -32,10 +32,7 @@ $view->addColumn(new TableColumn("item_date", "Date"));
 
 $view->addColumn(new TableColumn("actions", "Actions"));
 
-$ticr = new TableImageCellRenderer(-1, 128);
-$ticr->setBean($bean);
-$view->getColumn("photo")->setCellRenderer($ticr);
-$view->getColumn("photo")->getHeaderCellRenderer()->setSortable(false);
+$view->getColumn("photo")->setCellRenderer(new TableImageCellRenderer());
 
 $act = new ActionsTableCellRenderer();
 $act->addAction(new Action("Edit", "add.php", array(new ActionParameter("editID", $bean->key()))));
@@ -46,7 +43,7 @@ $act->addAction($h_delete->createAction());
 $view->getColumn("actions")->setCellRenderer($act);
 
 $page->startRender($menu);
-$page->renderPageCaption();
+
 
 $view->render();
 

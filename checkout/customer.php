@@ -7,8 +7,8 @@ include_once("class/forms/processors/RegisterClientFormProcessor.php");
 
 include_once("auth/UserAuthenticator.php");
 include_once("handlers/AuthenticatorRequestHandler.php");
-include_once("forms/AuthForm.php");
-include_once("forms/renderers/AuthFormRenderer.php");
+include_once("forms/LoginForm.php");
+include_once("forms/renderers/LoginFormRenderer.php");
 
 $page = new CheckoutPage();
 
@@ -31,7 +31,7 @@ if ($auth->authorize()) {
 }
 
 $af = new LoginForm();
-$afr = new LoginFormRenderer($af);
+$afr = new LoginFormRenderer($af, $req);
 $afr->setAttribute("name", "client_auth");
 $afr->setForm($af);
 
@@ -47,14 +47,14 @@ $frender->setLayout(FormRenderer::FIELD_VBOX);
 $frender->setAttribute("name", "RegisterClient");
 
 
-$form->setProcessor(new RegisterClientFormProcessor());
+$proc = new RegisterClientFormProcessor();
 
-$form->getProcessor()->process($form, "RegisterClient");
+$proc->process($form);
 
-if ($form->getProcessor()->getStatus() == IFormProcessor::STATUS_ERROR) {
+if ($proc->getStatus() == IFormProcessor::STATUS_ERROR) {
     Session::SetAlert($form->getProcessor()->getMessage());
 }
-else if ($form->getProcessor()->getStatus() == IFormProcessor::STATUS_OK) {
+else if ($proc->getStatus() == IFormProcessor::STATUS_OK) {
 
     header("Location: delivery.php");
     exit;
@@ -66,8 +66,6 @@ header("Expires: 0");
 $page->startRender();
 $page->setPreferredTitle(tr("Клиенти"));
 
-//set the token after RequestController processHandlers is done
-$af->getInput("rand")->setValue($auth->createLoginToken());
 
 echo "<div class='item login'>";
 
@@ -88,7 +86,7 @@ echo "<div class='caption'>" . tr("Нови Клиенти") . "</div>";
 
 echo "<div class='panel'>";
 
-$frender->renderImpl();
+$frender->render();
 
 echo "</div>";
 
@@ -99,7 +97,7 @@ echo "<div class='navigation'>";
 echo "<div class='slot left'>";
 echo "<a href='cart.php'>";
 echo "<img src='" . LOCAL . "images/cart_edit.png'>";
-echo "<div class='DefaultButton checkout_button' >" . tr("Назад") . "</div>";
+echo "<div class='ColorButton checkout_button' >" . tr("Назад") . "</div>";
 echo "</a>";
 echo "</div>";
 
@@ -112,7 +110,7 @@ echo "</div>";
 echo "<div class='slot right'>";
 echo "<a href='javascript:document.forms.RegisterClient.submit();'>";
 echo "<img src='" . LOCAL . "images/cart_checkout.png'>";
-echo "<div class='DefaultButton checkout_button'>" . tr("Продължи") . "</div>";
+echo "<div class='ColorButton checkout_button'>" . tr("Продължи") . "</div>";
 echo "</a>";
 echo "</div>";
 //

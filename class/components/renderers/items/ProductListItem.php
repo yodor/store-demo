@@ -40,9 +40,9 @@ class ProductListItem extends ItemRendererImpl implements IHeadContents {
         return $arr;
     }
 
-    public function setItem($item)
+    public function setStorageItem($item)
     {
-        parent::setItem($item);
+        parent::setStorageItem($item);
         $this->setAttribute("prodID", $this->item["prodID"]);
         $this->setAttribute("piID", $this->item["piID"]);
 

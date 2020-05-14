@@ -63,10 +63,8 @@ else {
 }
 
 $frend = new FormRenderer($form);
-$frend->setName("EkontOffice");
 
-
-$proc->process($form, "office");
+$proc->process($form);
 
 $page->startRender();
 
@@ -83,10 +81,10 @@ echo "<div class='selected_office'>";
 echo str_replace("\r", "<br>", $form->getInput("office")->getValue());
 echo "</div>";
 $frend->renderInput($form->getInput("office"));
-
+$frend->renderSubmitValue();
 $frend->finishRender();
 
-echo "<a class='DefaultButton' href='javascript:changeEkontOffice();'>" . tr("Изберете друг офис") . "</a>";
+echo "<a class='ColorButton' href='javascript:changeEkontOffice();'>" . tr("Изберете друг офис") . "</a>";
 
 echo "</div>";//ekont_office
 
@@ -109,7 +107,7 @@ echo "<div class='navigation'>";
 echo "<div class='slot left'>";
 echo "<a href='delivery.php'>";
 echo "<img src='" . LOCAL . "images/cart_edit.png'>";
-echo "<div class='DefaultButton checkout_button' >" . tr("Назад") . "</div>";
+echo "<div class='ColorButton checkout_button' >" . tr("Назад") . "</div>";
 echo "</a>";
 echo "</div>";
 
@@ -117,9 +115,9 @@ echo "<div class='slot center'>";
 echo "</div>";
 
 echo "<div class='slot right'>";
-echo "<a href='javascript:document.forms.EkontOffice.submit();'>";
+echo "<a href='javascript:document.forms.EkontOfficeInputForm.submit();'>";
 echo "<img src='" . LOCAL . "images/cart_checkout.png'>";
-echo "<div class='DefaultButton checkout_button'  >" . tr("Продължи") . "</div>";
+echo "<div class='ColorButton checkout_button'  >" . tr("Продължи") . "</div>";
 echo "</a>";
 echo "</div>";
 

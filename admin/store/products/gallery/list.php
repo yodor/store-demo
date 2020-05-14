@@ -46,7 +46,7 @@ $gv->getActionsCollection()->addURLParameter($rc->getURLParameter());
 Session::Set("products.gallery", $page->getPageURL());
 
 $page->startRender($menu);
-$page->renderPageCaption();
+
 
 $gv->render();
 

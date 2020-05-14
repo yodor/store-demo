@@ -44,7 +44,7 @@ $tv->setName("ProductCategores");
 Session::Set("categories.list", $page->getPageURL());
 
 $page->startRender($menu);
-$page->renderPageCaption();
+
 
 $tv->render();
 

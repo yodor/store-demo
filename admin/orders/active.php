@@ -51,7 +51,7 @@ $act->addAction(
 $menu = array();
 
 $page->startRender($menu);
-$page->renderPageCaption();
+
 
 $scomp->render();
 

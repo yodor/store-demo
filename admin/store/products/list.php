@@ -14,7 +14,8 @@ include_once("iterators/SQLQuery.php");
 
 $menu = array(
 
-    new MenuItem("Inventory", "inventory/list.php", "list-add.png"), //     new MenuItem("Color Gallery", "color_gallery/list.php?prodID", "list-add.png"),
+    new MenuItem("Inventory", "inventory/list.php", "list-add.png"),
+    //     new MenuItem("Color Gallery", "color_gallery/list.php?prodID", "list-add.png"),
     //     new MenuItem("Photo Gallery", "gallery/list.php?prodID", "list-add.png"),
     //     new MenuItem("Add Product", "add.php", "list-add.png"),
 
@@ -33,7 +34,8 @@ $bean = new ProductsBean();
 $h_delete = new DeleteItemRequestHandler($bean);
 RequestController::addRequestHandler($h_delete);
 
-$search_fields = array("product_name", "category_name", "class_name", "product_summary", "keywords", "brand_name", "section");
+$search_fields = array("product_name", "category_name", "class_name", "product_summary", "keywords", "brand_name",
+                       "section");
 $ksc = new KeywordSearchComponent($search_fields);
 $ksc->getForm()->getRenderer()->setAttribute("method", "get");
 
@@ -56,7 +58,6 @@ $select_products->group_by = "  p.prodID, pi.prodID ";
 
 $ksc->processSearch($select_products);
 
-
 $view = new TableView(new SQLQuery($select_products, "prodID"));
 $view->setCaption("Products List");
 $view->setDefaultOrder("  p.insert_date DESC  ");
@@ -69,51 +70,31 @@ $view->addColumn(new TableColumn("category_name", "Category"));
 $view->addColumn(new TableColumn("brand_name", "Brand"));
 $view->addColumn(new TableColumn("product_name", "Product Name"));
 
-
-
-$view->addColumn(new TableColumn("photo", "Product Photo"));
+$view->addColumn(new TableColumn("product_photos", "Product Photo"));
 
 $view->addColumn(new TableColumn("color_photos", "Color Gallery"));
-
-
-
-// $view->addColumn(new TableColumn("product_code","Product Code"));
-
-
-// $view->addColumn(new TableColumn("buy_price","Buy Price"));
-
-// $view->addColumn(new TableColumn("old_price","Old Price"));
 
 $view->addColumn(new TableColumn("colors", "Colors"));
 $view->addColumn(new TableColumn("sizes", "Sizes"));
 
-// $view->addColumn(new TableColumn("weight_min", "Weight Min"));
-// $view->addColumn(new TableColumn("weight_max", "Weight Max"));
-
 $view->addColumn(new TableColumn("visible", "Visible"));
-
-// $view->addColumn(new TableColumn("promotion", "Promotion"));
-
 
 $view->addColumn(new TableColumn("stock_amount", "In-stock"));
 
 $view->addColumn(new TableColumn("price_min", "Price Min"));
 $view->addColumn(new TableColumn("price_max", "Price Max"));
 
-
 $view->addColumn(new TableColumn("actions", "Actions"));
 
 $ticr1 = new TableImageCellRenderer(-1, 64);
 $ticr1->setBean(new ProductPhotosBean());
 $ticr1->setLimit(1);
-$view->getColumn("photo")->setCellRenderer($ticr1);
-$view->getColumn("photo")->getHeaderCellRenderer()->setSortable(false);
+$view->getColumn("product_photos")->setCellRenderer($ticr1);
 
 $ticr2 = new TableImageCellRenderer(-1, 64);
-$ticr2->setBean(new ProductColorPhotosBean(), "photo");
+$ticr2->setBean(new ProductColorPhotosBean());
 $ticr2->setLimit(0);
 $view->getColumn("color_photos")->setCellRenderer($ticr2);
-$view->getColumn("color_photos")->getHeaderCellRenderer()->setSortable(false);
 
 $view->getColumn("visible")->setCellRenderer(new BooleanFieldCellRenderer("Yes", "No"));
 // $view->getColumn("promotion")->setCellRenderer(new BooleanFieldCellRenderer("Yes", "No"));
@@ -131,7 +112,6 @@ $act->addAction(new RowSeparatorAction());
 
 $act->addAction(new Action("Photo Gallery", "gallery/list.php", array(new ActionParameter("prodID", $bean->key()))));
 
-
 $view->getColumn("actions")->setCellRenderer($act);
 
 //store page URL to session and restore on confirm product add or insert
@@ -139,13 +119,11 @@ Session::Set("products.list", $page->getPageURL());
 
 $page->startRender($menu);
 
-$page->renderPageCaption();
+
 
 $ksc->render();
 $view->render();
 
-
 $page->finishRender();
-
 
 ?>

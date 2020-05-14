@@ -62,7 +62,7 @@ $view->getColumn("actions")->setCellRenderer($act);
 Session::Set("sections.list", $page->getPageURL());
 
 $page->startRender($menu);
-$page->renderPageCaption();
+
 
 $view->render();
 

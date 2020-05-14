@@ -90,7 +90,7 @@ class ProductDetailsPage extends ProductsPage
         if (!$res) throw new Exception("Unable to query products from section='{$this->section}' and catID='{$this->sellable["catID"]}'. Error: " . $db->getError());
 
         while ($row = $db->fetch($res)) {
-            $this->list_item->setItem($row);
+            $this->list_item->setStorageItem($row);
             $this->list_item->render();
         }
         $db->free($res);
@@ -114,7 +114,7 @@ class ProductDetailsPage extends ProductsPage
         if (!$res) throw new Exception("Unable to query products from section='{$this->section}' and catID='{$this->sellable["catID"]}'. Error: " . $db->getError());
 
         while ($row = $db->fetch($res)) {
-            $this->list_item->setItem($row);
+            $this->list_item->setStorageItem($row);
             $this->list_item->render();
         }
         $db->free($res);

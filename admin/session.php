@@ -4,9 +4,6 @@ $cdir = dirname(__FILE__);
 $realpath = realpath($cdir . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR);
 include_once($realpath . "/session.php");
 
-include_once("buttons/StyledButton.php");
-StyledButton::setDefaultClass("admin_button");
-
 
 $all_roles = array(
 

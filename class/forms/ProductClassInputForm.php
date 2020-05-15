@@ -26,7 +26,7 @@ class ProductClassInputForm extends InputForm
         $attribs = new AttributesBean();
 
         $rend = new SelectField($field1);
-        $rend->setItemIterator($attribs->query());
+        $rend->setIterator($attribs->query());
         $rend->getItemRenderer()->setValueKey("name");
         $rend->getItemRenderer()->setLabelKey("name");
 
@@ -34,10 +34,10 @@ class ProductClassInputForm extends InputForm
 
         $arend = new ArrayField($rend);
 
-        $act_rend = new ActionRenderer(new Action("New attribute", "../attributes/add.php", array()));
-        $act_rend->setName("Нов атрибут");
-        $act_rend->setAttribute("action", "inline-new");
-        $arend->addControl($act_rend);
+        $act = new Action("New attribute", "../attributes/add.php");
+        $act->setName("Нов атрибут");
+        $act->setAttribute("action", "inline-new");
+        $arend->addControl($act);
 
         $this->addInput($field1);
 

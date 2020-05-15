@@ -11,7 +11,7 @@ $page->checkAccess(ROLE_ORDERS_MENU);
 
 $bean = new OrdersBean();
 
-$h_send = new OrderStatusRequestHandler($bean);
+$h_send = new OrderStatusRequestHandler();
 RequestController::addRequestHandler($h_send);
 
 $h_delete = new DeleteItemRequestHandler($bean);
@@ -30,18 +30,18 @@ $act->addAction(
     new Action(
         "Потвърди изпращане", "?cmd=order_status",
         array(
-            new ActionParameter("orderID", "orderID"),
+            new DataParameter("orderID", "orderID"),
             new URLParameter("status", OrdersBean::STATUS_SENT),
         )
     )
 
 );
-$act->addAction(  new RowSeparatorAction() );
+$act->addAction(  new RowSeparator() );
 $act->addAction(
     new Action(
         "Откажи изпращане", "?cmd=order_status",
         array(
-            new ActionParameter("orderID", "orderID"),
+            new DataParameter("orderID", "orderID"),
             new URLParameter("status", OrdersBean::STATUS_CANCELED),
         )
     )

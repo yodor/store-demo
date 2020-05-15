@@ -5,7 +5,9 @@ include_once("class/pages/ProductListPage.php");
 
 include_once("class/beans/ProductsBean.php");
 include_once("class/beans/ProductPhotosBean.php");
+
 include_once("components/TableView.php");
+include_once("components/ItemView.php");
 
 include_once("iterators/SQLQuery.php");
 include_once("iterators/ArrayDataIterator.php");
@@ -75,7 +77,7 @@ $tree_selector = $bean->selectTreeRelation($product_selector, "relation", "prodI
 // echo $tree_selector->getSQL();
 
 //set the the iterator
-$treeView->setItemIterator(new SQLQuery($tree_selector, $bean->key(), $bean->getTableName()));
+$treeView->setIterator(new SQLQuery($tree_selector, $bean->key(), $bean->getTableName()));
 
 
 $nodeID = $treeView->getSelectedID();
@@ -232,7 +234,7 @@ echo "<div class='column left'>";
 
 echo "<div class='categories panel'>";
 //   if ($num_filters>0) {
-// 	echo "<a class='ActionRenderer Clear' href='javascript:clearFilters()'>Show All Categories</a>";
+// 	echo "<a class='Action Clear' href='javascript:clearFilters()'>Show All Categories</a>";
 //   }
 echo "<div class='caption'>" . tr("Категории") . "</div>";
 $treeView->render();
@@ -254,7 +256,7 @@ echo "<span class='label'>" . tr("Марка") . "</span>";
 
 $field = DataInputFactory::Create(DataInputFactory::SELECT, "brand_name", "Марка", 0);
 $rend = $field->getRenderer();
-$rend->setItemIterator(ArrayDataIterator::FromSelect($brand_select, "brand_name", "brand_name"));
+$rend->setIterator(ArrayDataIterator::FromSelect($brand_select, "brand_name", "brand_name"));
 $rend->getItemRenderer()->setValueKey("brand_name");
 $rend->getItemRenderer()->setLabelKey("brand_name");
 $rend->setInputAttribute("onChange", "javascript:filterChanged(this)");
@@ -268,7 +270,7 @@ echo "<div class='InputComponent'>";
 echo "<span class='label'>" . tr("Цвят") . "</span>";
 $field = DataInputFactory::Create(DataInputFactory::SELECT, "color", "Цвят", 0);
 $rend = $field->getRenderer();
-$rend->setItemIterator(ArrayDataIterator::FromSelect($color_select, "color", "color"));
+$rend->setIterator(ArrayDataIterator::FromSelect($color_select, "color", "color"));
 $rend->getItemRenderer()->setValueKey("color");
 $rend->getItemRenderer()->setLabelKey("color");
 $rend->setInputAttribute("onChange", "javascript:filterChanged(this)");
@@ -281,7 +283,7 @@ echo "<div class='InputComponent'>";
 echo "<span class='label'>" . tr("Размер") . "</span>";
 $field = DataInputFactory::Create(DataInputFactory::SELECT, "size_value", "Размер", 0);
 $rend = $field->getRenderer();
-$rend->setItemIterator(ArrayDataIterator::FromSelect($size_select, "size_value", "size_value"));
+$rend->setIterator(ArrayDataIterator::FromSelect($size_select, "size_value", "size_value"));
 $rend->getItemRenderer()->setValueKey("size_value");
 $rend->getItemRenderer()->setLabelKey("size_value");
 $rend->setInputAttribute("onChange", "javascript:filterChanged(this)");
@@ -321,7 +323,7 @@ try {
         $rend = $field->getRenderer();
         $sel = $item["select"];
         // 		echo $sel->getSQL();
-        $rend->setItemIterator(ArrayDataIterator::FromSelect($item["select"], "ia_value", "ia_value"));
+        $rend->setIterator(ArrayDataIterator::FromSelect($item["select"], "ia_value", "ia_value"));
         $rend->getItemRenderer()->setValueKey("ia_value");
         $rend->getItemRenderer()->setLabelKey("ia_value");
         $rend->setInputAttribute("onChange", "javascript:filterChanged(this, 'ia', true)");

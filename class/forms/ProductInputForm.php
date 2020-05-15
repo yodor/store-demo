@@ -23,7 +23,7 @@ class ProductInputForm extends InputForm
         $field = DataInputFactory::Create(DataInputFactory::SELECT, "section", "Секция", 1);
         $rend = $field->getRenderer();
         $sb = new SectionsBean();
-        $rend->setItemIterator($sb->query());
+        $rend->setIterator($sb->query());
         $rend->getItemRenderer()->setValueKey("section_title");
         $rend->getItemRenderer()->setLabelKey("section_title");
         $this->addInput($field);
@@ -31,7 +31,7 @@ class ProductInputForm extends InputForm
         $field = DataInputFactory::Create(DataInputFactory::NESTED_SELECT, "catID", "Категория", 1);
         $bean1 = new ProductCategoriesBean();
         $rend = $field->getRenderer();
-        $rend->setItemIterator($bean1->query());
+        $rend->setIterator($bean1->query());
         $rend->getItemRenderer()->setValueKey("catID");
         $rend->getItemRenderer()->setLabelKey("category_name");
 
@@ -40,7 +40,7 @@ class ProductInputForm extends InputForm
         $field = DataInputFactory::Create(DataInputFactory::SELECT, "brand_name", "Марка", 1);
         $rend = $field->getRenderer();
         $brands = new BrandsBean();
-        $rend->setItemIterator($brands->query());
+        $rend->setIterator($brands->query());
         $rend->getItemRenderer()->setValueKey("brand_name");
         $rend->getItemRenderer()->setLabelKey("brand_name");
         $this->addInput($field);
@@ -48,7 +48,7 @@ class ProductInputForm extends InputForm
         $field = DataInputFactory::Create(DataInputFactory::SELECT, "class_name", "Продуктов клас", 0);
         $rend = $field->getRenderer();
         $pcb = new ProductClassesBean();
-        $rend->setItemIterator($pcb->query());
+        $rend->setIterator($pcb->query());
         $rend->getItemRenderer()->setValueKey("class_name");
         $rend->getItemRenderer()->setLabelKey("class_name");
         $this->addInput($field);
@@ -79,7 +79,7 @@ class ProductInputForm extends InputForm
         $field1->getProcessor()->setTransactBean($features_source);
 
         $renderer = new TextField($field1);
-        $renderer->setItemIterator($features_source->query());
+        $renderer->setIterator($features_source->query());
 
         $field1->setValidator(new EmptyValueValidator());
         new InputProcessor($field1);

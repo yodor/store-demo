@@ -62,7 +62,7 @@ $act = new ActionsTableCellRenderer();
 
 if (isset($_GET["chooser"]) && isset($_SESSION["chooser_return"])) {
 
-    $action_chooser = new Action("Choose", $_SESSION["chooser_return"], array(new ActionParameter("page_id", $bean->key()),
+    $action_chooser = new Action("Choose", $_SESSION["chooser_return"], array(new DataParameter("page_id", $bean->key()),
                                                                               new URLParameter("page_class", "DynamicPagesBean")));
 
     $act->addAction($action_chooser);
@@ -70,27 +70,27 @@ if (isset($_GET["chooser"]) && isset($_SESSION["chooser_return"])) {
 }
 else {
 
-    $act->addAction(new Action("Edit", "add.php", array(new ActionParameter("editID", $bean->key()))));
-    $act->addAction(new PipeSeparatorAction());
+    $act->addAction(new Action("Edit", "add.php", array(new DataParameter("editID", $bean->key()))));
+    $act->addAction(new PipeSeparator());
     $act->addAction($h_delete->createAction());
 
-    $act->addAction(new RowSeparatorAction());
+    $act->addAction(new RowSeparator());
 
-    $act->addAction(new Action("Photo Gallery", "gallery/list.php", array(new ActionParameter($bean->key(), $bean->key()))));
+    $act->addAction(new Action("Photo Gallery", "gallery/list.php", array(new DataParameter($bean->key(), $bean->key()))));
 
-    $act->addAction(new RowSeparatorAction());
+    $act->addAction(new RowSeparator());
 
     $bkey = $bean->key();
-    $repos_param = array(new ActionParameter("item_id", $bkey));
+    $repos_param = array(new DataParameter("item_id", $bkey));
 
     $act->addAction(new Action("Previous", "?cmd=reposition&type=previous", $repos_param));
-    $act->addAction(new PipeSeparatorAction());
+    $act->addAction(new PipeSeparator());
     $act->addAction(new Action("Next", "?cmd=reposition&type=next", $repos_param));
 
-    $act->addAction(new RowSeparatorAction());
+    $act->addAction(new RowSeparator());
 
     $act->addAction(new Action("First", "?cmd=reposition&type=first", $repos_param));
-    $act->addAction(new PipeSeparatorAction());
+    $act->addAction(new PipeSeparator());
     $act->addAction(new Action("Last", "?cmd=reposition&type=last", $repos_param));
 
 }

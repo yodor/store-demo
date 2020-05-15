@@ -32,27 +32,23 @@ if ($auth->authorize()) {
 
 $af = new LoginForm();
 $afr = new LoginFormRenderer($af, $req);
-$afr->setAttribute("name", "client_auth");
-$afr->setForm($af);
 
-$afr->forgot_password_url = LOCAL . "account/forgot_password.php";
+$action = $afr->getTextSpace()->get(0);
+if ($action instanceof Action) {
+    $action->getURL()->setHref(LOCAL . "account/forgot_password.php");
+}
 
 $form = new RegisterClientInputForm();
+$form->setName("RegisterClient");
 
 $frender = new FormRenderer($form);
-$frender->getSubmitButton()->setName("RegisterClient");
-$frender->getSubmitButton()->setValue("submit");
-
-$frender->setLayout(FormRenderer::FIELD_VBOX);
-$frender->setAttribute("name", "RegisterClient");
-
 
 $proc = new RegisterClientFormProcessor();
 
 $proc->process($form);
 
 if ($proc->getStatus() == IFormProcessor::STATUS_ERROR) {
-    Session::SetAlert($form->getProcessor()->getMessage());
+    Session::SetAlert($proc->getMessage());
 }
 else if ($proc->getStatus() == IFormProcessor::STATUS_OK) {
 
@@ -65,7 +61,6 @@ header("Expires: 0");
 
 $page->startRender();
 $page->setPreferredTitle(tr("Клиенти"));
-
 
 echo "<div class='item login'>";
 

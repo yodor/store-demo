@@ -2,7 +2,7 @@
 include_once("class/pages/StorePage.php");
 include_once("class/utils/ProductsSQL.php");
 include_once("class/beans/ProductCategoriesBean.php");
-include_once("components/renderers/ActionRenderer.php");
+include_once("components/Action.php");
 
 class ProductsPage extends StorePage
 {
@@ -21,11 +21,7 @@ class ProductsPage extends StorePage
 
         $this->product_categories = new ProductCategoriesBean();
 
-        $this->action_renderer = new ActionRenderer();
-
-
         $derived = new ProductsSQL();
-
 
         if ($this->section) {
             $derived->where = " p.section = '{$this->section}' ";
@@ -41,7 +37,7 @@ class ProductsPage extends StorePage
 
         echo "<div class='caption category_path'>";
         if ($actions) {
-            $this->action_renderer->renderActions($actions);
+            Action::RenderActions($actions);
         }
         echo "</div>";
     }
@@ -55,15 +51,6 @@ class ProductsPage extends StorePage
     protected function constructPathActions()
     {
         $actions = array();
-
-        //         $back_path = Session::get("shopping.list", "");
-        //         $back_action = NULL;
-        //         echo $back_path;
-
-        //         if (strlen($back_path)>0) {
-        //             $back_action = new Action("&larr;", $back_path, array());
-        //             $actions[]=$back_action;
-        //         }
 
         $actions[] = new Action(tr("Начало"), LOCAL . "index.php", array());
 

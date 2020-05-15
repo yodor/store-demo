@@ -18,10 +18,10 @@ class RequireInvoiceInputForm extends InputForm
     public function __construct()
     {
         parent::__construct();
-        $field = DataInputFactory::Create(DataInputFactory::CHECKBOX, "require_invoice", "Да се издаде фактура", 0);
+        $input = DataInputFactory::Create(DataInputFactory::CHECKBOX, "require_invoice", "Да се издаде фактура", 0);
 
-        $field->getRenderer()->setInputAttribute("onClick", "javascript:this.form.submit()");
-        $this->addInput($field);
+        $input->getRenderer()->getItemRenderer()->setAttribute("onClick", "javascript:this.form.submit()");
+        $this->addInput($input);
     }
 }
 
@@ -35,11 +35,11 @@ class RequireInvoiceFormProcessor extends FormProcessor
 
         if ($this->getStatus() != FormProcessor::STATUS_OK) return;
 
-        $page = HTMLPage::Instance();
+        $page = SparkPage::Instance();
         $cart = $page->getCart();
 
         $cabrow = $this->bean->findFieldValue("userID", $page->getUserID());
-        if (!$cabrow) {
+        if ($cabrow) {
             header("Location: invoice_details.php");
             exit;
         }

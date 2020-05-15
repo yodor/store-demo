@@ -1,10 +1,9 @@
 <?php
-// include_once("class/beans/SellableProductsBean.php");
-include_once("components/renderers/items/ItemRendererImpl.php");
+include_once("components/renderers/items/DataIteratorItem.php");
 include_once("storage/StorageItem.php");
 include_once("class/beans/ProductColorPhotosBean.php");
 
-class ProductListItem extends ItemRendererImpl implements IHeadContents {
+class ProductListItem extends DataIteratorItem implements IHeadContents {
 
 
     protected $colors = null;
@@ -31,6 +30,7 @@ class ProductListItem extends ItemRendererImpl implements IHeadContents {
 
         $this->sel = $sel;
 
+        $this->photo = new StorageItem();
     }
 
     public function requiredStyle()
@@ -40,15 +40,15 @@ class ProductListItem extends ItemRendererImpl implements IHeadContents {
         return $arr;
     }
 
-    public function setStorageItem($item)
+    public function setData(array $item)
     {
-        parent::setStorageItem($item);
-        $this->setAttribute("prodID", $this->item["prodID"]);
-        $this->setAttribute("piID", $this->item["piID"]);
+        parent::setData($item);
+        $this->setAttribute("prodID", $this->data["prodID"]);
+        $this->setAttribute("piID", $this->data["piID"]);
 
 
-        if ($this->item["color_ids"]) {
-            $colors = explode("|", $this->item["color_ids"]);
+        if ($this->data["color_ids"]) {
+            $colors = explode("|", $this->data["color_ids"]);
             if (count($colors)>0) {
 
                 $this->colors = $colors;
@@ -57,21 +57,18 @@ class ProductListItem extends ItemRendererImpl implements IHeadContents {
         }
         //         var_dump($this->colors);
 
-        $photo = null;
+
         if (isset($item["pclrpID"]) && $item["pclrpID"]>0) {
-            $photo = new StorageItem();
-            $photo->id = (int)$item["pclrpID"];
-            $photo->className = "ProductColorPhotosBean";//ProductColorPhotosBean::class;
+
+            $this->photo->id = (int)$item["pclrpID"];
+            $this->photo->className = "ProductColorPhotosBean";//ProductColorPhotosBean::class;
         }
         else if (isset($item["ppID"]) && $item["ppID"]>0){
-            $photo = new StorageItem();
-            $photo->id = (int)$item["ppID"];
-            $photo->className = "ProductPhotosBean";//ProductPhotosBean::class;
+
+            $this->photo->id = (int)$item["ppID"];
+            $this->photo->className = "ProductPhotosBean";//ProductPhotosBean::class;
         }
 
-        if ($photo) {
-            $this->photo = $photo;
-        }
 
         //$this->sel->where = " pc.prodID = {$item["prodID"]} ";
     }
@@ -85,10 +82,10 @@ class ProductListItem extends ItemRendererImpl implements IHeadContents {
 
         // 	cho $this->sel->getSQL();
 
-        $product_href = LOCAL."details.php?prodID={$this->item["prodID"]}";
-        $item_href = LOCAL."details.php?prodID={$this->item["prodID"]}&piID=";
+        $product_href = LOCAL."details.php?prodID={$this->data["prodID"]}";
+        $item_href = LOCAL."details.php?prodID={$this->data["prodID"]}&piID=";
 
-        $item_href_main = $item_href.$this->item["piID"];
+        $item_href_main = $item_href.$this->data["piID"];
         echo "<a href='$item_href_main' class='product_link'>";
         if ($this->photo) {
             $img_href = $this->photo->hrefThumb(275,275);
@@ -111,7 +108,7 @@ class ProductListItem extends ItemRendererImpl implements IHeadContents {
 
             foreach ($this->colors as $idx=>$pclrID) {
 
-                $this->sel->where = " pc.prodID='{$this->item["prodID"]}' AND pc.pclrID='$pclrID' ";
+                $this->sel->where = " pc.prodID='{$this->data["prodID"]}' AND pc.pclrID='$pclrID' ";
                 //echo $this->sel->getSQL();
 
                 $res = $db->query($this->sel->getSQL());
@@ -164,15 +161,15 @@ class ProductListItem extends ItemRendererImpl implements IHeadContents {
         echo "</div>"; //colors_container
 
 
-        echo "<a class='product_name' href='$item_href_main' >".$this->item["product_name"]."</a>";
+        echo "<a class='product_name' href='$item_href_main' >".$this->data["product_name"]."</a>";
         //echo "<div class='stock_amount'><label>".tr("Наличност").": </label>".$this->item["stock_amount"]."</div>";
 
         echo "<div class='sell_price'>";
 
-        echo "<div class='item_price'>".sprintf("%1.2f",$this->item["sell_price"])." ".tr("лв.")."</div>";
+        echo "<div class='item_price'>".sprintf("%1.2f",$this->data["sell_price"])." ".tr("лв.")."</div>";
 
-        if ($this->item["price_min"] != $this->item["sell_price"] || $this->item["price_max"] != $this->item["sell_price"] ) {
-            echo "<div class='series_price'>".sprintf("%1.2f",$this->item["price_min"])." ".tr("лв.")." - ".sprintf("%1.2f",$this->item["price_max"])." ".tr("лв.")."</div>";
+        if ($this->data["price_min"] != $this->data["sell_price"] || $this->data["price_max"] != $this->data["sell_price"] ) {
+            echo "<div class='series_price'>".sprintf("%1.2f",$this->data["price_min"])." ".tr("лв.")." - ".sprintf("%1.2f",$this->data["price_max"])." ".tr("лв.")."</div>";
         }
 
         echo "</div>";

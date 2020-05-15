@@ -30,7 +30,7 @@ $act->addAction(
     new Action(
         "Потвърди завършване", "?cmd=order_status",
         array(
-            new ActionParameter("orderID", "orderID"),
+            new DataParameter("orderID", "orderID"),
             new URLParameter("status", OrdersBean::STATUS_COMPLETED),
         )
     )

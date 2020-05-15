@@ -33,9 +33,9 @@ class IteratorRelatedField extends DataIteratorField
 
     }
 
-    public function setItemIterator(IDataIterator $query)
+    public function setIterator(IDataIterator $query)
     {
-        parent::setItemIterator($query);
+        parent::setIterator($query);
         $this->addClassName(get_class($query));
     }
 

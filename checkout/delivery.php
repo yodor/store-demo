@@ -30,10 +30,11 @@ $page->ensureClient();
 // $page->getCart()->setDeliveryType(NULL);
 
 $form = new DeliveryAddressForm();
+$form->setName("DeliveryAddress");
 
 $proc = new DeliveryAddressProcessor();
-$frend = new FormRenderer($form);
 
+$frend = new FormRenderer($form);
 
 $bean = new ClientAddressesBean();
 
@@ -82,7 +83,10 @@ echo "<div class='delivery_address'>";
 
 echo "<div class='caption'>" . $page->getPreferredTitle() . "</div>";
 
-$frend->render();
+$frend->startRender();
+$frend->renderInputs();
+$frend->renderSubmitValue();
+$frend->finishRender();
 
 $back_url = Session::get("checkout.navigation.back", "cart.php");
 

@@ -30,8 +30,8 @@ $view->addColumn(new TableColumn("actions", "Actions"));
 
 //command actions edit/delete
 $act = new ActionsTableCellRenderer();
-$act->addAction(new Action("Edit", "add.php", array(new ActionParameter("editID", $bean->key()))));
-$act->addAction(new PipeSeparatorAction());
+$act->addAction(new Action("Edit", "add.php", array(new DataParameter("editID", $bean->key()))));
+$act->addAction(new PipeSeparator());
 $act->addAction($h_delete->createAction());
 $view->getColumn("actions")->setCellRenderer($act);
 

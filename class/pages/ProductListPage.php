@@ -25,7 +25,7 @@ class ProductListPage extends ProductsPage
 
         $treeQry = new SQLQuery($treeSelect, $this->product_categories->key(), $this->product_categories->getTableName());
 
-        $treeView->setItemIterator($treeQry);
+        $treeView->setIterator($treeQry);
 
         $treeView->setName("products_tree");
         $treeView->open_all = false;

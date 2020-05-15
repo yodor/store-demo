@@ -75,11 +75,11 @@ $view->addColumn(new TableColumn("actions", "Actions"));
 
 //command actions edit/delete
 $act = new ActionsTableCellRenderer();
-$action_translate = new Action("Translate", "javascript:phrase_translator.edit(%textID%)", array(new ActionParameter("textID", "textID")));
+$action_translate = new Action("Translate", "javascript:phrase_translator.edit(%textID%)", array(new DataParameter("textID", "textID")));
 $act->addAction($action_translate);
-$act->addAction(new PipeSeparatorAction());
+$act->addAction(new PipeSeparator());
 
-$action_clear = new Action("Clear", "javascript:phrase_translator.clear(%textID%)", array(new ActionParameter("textID", "textID")));
+$action_clear = new Action("Clear", "javascript:phrase_translator.clear(%textID%)", array(new DataParameter("textID", "textID")));
 $act->addAction($action_clear);
 
 

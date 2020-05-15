@@ -77,13 +77,13 @@ $ticr2->setLimit(0);
 $view->getColumn("photo")->setCellRenderer($ticr2);
 
 $act = new ActionsTableCellRenderer();
-$act->addAction(new Action("Edit", "add.php", array(new ActionParameter("editID", $bean->key()))));
-$act->addAction(new PipeSeparatorAction());
+$act->addAction(new Action("Edit", "add.php", array(new DataParameter("editID", $bean->key()))));
+$act->addAction(new PipeSeparator());
 $act->addAction($h_delete->createAction());
 
-$act->addAction(new RowSeparatorAction());
+$act->addAction(new RowSeparator());
 
-$act->addAction(new Action("Photos", "gallery/list.php", array(new ActionParameter($bean->key(), $bean->key()))));
+$act->addAction(new Action("Photos", "gallery/list.php", array(new DataParameter($bean->key(), $bean->key()))));
 
 $view->getColumn("actions")->setCellRenderer($act);
 

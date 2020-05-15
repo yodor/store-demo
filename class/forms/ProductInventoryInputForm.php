@@ -25,7 +25,7 @@ class ProductInventoryInputForm extends InputForm
 
         $field = DataInputFactory::Create(DataInputFactory::SELECT, "pclrID", "Цветова схема", 0);
         $colors = new ProductColorsBean();
-        $field->getRenderer()->setItemIterator($colors->query());
+        $field->getRenderer()->setIterator($colors->query());
 
         $field->getRenderer()->getItemRenderer()->setValueKey("pclrID");
         $field->getRenderer()->getItemRenderer()->setLabelKey("color");
@@ -37,11 +37,11 @@ class ProductInventoryInputForm extends InputForm
 
         $field = DataInputFactory::Create(DataInputFactory::SELECT, "size_value", "Оразмеряване", 0);
         $sizes = new StoreSizesBean();
-        $field->getRenderer()->setItemIterator($sizes->query());
+        $field->getRenderer()->setIterator($sizes->query());
         $field->getRenderer()->getItemRenderer()->setValueKey("size_value");
         $field->getRenderer()->getItemRenderer()->setLabelKey("size_value");
 
-        $field->getRenderer()->addon_content = "<a class='ActionRenderer' action='inline-new' href='../../sizes/add.php'>" . tr("Нов код за оразмеряване") . "</a>";
+        $field->getRenderer()->addon_content = "<a class='Action' action='inline-new' href='../../sizes/add.php'>" . tr("Нов код за оразмеряване") . "</a>";
 
         $this->addInput($field);
 
@@ -75,7 +75,7 @@ class ProductInventoryInputForm extends InputForm
         $rend = new IteratorRelatedField($field);
 
         $bean = new ClassAttributesBean();
-        $rend->setItemIterator($bean->query());
+        $rend->setIterator($bean->query());
 
         $rend->getItemRenderer()->setValueKey("value");
         $rend->getItemRenderer()->setLabelKey("attribute_name");
@@ -87,9 +87,9 @@ class ProductInventoryInputForm extends InputForm
     {
         $this->prodID = (int)$prodID;
 
-        $this->getInput("pclrID")->getRenderer()->getItemIterator()->select->where = " prodID='{$this->prodID}' ";
+        $this->getInput("pclrID")->getRenderer()->getIterator()->select->where = " prodID='{$this->prodID}' ";
 
-        $this->getInput("pclrID")->getRenderer()->addon_content = "<a class='ActionRenderer' action='inline-new' href='../color_gallery/add.php?prodID={$this->prodID}'>" . tr("Нова цветова схема") . "</a>";
+        $this->getInput("pclrID")->getRenderer()->addon_content = "<a class='Action' action='inline-new' href='../color_gallery/add.php?prodID={$this->prodID}'>" . tr("Нова цветова схема") . "</a>";
 
         // 	  $this->getField("size_value")->getRenderer()->setFilter(" WHERE prodID='{$this->prodID}' ");
 
@@ -100,9 +100,9 @@ class ProductInventoryInputForm extends InputForm
 
         $rend->setCaption(tr("Продуктов клас") . ": " . $this->product["class_name"]);
 
-        $sel = $rend->getItemIterator()->select;
+        $sel = $rend->getIterator()->select;
         $sel->where = " ca.class_name='{$this->product["class_name"]}' ";
-        $sel->from = $rend->getItemIterator()->name()." ca LEFT JOIN attributes attr ON attr.name = ca.attribute_name ";
+        $sel->from = $rend->getIterator()->name()." ca LEFT JOIN attributes attr ON attr.name = ca.attribute_name ";
         $sel->fields = " ca.*, attr.unit as attribute_unit, attr.type attribute_type ";
 
         //debug($sel->getSQL());
@@ -121,9 +121,9 @@ class ProductInventoryInputForm extends InputForm
 
         $rend = $this->getInput("value")->getRenderer();
 
-        $sel = $rend->getItemIterator()->select;
+        $sel = $rend->getIterator()->select;
 
-        $sel->from = $rend->getItemIterator()->name()." ca LEFT 
+        $sel->from = $rend->getIterator()->name()." ca LEFT 
         JOIN inventory_attribute_values iav ON iav.caID = ca.caID AND iav.piID='$editID' LEFT 
         JOIN attributes attr ON attr.name = ca.attribute_name ";
 

@@ -15,7 +15,7 @@ class DeliveryAddressForm extends InputForm
         $field = new DataInput("delivery_type", "Изберете адрес", 1);
 
         $radio = new RadioField($field);
-        $radio->setItemIterator($data);
+        $radio->setIterator($data);
         $radio->getItemRenderer()->setValueKey(ArrayDataIterator::KEY_ID);
         $radio->getItemRenderer()->setLabelKey(ArrayDataIterator::KEY_VALUE);
 

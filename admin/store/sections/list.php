@@ -37,24 +37,24 @@ $view->addColumn(new TableColumn("actions", "Actions"));
 
 
 $act = new ActionsTableCellRenderer();
-$act->addAction(new Action("Edit", "add.php", array(new ActionParameter("editID", $bean->key()))));
-$act->addAction(new PipeSeparatorAction());
+$act->addAction(new Action("Edit", "add.php", array(new DataParameter("editID", $bean->key()))));
+$act->addAction(new PipeSeparator());
 $act->addAction($h_delete->createAction());
-$act->addAction(new RowSeparatorAction());
+$act->addAction(new RowSeparator());
 
-$repos_param = array(new ActionParameter("item_id", $bean->key()),);
+$repos_param = array(new DataParameter("item_id", $bean->key()),);
 
 $act->addAction(new Action("First", "?cmd=reposition&type=first", $repos_param));
-$act->addAction(new PipeSeparatorAction());
+$act->addAction(new PipeSeparator());
 $act->addAction(new Action("Last", "?cmd=reposition&type=last", $repos_param));
-$act->addAction(new RowSeparatorAction());
+$act->addAction(new RowSeparator());
 $act->addAction(new Action("Previous", "?cmd=reposition&type=previous", $repos_param));
-$act->addAction(new PipeSeparatorAction());
+$act->addAction(new PipeSeparator());
 $act->addAction(new Action("Next", "?cmd=reposition&type=next", $repos_param));
 
-$act->addAction(new RowSeparatorAction());
+$act->addAction(new RowSeparator());
 
-$act->addAction(new Action("Banners Gallery", "banners/list.php", array(new ActionParameter("secID", $bean->key()))));
+$act->addAction(new Action("Banners Gallery", "banners/list.php", array(new DataParameter("secID", $bean->key()))));
 
 $view->getColumn("actions")->setCellRenderer($act);
 

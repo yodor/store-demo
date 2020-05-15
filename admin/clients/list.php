@@ -61,8 +61,8 @@ $vis_act->addAction($h_toggle->createAction("Enable", "&field=suspend&status=0",
 $view->getColumn("suspend")->setCellRenderer($vis_act);
 
 $act = new ActionsTableCellRenderer();
-$act->addAction(new Action("Edit", "add.php", array(new ActionParameter("editID", $bean->key()))));
-$act->addAction(new PipeSeparatorAction());
+$act->addAction(new Action("Edit", "add.php", array(new DataParameter("editID", $bean->key()))));
+$act->addAction(new PipeSeparator());
 $act->addAction($h_delete->createAction());
 
 $view->getColumn("actions")->setCellRenderer($act);

@@ -45,22 +45,25 @@
 
 }
 
-.CheckoutPage .FormRenderer {
+.CheckoutPage .main_content .CartComponent .FormRenderer {
     font-size: 1.3em;
 }
 
-.CheckoutPage .FormRenderer INPUT[type='radio'] {
+.CheckoutPage .main_content .CartComponent .FormRenderer INPUT[type='radio'] {
     width: 1.5em;
     height: 1.5em;
 }
 
-.CheckoutPage .FormRenderer INPUT[type='checkbox'] {
+.CheckoutPage .main_content .CartComponent .FormRenderer INPUT[type='checkbox'] {
     width: 1.5em;
     height: 1.5em;
 }
 
 .CheckoutPage.delivery_ekont .item.ekont_office {
     display: block;
+}
+.CheckoutPage.delivery_ekont .item.ekont_office .selected_office {
+    margin-bottom:1.5em;
 }
 
 .CheckoutPage.delivery_ekont .item.ekont_office.empty {

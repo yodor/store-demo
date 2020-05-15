@@ -8,6 +8,7 @@ include_once("class/components/renderers/items/ProductListItem.php");
 
 $page = new StorePage();
 $page->setPreferredTitle("Начало");
+
 $item = new ProductListItem();
 
 $page->startRender();
@@ -60,7 +61,7 @@ while ($section = $qry->next()) {
     echo "<div class='products'>";
 
     while ($row = $prodQry->next()) {
-        $item->setStorageItem($row);
+        $item->setData($row);
         $item->render();
     }
 

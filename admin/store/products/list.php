@@ -100,17 +100,17 @@ $view->getColumn("visible")->setCellRenderer(new BooleanFieldCellRenderer("Yes",
 // $view->getColumn("promotion")->setCellRenderer(new BooleanFieldCellRenderer("Yes", "No"));
 
 $act = new ActionsTableCellRenderer();
-$act->addAction(new Action("Edit", "add.php", array(new ActionParameter("editID", $bean->key()))));
-$act->addAction(new PipeSeparatorAction());
+$act->addAction(new Action("Edit", "add.php", array(new DataParameter("editID", $bean->key()))));
+$act->addAction(new PipeSeparator());
 $act->addAction($h_delete->createAction());
-$act->addAction(new RowSeparatorAction());
+$act->addAction(new RowSeparator());
 
-$act->addAction(new Action("Inventory", "inventory/list.php", array(new ActionParameter("prodID", $bean->key()))));
-$act->addAction(new RowSeparatorAction());
-$act->addAction(new Action("Color Scheme", "color_gallery/list.php", array(new ActionParameter("prodID", $bean->key()))));
-$act->addAction(new RowSeparatorAction());
+$act->addAction(new Action("Inventory", "inventory/list.php", array(new DataParameter("prodID", $bean->key()))));
+$act->addAction(new RowSeparator());
+$act->addAction(new Action("Color Scheme", "color_gallery/list.php", array(new DataParameter("prodID", $bean->key()))));
+$act->addAction(new RowSeparator());
 
-$act->addAction(new Action("Photo Gallery", "gallery/list.php", array(new ActionParameter("prodID", $bean->key()))));
+$act->addAction(new Action("Photo Gallery", "gallery/list.php", array(new DataParameter("prodID", $bean->key()))));
 
 $view->getColumn("actions")->setCellRenderer($act);
 

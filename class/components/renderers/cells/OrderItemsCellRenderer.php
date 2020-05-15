@@ -74,7 +74,7 @@ class OrderItemsCellRenderer extends TableCellRenderer
 
 
             if ($prodID > 0) {
-                echo "<a class='ActionRenderer' href='" . LOCAL . "admin/store/products/inventory/list.php?prodID=$prodID'>" . tr("Виж инвентар") . "</a>";
+                echo "<a class='Action' href='" . LOCAL . "admin/store/products/inventory/list.php?prodID=$prodID'>" . tr("Виж инвентар") . "</a>";
             }
         }
 

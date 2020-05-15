@@ -21,8 +21,9 @@ class ProductColorPhotosBean extends OrderedDataBean
     }
 
     //return pclrpID
-    public function getFirstPhotoID(int $pclrID = -1)
+    public function getFirstPhotoID(int $pclrID)
     {
+        $pclrpID = -1;
 
         $qry = $this->queryField("pclrID", $pclrID);
         $qry->select->fields = $this->key();

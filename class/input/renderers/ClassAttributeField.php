@@ -74,7 +74,7 @@ class ClassAttributeField extends DataIteratorField
         $this->setItemRenderer(new ClassAttributeItem());
 
         $cab = new ClassAttributesBean();
-        $this->setItemIterator($cab->query());
+        $this->setIterator($cab->query());
         $this->getItemRenderer()->setValueKey("caID");
         $this->getItemRenderer()->setLabelKey("attribute_name");
 

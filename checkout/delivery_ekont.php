@@ -50,6 +50,7 @@ $proc = new EkontOfficeFormProcessor();
 $proc->setBean($bean);
 
 $form = new EkontOfficeInputForm();
+$form->setName("EkontOffice");
 
 $empty = "";
 $eorow = $bean->findFieldValue("userID", $page->getUserID());
@@ -76,11 +77,12 @@ echo "<div class='item ekont_office $empty'>";
 
 echo "<div class='caption'>" . tr("Избран офис на Еконт") . "</div>";
 
-$frend->startRender();
 echo "<div class='selected_office'>";
 echo str_replace("\r", "<br>", $form->getInput("office")->getValue());
 echo "</div>";
-$frend->renderInput($form->getInput("office"));
+
+$frend->startRender();
+$frend->renderInputs();//($form->getInput("office"));
 $frend->renderSubmitValue();
 $frend->finishRender();
 
@@ -115,7 +117,7 @@ echo "<div class='slot center'>";
 echo "</div>";
 
 echo "<div class='slot right'>";
-echo "<a href='javascript:document.forms.EkontOfficeInputForm.submit();'>";
+echo "<a href='javascript:document.forms.EkontOffice.submit();'>";
 echo "<img src='" . LOCAL . "images/cart_checkout.png'>";
 echo "<div class='ColorButton checkout_button'  >" . tr("Продължи") . "</div>";
 echo "</a>";

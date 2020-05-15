@@ -34,7 +34,6 @@ class ProductInventoryInputForm extends InputForm
 
         $this->addInput($field);
 
-
         $field = DataInputFactory::Create(DataInputFactory::SELECT, "size_value", "Оразмеряване", 0);
         $sizes = new StoreSizesBean();
         $field->getRenderer()->setIterator($sizes->query());
@@ -63,11 +62,11 @@ class ProductInventoryInputForm extends InputForm
         //1. input is taking array of values (ArrayDataInput)
         //2. renderer is drawing single element with many items (DataSourceField)
         $field = new ArrayDataInput("value", "Атрибути на класа", 0);
-        $field->allow_dynamic_addition = false;
+        $field->allow_dynamic_addition = FALSE;
 
-        $field->source_label_visible = true;
+        $field->source_label_visible = TRUE;
 
-        $field->getProcessor()->process_datasource_foreign_keys = true;
+        $field->getProcessor()->process_datasource_foreign_keys = TRUE;
 
         $bean1 = new InventoryAttributeValuesBean();
         $field->getProcessor()->setTransactBean($bean1);
@@ -102,7 +101,7 @@ class ProductInventoryInputForm extends InputForm
 
         $sel = $rend->getIterator()->select;
         $sel->where = " ca.class_name='{$this->product["class_name"]}' ";
-        $sel->from = $rend->getIterator()->name()." ca LEFT JOIN attributes attr ON attr.name = ca.attribute_name ";
+        $sel->from = $rend->getIterator()->name() . " ca LEFT JOIN attributes attr ON attr.name = ca.attribute_name ";
         $sel->fields = " ca.*, attr.unit as attribute_unit, attr.type attribute_type ";
 
         //debug($sel->getSQL());
@@ -123,7 +122,7 @@ class ProductInventoryInputForm extends InputForm
 
         $sel = $rend->getIterator()->select;
 
-        $sel->from = $rend->getIterator()->name()." ca LEFT 
+        $sel->from = $rend->getIterator()->name() . " ca LEFT 
         JOIN inventory_attribute_values iav ON iav.caID = ca.caID AND iav.piID='$editID' LEFT 
         JOIN attributes attr ON attr.name = ca.attribute_name ";
 

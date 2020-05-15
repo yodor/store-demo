@@ -1,7 +1,6 @@
 <?php
 include_once("beans/DBTableBean.php");
 
-
 class ProductColorsBean extends DBTableBean
 {
     protected $createString = "CREATE TABLE `product_colors` (

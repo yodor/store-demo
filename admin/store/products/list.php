@@ -119,8 +119,6 @@ Session::Set("products.list", $page->getPageURL());
 
 $page->startRender($menu);
 
-
-
 $ksc->render();
 $view->render();
 

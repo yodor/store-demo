@@ -169,7 +169,7 @@ echo "</div>";
         $(".item.ekont_locator").css("display", "block");
     }
 
-    onPageLoad(function(){
+    onPageLoad(function () {
         $(".item.ekont_locator").css("display", "none");
 
     });

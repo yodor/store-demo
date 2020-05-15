@@ -44,7 +44,6 @@ class CurrencyRatesBean extends DBTableBean
             return $ret;
         }
 
-
         try {
             $crrow = $currencies->getByID($dstID);
             $ret["currency_code"] = $crrow["currency_code"];

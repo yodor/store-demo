@@ -9,8 +9,6 @@ class ClientAddressFormProcessor extends FormProcessor
     protected $editID = -1;
     protected $userID = -1;
 
-
-
     public function setUserID(int $userID)
     {
         $this->userID = $userID;
@@ -22,7 +20,6 @@ class ClientAddressFormProcessor extends FormProcessor
         parent::processImpl($form);
 
         if ($this->getStatus() != FormProcessor::STATUS_OK) return;
-
 
         if ($this->userID < 1) throw new Exception("Тази функция изисква регистрация");
 

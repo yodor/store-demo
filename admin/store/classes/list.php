@@ -2,9 +2,7 @@
 include_once("session.php");
 include_once("class/pages/AdminPage.php");
 
-
 include_once("class/beans/ProductClassesBean.php");
-
 
 include_once("components/TableView.php");
 include_once("components/renderers/cells/TableImageCellRenderer.php");
@@ -12,19 +10,15 @@ include_once("components/KeywordSearchComponent.php");
 include_once("iterators/SQLQuery.php");
 // include_once("class/beans/ProductInventoryPhotosBean.php");
 
-
 $menu = array();
-
 
 $page = new AdminPage();
 $page->checkAccess(ROLE_CONTENT_MENU);
-
 
 $action_add = new Action("", "add.php", array());
 $action_add->setAttribute("action", "add");
 $action_add->setAttribute("title", "Add Class");
 $page->addAction($action_add);
-
 
 $bean = new ProductClassesBean();
 
@@ -35,7 +29,6 @@ $sql->fields = " pc.*, (SELECT GROUP_CONCAT(attribute_name SEPARATOR '<BR>') FRO
 
 $h_delete = new DeleteItemRequestHandler($bean);
 RequestController::addRequestHandler($h_delete);
-
 
 $view = new TableView(new SQLQuery($sql, $bean->key()));
 $view->setCaption("Product Classes List");
@@ -56,8 +49,6 @@ $view->getColumn("actions")->setCellRenderer($act);
 Session::Set("classes.list", $page->getPageURL());
 
 $page->startRender($menu);
-
-
 
 $view->render();
 

@@ -23,7 +23,6 @@ RequestController::addRequestHandler($h_delete);
 $h_toggle = new ToggleFieldRequestHandler($bean);
 RequestController::addRequestHandler($h_toggle);
 
-
 $view = new TableView($bean->query());
 
 $view->addColumn(new TableColumn($bean->key(), "ID"));
@@ -46,10 +45,15 @@ $act->addAction($h_delete->createAction());
 $view->getColumn("actions")->setCellRenderer($act);
 
 $vis_act = new ActionsTableCellRenderer();
-$vis_act->addAction($h_toggle->createAction("Disable", "&field=suspend&status=1", "return (\$row['suspend'] < 1);"));
-$vis_act->addAction($h_toggle->createAction("Enable", "&field=suspend&status=0", "return (\$row['suspend'] > 0);"));
+$check_is_suspend = function (Action $act, array $data) {
+    return ($data['suspend'] < 1);
+};
+$check_is_not_suspend = function (Action $act, array $data) {
+    return ($data['suspend'] > 0);
+};
+$vis_act->addAction($h_toggle->createAction("Disable", "?field=suspend&status=1", $check_is_suspend));
+$vis_act->addAction($h_toggle->createAction("Enable", "?field=suspend&status=0", $check_is_not_suspend));
 $view->getColumn("status")->setCellRenderer($vis_act);
-
 
 $ac = new AdminAccessBean();
 
@@ -58,7 +62,6 @@ function draw_access_level(&$row, TableColumn $tc)
 
     $key_id = $tc->getView()->getIterator()->key();
     $id = $row[$key_id];
-
 
     echo $row["access_level"] . "<br>";
 
@@ -81,12 +84,8 @@ $view->setCaption("Admin Users List");
 
 $page->startRender($menu);
 
-
-
 $view->render();
 
-
 $page->finishRender();
-
 
 ?>

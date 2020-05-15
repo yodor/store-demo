@@ -42,8 +42,6 @@ $tv->setIterator(new SQLQuery($bean->selectTree(array("menu_title")), $bean->key
 
 $page->startRender($menu);
 
-
-
 $tv->render();
 
 $page->finishRender();

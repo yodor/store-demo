@@ -4,7 +4,6 @@ include_once("class/pages/AdminPage.php");
 include_once("class/forms/SectionInputForm.php");
 include_once("class/beans/SectionsBean.php");
 
-
 $menu = array();
 
 $page = new AdminPage();
@@ -21,11 +20,8 @@ $view->processInput();
 
 $page->startRender($menu);
 
-
-
 $view->render();
 
 $page->finishRender();
-
 
 ?>

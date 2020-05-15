@@ -34,7 +34,7 @@ class StorePage extends SparkPage
     public function __construct()
     {
         $this->auth = new UserAuthenticator();
-        $this->loginURL = LOCAL."account/login.php";
+        $this->loginURL = LOCAL . "account/login.php";
 
         parent::__construct();
 
@@ -61,7 +61,6 @@ class StorePage extends SparkPage
 
         $this->addMeta("viewport", "width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0");
 
-
         if (isset($_GET["section"])) {
             $section = DBConnections::Get()->escape($_GET["section"]);
             $qry = $this->sections->queryField("section_title", $section, 1);
@@ -75,7 +74,8 @@ class StorePage extends SparkPage
         }
 
         //construct filters 
-        $search_fields = array("relation.product_name", "relation.product_summary", "relation.keywords", "relation.color", "relation.inventory_attributes");
+        $search_fields = array("relation.product_name", "relation.product_summary", "relation.keywords",
+                               "relation.color", "relation.inventory_attributes");
 
         $ksc = new KeywordSearchComponent($search_fields, "relation");
         $ksc->getForm()->getInput("keyword")->getRenderer()->setInputAttribute("placeholder", "Търси ...");
@@ -83,7 +83,6 @@ class StorePage extends SparkPage
         $ksc->getForm()->getRenderer()->setAttribute("action", LOCAL . "products.php");
         $ksc->getForm()->setCompareExpression("relation.inventory_attributes", array("%:{keyword}|%", "%:{keyword}"));
         $this->keyword_search = $ksc;
-
 
         $this->addCSS(LOCAL . "/css/store.css");
         $this->addCSS("//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css");
@@ -119,9 +118,7 @@ class StorePage extends SparkPage
 
         echo "\n<!-- startRender StorePage-->\n";
 
-
         $this->selectActiveMenu();
-
 
         echo "<div class='full' align=center>";
 
@@ -186,7 +183,6 @@ class StorePage extends SparkPage
     public function finishRender()
     {
 
-
         echo "</div>"; //main_content
         echo "</div>"; //full align=center
 
@@ -228,7 +224,6 @@ class StorePage extends SparkPage
         $this->constructTitle();
 
         parent::finishRender();
-
 
     }
 

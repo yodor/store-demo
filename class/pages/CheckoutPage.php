@@ -2,11 +2,10 @@
 include_once("class/pages/StorePage.php");
 include_once("class/components/CartComponent.php");
 
-
 class CheckoutPage extends StorePage
 {
 
-    public $modify_enabled = false;
+    public $modify_enabled = FALSE;
     public $total = 0.0;
 
     protected $ccmp = NULL;
@@ -16,10 +15,9 @@ class CheckoutPage extends StorePage
 
         parent::__construct();
 
-
         $this->ccmp = new CartComponent();
 
-        $this->addCSS(LOCAL."css/checkout.css");
+        $this->addCSS(LOCAL . "css/checkout.css");
     }
 
     public function drawCartItems($heading_text = "")

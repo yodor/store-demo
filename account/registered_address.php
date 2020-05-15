@@ -43,7 +43,6 @@ $page->startRender();
 $page->setPreferredTitle(tr("Регистриран адрес"));
 echo "<div class='caption'>" . $page->getPreferredTitle() . "</div>";
 
-
 $frend->render();
 
 $page->finishRender();

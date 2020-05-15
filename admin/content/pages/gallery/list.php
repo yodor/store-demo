@@ -9,8 +9,7 @@ include_once("components/GalleryView.php");
 
 $rc = new RequestBeanKey(new DynamicPagesBean(), "../list.php");
 
-$menu = array(
-);
+$menu = array();
 
 $page = new AdminPage();
 $page->checkAccess(ROLE_CONTENT_MENU);
@@ -34,8 +33,6 @@ $gv = new GalleryView($bean);
 $gv->getActionsCollection()->addURLParameter($rc->getURLParameter());
 
 $page->startRender($menu);
-
-
 
 $gv->render();
 

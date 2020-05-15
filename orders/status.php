@@ -7,7 +7,6 @@ include_once("class/beans/OrdersBean.php");
 include_once("forms/processors/FormProcessor.php");
 include_once("forms/renderers/FormRenderer.php");
 
-
 include_once("class/forms/OrderStatusInputForm.php");
 include_once("class/forms/OrderAddressInputForm.php");
 
@@ -16,7 +15,6 @@ class OrderStatusProcessor extends FormProcessor
     public $order = NULL;
     public $orderID = -1;
     public $confirm_ticket = "";
-
 
     protected function processImpl(InputForm $form)
     {
@@ -47,23 +45,18 @@ class OrderStatusProcessor extends FormProcessor
     }
 }
 
-
 $page = new ProductsPage();
 
 $form = new OrderStatusInputForm();
 
-
 $tfr = new FormRenderer($form);
 $tfr->setName("OrderStatus");
-
 
 $proc = new OrderStatusProcessor();
 
 $form->setProcessor($proc);
 
-
 $proc->process($form);
-
 
 if ($proc->getStatus() == IFormProcessor::STATUS_ERROR) {
 
@@ -81,7 +74,6 @@ echo "</div>";
 
 echo "<div class='column right orders'>";
 
-
 if ($proc->getStatus() == IFormProcessor::STATUS_OK) {
 
     echo "<div class='caption'>";
@@ -92,14 +84,12 @@ if ($proc->getStatus() == IFormProcessor::STATUS_OK) {
 
     $page->renderOrderDeliveryAddress($proc->order);
 
-
 }
 else {
 
     echo "<div class='caption'>";
     echo tr("Състояние на поръчка");
     echo "</div>";
-
 
     echo "<div class='panel'>";
 

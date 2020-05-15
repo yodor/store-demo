@@ -46,7 +46,6 @@ class OrderProcessor
             $eab = new EkontAddressesBean();
             $uab = new ClientAddressesBean();
 
-
             $cart_data = array();
 
             $items = $cart->getItems();
@@ -124,7 +123,7 @@ class OrderProcessor
 
                 $pclrID = (int)$item["pclrID"];
                 $pclrpID = -1;
-                if ($pclrID>0) {
+                if ($pclrID > 0) {
                     $pclrpID = $photos->getFirstPhotoID($pclrID);
                 }
 

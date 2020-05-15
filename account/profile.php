@@ -10,15 +10,12 @@ $form = new RegisterClientInputForm();
 
 $form->loadBeanData($page->getUserID(), new UsersBean());
 
-
 $frend = new FormRenderer($form);
 $frend->setLayout(FormRenderer::FIELD_VBOX);
-$frend->getSubmitButton()->setText("Update");
-
+$frend->getSubmitButton()->setContents("Update");
 
 $proc = new RegisterClientFormProcessor();
 $proc->setEditID($page->getUserID());
-
 
 $proc->process($form);
 

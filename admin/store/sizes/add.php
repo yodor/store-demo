@@ -26,11 +26,8 @@ $view->processInput();
 
 $page->startRender($menu);
 
-
-
 $view->render();
 
 $page->finishRender();
-
 
 ?>

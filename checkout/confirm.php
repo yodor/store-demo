@@ -69,7 +69,6 @@ class OrderNoteFormProcessor extends FormProcessor
 
         if ($this->getStatus() != FormProcessor::STATUS_OK) return;
 
-
         $page = HTMLPage::Instance();
         $cart = $page->getCart();
 
@@ -93,7 +92,7 @@ $reqform = new RequireInvoiceInputForm();
 $idb = new InvoiceDetailsBean();
 $idbrow = $idb->findFieldValue("userID", $page->getUserID());
 if (!$idbrow) {
-    $reqform->getInput("require_invoice")->setValue(false);
+    $reqform->getInput("require_invoice")->setValue(FALSE);
 }
 else {
     $reqform->getInput("require_invoice")->setValue($cart->getRequireInvoice());
@@ -106,8 +105,7 @@ $frend = new FormRenderer($reqform);
 
 $reqproc->process($reqform);
 
-
-//order note 
+//order note
 $noteform = new OrderNoteInputForm();
 $noteform->getInput("note")->setValue($cart->getNote());
 
@@ -116,14 +114,11 @@ $nfrend = new FormRenderer($noteform);
 $noteproc = new OrderNoteFormProcessor();
 $noteproc->process($noteform);
 
-
 $page->startRender();
 
 $page->setPreferredTitle(tr("Потвърди поръчка"));
 
-
 $page->drawCartItems();
-
 
 echo "<div class='item delivery_type'>";
 
@@ -138,7 +133,6 @@ echo tr("Промени");
 echo "</a>";
 
 echo "</div>"; //item delivery_type
-
 
 echo "<div class='item address'>";
 
@@ -182,7 +176,6 @@ echo "</div>";//value
 
 echo "</div>";// item address
 
-
 echo "<div class='item invoicing'>";
 
 echo "<div class='caption'>" . tr("Фактуриране") . "</div>";
@@ -202,7 +195,6 @@ if ($idbrow && $cart->getRequireInvoice()) {
 echo "</div>";
 
 echo "</div>";
-
 
 echo "<div class='item note'>";
 echo "<div class='caption'>" . tr("Забележка") . "</div>";
@@ -231,9 +223,7 @@ echo "<div class='ColorButton checkout_button'  >" . tr("Потвърди пор
 echo "</a>";
 echo "</div>";
 
-
 echo "</div>";
-
 
 Session::set("checkout.navigation.back", $page->getPageURL());
 

@@ -2,7 +2,6 @@
 include_once("forms/InputForm.php");
 include_once("input/DataInputFactory.php");
 
-
 class StoreColorInputForm extends InputForm
 {
 
@@ -13,7 +12,7 @@ class StoreColorInputForm extends InputForm
 
         $field = DataInputFactory::Create(DataInputFactory::TEXT, "color", "Име на цвят", 1);
         $this->addInput($field);
-        $field->enableTranslator(true);
+        $field->enableTranslator(TRUE);
 
         $field = DataInputFactory::Create(DataInputFactory::COLOR_CODE, "color_code", "Цветови код", 0);
 

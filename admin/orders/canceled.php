@@ -17,11 +17,9 @@ $bean = new OrdersBean();
 $h_delete = new DeleteItemRequestHandler($bean);
 RequestController::addRequestHandler($h_delete);
 
-
 $sel = new OrdersSQL();
 
-$sel->where = " o.status='".OrdersBean::STATUS_CANCELED."' ";
-
+$sel->where = " o.status='" . OrdersBean::STATUS_CANCELED . "' ";
 
 include_once("list.php");
 
@@ -29,12 +27,9 @@ $menu = array();
 
 $page->startRender($menu);
 
-
 $scomp->render();
 
-
 $view->render();
-
 
 $page->finishRender();
 ?>

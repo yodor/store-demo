@@ -6,7 +6,6 @@ include_once("beans/DynamicPagePhotosBean.php");
 
 include_once("forms/PhotoForm.php");
 
-
 $rc = new RequestBeanKey(new DynamicPagesBean(), "list.php");
 
 $menu = array();
@@ -15,7 +14,7 @@ $page = new AdminPage();
 $page->checkAccess(ROLE_CONTENT_MENU);
 
 $event_photos = new DynamicPagePhotosBean();
-$event_photos->select()->where = $rc->getURLParameter()->text(true);
+$event_photos->select()->where = $rc->getURLParameter()->text(TRUE);
 
 $view = new BeanFormEditor($event_photos, new PhotoForm());
 
@@ -31,6 +30,5 @@ $page->startRender($menu);
 $view->render();
 
 $page->finishRender();
-
 
 ?>

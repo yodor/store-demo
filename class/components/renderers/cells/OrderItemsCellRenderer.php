@@ -32,7 +32,6 @@ class OrderItemsCellRenderer extends TableCellRenderer
 
             $itemID = $item["itemID"];
 
-
             echo "<div class='item qty'>";
             echo "<label>" . tr("Позиция") . "</label>";
             echo "<span>" . $item["position"] . "</span>";
@@ -40,11 +39,10 @@ class OrderItemsCellRenderer extends TableCellRenderer
 
             echo "<div class='item photo'>";
             echo "<label>";
-            echo StorageItem::Image($itemID, get_class($order_items), 100,100);
+            echo StorageItem::Image($itemID, get_class($order_items), 100, 100);
             echo "</label>";
 
             echo "</div>";
-
 
             $details = explode("//", $item["product"]);
             foreach ($details as $index => $data) {
@@ -55,7 +53,6 @@ class OrderItemsCellRenderer extends TableCellRenderer
                 echo "<span>" . $label_value[1] . "</span>";
                 echo "</div>";
             }
-
 
             echo "<div class='item qty'>";
             echo "<label>" . tr("Количество") . "</label>";
@@ -72,14 +69,12 @@ class OrderItemsCellRenderer extends TableCellRenderer
             echo "<span>" . sprintf("%0.2f лв.", ($item["qty"] * $item["price"])) . "</span>";
             echo "</div>";
 
-
             if ($prodID > 0) {
                 echo "<a class='Action' href='" . LOCAL . "admin/store/products/inventory/list.php?prodID=$prodID'>" . tr("Виж инвентар") . "</a>";
             }
         }
 
         echo "</div>";
-
 
     }
 

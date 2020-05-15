@@ -17,7 +17,7 @@ class CopyProductRequestHandler extends RequestHandler
 
         $this->bean = new ProductsBean();
 
-        $this->need_confirm = true;
+        $this->need_confirm = TRUE;
     }
 
     public function getItemID()
@@ -51,9 +51,7 @@ class CopyProductRequestHandler extends RequestHandler
     protected function process()
     {
 
-
         $db = DBConnections::Factory();
-
 
         try {
             $cbrow = $this->bean->getByID($this->item_id);
@@ -97,7 +95,7 @@ class CopyProductRequestHandler extends RequestHandler
             }
 
             $db->commit();
-            $success = true;
+            $success = TRUE;
             Session::SetAlert(tr("Продуктът е копиран успешно.") . tr("Кликнете") . " <a href='add.php?editID=$lastID&catID={$cbrow["catID"]}'>" . tr("тук") . "</a> " . tr("за редактиране"));
 
             header("Location: {$this->cancel_url}");
@@ -110,7 +108,6 @@ class CopyProductRequestHandler extends RequestHandler
         }
 
     }
-
 
 }
 

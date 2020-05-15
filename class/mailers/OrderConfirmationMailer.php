@@ -24,7 +24,6 @@ class OrderConfirmationMailer extends Mailer
 
         $this->subject = "Потвърждение на поръчка / Order Confirmation - OrderID $orderID";
 
-
         $message = "Здравейте, {$user["fullname"]}<br><br>\r\n\r\n";
         $message .= "Изпращаме Ви това съобщение за да Ви уведомим, че поръчка Ви е приета за обработка. ";
         $message .= "\r\n\r\n<br><br>";
@@ -35,7 +34,6 @@ class OrderConfirmationMailer extends Mailer
         $message .= "<a href='$order_link'>$order_link</a>";
 
         $message .= "\r\n\r\n<br><br>";
-
 
         $message .= "Поръчка Номер: $orderID \r\n<br>";
         $message .= "Дата: {$order["order_date"]} \r\n<br>";
@@ -89,11 +87,9 @@ class OrderConfirmationMailer extends Mailer
         $message .= "С уважение,\r\n<BR>";
         $message .= SITE_DOMAIN;
 
-
         $this->body = $this->templateMessage($message);
 
-        
-    }	
+    }
 
 }
 

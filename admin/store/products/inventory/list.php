@@ -150,8 +150,6 @@ Session::Set("products.inventory", $page->getPageURL());
 
 $page->startRender($menu);
 
-
-
 $ksc->render();
 $view->render();
 

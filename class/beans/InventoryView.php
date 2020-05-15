@@ -19,7 +19,6 @@ class InventoryView extends DBViewBean
     // LEFT JOIN store_promos sp ON (sp.targetID = p.catID AND sp.target='Category' AND sp.start_date < NOW() AND sp.end_date > NOW())
     // )
 
-
     public function __construct()
     {
         parent::__construct("inventory");

@@ -6,7 +6,7 @@ include_once("class/utils/Cart.php");
 class OrderDeliveryCellRenderer extends TableCellRenderer
 {
 
-    protected $data = null;
+    protected $data = NULL;
 
     public function setData(array &$row)
     {
@@ -16,7 +16,6 @@ class OrderDeliveryCellRenderer extends TableCellRenderer
 
     protected function renderImpl()
     {
-
 
         $orderID = $this->data["orderID"];
         $userID = $this->data["userID"];
@@ -61,7 +60,6 @@ class OrderDeliveryCellRenderer extends TableCellRenderer
             echo "</div>";
 
         }
-
 
         echo "</div>";
 

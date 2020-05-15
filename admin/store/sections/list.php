@@ -14,7 +14,6 @@ $action_add->setAttribute("action", "add");
 $action_add->setAttribute("title", "Add Section");
 $page->addAction($action_add);
 
-
 $bean = new SectionsBean();
 
 $h_position = new ChangePositionRequestHandler($bean);
@@ -22,7 +21,6 @@ RequestController::addRequestHandler($h_position);
 
 $h_delete = new DeleteItemRequestHandler($bean);
 RequestController::addRequestHandler($h_delete);
-
 
 $view = new TableView($bean->query());
 $view->setCaption("Sections List");
@@ -32,9 +30,7 @@ $view->addColumn(new TableColumn($bean->key(), "ID"));
 $view->addColumn(new TableColumn("section_title", "Section"));
 $view->addColumn(new TableColumn("position", "Position"));
 
-
 $view->addColumn(new TableColumn("actions", "Actions"));
-
 
 $act = new ActionsTableCellRenderer();
 $act->addAction(new Action("Edit", "add.php", array(new DataParameter("editID", $bean->key()))));
@@ -58,14 +54,11 @@ $act->addAction(new Action("Banners Gallery", "banners/list.php", array(new Data
 
 $view->getColumn("actions")->setCellRenderer($act);
 
-
 Session::Set("sections.list", $page->getPageURL());
 
 $page->startRender($menu);
 
-
 $view->render();
-
 
 $page->finishRender();
 

@@ -9,10 +9,7 @@ $page->checkAccess(ROLE_ORDERS_MENU);
 
 $bean = new OrdersBean();
 
-
-
 $sel = new OrdersSQL();
-
 
 include_once("list.php");
 
@@ -20,13 +17,9 @@ $menu = array();
 
 $page->startRender($menu);
 
-
-
 $scomp->render();
 
-
 $view->render();
-
 
 $page->finishRender();
 ?>

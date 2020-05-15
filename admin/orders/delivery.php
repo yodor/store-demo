@@ -7,7 +7,6 @@ include_once("beans/ConfigBean.php");
 include_once("forms/processors/ConfigFormProcessor.php");
 include_once("forms/renderers/FormRenderer.php");
 
-
 $page = new AdminPage();
 $page->checkAccess(ROLE_ORDERS_MENU);
 
@@ -17,12 +16,10 @@ $config->setSection("delivery_prices");
 $form = new DeliveryConfigForm();
 $config->loadForm($form);
 
-
 $rend = new FormRenderer($form);
 $rend->setClassName("config_form");
 
 $proc = new ConfigFormProcessor();
-
 
 $form->setProcessor($proc);
 
@@ -38,8 +35,6 @@ else if ($proc->getStatus() === IFormProcessor::STATUS_ERROR) {
     //   header("Location: delivery.php");
     //   exit;
 }
-
-
 
 $page->startRender();
 

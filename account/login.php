@@ -23,16 +23,14 @@ $af = new LoginForm();
 
 $afr = new LoginFormRenderer($af, $req);
 
-
 $form = new RegisterClientInputForm();
 
 $frender = new FormRenderer($form);
 $frender->setLayout(FormRenderer::FIELD_VBOX);
 
-$frender->getSubmitButton()->setText("Регистрация");
+$frender->getSubmitButton()->setContents("Регистрация");
 
 $proc = new RegisterClientFormProcessor();
-
 
 $proc->process($form);
 

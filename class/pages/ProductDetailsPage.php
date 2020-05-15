@@ -14,11 +14,10 @@ class ProductDetailsPage extends ProductsPage
         $this->list_item = new ProductListItem();
 
         $this->addCSS(LOCAL . "css/product_details.css");
-        $this->addCSS(LOCAL."css/product_details.css");
+        $this->addCSS(LOCAL . "css/product_details.css");
 
         $this->addJS(LOCAL . "js/product_details.js");
     }
-
 
     public function setSellableItem($sellable)
     {
@@ -59,7 +58,6 @@ class ProductDetailsPage extends ProductsPage
         return $this->product_categories->getParentNodes($this->sellable["catID"], array("category_name"));
     }
 
-
     protected function constructPathActions()
     {
 
@@ -71,11 +69,9 @@ class ProductDetailsPage extends ProductsPage
 
     }
 
-
     public function renderSameCategoryProducts()
     {
         echo "<div class='caption'>" . tr("Още продукти от тази категория") . "</div>";
-
 
         $sel = new ProductsSQL();
         $sel->order_by = " pi.view_counter ";
@@ -99,7 +95,6 @@ class ProductDetailsPage extends ProductsPage
     public function renderMostOrderedProducts()
     {
         echo "<div class='caption'>" . tr("Най-продавани от тази секция") . "</div>";
-
 
         $sel = new ProductsSQL();
         $sel->order_by = " pi.order_counter ";

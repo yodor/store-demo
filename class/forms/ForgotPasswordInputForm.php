@@ -2,7 +2,6 @@
 include_once("forms/InputForm.php");
 include_once("input/DataInputFactory.php");
 
-
 class ForgotPasswordInputForm extends InputForm
 {
 

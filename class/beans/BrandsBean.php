@@ -1,7 +1,6 @@
 <?php
 include_once("beans/DBTableBean.php");
 
-
 class BrandsBean extends DBTableBean
 {
 

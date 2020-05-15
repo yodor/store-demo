@@ -5,7 +5,6 @@ class ColorChipsView extends DBViewBean
 {
     protected $createString = "";
 
-
     // create view color_chips as (select
     // i.prodID,
     //  group_concat(ic.piID SEPARATOR '|') as pi_ids,

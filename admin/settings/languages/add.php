@@ -20,5 +20,4 @@ $view->render();
 
 $page->finishRender();
 
-
 ?>

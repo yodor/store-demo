@@ -6,7 +6,6 @@ include_once("forms/SEOConfigForm.php");
 include_once("forms/processors/ConfigFormProcessor.php");
 include_once("forms/renderers/FormRenderer.php");
 
-
 $page = new AdminPage("SEO");
 $page->checkAccess(ROLE_SETTINGS_MENU);
 
@@ -16,16 +15,12 @@ $config->setSection("seo");
 $form = new SEOConfigForm();
 $config->loadForm($form);
 
-
 $rend = new FormRenderer($form);
 $rend->setClassName("config_form");
 
-
 $proc = new ConfigFormProcessor();
 
-
 $form->setProcessor($proc);
-
 
 $proc->process($form);
 
@@ -34,7 +29,6 @@ if ($proc->getStatus() == IFormProcessor::STATUS_OK) {
     header("Location: seo.php");
     exit;
 }
-
 
 $page->startRender();
 

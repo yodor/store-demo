@@ -1,7 +1,6 @@
 <?php
 include_once("beans/OrderedDataBean.php");
 
-
 class SectionBannersBean extends OrderedDataBean
 {
     protected $createString = "CREATE TABLE `section_banners` (

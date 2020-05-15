@@ -15,17 +15,14 @@ $menu = array();
 $page = new AdminPage();
 $page->checkAccess(ROLE_CLIENTS_MENU);
 
-
 $bean = new UsersBean();
 $h_delete = new DeleteItemRequestHandler($bean);
 RequestController::addRequestHandler($h_delete);
 $h_toggle = new ToggleFieldRequestHandler($bean);
 RequestController::addRequestHandler($h_toggle);
 
-
 $search_fields = array("email", "fullname", "phone");
 $scomp = new KeywordSearchComponent($search_fields);
-
 
 $sel = new SQLSelect();
 $sel->fields = " u.email, u.fullname, u.userID, u.phone, last_active, counter, date_signup, u.suspend ";
@@ -35,7 +32,6 @@ $filter = $scomp->filterSelect();
 if ($filter) {
     $sel = $sel->combineWith($filter);
 }
-
 
 $view = new TableView(new SQLQuery($sel, "userID"));
 $view->setDefaultOrder(" userID DESC ");
@@ -54,10 +50,15 @@ $view->addColumn(new TableColumn("suspend", "State"));
 
 $view->addColumn(new TableColumn("actions", "Actions"));
 
-
 $vis_act = new ActionsTableCellRenderer();
-$vis_act->addAction($h_toggle->createAction("Disable", "&field=suspend&status=1", "return (\$row['suspend'] < 1);"));
-$vis_act->addAction($h_toggle->createAction("Enable", "&field=suspend&status=0", "return (\$row['suspend'] > 0);"));
+$check_is_suspend = function (Action $act, array $data) {
+    return ($data['suspend'] < 1);
+};
+$check_is_not_suspend = function (Action $act, array $data) {
+    return ($data['suspend'] > 0);
+};
+$vis_act->addAction($h_toggle->createAction("Disable", "?field=suspend&status=1", $check_is_suspend));
+$vis_act->addAction($h_toggle->createAction("Enable", "?field=suspend&status=0", $check_is_not_suspend));
 $view->getColumn("suspend")->setCellRenderer($vis_act);
 
 $act = new ActionsTableCellRenderer();
@@ -71,8 +72,6 @@ $view->getColumn("actions")->setCellRenderer($act);
 Session::Set("clients.list", $page->getPageURL());
 
 $page->startRender($menu);
-
-
 
 $scomp->render();
 

@@ -8,7 +8,6 @@ include_once("beans/LanguagesBean.php");
 include_once("panels/PhraseTranslationDialog.php");
 include_once("iterators/SQLQuery.php");
 
-
 $page = new AdminPage();
 $page->checkAccess(ROLE_SETTINGS_MENU);
 
@@ -21,14 +20,12 @@ $langID = (int)$_GET["langID"];
 $lb = new LanguagesBean();
 $lrow = $lb->getByID($langID);
 
-
 $bean = new SiteTextsBean();
 
 $menu = array();
 
 $dialog = new PhraseTranslationDialog();
 $dialog->setAttribute("langID", $langID);
-
 
 $search_fields = array("value");
 
@@ -48,12 +45,10 @@ $search_qry = $scomp->getForm()->searchFilterSelect();
 
 $qry = $qry->combineWith($search_qry);
 
-
 $view = new TableView(new SQLQuery($qry, $bean->key()));
 $view->setCaption("Available Phrases For Translation");
 // $view->setClassName("TranslationPhrases");
 // $view->setAttribute("langID", $langID);
-
 
 $view->items_per_page = 20;
 
@@ -70,7 +65,6 @@ $view->getColumn("phrase")->getCellRenderer()->addValueAttribute("trID");
 $view->getColumn("translation")->getCellRenderer()->addValueAttribute("textID");
 $view->getColumn("translation")->getCellRenderer()->addValueAttribute("trID");
 
-
 $view->addColumn(new TableColumn("actions", "Actions"));
 
 //command actions edit/delete
@@ -82,22 +76,17 @@ $act->addAction(new PipeSeparator());
 $action_clear = new Action("Clear", "javascript:phrase_translator.clear(%textID%)", array(new DataParameter("textID", "textID")));
 $act->addAction($action_clear);
 
-
 $view->getColumn("actions")->setCellRenderer($act);
 
-
 $page->startRender($menu);
-
 
 echo "<div class='page_caption'>";
 echo tr("Translations For") . ": " . tr($lrow["language"]);
 echo "</div>";
 
-
 $scomp->render();
 
 $view->render();
-
 
 ?>
 

@@ -42,7 +42,6 @@ Session::Set("section.banners.list", $page->getPageURL());
 
 $page->startRender($menu);
 
-
 $gv->render();
 
 $page->finishRender();

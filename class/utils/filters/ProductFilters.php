@@ -68,7 +68,6 @@ class SizingFilter implements IQueryFilter
     }
 }
 
-
 class PricingFilter implements IQueryFilter
 {
     public function filterSelect($view = NULL, $value = NULL)
@@ -113,7 +112,6 @@ class InventoryAttributeFilter implements IQueryFilter
             //?ia=Материал:Пух|Години:10
             $all_filters = explode("|", $value);
             // 	  var_dump($all_filters);
-
 
             foreach ($all_filters as $idx => $filter) {
                 if (strlen($filter) < 1) continue;

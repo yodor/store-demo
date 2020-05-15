@@ -5,7 +5,6 @@ include_once("class/beans/ProductCategoriesBean.php");
 include_once("components/NestedSetTreeView.php");
 include_once("components/renderers/items/TextTreeItem.php");
 
-
 $menu = array();
 
 $page = new AdminPage();
@@ -23,7 +22,6 @@ RequestController::addRequestHandler($h_repos);
 
 $h_delete = new DeleteItemRequestHandler($bean);
 RequestController::addRequestHandler($h_delete);
-
 
 $ir = new TextTreeItem();
 $ir->addAction(new Action("Up", "?cmd=reposition&type=left", array(new DataParameter("item_id", $bean->key()))));
@@ -45,10 +43,8 @@ Session::Set("categories.list", $page->getPageURL());
 
 $page->startRender($menu);
 
-
 $tv->render();
 
 $page->finishRender();
-
 
 ?>

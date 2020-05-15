@@ -6,12 +6,10 @@ include_once("class/beans/GalleryPhotosBean.php");
 
 include_once("forms/PhotoForm.php");
 
-
 $page = new AdminPage();
 $page->checkAccess(ROLE_CONTENT_MENU);
 
 $event_photos = new GalleryPhotosBean();
-
 
 //prefer db_row
 $view = new BeanFormEditor($event_photos, new PhotoForm());
@@ -25,6 +23,5 @@ $page->startRender();
 $view->render();
 
 $page->finishRender();
-
 
 ?>

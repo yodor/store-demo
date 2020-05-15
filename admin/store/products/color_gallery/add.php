@@ -17,13 +17,11 @@ $page->addAction($action_back);
 
 $ensure_product = new RequestBeanKey(new ProductsBean(), "../list.php", array("product_name"));
 
-
 $view = new BeanFormEditor(new ProductColorsBean(), new ProductColorInputForm($ensure_product->getID()));
 
 Session::Set("color_codes.list", $page->getPageURL());
 
 $view->getTransactor()->appendValue("prodID", $ensure_product->getID());
-
 
 $page->setCaption("Color Scheme: " . $ensure_product->getData("product_name"));
 
@@ -31,11 +29,8 @@ $view->processInput();
 
 $page->startRender($menu);
 
-
-
 $view->render();
 
 $page->finishRender();
-
 
 ?>

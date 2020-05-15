@@ -8,7 +8,6 @@ include_once("class/forms/ForgotPasswordInputForm.php");
 
 include_once("auth/Authenticator.php");
 
-
 class ForgotPasswordProcessor extends FormProcessor
 {
     protected function processImpl(InputForm $form)
@@ -25,7 +24,6 @@ class ForgotPasswordProcessor extends FormProcessor
             $form->getInput("email")->setError(tr("Този адрес не е регистриран при нас"));
             throw new Exception(tr("Този адрес не е регистриран при нас"));
         }
-
 
         $random_pass = Authenticator::RandomToken(8);
 
@@ -51,7 +49,7 @@ class ForgotPasswordProcessor extends FormProcessor
     }
 }
 
-$page = new AccountPage(false);
+$page = new AccountPage(FALSE);
 
 $users = new UsersBean();
 
@@ -59,7 +57,7 @@ $form = new ForgotPasswordInputForm();
 
 $frend = new FormRenderer($form);
 $frend->setName("ForgotPassword");
-$frend->getSubmitButton()->setText(tr("Изпрати"));
+$frend->getSubmitButton()->setContents("Изпрати");
 
 $proc = new ForgotPasswordProcessor();
 $form->setProcessor($proc);

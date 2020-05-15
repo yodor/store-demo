@@ -5,7 +5,6 @@ include_once("class/pages/AdminPage.php");
 
 include_once("class/mailers/OrderConfirmationMailer.php");
 
-
 $page = new AdminPage();
 $page->startRender();
 
@@ -18,6 +17,5 @@ $mailer = new OrderConfirmationMailer($orderID);
 $mailer->send();
 
 $page->finishRender();
-
 
 ?>

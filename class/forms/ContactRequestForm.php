@@ -18,9 +18,7 @@ class ContactRequestForm extends InputForm
         $field = DataInputFactory::Create(DataInputFactory::TEXTAREA, "query", "Запитване", 1);
         $this->addInput($field);
 
-
     }
-
 
 }
 

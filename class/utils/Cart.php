@@ -11,11 +11,10 @@ class Cart
 
     protected $delivery_options = NULL;
 
-
     protected $delivery_type = NULL;
     protected $note = "";
 
-    protected $require_invoice = false;
+    protected $require_invoice = FALSE;
 
     public function __construct()
     {
@@ -143,7 +142,6 @@ class Cart
 
         if (isset($this->items[$piID])) {
 
-
             unset($this->items[$piID]);
 
             $this->storeCart();
@@ -182,7 +180,7 @@ class Cart
     {
         $this->items = array();
         $this->note = "";
-        $this->require_invoice = false;
+        $this->require_invoice = FALSE;
         $this->delivery_type = "";
         $this->storeCart();
     }

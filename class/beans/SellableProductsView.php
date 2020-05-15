@@ -26,7 +26,6 @@ class SellableProductsView extends DBViewBean
     // GROUP BY  si.prodID, si.pclrID
     // )
 
-
     public function __construct()
     {
         parent::__construct("sellable_products");

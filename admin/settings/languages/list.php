@@ -3,7 +3,6 @@ include_once("session.php");
 include_once("class/pages/AdminPage.php");
 include_once("beans/LanguagesBean.php");
 
-
 $page = new AdminPage("Languages");
 $page->checkAccess(ROLE_SETTINGS_MENU);
 
@@ -20,7 +19,6 @@ $bean = new LanguagesBean();
 $h_delete = new DeleteItemRequestHandler($bean);
 RequestController::addRequestHandler($h_delete);
 
-
 $view = new TableView($bean->query());
 
 $view->addColumn(new TableColumn($bean->key(), "ID"));
@@ -35,18 +33,12 @@ $act->addAction(new PipeSeparator());
 $act->addAction($h_delete->createAction());
 $view->getColumn("actions")->setCellRenderer($act);
 
-
 $view->setCaption("Languages List");
-
 
 $page->startRender($menu);
 
-
-
 $view->render();
 
-
 $page->finishRender();
-
 
 ?>

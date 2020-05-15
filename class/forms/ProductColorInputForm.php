@@ -4,7 +4,6 @@ include_once("input/DataInputFactory.php");
 include_once("class/beans/ProductColorPhotosBean.php");
 include_once("class/beans/StoreColorsBean.php");
 
-
 class ProductColorInputForm extends InputForm
 {
 

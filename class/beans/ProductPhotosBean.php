@@ -1,7 +1,6 @@
 <?php
 include_once("beans/OrderedDataBean.php");
 
-
 class ProductPhotosBean extends OrderedDataBean
 {
     protected $createString = "CREATE TABLE `product_photos` (
@@ -22,21 +21,21 @@ class ProductPhotosBean extends OrderedDataBean
     }
 
     //return ppID
-    public function getFirstPhotoID($prodID) 
+    public function getFirstPhotoID($prodID)
     {
-    
+
         $ppID = -1;
         $qry = $this->queryField("prodID", $prodID, 1);
         $qry->select->order_by = " position ASC ";
         $qry->select->fields = $this->key();
         $qry->exec();
 
-        if ($photo_row = $qry->next()){
+        if ($photo_row = $qry->next()) {
             $ppID = $photo_row[$this->key()];
         }
-        
+
         return $ppID;
-    
+
     }
 }
 

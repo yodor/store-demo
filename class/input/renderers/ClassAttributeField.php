@@ -48,7 +48,6 @@ class ClassAttributeFieldAjaxHandler extends JSONRequestHandler
         $field->allow_dynamic_addition = FALSE;
         $field->source_label_visible = TRUE;
 
-
         $bean1 = new ClassAttributeValuesBean();
         $field->getProcessor()->setTransactBean($bean1);
 
@@ -92,7 +91,7 @@ class ClassAttributeField extends DataIteratorField
     {
         $this->catID = $catID;
         $this->iterator->select->fields = " ca.*, ma.name as attribute_name, ma.unit, ma.type ";
-        $this->iterator->select->from = $this->iterator->name(). " ca, attributes ma ";
+        $this->iterator->select->from = $this->iterator->name() . " ca, attributes ma ";
         $this->iterator->select->where = "ca.catID='$catID' AND ma.maID=ca.maID";
 
     }
@@ -102,13 +101,12 @@ class ClassAttributeField extends DataIteratorField
         $this->prodID = (int)$prodID;
         if ($this->prodID > 0) {
             $this->iterator->select->fields = "ca.*, ma.name as attribute_name, ma.unit, ma.type, cav.value, cav.prodID";
-            $this->iterator->select->from = $this->iterator->name(). " ca LEFT JOIN class_attribute_values cav ON ca.caID = cav.caID , attributes ma ";
+            $this->iterator->select->from = $this->iterator->name() . " ca LEFT JOIN class_attribute_values cav ON ca.caID = cav.caID , attributes ma ";
             $this->iterator->select->where = "ma.maID=ca.maID AND ca.catID='{$this->catID}'";
             $this->iterator->select->group_by = "ca.caID";
             $this->iterator->select->having = "(cav.prodID='{$this->prodID}' OR cav.prodID IS NULL)";
         }
     }
-
 
     public function renderImpl()
     {
@@ -126,7 +124,7 @@ class ClassAttributeField extends DataIteratorField
     protected function renderItems()
     {
 
-        if ( $this->iterator->count() < 1) {
+        if ($this->iterator->count() < 1) {
             echo tr("No optional attributes");
             return;
         }
@@ -168,8 +166,6 @@ class ClassAttributeField extends DataIteratorField
         </script>
         <?php
     }
-
-
 
 }
 

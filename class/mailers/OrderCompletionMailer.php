@@ -28,7 +28,6 @@ class OrderCompletionMailer extends Mailer
         $message .= $order_row["cart_data"] . "<br>\r\n";
         $message .= "\r\n\r\n<br><br>";
 
-
         $message .= "Цена Всичко: " . $order_row["order_total"] . " " . $order_row["active_currency"];
 
         $message .= "<BR><BR>\r\n\r\nС Уважение,<BR>\r\n";

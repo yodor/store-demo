@@ -15,23 +15,20 @@ include_once("class/forms/processors/OrderConfirmProcessor.php");
 
 $page = new ProductsPage();
 
-
-$confirm_success = false;
+$confirm_success = FALSE;
 $error_details = "";
-
 
 ob_start();
 $confirm_proc = new OrderConfirmProcessor();
 try {
     $confirm_proc->process();
-    $confirm_success = true;
+    $confirm_success = TRUE;
 }
 catch (Exception $e) {
     $error_details = $e->getMessage();
     //   Session::Alert(tr($error_details));
 }
 ob_end_clean();
-
 
 $page->startRender();
 
@@ -47,7 +44,6 @@ echo "<div class='caption'>";
 echo tr("Потвърждаване на поръчка");
 echo "</div>";
 
-
 if ($confirm_success) {
 
     echo "<div class='panel'>";
@@ -57,7 +53,6 @@ if ($confirm_success) {
     echo "</div>";
 
     echo "</div>";
-
 
     $page->renderOrderDetails($confirm_proc->orderID, $confirm_proc->confirmed_order, $confirm_proc->confirm_ticket);
 
@@ -86,7 +81,6 @@ if ($confirm_success) {
     ob_end_clean();
     ///////
 
-
 }
 else {
     echo "<div class='panel'>";
@@ -96,7 +90,6 @@ else {
     echo "</div>";
 
     echo "</div>";
-
 
     echo "<div class='caption'>";
     echo tr("Детайли");
@@ -111,7 +104,6 @@ else {
     echo "<a href='" . LOCAL . "contacts.php'>" . tr("Продължи към страницата за контакти.") . "</a>";
     echo "<BR><BR>";
 
-
     echo tr("Код за потвърждение на поръчка") . ": ";
     echo "<div class='confirm_ticket'>" . $confirm_proc->confirm_ticket . "</div>";
 
@@ -123,7 +115,6 @@ else {
     echo "<div class='error_message'>";
     echo tr($error_details);
     echo "</div>";
-
 
     echo "</div>";
 }

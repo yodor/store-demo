@@ -57,7 +57,6 @@ $view->getColumn("visible")->setCellRenderer(new BooleanFieldCellRenderer("Yes",
 
 $view->getColumn("photo")->setCellRenderer(new TableImageCellRenderer());
 
-
 $act = new ActionsTableCellRenderer();
 
 if (isset($_GET["chooser"]) && isset($_SESSION["chooser_return"])) {
@@ -102,7 +101,6 @@ $page->startRender($menu);
 // echo "<div class='page_caption'>";
 // echo tr("Dynamic Pages");
 // echo "</div>";
-
 
 $view->render();
 if (isset($_GET["chooser"])) unset($_GET["chooser"]);

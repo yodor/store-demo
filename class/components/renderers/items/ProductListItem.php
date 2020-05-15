@@ -3,15 +3,14 @@ include_once("components/renderers/items/DataIteratorItem.php");
 include_once("storage/StorageItem.php");
 include_once("class/beans/ProductColorPhotosBean.php");
 
-class ProductListItem extends DataIteratorItem implements IHeadContents {
+class ProductListItem extends DataIteratorItem implements IHeadContents
+{
 
+    protected $colors = NULL;
 
-    protected $colors = null;
+    protected $photo = NULL;
 
-    protected $photo = null;
-
-    protected $sel = null;
-
+    protected $sel = NULL;
 
     public function __construct()
     {
@@ -20,7 +19,6 @@ class ProductListItem extends DataIteratorItem implements IHeadContents {
         $sel = new SQLSelect();
 
         $sel->from = " product_colors pc JOIN store_colors sc ON sc.color=pc.color  LEFT JOIN product_inventory pi ON pi.prodID=pc.prodID AND pi.color=pc.color";
-
 
         $sel->fields = " pi.piID, pc.pclrID, pc.color, pc.prodID, sc.color_code,
 
@@ -36,7 +34,7 @@ class ProductListItem extends DataIteratorItem implements IHeadContents {
     public function requiredStyle()
     {
         $arr = parent::requiredStyle();
-        $arr[] = LOCAL."css/ProductListItem.css";
+        $arr[] = LOCAL . "css/ProductListItem.css";
         return $arr;
     }
 
@@ -46,10 +44,9 @@ class ProductListItem extends DataIteratorItem implements IHeadContents {
         $this->setAttribute("prodID", $this->data["prodID"]);
         $this->setAttribute("piID", $this->data["piID"]);
 
-
         if ($this->data["color_ids"]) {
             $colors = explode("|", $this->data["color_ids"]);
-            if (count($colors)>0) {
+            if (count($colors) > 0) {
 
                 $this->colors = $colors;
             }
@@ -57,18 +54,16 @@ class ProductListItem extends DataIteratorItem implements IHeadContents {
         }
         //         var_dump($this->colors);
 
-
-        if (isset($item["pclrpID"]) && $item["pclrpID"]>0) {
+        if (isset($item["pclrpID"]) && $item["pclrpID"] > 0) {
 
             $this->photo->id = (int)$item["pclrpID"];
             $this->photo->className = "ProductColorPhotosBean";//ProductColorPhotosBean::class;
         }
-        else if (isset($item["ppID"]) && $item["ppID"]>0){
+        else if (isset($item["ppID"]) && $item["ppID"] > 0) {
 
             $this->photo->id = (int)$item["ppID"];
             $this->photo->className = "ProductPhotosBean";//ProductPhotosBean::class;
         }
-
 
         //$this->sel->where = " pc.prodID = {$item["prodID"]} ";
     }
@@ -82,13 +77,13 @@ class ProductListItem extends DataIteratorItem implements IHeadContents {
 
         // 	cho $this->sel->getSQL();
 
-        $product_href = LOCAL."details.php?prodID={$this->data["prodID"]}";
-        $item_href = LOCAL."details.php?prodID={$this->data["prodID"]}&piID=";
+        $product_href = LOCAL . "details.php?prodID={$this->data["prodID"]}";
+        $item_href = LOCAL . "details.php?prodID={$this->data["prodID"]}&piID=";
 
-        $item_href_main = $item_href.$this->data["piID"];
+        $item_href_main = $item_href . $this->data["piID"];
         echo "<a href='$item_href_main' class='product_link'>";
         if ($this->photo) {
-            $img_href = $this->photo->hrefThumb(275,275);
+            $img_href = $this->photo->hrefThumb(275, 275);
             echo "<img src='$img_href'>";
         }
         echo "</a>";
@@ -98,15 +93,15 @@ class ProductListItem extends DataIteratorItem implements IHeadContents {
         echo "<div class='colors_container'>";
 
         $num_colors = is_array($this->colors) ? count($this->colors) : 0;
-        if ($num_colors>0) {
+        if ($num_colors > 0) {
 
-            echo "<div class='colors'>".$num_colors." ".($num_colors>1 ? tr("цвята") : tr("цвят"))."</div>";
+            echo "<div class='colors'>" . $num_colors . " " . ($num_colors > 1 ? tr("цвята") : tr("цвят")) . "</div>";
 
             echo "<div class='color_chips'>";
 
             $db = DBConnections::get();
 
-            foreach ($this->colors as $idx=>$pclrID) {
+            foreach ($this->colors as $idx => $pclrID) {
 
                 $this->sel->where = " pc.prodID='{$this->data["prodID"]}' AND pc.pclrID='$pclrID' ";
                 //echo $this->sel->getSQL();
@@ -114,31 +109,31 @@ class ProductListItem extends DataIteratorItem implements IHeadContents {
                 $res = $db->query($this->sel->getSQL());
                 if (!$res) throw new Exception($db->getError());
 
-                $chip_class  =  "";
+                $chip_class = "";
                 $chip_id = -1;
-                $use_color_code = false;
+                $use_color_code = FALSE;
 
                 if ($prow = $db->fetch($res)) {
 
                     //use color chip if any
-                    if ($prow["have_chip"]>0) {
+                    if ($prow["have_chip"] > 0) {
                         $chip_class = "ProductColorsBean&field=color_photo";
                         $chip_id = $pclrID;
                     }
                     //use the product photo if no color photo is set
-                    else if ($prow["pclrpID"]<1 && $prow["ppID"]>0) {
+                    else if ($prow["pclrpID"] < 1 && $prow["ppID"] > 0) {
                         $chip_class = "ProductPhotosBean";
                         $chip_id = $prow["ppID"];
                     }
                     else {
                         $chip_class = "ProductColorPhotosBean";
                         $chip_id = $prow["pclrpID"];
-                        if ((int)$chip_id==0) {
-                            $use_color_code = true;
+                        if ((int)$chip_id == 0) {
+                            $use_color_code = TRUE;
                         }
                     }
 
-                    $item_href_color = $item_href.$prow["piID"];
+                    $item_href_color = $item_href . $prow["piID"];
                     $color_code = $prow["color_code"];
                     echo "<a href='$item_href_color' class='item' color_code='$color_code' title='{$prow["color"]}'>";
                     if ($use_color_code) {
@@ -160,16 +155,15 @@ class ProductListItem extends DataIteratorItem implements IHeadContents {
         }
         echo "</div>"; //colors_container
 
-
-        echo "<a class='product_name' href='$item_href_main' >".$this->data["product_name"]."</a>";
+        echo "<a class='product_name' href='$item_href_main' >" . $this->data["product_name"] . "</a>";
         //echo "<div class='stock_amount'><label>".tr("Наличност").": </label>".$this->item["stock_amount"]."</div>";
 
         echo "<div class='sell_price'>";
 
-        echo "<div class='item_price'>".sprintf("%1.2f",$this->data["sell_price"])." ".tr("лв.")."</div>";
+        echo "<div class='item_price'>" . sprintf("%1.2f", $this->data["sell_price"]) . " " . tr("лв.") . "</div>";
 
-        if ($this->data["price_min"] != $this->data["sell_price"] || $this->data["price_max"] != $this->data["sell_price"] ) {
-            echo "<div class='series_price'>".sprintf("%1.2f",$this->data["price_min"])." ".tr("лв.")." - ".sprintf("%1.2f",$this->data["price_max"])." ".tr("лв.")."</div>";
+        if ($this->data["price_min"] != $this->data["sell_price"] || $this->data["price_max"] != $this->data["sell_price"]) {
+            echo "<div class='series_price'>" . sprintf("%1.2f", $this->data["price_min"]) . " " . tr("лв.") . " - " . sprintf("%1.2f", $this->data["price_max"]) . " " . tr("лв.") . "</div>";
         }
 
         echo "</div>";
@@ -180,8 +174,10 @@ class ProductListItem extends DataIteratorItem implements IHeadContents {
 
     }
 
-    public function renderSeparator($idx_curr, $items_total) {
+    public function renderSeparator($idx_curr, $items_total)
+    {
 
     }
 }
+
 ?>

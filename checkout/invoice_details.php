@@ -7,7 +7,6 @@ include_once("class/beans/InvoiceDetailsBean.php");
 include_once("class/forms/processors/InvoiceDetailsFormProcessor.php");
 include_once("db/BeanTransactor.php");
 
-
 $page = new CheckoutPage();
 
 $page->ensureCartItems();
@@ -31,7 +30,7 @@ $proc->setBean($ccb);
 
 $frend = new FormRenderer($form);
 $frend->setClassName("InvoiceDetails");
-$frend->getSubmitLine()->setEnabled(false);
+$frend->getSubmitLine()->setEnabled(FALSE);
 
 $proc->process($form);
 
@@ -44,23 +43,17 @@ else if ($proc->getStatus() == FormProcessor::STATUS_ERROR) {
 }
 $page->startRender();
 
-
 $page->setPreferredTitle(tr("Детайли за фактуриране"));
 
-
 $page->drawCartItems();
-
 
 echo "<div class='item invoice_details'>";
 
 echo "<div class='caption'>" . $page->getPreferredTitle() . "</div>";
 
-
 $frend->render();
 
-
 echo "</div>"; //invoice_details
-
 
 echo "<div class='navigation'>";
 
@@ -81,9 +74,7 @@ echo "<div class='ColorButton checkout_button'  >" . tr("Продължи") . "<
 echo "</a>";
 echo "</div>";
 
-
 echo "</div>"; //navigation
-
 
 $page->finishRender();
 ?>

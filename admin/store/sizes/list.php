@@ -2,18 +2,14 @@
 include_once("session.php");
 include_once("class/pages/AdminPage.php");
 
-
 include_once("class/beans/StoreSizesBean.php");
-
 
 include_once("components/TableView.php");
 include_once("components/renderers/cells/TableImageCellRenderer.php");
 include_once("components/KeywordSearchComponent.php");
 include_once("iterators/SQLQuery.php");
 
-
 $menu = array();
-
 
 $page = new AdminPage();
 $page->checkAccess(ROLE_CONTENT_MENU);
@@ -25,10 +21,8 @@ $page->addAction($action_add);
 
 $bean = new StoreSizesBean();
 
-
 $h_delete = new DeleteItemRequestHandler($bean);
 RequestController::addRequestHandler($h_delete);
-
 
 $view = new TableView($bean->query());
 $view->items_per_page = 100;
@@ -51,8 +45,6 @@ $view->getColumn("actions")->setCellRenderer($act);
 Session::Set("sizing.list", $page->getPageURL());
 
 $page->startRender($menu);
-
-
 
 $view->render();
 

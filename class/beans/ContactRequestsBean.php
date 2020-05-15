@@ -15,9 +15,8 @@ class ContactRequestsBean extends DBTableBean
     public function __construct()
     {
         parent::__construct("contact_requests");
-        $this->na_str = false;
+        $this->na_str = FALSE;
         $this->na_val = "";
     }
-
 
 }

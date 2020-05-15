@@ -1,7 +1,6 @@
 <?php
 include_once("beans/OrderedDataBean.php");
 
-
 class GalleryPhotosBean extends OrderedDataBean
 {
 

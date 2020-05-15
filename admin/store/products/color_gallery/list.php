@@ -91,8 +91,6 @@ Session::Set("product.color_scheme", $page->getPageURL());
 
 $page->startRender($menu);
 
-
-
 // $ksc->render();
 $view->render();
 

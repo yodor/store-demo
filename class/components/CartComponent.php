@@ -133,12 +133,11 @@ class CartComponent extends Component implements IHeadContents
         }
         else {
             $ppID = $this->product_photos->getFirstPhotoID($prodID);
-            if ($ppID>0) {
+            if ($ppID > 0) {
                 $this->image_popup->setID($ppID);
                 $this->image_popup->setBeanClass(get_class($this->product_photos));
             }
         }
-
 
         $this->image_popup->render();
 

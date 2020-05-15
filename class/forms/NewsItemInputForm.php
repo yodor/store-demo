@@ -5,7 +5,6 @@ include_once("input/DataInputFactory.php");
 class NewsItemInputForm extends InputForm
 {
 
-
     public function __construct()
     {
 

@@ -1,7 +1,6 @@
 <?php
 include_once("beans/DBTableBean.php");
 
-
 class StoreSizesBean extends DBTableBean
 {
     protected $createString = "CREATE TABLE `store_sizes` (

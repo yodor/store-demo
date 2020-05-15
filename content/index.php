@@ -7,12 +7,10 @@ include_once("beans/MenuItemsBean.php");
 
 $page = new DemoPage();
 
-
 if (!isset($_GET["page_id"]) || !isset($_GET["page_class"])) {
 
     exit;
 }
-
 
 $page_class = DBConnections::Get()->escape($_GET["page_class"]);
 $page_id = (int)$_GET["page_id"];
@@ -46,16 +44,13 @@ $menu1->constructMenuItems(0, NULL, "menuID", "menu_title");
 $menu_bar1 = new MenuBarComponent($menu1);
 $menu_bar1->setName("MenuItemsBean");
 
-
 $page->startRender();
-
 
 echo "<div class='$page_class'>";
 
 echo "<div class='MenuBarWrapper'>";
 $menu_bar1->render();
 echo "</div>";
-
 
 echo "<div class='photo'>";
 $photo_href = StorageItem::Image($page_id, $page_class);
@@ -73,7 +68,6 @@ if (isset($rrow["subtitle"])) {
 echo "<div class='content'>" . $rrow["content"] . "</div>";
 
 echo "<div class='PagePhotos'>";
-
 
 $dpp = new DynamicPagePhotosBean();
 $qry = $dpp->queryField("dpID", $page_id, 1);
@@ -100,9 +94,7 @@ if ($num_photos && $dpprow = $qry->next()) {
 
 echo "</div>";
 
-
 echo "</div>"; //$page_class
-
 
 $page->finishRender();
 ?>

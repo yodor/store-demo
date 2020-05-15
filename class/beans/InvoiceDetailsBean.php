@@ -21,12 +21,10 @@ class InvoiceDetailsBean extends DBTableBean
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8
 ";
 
-
     public function __construct()
     {
         parent::__construct("invoice_details");
     }
-
 
 }
 

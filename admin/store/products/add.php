@@ -4,7 +4,6 @@ include_once("class/pages/AdminPage.php");
 include_once("class/forms/ProductInputForm.php");
 include_once("class/beans/ProductsBean.php");
 
-
 $menu = array();
 
 $page = new AdminPage();
@@ -22,14 +21,11 @@ Session::Set("categories.list", $page->getPageURL());
 Session::Set("brands.list", $page->getPageURL());
 Session::Set("classes.list", $page->getPageURL());
 
-
 $view->getTransactor()->assignInsertValue("insert_date", DBConnections::Get()->dateTime());
 
 $view->processInput();
 
 $page->startRender($menu);
-
-
 
 $view->render();
 

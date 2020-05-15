@@ -7,8 +7,7 @@ include_once("class/beans/ProductInventoryBean.php");
 include_once("class/utils/Cart.php");
 
 $page = new CheckoutPage();
-$page->modify_enabled = true;
-
+$page->modify_enabled = TRUE;
 
 $products = new ProductsBean();
 $inventory = new ProductInventoryBean();
@@ -87,19 +86,15 @@ else if (isset($_GET["clear"])) {
 
 }
 
-
 $page->startRender();
 
 $page->setPreferredTitle(tr("Съдържание на кошницата"));
-
 
 echo "<div class='caption'>" . $page->getPreferredTitle() . "</div>";
 
 $page->drawCartItems();
 
-
 if ($page->total) {
-
 
     echo "<div class='navigation'>";
 
@@ -134,7 +129,6 @@ else {
     echo tr("Продължи пазаруването");
     echo "</a>";
 }
-
 
 Session::set("checkout.navigation.back", $page->getPageURL());
 

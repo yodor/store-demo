@@ -102,6 +102,7 @@ $view->getColumn("require_invoice")->setCellRenderer(new OrderInvoiceCellRendere
 $act = new ActionsTableCellRenderer();
 
 // $act->addAction(
+
 //   $h1->createAction("Маркирай изпратена","?cmd=confirm_send",  "return (\$row['status']>0 && \$row['is_complete']<1);")
 //
 // );

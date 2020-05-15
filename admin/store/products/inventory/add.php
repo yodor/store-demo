@@ -48,8 +48,6 @@ if ($copyID > 0) {
 
 $page->startRender($menu);
 
-
-
 $view->render();
 
 $page->finishRender();

@@ -4,16 +4,13 @@ $cdir = dirname(__FILE__);
 $realpath = realpath($cdir . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR);
 include_once($realpath . "/session.php");
 
-
 $all_roles = array(
 
     "ROLE_STORE_MENU", "ROLE_ORDERS_MENU", "ROLE_CLIENTS_MENU", "ROLE_CONTENT_MENU", "ROLE_SETTINGS_MENU");
 
-
 foreach ($all_roles as $key => $val) {
     define($val, $val);
 }
-
 
 include_once("utils/MenuItem.php");
 $admin_menu = array();
@@ -27,6 +24,5 @@ $admin_menu[] = new MenuItem("Клиенти", ADMIN_LOCAL . "clients/index.php"
 $admin_menu[] = new MenuItem("Съдържание", ADMIN_LOCAL . "content/index.php", "class:icon_content");
 
 $admin_menu[] = new MenuItem("Настройки", ADMIN_LOCAL . "settings/index.php", "class:icon_settings");
-
 
 ?>

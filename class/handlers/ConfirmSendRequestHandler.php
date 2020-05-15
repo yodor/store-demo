@@ -28,9 +28,7 @@ class ConfirmSendRequestHandler extends RequestHandler
     protected function process()
     {
 
-
         //$db = DBConnections::Get();
-
 
         try {
             // 	  $field_name = $db->escapeString($this->field_name);
@@ -58,9 +56,7 @@ class ConfirmSendRequestHandler extends RequestHandler
             throw $e;
         }
 
-
     }
-
 
 }
 

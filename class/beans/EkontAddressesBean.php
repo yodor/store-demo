@@ -23,7 +23,6 @@ class EkontAddressesBean extends DBTableBean
         parent::__construct("ekont_addresses");
     }
 
-
 }
 
 ?>

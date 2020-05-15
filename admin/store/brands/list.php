@@ -14,12 +14,10 @@ $action_add->setAttribute("action", "add");
 $action_add->setAttribute("title", "Add Brand");
 $page->addAction($action_add);
 
-
 $bean = new BrandsBean();
 
 $h_delete = new DeleteItemRequestHandler($bean);
 RequestController::addRequestHandler($h_delete);
-
 
 $view = new TableView($bean->query());
 $view->setCaption("Brands List");
@@ -30,15 +28,12 @@ $view->addColumn(new TableColumn("brand_name", "Name"));
 $view->addColumn(new TableColumn("summary", "Summary"));
 $view->addColumn(new TableColumn("url", "URL"));
 
-
 $view->addColumn(new TableColumn("actions", "Actions"));
-
 
 $act = new ActionsTableCellRenderer();
 $act->addAction(new Action("Edit", "add.php", array(new DataParameter("editID", $bean->key()))));
 $act->addAction(new PipeSeparator());
 $act->addAction($h_delete->createAction());
-
 
 $view->getColumn("actions")->setCellRenderer($act);
 
@@ -46,9 +41,7 @@ Session::Set("brands.list", $page->getPageURL());
 
 $page->startRender($menu);
 
-
 $view->render();
-
 
 $page->finishRender();
 

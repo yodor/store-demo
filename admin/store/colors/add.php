@@ -16,16 +16,12 @@ $page->addAction($action_back);
 
 $view = new BeanFormEditor(new StoreColorsBean(), new StoreColorInputForm());
 
-
 $view->processInput();
 
 $page->startRender($menu);
 
-
-
 $view->render();
 
 $page->finishRender();
-
 
 ?>

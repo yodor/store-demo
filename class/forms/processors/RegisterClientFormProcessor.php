@@ -71,14 +71,12 @@ class RegisterClientFormProcessor extends FormProcessor
                 }
             }
 
-
             $urow = array();
             $urow["fullname"] = $form->getInput("fullname")->getValue();
             $urow["email"] = $email;
             $urow["phone"] = $form->getInput("phone")->getValue();
 
             if (!$users->update($this->editID, $urow)) throw new Exception("Грешка при обновяване на профила: " . $users->getDB()->getError());
-
 
         }
     }

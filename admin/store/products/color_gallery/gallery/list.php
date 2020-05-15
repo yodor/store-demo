@@ -24,7 +24,6 @@ $action_add->setAttribute("action", "add");
 $action_add->setAttribute("title", "Add Photo");
 $page->addAction($action_add);
 
-
 $page->setAccessibleTitle("Color Scheme Photos");
 
 $page->setCaption(tr("Color Scheme Photos") . ": " . $rc->getData("color"));
@@ -43,8 +42,6 @@ $gv->getActionsCollection()->addURLParameter($rc->getURLParameter());
 Session::Set("color_scheme.photos", $page->getPageURL());
 
 $page->startRender($menu);
-
-
 
 $gv->render();
 

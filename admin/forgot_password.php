@@ -53,14 +53,14 @@ class ForgotPasswordProcessor extends FormProcessor
 }
 
 $page = new AdminLoginPage();
-$page->addCSS(SPARK_LOCAL."/css/LoginForm.css");
+$page->addCSS(SPARK_LOCAL . "/css/LoginForm.css");
 
 $form = new InputForm();
 $form->addInput(DataInputFactory::Create(DataInputFactory::EMAIL, "email", "Input your registered email", 1));
 
 $frend = new FormRenderer($form);
 
-$frend->getSubmitButton()->setText("Send");
+$frend->getSubmitButton()->setContents("Send");
 $frend->addClassName("LoginFormRenderer");
 
 $proc = new ForgotPasswordProcessor();
@@ -79,7 +79,7 @@ $page->startRender();
 
 $page->setPreferredTitle(tr("Forgot Password"));
 
-$frend->setCaption(SITE_TITLE."<BR><small>".tr("Administration")."</small>");
+$frend->setCaption(SITE_TITLE . "<BR><small>" . tr("Administration") . "</small>");
 
 $frend->render();
 

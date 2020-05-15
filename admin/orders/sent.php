@@ -17,30 +17,21 @@ RequestController::addRequestHandler($h_send);
 // $h_delete = new DeleteItemRequestHandler($bean);
 // RequestController::addRequestHandler($h_delete);
 
-
 $sel = new OrdersSQL();
 
-$sel->where = " o.status='".OrdersBean::STATUS_SENT."' ";
-
+$sel->where = " o.status='" . OrdersBean::STATUS_SENT . "' ";
 
 include_once("list.php");
 
 $act = $view->getColumn("actions")->getCellRenderer();
-$act->addAction(
-    new Action(
-        "Потвърди завършване", "?cmd=order_status",
-        array(
-            new DataParameter("orderID", "orderID"),
-            new URLParameter("status", OrdersBean::STATUS_COMPLETED),
-        )
-    )
+$act->addAction(new Action("Потвърди завършване", "?cmd=order_status", array(new DataParameter("orderID", "orderID"),
+                                                                             new URLParameter("status", OrdersBean::STATUS_COMPLETED),))
 
 );
 
 $menu = array();
 
 $page->startRender($menu);
-
 
 $scomp->render();
 

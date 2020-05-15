@@ -14,7 +14,6 @@ class ProductsPage extends StorePage
 
     public $product_categories = NULL;
 
-
     public function __construct()
     {
         parent::__construct();
@@ -73,7 +72,6 @@ class ProductsPage extends StorePage
 
         return $actions;
     }
-
 
 }
 

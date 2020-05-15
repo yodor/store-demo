@@ -23,8 +23,8 @@ class ProductCategoryInputForm extends InputForm
         $rend = new NestedSelectField($field);
 
         $rend->setIterator(new SQLQuery($pcats->selectTree(array("category_name")), $pcats->key(), $pcats->getTableName()));
-        $rend->getItemRenderer()->setValueKey( $pcats->key());
-        $rend->getItemRenderer()->setLabelKey( "category_name");
+        $rend->getItemRenderer()->setValueKey($pcats->key());
+        $rend->getItemRenderer()->setLabelKey("category_name");
         $rend->na_label = '--- TOP ---';
         $rend->na_value = "0";
 

@@ -19,12 +19,10 @@ class ClientAddressesBean extends DBTableBean
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8
 ";
 
-
     public function __construct()
     {
         parent::__construct("client_addresses");
     }
-
 
 }
 

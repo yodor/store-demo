@@ -1,7 +1,6 @@
 <?php
 include_once("mailers/Mailer.php");
 
-
 class ContactRequestMailer extends Mailer
 {
 

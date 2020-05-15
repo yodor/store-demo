@@ -44,10 +44,7 @@ if ($num < 1) {
     $num = $qry->exec();
 }
 
-
-
 $page->startRender();
-
 
 echo "<div class='news_view'>";
 
@@ -64,14 +61,14 @@ while ($$nb->fetchNext($item_row)) {
     echo "</div>";
 
     echo "<div class='date'>";
-    echo dateFormat($item_row["item_date"], false);
+    echo dateFormat($item_row["item_date"], FALSE);
     echo "</div>";
 
     echo "<div class='content'>";
     $item = new StorageItem();
     $item->id = $itemID;
     $item->className = NewsItemsBean;
-    $img_href = $item->hrefCrop(-1,256);
+    $img_href = $item->hrefCrop(-1, 256);
     echo "<img src='$img_href'>";
     echo $item_row["content"];
     echo "</div>";
@@ -100,13 +97,10 @@ echo "</div>";
 
 echo "</div>"; //column_other
 
-
 echo "</div>";//news_view
 
-
-function drawLatestNews($num, $selected_year = false, $selected_month = false)
+function drawLatestNews($num, $selected_year = FALSE, $selected_month = FALSE)
 {
-
 
     $nb = new NewsItemsBean();
     $qry = $nb->query();
@@ -126,7 +120,7 @@ function drawLatestNews($num, $selected_year = false, $selected_month = false)
 
         echo "<div class='cell details'>";
         echo "<span class='title'>" . $item_row["item_title"] . "</span>";
-        echo "<span class='date'>" . dateFormat($item_row["item_date"], false) . "</span>";
+        echo "<span class='date'>" . dateFormat($item_row["item_date"], FALSE) . "</span>";
         echo "</div>";
 
         echo "</a>";

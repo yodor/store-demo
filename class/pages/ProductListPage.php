@@ -4,7 +4,6 @@ include_once("class/utils/ProductsSQL.php");
 include_once("components/NestedSetTreeView.php");
 include_once("components/renderers/items/TextTreeItem.php");
 
-
 class ProductListPage extends ProductsPage
 {
 
@@ -28,7 +27,7 @@ class ProductListPage extends ProductsPage
         $treeView->setIterator($treeQry);
 
         $treeView->setName("products_tree");
-        $treeView->open_all = false;
+        $treeView->open_all = FALSE;
 
         $this->treeView = $treeView;
 
@@ -51,7 +50,6 @@ class ProductListPage extends ProductsPage
 
         $this->setPreferredTitle(constructSiteTitle($title));
     }
-
 
     public function getCategoryPath()
     {

@@ -41,7 +41,7 @@ $product_selector->from = " ( " . $derived->getSQL(FALSE, FALSE) . " ) as relati
 $product_selector->where = "  ";
 
 //process get filters
-$proc = new RelatedSourceFilterProcessor($bean,"prodID");
+$proc = new RelatedSourceFilterProcessor($bean, "prodID");
 
 $proc->addFilter("keyword", $page->keyword_search);
 
@@ -78,7 +78,6 @@ $tree_selector = $bean->selectTreeRelation($product_selector, "relation", "prodI
 
 //set the the iterator
 $treeView->setIterator(new SQLQuery($tree_selector, $bean->key(), $bean->getTableName()));
-
 
 $nodeID = $treeView->getSelectedID();
 

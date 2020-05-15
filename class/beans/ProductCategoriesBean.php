@@ -1,7 +1,6 @@
 <?php
 include_once("beans/NestedSetBean.php");
 
-
 class ProductCategoriesBean extends NestedSetBean
 {
 

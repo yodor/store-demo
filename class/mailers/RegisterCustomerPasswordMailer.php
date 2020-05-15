@@ -1,13 +1,11 @@
 <?php
 include_once("mailers/Mailer.php");
 
-
 class RegisterCustomerPasswordMailer extends Mailer
 {
 
     public function __construct($userID, $random_pass, $fullname, $email)
     {
-
 
         $this->to = $email;
 
@@ -30,7 +28,6 @@ class RegisterCustomerPasswordMailer extends Mailer
 
         $message .= "<BR><BR>\r\n\r\nС Уважение,<BR>\r\n";
         $message .= SITE_DOMAIN;
-
 
         $this->body = $this->templateMessage($message);
 

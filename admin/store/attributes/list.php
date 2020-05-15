@@ -19,7 +19,6 @@ $bean = new AttributesBean();
 $h_delete = new DeleteItemRequestHandler($bean);
 RequestController::addRequestHandler($h_delete);
 
-
 $view = new TableView($bean->query());
 $view->setCaption("Store attributes list");
 $view->setDefaultOrder(" name ASC ");
@@ -38,14 +37,11 @@ $act->addAction($h_delete->createAction());
 
 $view->getColumn("actions")->setCellRenderer($act);
 
-
 Session::Set("attributes.list", $page->getPageURL());
 
 $page->startRender($menu);
 
-
 $view->render();
-
 
 $page->finishRender();
 

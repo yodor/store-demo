@@ -4,21 +4,16 @@ include_once("class/pages/AdminPage.php");
 include_once("forms/AdminUserForm.php");
 include_once("beans/AdminUsersBean.php");
 
-
 $menu = array();
-
 
 $page = new AdminPage("Add User");
 $page->checkAccess(ROLE_SETTINGS_MENU);
-
 
 $view = new BeanFormEditor(new AdminUsersBean(), new AdminUserForm());
 
 $view->getForm()->getRenderer()->setAttribute("onSubmit", "return checkForm(this)");
 
-
 $view->processInput();
-
 
 $page->startRender($menu);
 

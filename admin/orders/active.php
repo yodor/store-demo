@@ -17,41 +17,26 @@ RequestController::addRequestHandler($h_send);
 $h_delete = new DeleteItemRequestHandler($bean);
 RequestController::addRequestHandler($h_delete);
 
-
 $sel = new OrdersSQL();
 
-$sel->where = " o.status='".OrdersBean::STATUS_PROCESSING."' ";
-
+$sel->where = " o.status='" . OrdersBean::STATUS_PROCESSING . "' ";
 
 include_once("list.php");
 
 $act = $view->getColumn("actions")->getCellRenderer();
-$act->addAction(
-    new Action(
-        "Потвърди изпращане", "?cmd=order_status",
-        array(
-            new DataParameter("orderID", "orderID"),
-            new URLParameter("status", OrdersBean::STATUS_SENT),
-        )
-    )
+$act->addAction(new Action("Потвърди изпращане", "?cmd=order_status", array(new DataParameter("orderID", "orderID"),
+                                                                            new URLParameter("status", OrdersBean::STATUS_SENT),))
 
 );
-$act->addAction(  new RowSeparator() );
-$act->addAction(
-    new Action(
-        "Откажи изпращане", "?cmd=order_status",
-        array(
-            new DataParameter("orderID", "orderID"),
-            new URLParameter("status", OrdersBean::STATUS_CANCELED),
-        )
-    )
+$act->addAction(new RowSeparator());
+$act->addAction(new Action("Откажи изпращане", "?cmd=order_status", array(new DataParameter("orderID", "orderID"),
+                                                                          new URLParameter("status", OrdersBean::STATUS_CANCELED),))
 
 );
 
 $menu = array();
 
 $page->startRender($menu);
-
 
 $scomp->render();
 

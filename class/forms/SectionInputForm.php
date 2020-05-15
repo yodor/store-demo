@@ -4,7 +4,6 @@ include_once("forms/InputForm.php");
 class SectionInputForm extends InputForm
 {
 
-
     public function __construct()
     {
         parent::__construct();

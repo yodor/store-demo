@@ -28,11 +28,8 @@ Session::Set("attributes.list", $page->getPageURL());
 
 $page->startRender($menu);
 
-
-
 $view->render();
 
 $page->finishRender();
-
 
 ?>

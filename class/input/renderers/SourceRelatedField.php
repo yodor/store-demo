@@ -20,7 +20,6 @@ class SourceAttributeItem extends DataIteratorItem
 
 }
 
-
 class IteratorRelatedField extends DataIteratorField
 {
 
@@ -49,7 +48,7 @@ class IteratorRelatedField extends DataIteratorField
     protected function renderItems()
     {
 
-        if ( $this->iterator->count() < 1) {
+        if ($this->iterator->count() < 1) {
             echo tr("No optional attributes");
             return;
         }

@@ -20,7 +20,6 @@ $bean = new NewsItemsBean();
 $h_delete = new DeleteItemRequestHandler($bean);
 RequestController::addRequestHandler($h_delete);
 
-
 $view = new TableView($bean->query());
 $view->setCaption("News Items");
 $view->setDefaultOrder(" item_date DESC ");
@@ -39,16 +38,12 @@ $act->addAction(new Action("Edit", "add.php", array(new DataParameter("editID", 
 $act->addAction(new PipeSeparator());
 $act->addAction($h_delete->createAction());
 
-
 $view->getColumn("actions")->setCellRenderer($act);
 
 $page->startRender($menu);
 
-
 $view->render();
 
-
 $page->finishRender();
-
 
 ?>

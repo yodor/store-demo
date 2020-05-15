@@ -7,7 +7,6 @@ include_once("class/beans/CurrencyRatesBean.php");
 class HeaderCartPanel extends Component
 {
 
-
     public function renderImpl()
     {
         echo "<a href='" . LOCAL . "checkout/cart.php'>";
@@ -39,7 +38,6 @@ class HeaderCartPanel extends Component
             echo "</span>";
 
             echo "<span class='cell cart_total'>" . sprintf("%0.2f " . $price["symbol"], $total) . "</span>";
-
 
         }
         else {

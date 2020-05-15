@@ -11,22 +11,18 @@ $page->checkAccess(ROLE_ORDERS_MENU);
 
 $bean = new OrdersBean();
 
-
 // $h_delete = new DeleteItemRequestHandler($bean);
 // RequestController::addRequestHandler($h_delete);
 
-
 $sel = new OrdersSQL();
 
-$sel->where = " o.status='".OrdersBean::STATUS_COMPLETED."' ";
-
+$sel->where = " o.status='" . OrdersBean::STATUS_COMPLETED . "' ";
 
 include_once("list.php");
 
 $menu = array();
 
 $page->startRender($menu);
-
 
 $scomp->render();
 

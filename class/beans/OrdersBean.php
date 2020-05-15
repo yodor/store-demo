@@ -26,12 +26,10 @@ class OrdersBean extends DBTableBean
 ) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8
 ";
 
-
     public function __construct()
     {
         parent::__construct("orders");
     }
-
 
 }
 

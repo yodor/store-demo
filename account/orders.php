@@ -31,7 +31,6 @@ $sel->order_by = " 'Processing', 'Sent', 'Completed' ";
 
 $view = new TableView(new SQLQuery($sel, "orderID"));
 
-
 // $view->setCaption($caption);
 
 $view->setDefaultOrder(" order_date DESC ");
@@ -52,7 +51,6 @@ $view->addColumn(new TableColumn("total", "Сума"));
 
 // $view->addColumn(new TableColumn("require_invoice", "Фактуриране"));
 
-
 $view->addColumn(new TableColumn("status", "Статус"));
 
 $view->addColumn(new TableColumn("actions", "Действия"));
@@ -69,7 +67,6 @@ $view->getColumn("order_date")->setCellRenderer(new DateFieldCellRenderer());
 $act = new ActionsTableCellRenderer();
 
 $act->addAction(new Action("Покажи детайли", "order_details.php", array(new DataParameter("orderID", "orderID"))));
-
 
 $view->getColumn("actions")->setCellRenderer($act);
 

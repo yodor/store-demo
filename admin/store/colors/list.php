@@ -8,7 +8,7 @@ include_once("class/beans/StoreColorsBean.php");
 include_once("components/TableView.php");
 include_once("components/renderers/cells/TableImageCellRenderer.php");
 include_once("components/renderers/cells/ColorCodeCellRenderer.php");
-include_once("components/KeywordSearchComponent.php");
+include_once("components/KeywordSearch.php");
 include_once("iterators/SQLQuery.php");
 
 $menu = array();

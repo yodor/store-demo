@@ -6,7 +6,7 @@ include_once("handlers/DeleteItemRequestHandler.php");
 include_once("handlers/ToggleFieldRequestHandler.php");
 
 include_once("components/TableView.php");
-include_once("components/KeywordSearchComponent.php");
+include_once("components/KeywordSearch.php");
 include_once("iterators/SQLQuery.php");
 include_once("beans/UsersBean.php");
 
@@ -22,7 +22,7 @@ $h_toggle = new ToggleFieldRequestHandler($bean);
 RequestController::addRequestHandler($h_toggle);
 
 $search_fields = array("email", "fullname", "phone");
-$scomp = new KeywordSearchComponent($search_fields);
+$scomp = new KeywordSearch($search_fields);
 
 $sel = new SQLSelect();
 $sel->fields = " u.email, u.fullname, u.userID, u.phone, last_active, counter, date_signup, u.suspend ";
@@ -57,8 +57,8 @@ $check_is_suspend = function (Action $act, array $data) {
 $check_is_not_suspend = function (Action $act, array $data) {
     return ($data['suspend'] > 0);
 };
-$vis_act->addAction($h_toggle->createAction("Disable", "?field=suspend&status=1", $check_is_suspend));
-$vis_act->addAction($h_toggle->createAction("Enable", "?field=suspend&status=0", $check_is_not_suspend));
+$vis_act->addAction($h_toggle->createAction("Disable", "field=suspend&status=1", $check_is_suspend));
+$vis_act->addAction($h_toggle->createAction("Enable", "field=suspend&status=0", $check_is_not_suspend));
 $view->getColumn("suspend")->setCellRenderer($vis_act);
 
 $act = new ActionsTableCellRenderer();

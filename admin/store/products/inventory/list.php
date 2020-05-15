@@ -6,7 +6,7 @@ include_once("components/TableView.php");
 include_once("components/renderers/cells/TableImageCellRenderer.php");
 include_once("components/renderers/cells/ColorCodeCellRenderer.php");
 
-include_once("components/KeywordSearchComponent.php");
+include_once("components/KeywordSearch.php");
 include_once("iterators/SQLQuery.php");
 
 include_once("class/beans/ProductInventoryBean.php");
@@ -51,7 +51,7 @@ RequestController::addRequestHandler($h_delete);
 
 $search_fields = array("product_name", "category_name", "class_name", "product_summary", "keywords", "brand_name",
                        "section", "color", "inventory_attributes");
-$ksc = new KeywordSearchComponent($search_fields);
+$ksc = new KeywordSearch($search_fields);
 $ksc->getForm()->getRenderer()->setAttribute("method", "get");
 
 $piID = -1;
@@ -60,7 +60,7 @@ if (isset($_GET["piID"])) {
 }
 
 // $search_fields = array("prodID", "product_code", "product_name", "color", "size");
-// $ksc = new KeywordSearchComponent($search_fields);
+// $ksc = new KeywordSearch($search_fields);
 
 $select_inventory = $bean->select();
 $select_inventory->fields = " pi.*, pc.category_name, pcp.pclrpID,  sc.color_code,  p.brand_name, p.keywords, p.product_name, p.product_summary, p.class_name, p.section, 

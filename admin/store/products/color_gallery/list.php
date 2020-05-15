@@ -10,7 +10,7 @@ include_once("class/beans/ProductColorPhotosBean.php");
 
 include_once("components/TableView.php");
 include_once("components/renderers/cells/TableImageCellRenderer.php");
-include_once("components/KeywordSearchComponent.php");
+include_once("components/KeywordSearch.php");
 include_once("iterators/SQLQuery.php");
 
 $page = new AdminPage();
@@ -38,7 +38,7 @@ $h_delete = new DeleteItemRequestHandler($bean);
 RequestController::addRequestHandler($h_delete);
 
 // $search_fields = array("prodID", "product_code", "product_name", "color", "size");
-// $ksc = new KeywordSearchComponent($search_fields);
+// $ksc = new KeywordSearch($search_fields);
 
 $select_colors = $bean->select();
 $select_colors->fields = " pclr.*, p.product_name ";

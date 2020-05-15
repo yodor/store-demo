@@ -15,7 +15,7 @@ include_once("class/components/renderers/cells/OrderInvoiceCellRenderer.php");
 include_once("components/renderers/cells/BooleanFieldCellRenderer.php");
 include_once("components/renderers/cells/DateFieldCellRenderer.php");
 
-include_once("components/KeywordSearchComponent.php");
+include_once("components/KeywordSearch.php");
 include_once("iterators/SQLQuery.php");
 
 $ekont_addresses = new EkontAddressesBean();
@@ -27,7 +27,7 @@ $order_items = new OrderItemsBean();
 $db = DBConnections::Factory();
 
 $search_fields = array("orderID", "items");
-$scomp = new KeywordSearchComponent($search_fields);
+$scomp = new KeywordSearch($search_fields);
 
 $filter = $scomp->filterSelect();
 if ($filter) {

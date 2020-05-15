@@ -31,16 +31,16 @@
 }
 
 
-/*.product_list .KeywordSearchComponent {
+/*.product_list .KeywordSearch {
   float:right;
 }
-.product_list .KeywordSearchComponent .InputLabel {
+.product_list .KeywordSearch .InputLabel {
   display:none;
 }
-.product_list .KeywordSearchComponent .buttons {
+.product_list .KeywordSearch .buttons {
   vertical-align:bottom;
 }
-.product_list .KeywordSearchComponent .buttons [name='clear'] {
+.product_list .KeywordSearch .buttons [name='clear'] {
   display:none;
 }*/
 

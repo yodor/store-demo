@@ -109,20 +109,20 @@ body {
     margin-top: 30px;
 }
 
-.aside .search_pane .KeywordSearchComponent {
+.aside .search_pane .KeywordSearch {
     float: right;
     border-bottom: 1px solid #ee2a32;
 }
 
-.aside .search_pane .KeywordSearchComponent FORM {
+.aside .search_pane .KeywordSearch FORM {
     border-spacing: 0px;
 }
 
-.aside .search_pane .KeywordSearchComponent LABEL {
+.aside .search_pane .KeywordSearch LABEL {
     display: none;
 }
 
-.aside .search_pane .KeywordSearchComponent .InputField[field='keyword'] {
+.aside .search_pane .KeywordSearch .InputField[field='keyword'] {
     background: none;
     border-top: 0px;
     border-bottom: 0px;
@@ -130,7 +130,7 @@ body {
     border-right: 0px;
 }
 
-.aside .search_pane .KeywordSearchComponent .buttons BUTTON {
+.aside .search_pane .KeywordSearch .buttons BUTTON {
 
     width: 31px;
     height: 31px;
@@ -148,13 +148,13 @@ body {
     padding: 0px;
 }
 
-.aside .search_pane .KeywordSearchComponent .buttons BUTTON[action='search'] {
+.aside .search_pane .KeywordSearch .buttons BUTTON[action='search'] {
     background-image: url("../images/icon_search.png");
     background-position: center center;
     background-repeat: no-repeat;
 }
 
-.aside .search_pane .KeywordSearchComponent .buttons BUTTON[action='clear'] {
+.aside .search_pane .KeywordSearch .buttons BUTTON[action='clear'] {
     display: none;
 }
 

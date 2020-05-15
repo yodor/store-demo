@@ -6,7 +6,7 @@ include_once("class/beans/ProductClassesBean.php");
 
 include_once("components/TableView.php");
 include_once("components/renderers/cells/TableImageCellRenderer.php");
-include_once("components/KeywordSearchComponent.php");
+include_once("components/KeywordSearch.php");
 include_once("iterators/SQLQuery.php");
 // include_once("class/beans/ProductInventoryPhotosBean.php");
 

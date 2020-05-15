@@ -3,7 +3,7 @@ include_once("session.php");
 include_once("class/pages/AdminPage.php");
 
 include_once("components/renderers/cells/CallbackTableCellRenderer.php");
-include_once("components/KeywordSearchComponent.php");
+include_once("components/KeywordSearch.php");
 include_once("beans/LanguagesBean.php");
 include_once("panels/PhraseTranslationDialog.php");
 include_once("iterators/SQLQuery.php");
@@ -29,7 +29,7 @@ $dialog->setAttribute("langID", $langID);
 
 $search_fields = array("value");
 
-$scomp = new KeywordSearchComponent($search_fields);
+$scomp = new KeywordSearch($search_fields);
 
 $scomp->append(new TextComponent("<input type=hidden name=langID value='{$langID}'>"));
 

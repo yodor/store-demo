@@ -98,14 +98,14 @@
   box-sizing:border-box !important;
 }
 
-.main_content .KeywordSearchComponent {
+.main_content .KeywordSearch {
   display:block !important;
   float:none !important;
   margin-top:10px;
   margin-bottom:10px;
 
 }
-.main_content .KeywordSearchComponent FORM {
+.main_content .KeywordSearch FORM {
 
   border-spacing:0px;
   

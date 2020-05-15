@@ -20,10 +20,10 @@
     max-width: 100px;
 }
 
-.KeywordSearchComponent .fields {
+.KeywordSearch .fields {
     vertical-align: bottom;
 }
 
-.KeywordSearchComponent .buttons {
+.KeywordSearch .buttons {
     vertical-align: bottom;
 }

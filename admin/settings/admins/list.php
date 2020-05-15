@@ -51,8 +51,8 @@ $check_is_suspend = function (Action $act, array $data) {
 $check_is_not_suspend = function (Action $act, array $data) {
     return ($data['suspend'] > 0);
 };
-$vis_act->addAction($h_toggle->createAction("Disable", "?field=suspend&status=1", $check_is_suspend));
-$vis_act->addAction($h_toggle->createAction("Enable", "?field=suspend&status=0", $check_is_not_suspend));
+$vis_act->addAction($h_toggle->createAction("Disable", "field=suspend&status=1", $check_is_suspend));
+$vis_act->addAction($h_toggle->createAction("Enable", "field=suspend&status=0", $check_is_not_suspend));
 $view->getColumn("status")->setCellRenderer($vis_act);
 
 $ac = new AdminAccessBean();

@@ -9,7 +9,7 @@ include_once("class/beans/ProductInventoryBean.php");
 
 include_once("components/TableView.php");
 include_once("components/renderers/cells/TableImageCellRenderer.php");
-include_once("components/KeywordSearchComponent.php");
+include_once("components/KeywordSearch.php");
 include_once("iterators/SQLQuery.php");
 
 $menu = array(
@@ -36,7 +36,7 @@ RequestController::addRequestHandler($h_delete);
 
 $search_fields = array("product_name", "category_name", "class_name", "product_summary", "keywords", "brand_name",
                        "section");
-$ksc = new KeywordSearchComponent($search_fields);
+$ksc = new KeywordSearch($search_fields);
 $ksc->getForm()->getRenderer()->setAttribute("method", "get");
 
 $select_products = $bean->select();

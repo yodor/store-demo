@@ -3,7 +3,7 @@ include_once("pages/SparkPage.php");
 
 include_once("utils/MainMenu.php");
 include_once("components/MenuBarComponent.php");
-include_once("components/KeywordSearchComponent.php");
+include_once("components/KeywordSearch.php");
 
 include_once("forms/InputForm.php");
 include_once("forms/renderers/FormRenderer.php");
@@ -77,7 +77,7 @@ class StorePage extends SparkPage
         $search_fields = array("relation.product_name", "relation.product_summary", "relation.keywords",
                                "relation.color", "relation.inventory_attributes");
 
-        $ksc = new KeywordSearchComponent($search_fields, "relation");
+        $ksc = new KeywordSearch($search_fields, "relation");
         $ksc->getForm()->getInput("keyword")->getRenderer()->setInputAttribute("placeholder", "Търси ...");
         $ksc->getForm()->getRenderer()->setAttribute("method", "get");
         $ksc->getForm()->getRenderer()->setAttribute("action", LOCAL . "products.php");

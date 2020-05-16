@@ -5,7 +5,7 @@ include_once("class/pages/AdminPage.php");
 include_once("components/renderers/cells/CallbackTableCellRenderer.php");
 include_once("components/KeywordSearch.php");
 include_once("beans/LanguagesBean.php");
-include_once("panels/PhraseTranslationDialog.php");
+include_once("dialogs/PhraseTranslationDialog.php");
 include_once("iterators/SQLQuery.php");
 
 $page = new AdminPage();
@@ -69,11 +69,11 @@ $view->addColumn(new TableColumn("actions", "Actions"));
 
 //command actions edit/delete
 $act = new ActionsTableCellRenderer();
-$action_translate = new Action("Translate", "javascript:phrase_translator.edit(%textID%)", array(new DataParameter("textID", "textID")));
+$action_translate = new Action("Translate", "javascript:phrase_translator.edit(%textID%)");
 $act->addAction($action_translate);
 $act->addAction(new PipeSeparator());
 
-$action_clear = new Action("Clear", "javascript:phrase_translator.clear(%textID%)", array(new DataParameter("textID", "textID")));
+$action_clear = new Action("Clear", "javascript:phrase_translator.clear(%textID%)");
 $act->addAction($action_clear);
 
 $view->getColumn("actions")->setCellRenderer($act);

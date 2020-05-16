@@ -35,7 +35,7 @@ $afr = new LoginFormRenderer($af, $req);
 
 $action = $afr->getTextSpace()->get(0);
 if ($action instanceof Action) {
-    $action->getURL()->setHref(LOCAL . "account/forgot_password.php");
+    $action->getURLBuilder()->buildFrom(LOCAL . "account/forgot_password.php");
 }
 
 $form = new RegisterClientInputForm();

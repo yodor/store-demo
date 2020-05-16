@@ -232,7 +232,7 @@ body {
     padding: 5px;
 }
 
-.caption {
+.Caption {
 
     font-size:1.4em;
     font-weight:bold;
@@ -353,21 +353,21 @@ body.mce_browser .FormRenderer .SubmitLine .Buttons {
     text-align:center;
 }
 
-.caption.category_path .Action {
+.Caption.category_path .Action {
 /*     font-size:1.2em; */
     font-weight:normal;
     color:gray;
 
 }
 
-.caption.category_path .Action:after {
+.Caption.category_path .Action:after {
     content: "//";
     padding-left: 5px;
     padding-right: 5px;
     color: gray;
 
 }
-.caption.category_path .Action:last-child:after {
+.Caption.category_path .Action:last-child:after {
     display:none;
     
 }

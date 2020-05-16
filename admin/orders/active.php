@@ -24,12 +24,12 @@ $sel->where = " o.status='" . OrdersBean::STATUS_PROCESSING . "' ";
 include_once("list.php");
 
 $act = $view->getColumn("actions")->getCellRenderer();
-$act->addAction(new Action("Потвърди изпращане", "?cmd=order_status", array(new DataParameter("orderID", "orderID"),
+$act->addAction(new Action("Потвърди изпращане", "?cmd=order_status", array(new DataParameter("orderID"),
                                                                             new URLParameter("status", OrdersBean::STATUS_SENT),))
 
 );
 $act->addAction(new RowSeparator());
-$act->addAction(new Action("Откажи изпращане", "?cmd=order_status", array(new DataParameter("orderID", "orderID"),
+$act->addAction(new Action("Откажи изпращане", "?cmd=order_status", array(new DataParameter("orderID"),
                                                                           new URLParameter("status", OrdersBean::STATUS_CANCELED),))
 
 );

@@ -25,7 +25,7 @@ class ConfirmSendRequestHandler extends RequestHandler
 
     }
 
-    protected function process()
+    protected function processImpl()
     {
 
         //$db = DBConnections::Get();

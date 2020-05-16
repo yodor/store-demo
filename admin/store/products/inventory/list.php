@@ -134,14 +134,14 @@ $view->getColumn("pclrpID")->setCellRenderer($ticr1);
 $view->getColumn("color_code")->setCellRenderer(new ColorCodeCellRenderer());
 
 $act = new ActionsTableCellRenderer();
-$act->addAction(new Action("Edit", "add.php", array(new DataParameter("prodID", "prodID"),
+$act->addAction(new Action("Edit", "add.php", array(new DataParameter("prodID"),
                                                     new DataParameter("editID", $bean->key()))));
 $act->addAction(new PipeSeparator());
 $act->addAction($h_delete->createAction());
 
 $act->addAction(new RowSeparator());
 
-$act->addAction(new Action("Add Copy", "add.php", array(new DataParameter("prodID", "prodID"),
+$act->addAction(new Action("Add Copy", "add.php", array(new DataParameter("prodID"),
                                                         new DataParameter("copyID", $bean->key()))));
 
 $view->getColumn("actions")->setCellRenderer($act);

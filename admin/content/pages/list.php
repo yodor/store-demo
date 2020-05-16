@@ -75,7 +75,7 @@ else {
 
     $act->addAction(new RowSeparator());
 
-    $act->addAction(new Action("Photo Gallery", "gallery/list.php", array(new DataParameter($bean->key(), $bean->key()))));
+    $act->addAction(new Action("Photo Gallery", "gallery/list.php", array(new DataParameter($bean->key()))));
 
     $act->addAction(new RowSeparator());
 

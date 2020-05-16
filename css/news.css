@@ -14,7 +14,7 @@
 
 }
 
-.news_view .column.main .title {
+.news_view .column.main .Title {
     font-size: 18px;
     display: block;
 }
@@ -74,7 +74,7 @@
 
 }
 
-.news_view .column.other .latest .item .cell.details SPAN.title {
+.news_view .column.other .latest .item .cell.details SPAN.Title {
     font-size: 13px;
     font-weight: bold;
 }

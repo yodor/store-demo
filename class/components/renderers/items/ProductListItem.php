@@ -38,7 +38,7 @@ class ProductListItem extends DataIteratorItem implements IHeadContents
         return $arr;
     }
 
-    public function setData(array $item)
+    public function setData(array &$item)
     {
         parent::setData($item);
         $this->setAttribute("prodID", $this->data["prodID"]);

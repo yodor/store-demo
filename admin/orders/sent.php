@@ -24,7 +24,7 @@ $sel->where = " o.status='" . OrdersBean::STATUS_SENT . "' ";
 include_once("list.php");
 
 $act = $view->getColumn("actions")->getCellRenderer();
-$act->addAction(new Action("Потвърди завършване", "?cmd=order_status", array(new DataParameter("orderID", "orderID"),
+$act->addAction(new Action("Потвърди завършване", "?cmd=order_status", array(new DataParameter("orderID"),
                                                                              new URLParameter("status", OrdersBean::STATUS_COMPLETED),))
 
 );

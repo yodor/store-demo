@@ -31,7 +31,7 @@ class OrderStatusRequestHandler extends RequestHandler
 
     }
 
-    protected function process()
+    protected function processImpl()
     {
 
         $db = DBConnections::factory();

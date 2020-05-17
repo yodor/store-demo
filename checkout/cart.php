@@ -88,9 +88,9 @@ else if (isset($_GET["clear"])) {
 
 $page->startRender();
 
-$page->setPreferredTitle(tr("Съдържание на кошницата"));
+$page->setTitle(tr("Съдържание на кошницата"));
 
-echo "<div class='caption'>" . $page->getPreferredTitle() . "</div>";
+echo "<div class='caption'>" . $page->getTitle() . "</div>";
 
 $page->drawCartItems();
 

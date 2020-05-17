@@ -7,7 +7,7 @@ include_once("class/utils/ProductsSQL.php");
 include_once("class/components/renderers/items/ProductListItem.php");
 
 $page = new StorePage();
-$page->setPreferredTitle("Начало");
+$page->setTitle("Начало");
 
 $item = new ProductListItem();
 

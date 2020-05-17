@@ -4,7 +4,7 @@ include_once("class/pages/StorePage.php");
 
 $page = new StorePage();
 $page->startRender();
-$page->setPreferredTitle("Условия за ползване");
-echo "<div class='caption'>" . tr($page->getPreferredTitle()) . "</div>";
+$page->setTitle("Условия за ползване");
+echo "<div class='caption'>" . tr($page->getTitle()) . "</div>";
 $page->finishRender();
 ?>

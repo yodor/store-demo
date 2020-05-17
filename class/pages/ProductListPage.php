@@ -48,7 +48,7 @@ class ProductListPage extends ProductsPage
             }
         }
 
-        $this->setPreferredTitle(constructSiteTitle($title));
+        $this->setTitle(constructSiteTitle($title));
     }
 
     public function getCategoryPath()

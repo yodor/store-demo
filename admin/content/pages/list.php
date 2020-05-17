@@ -13,7 +13,7 @@ $page->checkAccess(ROLE_CONTENT_MENU);
 
 if (!isset($_GET["chooser"])) {
 
-    $page->setCaption("Dynamic Pages");
+    $page->setName("Dynamic Pages");
 
     $action_add = new Action("", "add.php", array());
     $action_add->setAttribute("action", "add");
@@ -22,7 +22,7 @@ if (!isset($_GET["chooser"])) {
 
 }
 else {
-    $page->setCaption("Choose Page to Link");
+    $page->setName("Choose Page to Link");
 
 }
 
@@ -97,10 +97,6 @@ else {
 $view->getColumn("actions")->setCellRenderer($act);
 
 $page->startRender($menu);
-
-// echo "<div class='page_caption'>";
-// echo tr("Dynamic Pages");
-// echo "</div>";
 
 $view->render();
 if (isset($_GET["chooser"])) unset($_GET["chooser"]);

@@ -116,7 +116,7 @@ $noteproc->process($noteform);
 
 $page->startRender();
 
-$page->setPreferredTitle(tr("Потвърди поръчка"));
+$page->setTitle(tr("Потвърди поръчка"));
 
 $page->drawCartItems();
 

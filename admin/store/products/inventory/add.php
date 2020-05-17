@@ -38,7 +38,7 @@ $view->reload_url = Session::Get("inventory.list");
 // $view->getTransactor()->assignInsertValue("insert_date", DBConnections::get()->dateTime());
 $view->getTransactor()->appendValue("prodID", $prodID);
 
-$page->setCaption("Inventory: " . $ensure_product->getData("product_name"));
+$page->setName("Inventory: " . $ensure_product->getData("product_name"));
 
 $view->processInput(); //redirect on successfully add or edit?
 

@@ -71,7 +71,7 @@ else if ($proc->getStatus() == FormProcessor::STATUS_OK) {
 }
 
 $page->startRender();
-$page->setPreferredTitle(tr("Начин на доставка"));
+$page->setTitle(tr("Начин на доставка"));
 
 // echo "UserID: ".$page->getUserID();
 
@@ -81,7 +81,7 @@ $page->drawCartItems();
 
 echo "<div class='delivery_address'>";
 
-echo "<div class='caption'>" . $page->getPreferredTitle() . "</div>";
+echo "<div class='caption'>" . $page->getTitle() . "</div>";
 
 $frend->startRender();
 $frend->renderInputs();

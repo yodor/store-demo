@@ -35,7 +35,7 @@ class ProductDetailsPage extends ProductsPage
             $title[] = $catinfo["category_name"];
         }
         $title[] = $this->sellable["product_name"];
-        $this->setPreferredTitle(constructSiteTitle($title));
+        $this->setTitle(constructSiteTitle($title));
     }
 
     protected function selectActiveMenu()

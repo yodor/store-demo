@@ -48,7 +48,7 @@ header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Expires: 0");
 
 $page->startRender();
-$page->setPreferredTitle(tr("Вход"));
+$page->setTitle(tr("Вход"));
 
 echo "<div class='caption'>" . tr("Регистрирани клиенти") . "</div>";
 

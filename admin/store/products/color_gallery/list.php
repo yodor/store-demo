@@ -45,7 +45,7 @@ $select_colors->fields = " pclr.*, p.product_name ";
 $select_colors->from = " product_colors pclr LEFT JOIN products p ON p.prodID = pclr.prodID ";
 $select_colors->where = " pclr.prodID = " . $rc->getID();
 
-$page->setCaption(tr("Color Scheme") . ": " . $rc->getData("product_name"));
+$page->setName(tr("Color Scheme") . ": " . $rc->getData("product_name"));
 
 // $ksc->processSearch($select_products);
 

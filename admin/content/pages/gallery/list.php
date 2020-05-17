@@ -13,7 +13,7 @@ $menu = array();
 
 $page = new AdminPage();
 $page->checkAccess(ROLE_CONTENT_MENU);
-$page->setCaption("Dynamic Page Photo Gallery");
+$page->setName("Dynamic Page Photo Gallery");
 $page->setAccessibleTitle("Photo Gallery");
 
 $action_add = new Action("", "add.php" . $rc->getQuery(), array());
@@ -30,7 +30,7 @@ $h_repos = new ChangePositionRequestHandler($bean);
 RequestController::addRequestHandler($h_repos);
 
 $gv = new GalleryView($bean);
-$gv->getActionsCollection()->addURLParameter($rc->getURLParameter());
+$gv->viewActions()->addURLParameter($rc->getURLParameter());
 
 $page->startRender($menu);
 

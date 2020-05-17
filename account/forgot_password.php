@@ -72,10 +72,10 @@ if ($proc->getStatus() != IFormProcessor::STATUS_NOT_PROCESSED) {
 
 $page->startRender();
 
-$page->setPreferredTitle("Забравена парола");
+$page->setTitle("Забравена парола");
 
 echo "<div class='caption'>";
-echo $page->getPreferredTitle();
+echo $page->getTitle();
 echo "</div>";
 
 echo "<div class='panel'>";

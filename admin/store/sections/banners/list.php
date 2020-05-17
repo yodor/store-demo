@@ -25,7 +25,7 @@ $action_add->setAttribute("action", "add");
 $action_add->setAttribute("title", "Add Photo");
 $page->addAction($action_add);
 
-$page->setCaption(tr("Banners Gallery") . ": " . $rc->getData("section_title"));
+$page->setName(tr("Banners Gallery") . ": " . $rc->getData("section_title"));
 
 $bean = new SectionBannersBean();
 $bean->select()->where = $rc->getURLParameter()->text(TRUE);
@@ -36,7 +36,7 @@ $h_repos = new ChangePositionRequestHandler($bean);
 RequestController::addRequestHandler($h_repos);
 
 $gv = new GalleryView($bean);
-$gv->getActionsCollection()->addURLParameter($rc->getURLParameter());
+$gv->viewActions()->addURLParameter($rc->getURLParameter());
 
 Session::Set("section.banners.list", $page->getPageURL());
 

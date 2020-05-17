@@ -50,9 +50,9 @@ $order = $qry->next();
 
 $page->startRender();
 
-$page->setPreferredTitle(tr("Детайли за поръчка"));
+$page->setTitle(tr("Детайли за поръчка"));
 
-echo "<div class='caption'>" . $page->getPreferredTitle() . "</div>";
+echo "<div class='caption'>" . $page->getTitle() . "</div>";
 
 echo "<div class='group'>";
 

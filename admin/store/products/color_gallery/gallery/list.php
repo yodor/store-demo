@@ -26,7 +26,7 @@ $page->addAction($action_add);
 
 $page->setAccessibleTitle("Color Scheme Photos");
 
-$page->setCaption(tr("Color Scheme Photos") . ": " . $rc->getData("color"));
+$page->setName(tr("Color Scheme Photos") . ": " . $rc->getData("color"));
 
 $bean = new ProductColorPhotosBean();
 $bean->select()->where = $rc->getURLParameter()->text(TRUE);
@@ -37,7 +37,7 @@ $h_repos = new ChangePositionRequestHandler($bean);
 RequestController::addRequestHandler($h_repos);
 
 $gv = new GalleryView($bean);
-$gv->getActionsCollection()->addURLParameter($rc->getURLParameter());
+$gv->viewActions()->addURLParameter($rc->getURLParameter());
 
 Session::Set("color_scheme.photos", $page->getPageURL());
 

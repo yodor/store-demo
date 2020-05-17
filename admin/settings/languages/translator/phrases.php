@@ -20,6 +20,9 @@ $langID = (int)$_GET["langID"];
 $lb = new LanguagesBean();
 $lrow = $lb->getByID($langID);
 
+$page->setName(tr("Translations For") . ": " . tr($lrow["language"]));
+
+
 $bean = new SiteTextsBean();
 
 $menu = array();
@@ -80,9 +83,7 @@ $view->getColumn("actions")->setCellRenderer($act);
 
 $page->startRender($menu);
 
-echo "<div class='page_caption'>";
-echo tr("Translations For") . ": " . tr($lrow["language"]);
-echo "</div>";
+
 
 $scomp->render();
 

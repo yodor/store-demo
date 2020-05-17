@@ -173,11 +173,11 @@ class StorePage extends SparkPage
 
     protected function constructTitle()
     {
-        if (strlen($this->getPreferredTitle()) > 0) return;
+        if (strlen($this->getTitle()) > 0) return;
 
         $main_menu = $this->menu_bar->getMainMenu();
 
-        $this->setPreferredTitle(constructSiteTitle($main_menu->getSelectedPath()));
+        $this->setTitle(constructSiteTitle($main_menu->getSelectedPath()));
     }
 
     public function finishRender()

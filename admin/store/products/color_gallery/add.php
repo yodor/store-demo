@@ -23,7 +23,7 @@ Session::Set("color_codes.list", $page->getPageURL());
 
 $view->getTransactor()->appendValue("prodID", $ensure_product->getID());
 
-$page->setCaption("Color Scheme: " . $ensure_product->getData("product_name"));
+$page->setName("Color Scheme: " . $ensure_product->getData("product_name"));
 
 $view->processInput();
 

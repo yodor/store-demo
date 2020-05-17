@@ -43,13 +43,13 @@ else if ($proc->getStatus() == FormProcessor::STATUS_ERROR) {
 }
 $page->startRender();
 
-$page->setPreferredTitle(tr("Детайли за фактуриране"));
+$page->setTitle(tr("Детайли за фактуриране"));
 
 $page->drawCartItems();
 
 echo "<div class='item invoice_details'>";
 
-echo "<div class='caption'>" . $page->getPreferredTitle() . "</div>";
+echo "<div class='caption'>" . $page->getTitle() . "</div>";
 
 $frend->render();
 

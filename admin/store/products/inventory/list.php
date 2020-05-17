@@ -79,10 +79,10 @@ $select_inventory->group_by = " pi.piID ";
 
 if ($prodID > 0) {
     $select_inventory->where = " pi.prodID = '$prodID' ";
-    $page->caption = tr("Inventory") . ": " . $rc->getData("product_name");
+    $page->setName(tr("Inventory") . ": " . $rc->getData("product_name"));
 }
 else {
-    $page->caption = tr("All Products Inventory");
+    $page->setName(tr("All Products Inventory"));
 }
 
 $view_inventory = new SQLSelect();

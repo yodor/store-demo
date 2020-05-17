@@ -77,7 +77,7 @@ else {
 }
 $page->startRender();
 
-$page->setPreferredTitle(tr("Forgot Password"));
+$page->setTitle(tr("Forgot Password"));
 
 $frend->setCaption(SITE_TITLE . "<BR><small>" . tr("Administration") . "</small>");
 

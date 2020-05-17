@@ -71,9 +71,9 @@ $act->addAction(new Action("Покажи детайли", "order_details.php", a
 $view->getColumn("actions")->setCellRenderer($act);
 
 $page->startRender();
-$page->setPreferredTitle(tr("История на поръчките"));
+$page->setTitle(tr("История на поръчките"));
 
-echo "<div class='caption'>" . $page->getPreferredTitle() . "</div>";
+echo "<div class='caption'>" . $page->getTitle() . "</div>";
 $view->render();
 
 $page->finishRender();

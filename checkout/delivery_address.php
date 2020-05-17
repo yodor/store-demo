@@ -43,7 +43,7 @@ else if ($proc->getStatus() == FormProcessor::STATUS_ERROR) {
 
 $page->startRender();
 
-$page->setPreferredTitle(tr("Адрес за доставка"));
+$page->setTitle(tr("Адрес за доставка"));
 
 $page->drawCartItems();
 

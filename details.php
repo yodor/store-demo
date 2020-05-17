@@ -182,10 +182,11 @@ echo "<div class='images'>";
 //main image
 $gallery_href = STORAGE_LOCAL . "?cmd=image&width=500&height=500";
 $big_href = STORAGE_LOCAL . "?cmd=image";
-echo "<div class='image_big' source='$gallery_href' >";
-echo "<a class='ImagePopup' href='' source='$big_href'><img src='$big_href'></a>";
-echo "</div>";
 
+echo "<div class='image_big' source='$gallery_href' >";
+echo "<a class='ImagePopup' data-href='' source='$big_href'><img src='$big_href'></a>";
+echo "</div>";
+//TODO:Images
 //photo galleries per color
 echo "<div class='image_gallery'>";
 foreach ($galleries as $pclrID => $gallery) {

@@ -31,9 +31,9 @@ else if ($proc->getStatus() == FormProcessor::STATUS_ERROR) {
 
 $page->startRender();
 
-$page->setPreferredTitle(tr("Клиентски профил"));
+$page->setTitle(tr("Клиентски профил"));
 
-echo "<div class='caption'>" . $page->getPreferredTitle() . "</div>";
+echo "<div class='caption'>" . $page->getTitle() . "</div>";
 
 $frend->render();
 

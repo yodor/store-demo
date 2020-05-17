@@ -60,7 +60,7 @@ header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Expires: 0");
 
 $page->startRender();
-$page->setPreferredTitle(tr("Клиенти"));
+$page->setTitle(tr("Клиенти"));
 
 echo "<div class='item login'>";
 

@@ -40,8 +40,8 @@ else if ($proc->getStatus() == FormProcessor::STATUS_ERROR) {
 
 $page->startRender();
 
-$page->setPreferredTitle(tr("Регистриран адрес"));
-echo "<div class='caption'>" . $page->getPreferredTitle() . "</div>";
+$page->setTitle(tr("Регистриран адрес"));
+echo "<div class='caption'>" . $page->getTitle() . "</div>";
 
 $frend->render();
 

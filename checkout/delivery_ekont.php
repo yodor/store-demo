@@ -69,7 +69,7 @@ $proc->process($form);
 
 $page->startRender();
 
-$page->setPreferredTitle(tr("Избор на Еконт офис"));
+$page->setTitle(tr("Избор на Еконт офис"));
 
 $page->drawCartItems();
 

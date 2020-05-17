@@ -25,7 +25,7 @@ $action_add->setAttribute("action", "add");
 $action_add->setAttribute("title", "Add Photo");
 $page->addAction($action_add);
 
-$page->setCaption(tr("Product Gallery") . ": " . $rc->getData("product_name"));
+$page->setName(tr("Product Gallery") . ": " . $rc->getData("product_name"));
 
 $bean = new ProductPhotosBean();
 $bean->select()->where = $rc->getURLParameter()->text(TRUE);
@@ -37,7 +37,7 @@ RequestController::addRequestHandler($h_repos);
 
 $gv = new GalleryView($bean);
 
-$gv->getActionsCollection()->addURLParameter($rc->getURLParameter());
+$gv->viewActions()->addURLParameter($rc->getURLParameter());
 
 Session::Set("products.gallery", $page->getPageURL());
 

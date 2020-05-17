@@ -21,7 +21,7 @@ if (isset($_GET["orderID"])) {
 
 $page->startRender();
 
-$page->setPreferredTitle(tr("Поръчката е завършена"));
+$page->setTitle(tr("Поръчката е завършена"));
 
 echo "<div class='caption'>" . tr("Поръчката е завършена") . "</div>";
 echo tr("Номер на поръчката") . ": " . $orderID;

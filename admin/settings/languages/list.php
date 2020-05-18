@@ -1,44 +1,17 @@
 <?php
 include_once("session.php");
-include_once("class/pages/AdminPage.php");
-include_once("beans/LanguagesBean.php");
+include_once("templates/admin/BeanListPage.php");
 
-$page = new AdminPage("Languages");
-$page->checkAccess(ROLE_SETTINGS_MENU);
+$cmp = new BeanListPage();
 
-$menu = array(// 	new MenuItem("Add Language","add.php", "list-add.png"),
-              new MenuItem("Translator", "translator/list.php", "applications-development-translation.png"));
+$menu = array(new MenuItem("Translator", "translator/list.php", "applications-development-translation.png"));
+$cmp->getPage()->setPageMenu($menu);
 
-$action_add = new Action("", "add.php", array());
-$action_add->setAttribute("action", "add");
-$action_add->setAttribute("title", "Add Language");
-$page->addAction($action_add);
+$cmp->setBean(new LanguagesBean());
+$cmp->setListFields(array("lang_code"=>"Language Code", "language" => "Language"));
 
-$bean = new LanguagesBean();
+$cmp->getPage()->navigation()->clear();
 
-$h_delete = new DeleteItemRequestHandler($bean);
-RequestController::addRequestHandler($h_delete);
-
-$view = new TableView($bean->query());
-
-$view->addColumn(new TableColumn($bean->key(), "ID"));
-$view->addColumn(new TableColumn("lang_code", "Language Code"));
-$view->addColumn(new TableColumn("language", "Language"));
-$view->addColumn(new TableColumn("actions", "Actions"));
-
-//command actions edit/delete
-$act = new ActionsTableCellRenderer();
-$act->addAction(new Action("Edit", "add.php", array(new DataParameter("editID", $bean->key()))));
-$act->addAction(new PipeSeparator());
-$act->addAction($h_delete->createAction());
-$view->getColumn("actions")->setCellRenderer($act);
-
-$view->setCaption("Languages List");
-
-$page->startRender($menu);
-
-$view->render();
-
-$page->finishRender();
+$cmp->render();
 
 ?>

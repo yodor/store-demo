@@ -7,7 +7,11 @@ $menu = array(new MenuItem("Main Menu", "main/list.php", "code-class.png"),);
 $page = new AdminPage();
 $page->checkAccess(ROLE_CONTENT_MENU);
 
-$page->startRender($menu);
+$page->setPageMenu($menu);
+
+$page->navigation()->clear();
+
+$page->startRender();
 
 $page->finishRender();
 ?>

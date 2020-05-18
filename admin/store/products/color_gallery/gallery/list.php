@@ -9,20 +9,10 @@ include_once("components/GalleryView.php");
 
 $rc = new RequestBeanKey(new ProductColorsBean(), "../list.php" . queryString($_GET), array("color"));
 
-$menu = array();
 
 $page = new AdminPage();
 $page->checkAccess(ROLE_CONTENT_MENU);
 
-$action_back = new Action("", Session::Get("product.color_scheme"), array());
-$action_back->setAttribute("action", "back");
-$action_back->setAttribute("title", "Back");
-$page->addAction($action_back);
-
-$action_add = new Action("", "add.php" . $rc->getQuery(), array());
-$action_add->setAttribute("action", "add");
-$action_add->setAttribute("title", "Add Photo");
-$page->addAction($action_add);
 
 $page->setAccessibleTitle("Color Scheme Photos");
 
@@ -37,11 +27,11 @@ $h_repos = new ChangePositionRequestHandler($bean);
 RequestController::addRequestHandler($h_repos);
 
 $gv = new GalleryView($bean);
-$gv->viewActions()->addURLParameter($rc->getURLParameter());
+$gv->getItemActions()->addURLParameter($rc->getURLParameter());
 
 Session::Set("color_scheme.photos", $page->getPageURL());
 
-$page->startRender($menu);
+$page->startRender();
 
 $gv->render();
 

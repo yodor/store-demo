@@ -13,11 +13,6 @@ $menu = array();
 $page = new AdminPage();
 $page->checkAccess(ROLE_CONTENT_MENU);
 
-$action_back = new Action("", Session::Get("section.banners.list"), array());
-$action_back->setAttribute("action", "back");
-$action_back->setAttribute("title", "Back To Banners");
-$page->addAction($action_back);
-
 $photos = new SectionBannersBean();
 $photos->select()->where = $rc->getURLParameter()->text(TRUE);
 
@@ -31,7 +26,7 @@ $view->getTransactor()->appendURLParameter($rc->getURLParameter());
 
 $view->processInput();
 
-$page->startRender($menu);
+$page->startRender();
 
 $view->render();
 

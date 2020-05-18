@@ -25,7 +25,7 @@ $view->getTransactor()->appendURLParameter($rc->getURLParameter());
 
 $view->processInput();
 
-$page->startRender($menu);
+$page->startRender();
 
 $view->render();
 

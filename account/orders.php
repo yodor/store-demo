@@ -66,7 +66,7 @@ $view->getColumn("order_date")->setCellRenderer(new DateFieldCellRenderer());
 
 $act = new ActionsTableCellRenderer();
 
-$act->addAction(new Action("Покажи детайли", "order_details.php", array(new DataParameter("orderID"))));
+$act->getActions()->append(new Action("Покажи детайли", "order_details.php", array(new DataParameter("orderID"))));
 
 $view->getColumn("actions")->setCellRenderer($act);
 

@@ -69,7 +69,7 @@ class OrderNoteFormProcessor extends FormProcessor
 
         if ($this->getStatus() != FormProcessor::STATUS_OK) return;
 
-        $page = HTMLPage::Instance();
+        $page = SparkPage::Instance();
         $cart = $page->getCart();
 
         $cart->setNote($form->getInput("note")->getValue());

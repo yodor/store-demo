@@ -5,15 +5,10 @@ include_once("class/beans/ProductCategoriesBean.php");
 include_once("components/NestedSetTreeView.php");
 include_once("components/renderers/items/TextTreeItem.php");
 
-$menu = array();
 
 $page = new AdminPage();
 $page->checkAccess(ROLE_CONTENT_MENU);
 
-$action_add = new Action("", "add.php", array());
-$action_add->setAttribute("action", "add");
-$action_add->setAttribute("title", "Add Category");
-$page->addAction($action_add);
 
 $bean = new ProductCategoriesBean();
 
@@ -24,11 +19,11 @@ $h_delete = new DeleteItemRequestHandler($bean);
 RequestController::addRequestHandler($h_delete);
 
 $ir = new TextTreeItem();
-$ir->addAction(new Action("Up", "?cmd=reposition&type=left", array(new DataParameter("item_id", $bean->key()))));
-$ir->addAction(new Action("Down", "?cmd=reposition&type=right", array(new DataParameter("item_id", $bean->key()))));
+$ir->getActions()->append(new Action("Up", "?cmd=reposition&type=left", array(new DataParameter("item_id", $bean->key()))));
+$ir->getActions()->append(new Action("Down", "?cmd=reposition&type=right", array(new DataParameter("item_id", $bean->key()))));
 
-$ir->addAction(new Action("Edit", "add.php", array(new DataParameter("editID", $bean->key()))));
-$ir->addAction($h_delete->createAction());
+$ir->getActions()->append(new Action("Edit", "add.php", array(new DataParameter("editID", $bean->key()))));
+$ir->getActions()->append($h_delete->createAction());
 
 $ir->setLabelKey("category_name");
 
@@ -41,7 +36,7 @@ $tv->setName("ProductCategores");
 
 Session::Set("categories.list", $page->getPageURL());
 
-$page->startRender($menu);
+$page->startRender();
 
 $tv->render();
 

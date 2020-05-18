@@ -3,7 +3,6 @@ include_once("session.php");
 include_once("class/pages/AdminPage.php");
 
 $page = new AdminPage("Settings");
-$page->checkAccess(ROLE_SETTINGS_MENU);
 
 $menu = array(
 
@@ -13,7 +12,9 @@ $menu = array(
 
 );
 
-$page->startRender($menu);
+$page->setPageMenu($menu);
+
+$page->startRender();
 
 $page->finishRender();
 

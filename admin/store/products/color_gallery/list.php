@@ -16,19 +16,7 @@ include_once("iterators/SQLQuery.php");
 $page = new AdminPage();
 $page->checkAccess(ROLE_CONTENT_MENU);
 
-$action_back = new Action("", Session::Get("products.list"), array());
-$action_back->setAttribute("action", "back");
-$action_back->setAttribute("title", "Back to Products");
-$page->addAction($action_back);
-
 $rc = new RequestBeanKey(new ProductsBean(), "../list.php", array("product_name"));
-
-$menu = array();
-
-$action_add = new Action("", "add.php" . $rc->getQuery(), array());
-$action_add->setAttribute("action", "add");
-$action_add->setAttribute("title", "Add Color Scheme");
-$page->addAction($action_add);
 
 $page->setAccessibleTitle("Color Scheme");
 
@@ -77,19 +65,18 @@ $ticr2->setLimit(0);
 $view->getColumn("photo")->setCellRenderer($ticr2);
 
 $act = new ActionsTableCellRenderer();
-$act->addAction(new Action("Edit", "add.php", array(new DataParameter("editID", $bean->key()))));
-$act->addAction(new PipeSeparator());
-$act->addAction($h_delete->createAction());
+$act->getActions()->append(new Action("Edit", "add.php", array(new DataParameter("editID", $bean->key()))));
+$act->getActions()->append(new PipeSeparator());
+$act->getActions()->append($h_delete->createAction());
 
-$act->addAction(new RowSeparator());
+$act->getActions()->append(new RowSeparator());
 
-$act->addAction(new Action("Photos", "gallery/list.php", array(new DataParameter($bean->key(), $bean->key()))));
+$act->getActions()->append(new Action("Photos", "gallery/list.php", array(new DataParameter($bean->key(), $bean->key()))));
 
 $view->getColumn("actions")->setCellRenderer($act);
 
-Session::Set("product.color_scheme", $page->getPageURL());
 
-$page->startRender($menu);
+$page->startRender();
 
 // $ksc->render();
 $view->render();

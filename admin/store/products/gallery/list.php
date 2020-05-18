@@ -13,17 +13,11 @@ $page = new AdminPage();
 $page->checkAccess(ROLE_CONTENT_MENU);
 $page->setAccessibleTitle("Photo Gallery");
 
-$action_back = new Action("", Session::Get("products.list"), array());
-$action_back->setAttribute("action", "back");
-$action_back->setAttribute("title", "Back to Products");
-$page->addAction($action_back);
+
 
 $rc = new RequestBeanKey(new ProductsBean(), "../list.php", array("product_name"));
 
-$action_add = new Action("", "add.php" . $rc->getQuery(), array());
-$action_add->setAttribute("action", "add");
-$action_add->setAttribute("title", "Add Photo");
-$page->addAction($action_add);
+
 
 $page->setName(tr("Product Gallery") . ": " . $rc->getData("product_name"));
 
@@ -37,7 +31,7 @@ RequestController::addRequestHandler($h_repos);
 
 $gv = new GalleryView($bean);
 
-$gv->viewActions()->addURLParameter($rc->getURLParameter());
+$gv->getItemActions()->addURLParameter($rc->getURLParameter());
 
 Session::Set("products.gallery", $page->getPageURL());
 

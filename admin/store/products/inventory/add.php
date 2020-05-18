@@ -5,15 +5,10 @@ include_once("class/forms/ProductInventoryInputForm.php");
 include_once("class/beans/ProductInventoryBean.php");
 include_once("class/beans/ProductsBean.php");
 
-$menu = array();
 
 $page = new AdminPage();
 $page->checkAccess(ROLE_CONTENT_MENU);
 
-$action_back = new Action("", Session::Get("products.inventory"), array());
-$action_back->setAttribute("action", "back");
-$action_back->setAttribute("title", "Back To Inventory List");
-$page->addAction($action_back);
 
 Session::Set("sizing.list", $page->getPageURL());
 Session::Set("product.color_scheme", $page->getPageURL());
@@ -46,7 +41,7 @@ if ($copyID > 0) {
     $form->loadBeanData($copyID, $bean);
 }
 
-$page->startRender($menu);
+$page->startRender();
 
 $view->render();
 

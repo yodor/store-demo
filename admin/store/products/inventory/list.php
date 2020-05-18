@@ -17,12 +17,7 @@ include_once("class/beans/ProductsBean.php");
 $page = new AdminPage();
 $page->checkAccess(ROLE_CONTENT_MENU);
 
-$menu = array();
 
-$action_back = new Action("", Session::Get("products.list"), array());
-$action_back->setAttribute("action", "back");
-$action_back->setAttribute("title", "Back to Products");
-$page->addAction($action_back);
 
 $prodID = -1;
 
@@ -37,7 +32,7 @@ try {
     $action_add = new Action("", "add.php?prodID=$prodID", array());
     $action_add->setAttribute("action", "add");
     $action_add->setAttribute("title", "Add Inventory");
-    $page->addAction($action_add);
+    $page->getActions()->append($action_add);
 
 }
 catch (Exception $e) {
@@ -51,6 +46,7 @@ RequestController::addRequestHandler($h_delete);
 
 $search_fields = array("product_name", "category_name", "class_name", "product_summary", "keywords", "brand_name",
                        "section", "color", "inventory_attributes");
+
 $ksc = new KeywordSearch($search_fields);
 $ksc->getForm()->getRenderer()->setAttribute("method", "get");
 
@@ -134,21 +130,20 @@ $view->getColumn("pclrpID")->setCellRenderer($ticr1);
 $view->getColumn("color_code")->setCellRenderer(new ColorCodeCellRenderer());
 
 $act = new ActionsTableCellRenderer();
-$act->addAction(new Action("Edit", "add.php", array(new DataParameter("prodID"),
+$act->getActions()->append(new Action("Edit", "add.php", array(new DataParameter("prodID"),
                                                     new DataParameter("editID", $bean->key()))));
-$act->addAction(new PipeSeparator());
-$act->addAction($h_delete->createAction());
+$act->getActions()->append(new PipeSeparator());
+$act->getActions()->append($h_delete->createAction());
 
-$act->addAction(new RowSeparator());
+$act->getActions()->append(new RowSeparator());
 
-$act->addAction(new Action("Add Copy", "add.php", array(new DataParameter("prodID"),
+$act->getActions()->append(new Action("Add Copy", "add.php", array(new DataParameter("prodID"),
                                                         new DataParameter("copyID", $bean->key()))));
 
 $view->getColumn("actions")->setCellRenderer($act);
 
-Session::Set("products.inventory", $page->getPageURL());
 
-$page->startRender($menu);
+$page->startRender();
 
 $ksc->render();
 $view->render();

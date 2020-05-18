@@ -13,17 +13,7 @@ $page = new AdminPage();
 $page->checkAccess(ROLE_CONTENT_MENU);
 $page->setAccessibleTitle("Banners Gallery");
 
-$action_back = new Action("", Session::Get("sections.list"), array());
-$action_back->setAttribute("action", "back");
-$action_back->setAttribute("title", "Back to Sections");
-$page->addAction($action_back);
-
 $rc = new RequestBeanKey(new SectionsBean(), "../list.php", array("section_title"));
-
-$action_add = new Action("", "add.php" . $rc->getQuery(), array());
-$action_add->setAttribute("action", "add");
-$action_add->setAttribute("title", "Add Photo");
-$page->addAction($action_add);
 
 $page->setName(tr("Banners Gallery") . ": " . $rc->getData("section_title"));
 
@@ -36,11 +26,9 @@ $h_repos = new ChangePositionRequestHandler($bean);
 RequestController::addRequestHandler($h_repos);
 
 $gv = new GalleryView($bean);
-$gv->viewActions()->addURLParameter($rc->getURLParameter());
+$gv->getItemActions()->addURLParameter($rc->getURLParameter());
 
-Session::Set("section.banners.list", $page->getPageURL());
-
-$page->startRender($menu);
+$page->startRender();
 
 $gv->render();
 

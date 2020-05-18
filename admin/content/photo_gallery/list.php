@@ -6,7 +6,6 @@ include_once("class/beans/GalleryPhotosBean.php");
 
 include_once("components/GalleryView.php");
 
-$menu = array();
 
 $page = new AdminPage();
 $page->checkAccess(ROLE_CONTENT_MENU);
@@ -28,7 +27,9 @@ $gv = new GalleryView($bean);
 
 $gv->setCaption("Sample Photo Gallery");
 
-$page->startRender($menu);
+
+
+$page->startRender();
 
 $gv->render();
 

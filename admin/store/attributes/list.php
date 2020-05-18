@@ -9,10 +9,6 @@ $menu = array();
 $page = new AdminPage();
 $page->checkAccess(ROLE_CONTENT_MENU);
 
-$action_add = new Action("", "add.php", array());
-$action_add->setAttribute("action", "add");
-$action_add->setAttribute("title", "Add attribute");
-$page->addAction($action_add);
 
 $bean = new AttributesBean();
 
@@ -31,15 +27,15 @@ $view->addColumn(new TableColumn("type", "Type"));
 $view->addColumn(new TableColumn("actions", "Actions"));
 
 $act = new ActionsTableCellRenderer();
-$act->addAction(new Action("Edit", "add.php", array(new DataParameter("editID", $bean->key()))));
-$act->addAction(new PipeSeparator());
-$act->addAction($h_delete->createAction());
+$act->getActions()->append(new Action("Edit", "add.php", array(new DataParameter("editID", $bean->key()))));
+$act->getActions()->append(new PipeSeparator());
+$act->getActions()->append($h_delete->createAction());
 
 $view->getColumn("actions")->setCellRenderer($act);
 
 Session::Set("attributes.list", $page->getPageURL());
 
-$page->startRender($menu);
+$page->startRender();
 
 $view->render();
 

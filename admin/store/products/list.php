@@ -24,10 +24,7 @@ $menu = array(
 $page = new AdminPage();
 $page->checkAccess(ROLE_CONTENT_MENU);
 
-$action_add = new Action("", "add.php", array());
-$action_add->setAttribute("action", "add");
-$action_add->setAttribute("title", "Add Product");
-$page->addAction($action_add);
+$page->setPageMenu($menu);
 
 $bean = new ProductsBean();
 
@@ -100,24 +97,22 @@ $view->getColumn("visible")->setCellRenderer(new BooleanFieldCellRenderer("Yes",
 // $view->getColumn("promotion")->setCellRenderer(new BooleanFieldCellRenderer("Yes", "No"));
 
 $act = new ActionsTableCellRenderer();
-$act->addAction(new Action("Edit", "add.php", array(new DataParameter("editID", $bean->key()))));
-$act->addAction(new PipeSeparator());
-$act->addAction($h_delete->createAction());
-$act->addAction(new RowSeparator());
+$act->getActions()->append(new Action("Edit", "add.php", array(new DataParameter("editID", $bean->key()))));
+$act->getActions()->append(new PipeSeparator());
+$act->getActions()->append($h_delete->createAction());
+$act->getActions()->append(new RowSeparator());
 
-$act->addAction(new Action("Inventory", "inventory/list.php", array(new DataParameter("prodID", $bean->key()))));
-$act->addAction(new RowSeparator());
-$act->addAction(new Action("Color Scheme", "color_gallery/list.php", array(new DataParameter("prodID", $bean->key()))));
-$act->addAction(new RowSeparator());
+$act->getActions()->append(new Action("Inventory", "inventory/list.php", array(new DataParameter("prodID", $bean->key()))));
+$act->getActions()->append(new RowSeparator());
+$act->getActions()->append(new Action("Color Scheme", "color_gallery/list.php", array(new DataParameter("prodID", $bean->key()))));
+$act->getActions()->append(new RowSeparator());
 
-$act->addAction(new Action("Photo Gallery", "gallery/list.php", array(new DataParameter("prodID", $bean->key()))));
+$act->getActions()->append(new Action("Photo Gallery", "gallery/list.php", array(new DataParameter("prodID", $bean->key()))));
 
 $view->getColumn("actions")->setCellRenderer($act);
 
-//store page URL to session and restore on confirm product add or insert
-Session::Set("products.list", $page->getPageURL());
 
-$page->startRender($menu);
+$page->startRender();
 
 $ksc->render();
 $view->render();

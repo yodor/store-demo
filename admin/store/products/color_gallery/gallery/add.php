@@ -13,10 +13,6 @@ $menu = array();
 $page = new AdminPage();
 $page->checkAccess(ROLE_CONTENT_MENU);
 
-$action_back = new Action("", Session::Get("color_scheme.photos"), array());
-$action_back->setAttribute("action", "back");
-$action_back->setAttribute("title", "Back to Color Scheme Photos");
-$page->addAction($action_back);
 
 $photos = new ProductColorPhotosBean();
 $photos->select()->where = $rc->getURLParameter()->text(TRUE);
@@ -27,7 +23,7 @@ $view->getTransactor()->appendURLParameter($rc->getURLParameter());
 
 $view->processInput();
 
-$page->startRender($menu);
+$page->startRender();
 
 $view->render();
 

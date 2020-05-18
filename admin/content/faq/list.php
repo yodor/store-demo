@@ -1,46 +1,25 @@
 <?php
 include_once("session.php");
-include_once("class/pages/AdminPage.php");
-include_once("class/beans/FAQItemsBean.php");
-include_once("components/TableView.php");
-
-$menu = array();
-
-$page = new AdminPage();
-$page->checkAccess(ROLE_CONTENT_MENU);
-
-$action_add = new Action("", "add.php", array());
-$action_add->setAttribute("action", "add");
-$action_add->setAttribute("title", "Add Item");
-$page->addAction($action_add);
+include_once("templates/admin/BeanListPage.php");
+include_once("beans/FAQItemsBean.php");
 
 $bean = new FAQItemsBean();
 
-$h_delete = new DeleteItemRequestHandler($bean);
-RequestController::addRequestHandler($h_delete);
+$cmp = new BeanListPage();
 
-$view = new TableView($bean->query());
-$view->setCaption("FAQ Items");
-$view->setDefaultOrder(" fID DESC ");
-// $view->search_filter = " ORDER BY day_num ASC ";
-$view->addColumn(new TableColumn($bean->key(), "ID"));
-$view->addColumn(new TableColumn("section", "Section"));
-$view->addColumn(new TableColumn("question", "Question"));
-$view->addColumn(new TableColumn("answer", "Answer"));
+$menu = array(new MenuItem("Sections", "sections.php"));
 
-$view->addColumn(new TableColumn("actions", "Actions"));
+$cmp->getPage()->setPageMenu($menu);
 
-$act = new ActionsTableCellRenderer();
-$act->addAction(new Action("Edit", "add.php", array(new DataParameter("editID", $bean->key()))));
-$act->addAction(new PipeSeparator());
-$act->addAction($h_delete->createAction());
+$qry = $bean->query();
+$qry->select->from.= " fi LEFT JOIN faq_sections fs ON fs.fqsID = fi.fqsID ";
+$qry->select->fields = " fi.fID, fs.section_name, fi.question, fi.answer ";
+$cmp->setBean($bean);
+$cmp->setIterator($qry);
 
-$view->getColumn("actions")->setCellRenderer($act);
+$cmp->setListFields(array("section_name"=>"Section", "question"=>"Question", "answer"=>"Answer"));
 
-$page->startRender($menu);
+$cmp->getPage()->navigation()->clear();
 
-$view->render();
-
-$page->finishRender();
-
+$cmp->render();
 ?>

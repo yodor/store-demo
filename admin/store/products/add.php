@@ -9,10 +9,6 @@ $menu = array();
 $page = new AdminPage();
 $page->checkAccess(ROLE_CONTENT_MENU);
 
-$action_back = new Action("", Session::Get("products.list"), array());
-$action_back->setAttribute("action", "back");
-$action_back->setAttribute("title", "Back to Products");
-$page->addAction($action_back);
 
 $view = new BeanFormEditor(new ProductsBean(), new ProductInputForm());
 
@@ -25,7 +21,7 @@ $view->getTransactor()->assignInsertValue("insert_date", DBConnections::Get()->d
 
 $view->processInput();
 
-$page->startRender($menu);
+$page->startRender();
 
 $view->render();
 

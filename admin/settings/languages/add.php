@@ -1,23 +1,15 @@
 <?php
 include_once("session.php");
-include_once("class/pages/AdminPage.php");
-
+include_once("templates/admin/BeanEditorPage.php");
 include_once("beans/LanguagesBean.php");
 include_once("forms/LanguageForm.php");
 
-$menu = array();
+$cmp = new BeanEditorPage();
 
-$page = new AdminPage("Add Language");
-$page->checkAccess(ROLE_SETTINGS_MENU);
+$cmp->setBean(new LanguagesBean());
+$cmp->setForm(new LanguageForm());
 
-$view = new BeanFormEditor(new LanguagesBean(), new LanguageForm());
+$cmp->render();
 
-$view->processInput();
-
-$page->startRender($menu);
-
-$view->render();
-
-$page->finishRender();
 
 ?>

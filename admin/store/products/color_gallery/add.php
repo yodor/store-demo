@@ -10,10 +10,6 @@ $menu = array();
 $page = new AdminPage();
 $page->checkAccess(ROLE_CONTENT_MENU);
 
-$action_back = new Action("", Session::Get("product.color_scheme"), array());
-$action_back->setAttribute("action", "back");
-$action_back->setAttribute("title", "Back to Colors List");
-$page->addAction($action_back);
 
 $ensure_product = new RequestBeanKey(new ProductsBean(), "../list.php", array("product_name"));
 
@@ -27,7 +23,7 @@ $page->setName("Color Scheme: " . $ensure_product->getData("product_name"));
 
 $view->processInput();
 
-$page->startRender($menu);
+$page->startRender();
 
 $view->render();
 

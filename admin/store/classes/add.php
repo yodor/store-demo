@@ -10,10 +10,6 @@ $menu = array();
 $page = new AdminPage();
 $page->checkAccess(ROLE_CONTENT_MENU);
 
-$action_back = new Action("", Session::Get("classes.list"), array());
-$action_back->setAttribute("action", "back");
-$action_back->setAttribute("title", "Back to Classes");
-$page->addAction($action_back);
 
 $view = new BeanFormEditor(new ProductClassesBean(), new ProductClassInputForm());
 
@@ -24,9 +20,8 @@ $view = new BeanFormEditor(new ProductClassesBean(), new ProductClassInputForm()
 
 $view->processInput();
 
-Session::Set("attributes.list", $page->getPageURL());
 
-$page->startRender($menu);
+$page->startRender();
 
 $view->render();
 

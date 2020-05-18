@@ -1,22 +1,13 @@
 <?php
 include_once("session.php");
-include_once("class/pages/AdminPage.php");
-include_once("class/forms/FAQItemInputForm.php");
-include_once("class/beans/FAQItemsBean.php");
+include_once("templates/admin/BeanEditorPage.php");
 
-$menu = array();
+include_once("forms/FAQItemInputForm.php");
+include_once("beans/FAQItemsBean.php");
 
-$page = new AdminPage();
-$page->checkAccess(ROLE_CONTENT_MENU);
-
-$view = new BeanFormEditor(new FAQItemsBean(), new FAQItemInputForm());
-
-$view->processInput();
-
-$page->startRender($menu);
-
-$view->render();
-
-$page->finishRender();
+$cmp = new BeanEditorPage();
+$cmp->setBean(new FAQItemsBean());
+$cmp->setForm(new FAQItemInputForm());
+$cmp->render();
 
 ?>

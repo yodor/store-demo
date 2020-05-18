@@ -1,41 +1,23 @@
 <?php
 include_once("session.php");
-include_once("class/pages/AdminPage.php");
+include_once("templates/admin/GalleryViewPage.php");
 
 include_once("beans/DynamicPagePhotosBean.php");
 include_once("beans/DynamicPagesBean.php");
 
-include_once("components/GalleryView.php");
 
-$rc = new RequestBeanKey(new DynamicPagesBean(), "../list.php");
-
-$menu = array();
-
-$page = new AdminPage();
-$page->checkAccess(ROLE_CONTENT_MENU);
-$page->setName("Dynamic Page Photo Gallery");
-$page->setAccessibleTitle("Photo Gallery");
-
-$action_add = new Action("", "add.php" . $rc->getQuery(), array());
-$action_add->setAttribute("action", "add");
-$action_add->setAttribute("title", "Add Photo");
-$page->addAction($action_add);
+$rc = new RequestBeanKey(new DynamicPagesBean(), "../list.php", array("item_title"));
 
 $bean = new DynamicPagePhotosBean();
 $bean->select()->where = $rc->getURLParameter()->text(TRUE);
 
-$h_delete = new DeleteItemRequestHandler($bean);
-RequestController::addRequestHandler($h_delete);
-$h_repos = new ChangePositionRequestHandler($bean);
-RequestController::addRequestHandler($h_repos);
+$cmp = new GalleryViewPage();
+$cmp->setBean($bean);
+$cmp->getPage()->setName(tr("Photo Gallery").": " . $rc->getData("item_title"));
+$cmp->getPage()->setAccessibleTitle($cmp->getPage()->getName());
 
-$gv = new GalleryView($bean);
-$gv->viewActions()->addURLParameter($rc->getURLParameter());
+$cmp->setBean($bean);
 
-$page->startRender($menu);
-
-$gv->render();
-
-$page->finishRender();
+$cmp->render();
 
 ?>

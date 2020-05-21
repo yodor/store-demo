@@ -13,17 +13,17 @@ $page = new AdminPage();
 $page->checkAccess(ROLE_CONTENT_MENU);
 $page->setAccessibleTitle("Banners Gallery");
 
-$rc = new RequestBeanKey(new SectionsBean(), "../list.php", array("section_title"));
+$rc = new BeanKeyCondition(new SectionsBean(), "../list.php", array("section_title"));
 
 $page->setName(tr("Banners Gallery") . ": " . $rc->getData("section_title"));
 
 $bean = new SectionBannersBean();
 $bean->select()->where = $rc->getURLParameter()->text(TRUE);
 
-$h_delete = new DeleteItemRequestHandler($bean);
-RequestController::addRequestHandler($h_delete);
-$h_repos = new ChangePositionRequestHandler($bean);
-RequestController::addRequestHandler($h_repos);
+$h_delete = new DeleteItemResponder($bean);
+
+$h_repos = new ChangePositionResponder($bean);
+
 
 $gv = new GalleryView($bean);
 $gv->getItemActions()->addURLParameter($rc->getURLParameter());

@@ -13,7 +13,7 @@ $cmp->setListFields(array("section_name"=>"Section"));
 $collection = $cmp->getPage()->getActions();
 $action = $collection->getByAction("Add");
 if ($action instanceof Action) {
-    $action->getURLBuilder()->buildFrom("section_add.php");
+    $action->getURLBuilder()->buildFrom("add.php");
 }
 $cmp->render();
 ?>

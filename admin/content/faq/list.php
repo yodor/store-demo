@@ -7,7 +7,7 @@ $bean = new FAQItemsBean();
 
 $cmp = new BeanListPage();
 
-$menu = array(new MenuItem("Sections", "sections.php"));
+$menu = array(new MenuItem("Sections", "list.php"));
 
 $cmp->getPage()->setPageMenu($menu);
 

@@ -6,9 +6,8 @@ include_once("beans/DynamicPagePhotosBean.php");
 
 include_once("forms/PhotoForm.php");
 
-$rc = new RequestBeanKey(new DynamicPagesBean(), "list.php");
+$rc = new BeanKeyCondition(new DynamicPagesBean(), "list.php");
 
-$menu = array();
 
 $page = new AdminPage();
 $page->checkAccess(ROLE_CONTENT_MENU);

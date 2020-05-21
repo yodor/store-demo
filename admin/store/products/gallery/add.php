@@ -6,7 +6,7 @@ include_once("class/beans/ProductPhotosBean.php");
 
 include_once("forms/PhotoForm.php");
 
-$rc = new RequestBeanKey(new ProductsBean(), "../list.php");
+$rc = new BeanKeyCondition(new ProductsBean(), "../list.php");
 
 $menu = array();
 

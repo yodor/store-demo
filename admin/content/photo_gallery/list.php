@@ -17,11 +17,11 @@ $page->addAction($action_add);
 
 $bean = new GalleryPhotosBean();
 
-$h_delete = new DeleteItemRequestHandler($bean);
-RequestController::addRequestHandler($h_delete);
+$h_delete = new DeleteItemResponder($bean);
 
-$h_repos = new ChangePositionRequestHandler($bean);
-RequestController::addRequestHandler($h_repos);
+
+$h_repos = new ChangePositionResponder($bean);
+
 
 $gv = new GalleryView($bean);
 

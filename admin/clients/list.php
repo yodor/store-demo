@@ -2,8 +2,8 @@
 include_once("session.php");
 include_once("class/pages/AdminPage.php");
 
-include_once("handlers/DeleteItemRequestHandler.php");
-include_once("handlers/ToggleFieldRequestHandler.php");
+include_once("responders/DeleteItemResponder.php");
+include_once("responders/ToggleFieldResponder.php");
 
 include_once("components/TableView.php");
 include_once("components/KeywordSearch.php");
@@ -16,13 +16,14 @@ $page = new AdminPage();
 $page->checkAccess(ROLE_CLIENTS_MENU);
 
 $bean = new UsersBean();
-$h_delete = new DeleteItemRequestHandler($bean);
-RequestController::addRequestHandler($h_delete);
-$h_toggle = new ToggleFieldRequestHandler($bean);
-RequestController::addRequestHandler($h_toggle);
+$h_delete = new DeleteItemResponder($bean);
+
+$h_toggle = new ToggleFieldResponder($bean);
+
 
 $search_fields = array("email", "fullname", "phone");
-$scomp = new KeywordSearch($search_fields);
+$scomp = new KeywordSearch();
+$scomp->getForm()->setFields($search_fields);
 
 $sel = new SQLSelect();
 $sel->fields = " u.email, u.fullname, u.userID, u.phone, last_active, counter, date_signup, u.suspend ";

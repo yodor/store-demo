@@ -6,7 +6,7 @@ include_once("beans/DynamicPagePhotosBean.php");
 include_once("beans/DynamicPagesBean.php");
 
 
-$rc = new RequestBeanKey(new DynamicPagesBean(), "../list.php", array("item_title"));
+$rc = new BeanKeyCondition(new DynamicPagesBean(), "../list.php", array("item_title"));
 
 $bean = new DynamicPagePhotosBean();
 $bean->select()->where = $rc->getURLParameter()->text(TRUE);

@@ -2,17 +2,14 @@
 include_once("session.php");
 include_once("class/pages/AdminPage.php");
 include_once("class/beans/OrdersBean.php");
-// include_once("class/handlers/ConfirmSendRequestHandler.php");
-include_once("handlers/DeleteItemRequestHandler.php");
+// include_once("class/responders/ConfirmSendRequestHandler.php");
+include_once("responders/DeleteItemResponder.php");
 include_once("class/utils/OrdersSQL.php");
 
 $page = new AdminPage();
 $page->checkAccess(ROLE_ORDERS_MENU);
 
 $bean = new OrdersBean();
-
-// $h_delete = new DeleteItemRequestHandler($bean);
-// RequestController::addRequestHandler($h_delete);
 
 $sel = new OrdersSQL();
 

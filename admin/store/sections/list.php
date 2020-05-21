@@ -9,11 +9,10 @@ $page->checkAccess(ROLE_CONTENT_MENU);
 
 $bean = new SectionsBean();
 
-$h_position = new ChangePositionRequestHandler($bean);
-RequestController::addRequestHandler($h_position);
+$h_position = new ChangePositionResponder($bean);
 
-$h_delete = new DeleteItemRequestHandler($bean);
-RequestController::addRequestHandler($h_delete);
+$h_delete = new DeleteItemResponder($bean);
+
 
 $view = new TableView($bean->query());
 $view->setCaption("Sections List");

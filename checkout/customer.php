@@ -6,7 +6,7 @@ include_once("class/forms/RegisterClientInputForm.php");
 include_once("class/forms/processors/RegisterClientFormProcessor.php");
 
 include_once("auth/UserAuthenticator.php");
-include_once("handlers/AuthenticatorRequestHandler.php");
+include_once("responders/AuthenticatorResponder.php");
 include_once("forms/LoginForm.php");
 include_once("forms/renderers/LoginFormRenderer.php");
 
@@ -19,11 +19,10 @@ if ($page->getUserID() > 0) {
 
 $auth = new UserAuthenticator();
 
-$req = new AuthenticatorRequestHandler($auth, "doLogin");
+$req = new AuthenticatorResponder($auth, "doLogin");
 $req->setCancelUrl(LOCAL . "checkout/customer.php");
 $req->setSuccessUrl(LOCAL . "checkout/delivery.php");
 
-RequestController::addRequestHandler($req);
 
 if ($auth->authorize()) {
     header("Location: delivery.php");

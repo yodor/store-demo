@@ -28,8 +28,6 @@ class IteratorRelatedField extends DataIteratorField
         parent::__construct($input);
         $this->setItemRenderer(new SourceAttributeItem());
 
-        //       RequestController::addAjaxHandler(new SourceRelatedFieldAjaxHandler());
-
     }
 
     public function setIterator(IDataIterator $query)

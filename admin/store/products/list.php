@@ -28,12 +28,13 @@ $page->setPageMenu($menu);
 
 $bean = new ProductsBean();
 
-$h_delete = new DeleteItemRequestHandler($bean);
-RequestController::addRequestHandler($h_delete);
+$h_delete = new DeleteItemResponder($bean);
+
 
 $search_fields = array("product_name", "category_name", "class_name", "product_summary", "keywords", "brand_name",
                        "section");
-$ksc = new KeywordSearch($search_fields);
+$ksc = new KeywordSearch();
+$ksc->getForm()->setFields($search_fields);
 $ksc->getForm()->getRenderer()->setAttribute("method", "get");
 
 $select_products = $bean->select();

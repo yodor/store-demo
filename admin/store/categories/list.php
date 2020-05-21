@@ -12,11 +12,11 @@ $page->checkAccess(ROLE_CONTENT_MENU);
 
 $bean = new ProductCategoriesBean();
 
-$h_repos = new ChangePositionRequestHandler($bean);
-RequestController::addRequestHandler($h_repos);
+$h_repos = new ChangePositionResponder($bean);
 
-$h_delete = new DeleteItemRequestHandler($bean);
-RequestController::addRequestHandler($h_delete);
+
+$h_delete = new DeleteItemResponder($bean);
+
 
 $ir = new TextTreeItem();
 $ir->getActions()->append(new Action("Up", "?cmd=reposition&type=left", array(new DataParameter("item_id", $bean->key()))));

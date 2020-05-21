@@ -23,8 +23,8 @@ $sql = $bean->select();
 $sql->from = " product_classes pc ";
 $sql->fields = " pc.*, (SELECT GROUP_CONCAT(attribute_name SEPARATOR '<BR>') FROM class_attributes ca WHERE ca.pclsID=pc.pclsID) as class_attributes ";
 
-$h_delete = new DeleteItemRequestHandler($bean);
-RequestController::addRequestHandler($h_delete);
+$h_delete = new DeleteItemResponder($bean);
+
 
 $view = new TableView(new SQLQuery($sql, $bean->key()));
 $view->setCaption("Product Classes List");

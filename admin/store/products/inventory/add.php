@@ -13,7 +13,7 @@ $page->checkAccess(ROLE_CONTENT_MENU);
 Session::Set("sizing.list", $page->getPageURL());
 Session::Set("product.color_scheme", $page->getPageURL());
 
-$ensure_product = new RequestBeanKey(new ProductsBean(), "../list.php", array("product_name"));
+$ensure_product = new BeanKeyCondition(new ProductsBean(), "../list.php", array("product_name"));
 $prodID = (int)$ensure_product->getID();
 
 $form = new ProductInventoryInputForm();

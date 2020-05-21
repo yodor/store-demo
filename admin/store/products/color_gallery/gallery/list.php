@@ -7,7 +7,7 @@ include_once("class/beans/ProductColorsBean.php");
 
 include_once("components/GalleryView.php");
 
-$rc = new RequestBeanKey(new ProductColorsBean(), "../list.php" . queryString($_GET), array("color"));
+$rc = new BeanKeyCondition(new ProductColorsBean(), "../list.php" . queryString($_GET), array("color"));
 
 
 $page = new AdminPage();
@@ -21,10 +21,10 @@ $page->setName(tr("Color Scheme Photos") . ": " . $rc->getData("color"));
 $bean = new ProductColorPhotosBean();
 $bean->select()->where = $rc->getURLParameter()->text(TRUE);
 
-$h_delete = new DeleteItemRequestHandler($bean);
-RequestController::addRequestHandler($h_delete);
-$h_repos = new ChangePositionRequestHandler($bean);
-RequestController::addRequestHandler($h_repos);
+$h_delete = new DeleteItemResponder($bean);
+
+$h_repos = new ChangePositionResponder($bean);
+
 
 $gv = new GalleryView($bean);
 $gv->getItemActions()->addURLParameter($rc->getURLParameter());

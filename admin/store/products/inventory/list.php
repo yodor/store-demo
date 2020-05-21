@@ -23,7 +23,7 @@ $prodID = -1;
 
 try {
 
-    $rc = new RequestBeanKey(new ProductsBean(), FALSE, array("product_name"));
+    $rc = new BeanKeyCondition(new ProductsBean(), FALSE, array("product_name"));
     //   $menu=array(
     // 	  new MenuItem("Add Inventory", "add.php".$rc->qrystr, "list-add.png"),
     //   );
@@ -41,13 +41,13 @@ catch (Exception $e) {
 
 $bean = new ProductInventoryBean();
 
-$h_delete = new DeleteItemRequestHandler($bean);
-RequestController::addRequestHandler($h_delete);
+$h_delete = new DeleteItemResponder($bean);
 
 $search_fields = array("product_name", "category_name", "class_name", "product_summary", "keywords", "brand_name",
                        "section", "color", "inventory_attributes");
 
-$ksc = new KeywordSearch($search_fields);
+$ksc = new KeywordSearch();
+$ksc->getForm()->setFields($search_fields);
 $ksc->getForm()->getRenderer()->setAttribute("method", "get");
 
 $piID = -1;

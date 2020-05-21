@@ -20,7 +20,7 @@ class ClassAttributeItem extends DataIteratorItem
 
 }
 
-class ClassAttributeFieldAjaxHandler extends JSONRequestHandler
+class ClassAttributeFieldResponder extends JSONResponder
 {
     protected $catID = -1;
     protected $prodID = -1;
@@ -77,7 +77,6 @@ class ClassAttributeField extends DataIteratorField
         $this->getItemRenderer()->setValueKey("caID");
         $this->getItemRenderer()->setLabelKey("attribute_name");
 
-        RequestController::addAjaxHandler(new ClassAttributeFieldAjaxHandler());
     }
 
     public function requiredStyle()

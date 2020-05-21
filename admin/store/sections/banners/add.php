@@ -6,7 +6,7 @@ include_once("class/beans/SectionBannersBean.php");
 
 include_once("forms/PhotoForm.php");
 
-$rc = new RequestBeanKey(new SectionsBean(), "../list.php");
+$rc = new BeanKeyCondition(new SectionsBean(), "../list.php");
 
 $menu = array();
 

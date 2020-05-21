@@ -16,14 +16,14 @@ include_once("iterators/SQLQuery.php");
 $page = new AdminPage();
 $page->checkAccess(ROLE_CONTENT_MENU);
 
-$rc = new RequestBeanKey(new ProductsBean(), "../list.php", array("product_name"));
+$rc = new BeanKeyCondition(new ProductsBean(), "../list.php", array("product_name"));
 
 $page->setAccessibleTitle("Color Scheme");
 
 $bean = new ProductColorsBean();
 
-$h_delete = new DeleteItemRequestHandler($bean);
-RequestController::addRequestHandler($h_delete);
+$h_delete = new DeleteItemResponder($bean);
+
 
 // $search_fields = array("prodID", "product_code", "product_name", "color", "size");
 // $ksc = new KeywordSearch($search_fields);

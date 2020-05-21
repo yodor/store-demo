@@ -1,9 +1,9 @@
 <?php
-include_once("handlers/RequestHandler.php");
+include_once("responders/RequestResponder.php");
 
 include_once("class/mailers/OrderStatusMailer.php");
 
-class OrderStatusRequestHandler extends RequestHandler
+class OrderStatusRequestResponder extends RequestResponder
 {
 
     protected $orderID = -1;

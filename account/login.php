@@ -1,7 +1,7 @@
 <?php
 include_once("session.php");
 include_once("auth/UserAuthenticator.php");
-include_once("handlers/AuthenticatorRequestHandler.php");
+include_once("responders/AuthenticatorResponder.php");
 include_once("forms/LoginForm.php");
 include_once("forms/renderers/LoginFormRenderer.php");
 
@@ -13,11 +13,10 @@ $page = new AccountPage(FALSE);
 
 $auth = new UserAuthenticator();
 
-$req = new AuthenticatorRequestHandler($auth, "doLogin");
+$req = new AuthenticatorResponder($auth, "doLogin");
 $req->setCancelUrl(LOCAL . "account/login.php");
 $req->setSuccessUrl(LOCAL . "account/index.php");
 
-RequestController::addRequestHandler($req);
 
 $af = new LoginForm();
 

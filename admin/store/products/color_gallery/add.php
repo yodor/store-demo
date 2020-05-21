@@ -11,7 +11,7 @@ $page = new AdminPage();
 $page->checkAccess(ROLE_CONTENT_MENU);
 
 
-$ensure_product = new RequestBeanKey(new ProductsBean(), "../list.php", array("product_name"));
+$ensure_product = new BeanKeyCondition(new ProductsBean(), "../list.php", array("product_name"));
 
 $view = new BeanFormEditor(new ProductColorsBean(), new ProductColorInputForm($ensure_product->getID()));
 

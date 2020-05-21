@@ -1,11 +1,11 @@
 <?php
-include_once("handlers/RequestHandler.php");
+include_once("responders/RequestResponder.php");
 include_once("class/beans/ProductsBean.php");
 include_once("class/beans/ProductFeaturesBean.php");
 include_once("class/beans/ProductPhotosBean.php");
 include_once("class/beans/ClassAttributeValuesBean.php");
 
-class CopyProductRequestHandler extends RequestHandler
+class CopyProductRequestResponder extends RequestResponder
 {
 
     protected $item_id = -1;

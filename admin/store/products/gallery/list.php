@@ -15,7 +15,7 @@ $page->setAccessibleTitle("Photo Gallery");
 
 
 
-$rc = new RequestBeanKey(new ProductsBean(), "../list.php", array("product_name"));
+$rc = new BeanKeyCondition(new ProductsBean(), "../list.php", array("product_name"));
 
 
 
@@ -24,10 +24,9 @@ $page->setName(tr("Product Gallery") . ": " . $rc->getData("product_name"));
 $bean = new ProductPhotosBean();
 $bean->select()->where = $rc->getURLParameter()->text(TRUE);
 
-$h_delete = new DeleteItemRequestHandler($bean);
-RequestController::addRequestHandler($h_delete);
-$h_repos = new ChangePositionRequestHandler($bean);
-RequestController::addRequestHandler($h_repos);
+$h_delete = new DeleteItemResponder($bean);
+
+$h_repos = new ChangePositionResponder($bean);
 
 $gv = new GalleryView($bean);
 

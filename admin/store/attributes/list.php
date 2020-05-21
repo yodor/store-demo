@@ -12,8 +12,8 @@ $page->checkAccess(ROLE_CONTENT_MENU);
 
 $bean = new AttributesBean();
 
-$h_delete = new DeleteItemRequestHandler($bean);
-RequestController::addRequestHandler($h_delete);
+$h_delete = new DeleteItemResponder($bean);
+
 
 $view = new TableView($bean->query());
 $view->setCaption("Store attributes list");

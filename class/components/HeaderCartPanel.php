@@ -2,7 +2,7 @@
 include_once("components/Component.php");
 include_once("class/Cart.php");
 include_once("class/beans/ProductsBean.php");
-include_once("class/beans/CurrencyRatesBean.php");
+include_once("beans/CurrencyRatesBean.php");
 
 class HeaderCartPanel extends Component
 {

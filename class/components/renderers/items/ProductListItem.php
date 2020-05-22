@@ -34,7 +34,7 @@ class ProductListItem extends DataIteratorItem implements IHeadContents
     public function requiredStyle()
     {
         $arr = parent::requiredStyle();
-        $arr[] = LOCAL . "css/ProductListItem.css";
+        $arr[] = LOCAL . "/css/ProductListItem.css";
         return $arr;
     }
 
@@ -77,8 +77,8 @@ class ProductListItem extends DataIteratorItem implements IHeadContents
 
         // 	cho $this->sel->getSQL();
 
-        $product_href = LOCAL . "details.php?prodID={$this->data["prodID"]}";
-        $item_href = LOCAL . "details.php?prodID={$this->data["prodID"]}&piID=";
+        $product_href = LOCAL . "/details.php?prodID={$this->data["prodID"]}";
+        $item_href = LOCAL . "/details.php?prodID={$this->data["prodID"]}&piID=";
 
         $item_href_main = $item_href . $this->data["piID"];
         echo "<a href='$item_href_main' class='product_link'>";

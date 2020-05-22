@@ -39,7 +39,7 @@ class IteratorRelatedField extends DataIteratorField
     public function requiredStyle()
     {
         $arr = parent::requiredStyle();
-        $arr[] = LOCAL . "css/SourceRelatedField.css";
+        $arr[] = LOCAL . "/css/SourceRelatedField.css";
         return $arr;
     }
 

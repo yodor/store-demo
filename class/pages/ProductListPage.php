@@ -31,8 +31,8 @@ class ProductListPage extends ProductsPage
 
         $this->treeView = $treeView;
 
-        $this->addCSS(LOCAL . "css/product_list.css?ver=1.0");
-        $this->addJS(LOCAL . "js/product_list.js?ver=1.2");
+        $this->addCSS(LOCAL . "/css/product_list.css");
+        $this->addJS(LOCAL . "/js/product_list.js");
 
     }
 

@@ -39,7 +39,7 @@ while ($section = $qry->next()) {
 
     echo "<div class='section $sectionName'>";
 
-    $secion_url = LOCAL . "products.php?section=$sectionName";
+    $secion_url = LOCAL . "/products.php?section=$sectionName";
     echo "<a class='caption' href='$secion_url'>$sectionName</a>";
 
     $qry1 = $banners->queryField("secID", $secID, 1);

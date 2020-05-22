@@ -12,8 +12,8 @@ $page = new AdminLoginPage();
 $auth = new AdminAuthenticator();
 
 $req = new AuthenticatorResponder($auth);
-$req->setCancelUrl(LOCAL . "admin/login.php");
-$req->setSuccessUrl(LOCAL . "admin/index.php");
+$req->setCancelUrl(ADMIN_LOCAL . "/login.php");
+$req->setSuccessUrl(ADMIN_LOCAL . "/index.php");
 
 
 $af = new LoginForm();

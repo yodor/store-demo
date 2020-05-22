@@ -94,20 +94,20 @@ echo "<div class='navigation'>";
 
 echo "<div class='slot left'>";
 echo "<a href='cart.php'>";
-echo "<img src='" . LOCAL . "images/cart_edit.png'>";
+echo "<img src='" . LOCAL . "/images/cart_edit.png'>";
 echo "<div class='ColorButton checkout_button' >" . tr("Назад") . "</div>";
 echo "</a>";
 echo "</div>";
 
 echo "<div class='slot center'>";
 //     echo "<div class='note'>";
-//         echo "<i>".tr("Натискайки бутона 'Продължи' Вие се съгласявате с нашите")."&nbsp;"."<a  href='".LOCAL."terms.php'>".tr("Условия за ползване")."</a></i>";
+//         echo "<i>".tr("Натискайки бутона 'Продължи' Вие се съгласявате с нашите")."&nbsp;"."<a  href='".LOCAL."/terms.php'>".tr("Условия за ползване")."</a></i>";
 //     echo "</div>";
 echo "</div>";
 
 echo "<div class='slot right'>";
 echo "<a href='javascript:document.forms.DeliveryAddress.submit();'>";
-echo "<img src='" . LOCAL . "images/cart_checkout.png'>";
+echo "<img src='" . LOCAL . "/images/cart_checkout.png'>";
 echo "<div class='ColorButton checkout_button'>" . tr("Продължи") . "</div>";
 echo "</a>";
 echo "</div>";

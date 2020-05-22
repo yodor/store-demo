@@ -17,7 +17,7 @@ class ContactRequestMailer extends Mailer
         $this->subject = $subject;
 
         $message = "crID: $crID\r\n";
-        $message .= "<a href='" . SITE_URL . LOCAL . "admin/contact_requests/list.php'>List Contact Requests</a>";
+        $message .= "<a href='" . SITE_URL . LOCAL . "/admin/contact_requests/list.php'>List Contact Requests</a>";
 
         $this->body = $this->templateMessage($message);
 

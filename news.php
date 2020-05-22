@@ -8,7 +8,7 @@ include_once("components/PublicationArchiveComponent.php");
 
 $page = new DemoPage();
 
-$page->addCSS(LOCAL . "css/news.css");
+$page->addCSS(LOCAL . "/css/news.css");
 
 $nb = new NewsItemsBean();
 $prkey = $nb->key();
@@ -24,7 +24,7 @@ $qry->select->where = " $prkey='$itemID' ";
 $qry->select->limit = " 1 ";
 $qry->select->order_by = " item_date DESC ";
 
-$pac = new PublicationArchiveComponent(new NewsItemsBean(), LOCAL . "news.php");
+$pac = new PublicationArchiveComponent(new NewsItemsBean(), LOCAL . "/news.php");
 
 $selected_year = $pac->getYear();
 $selected_month = $pac->getMonth();
@@ -111,7 +111,7 @@ function drawLatestNews($num, $selected_year = FALSE, $selected_month = FALSE)
 
     while ($item_row = $qry->next()) {
         $itemID = $item_row[$nb->key()];
-        echo "<a class='item' newsID='$itemID' href='" . LOCAL . "news.php?newsID=$itemID'>";
+        echo "<a class='item' newsID='$itemID' href='" . LOCAL . "/news.php?newsID=$itemID'>";
 
         echo "<div class='cell image'>";
         $img_href = StorageItem::Image($itemID, $nb, 48, 48);

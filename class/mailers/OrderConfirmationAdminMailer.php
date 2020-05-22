@@ -13,7 +13,7 @@ class OrderConfirmationAdminMailer extends Mailer
 
         $message = "OrderID: $orderID\r\n<BR>";
 
-        $order_link = SITE_URL . LOCAL . "admin/orders/list.php?orderID=$orderID";
+        $order_link = SITE_URL . LOCAL . "/admin/orders/list.php?orderID=$orderID";
 
         $message .= "Можете да видите поръчката на адрес - ";
         $message .= "<a href='$order_link'>$order_link</a>";

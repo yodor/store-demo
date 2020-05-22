@@ -31,7 +31,7 @@ class AccountPage extends StorePage
 
         $this->account_menu->setMenuItems($items);
 
-        $this->addCSS(LOCAL . "css/account.css");
+        $this->addCSS(LOCAL . "/css/account.css");
     }
 
     public function startRender()

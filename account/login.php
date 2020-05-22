@@ -14,8 +14,8 @@ $page = new AccountPage(FALSE);
 $auth = new UserAuthenticator();
 
 $req = new AuthenticatorResponder($auth, "doLogin");
-$req->setCancelUrl(LOCAL . "account/login.php");
-$req->setSuccessUrl(LOCAL . "account/index.php");
+$req->setCancelUrl(LOCAL . "/account/login.php");
+$req->setSuccessUrl(LOCAL . "/account/index.php");
 
 
 $af = new LoginForm();

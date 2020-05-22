@@ -32,7 +32,7 @@ try {
 }
 catch (Exception $e) {
     Session::SetAlert($e->getMessage());
-    header("Location: " . LOCAL . "home.php");
+    header("Location: " . LOCAL . "/home.php");
     exit;
 }
 

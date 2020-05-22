@@ -13,10 +13,10 @@ class ProductDetailsPage extends ProductsPage
         parent::__construct();
         $this->list_item = new ProductListItem();
 
-        $this->addCSS(LOCAL . "css/product_details.css");
-        $this->addCSS(LOCAL . "css/product_details.css");
+        $this->addCSS(LOCAL . "/css/product_details.css");
+        $this->addCSS(LOCAL . "/css/product_details.css");
 
-        $this->addJS(LOCAL . "js/product_details.js");
+        $this->addJS(LOCAL . "/js/product_details.js");
     }
 
     public function setSellableItem($sellable)

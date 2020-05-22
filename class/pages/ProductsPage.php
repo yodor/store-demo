@@ -51,12 +51,12 @@ class ProductsPage extends StorePage
     {
         $actions = array();
 
-        $actions[] = new Action(tr("Начало"), LOCAL . "index.php", array());
+        $actions[] = new Action(tr("Начало"), LOCAL . "/index.php", array());
 
         if ($this->section) {
             $qarr = array();
             $qarr["section"] = $this->section;
-            $link = LOCAL . "products.php" . queryString($qarr);
+            $link = LOCAL . "/products.php" . queryString($qarr);
             $actions[] = new Action($this->section, $link, array());
         }
 
@@ -66,7 +66,7 @@ class ProductsPage extends StorePage
             $qarr = array();
             $qarr["section"] = $this->section;
             $qarr["catID"] = $category["catID"];
-            $link = LOCAL . "products.php" . queryString($qarr);
+            $link = LOCAL . "/products.php" . queryString($qarr);
             $actions[] = new Action($category["category_name"], $link, array());
         }
 

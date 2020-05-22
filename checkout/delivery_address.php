@@ -59,7 +59,7 @@ echo "<div class='navigation'>";
 
 echo "<div class='slot left'>";
 echo "<a href='delivery.php'>";
-echo "<img src='" . LOCAL . "images/cart_edit.png'>";
+echo "<img src='" . LOCAL . "/images/cart_edit.png'>";
 echo "<div class='ColorButton checkout_button' >" . tr("Назад") . "</div>";
 echo "</a>";
 echo "</div>";
@@ -69,7 +69,7 @@ echo "</div>";
 
 echo "<div class='slot right'>";
 echo "<a href='javascript:document.forms.ClientAddressInputForm.submit();'>";
-echo "<img src='" . LOCAL . "images/cart_checkout.png'>";
+echo "<img src='" . LOCAL . "/images/cart_checkout.png'>";
 echo "<div class='ColorButton checkout_button'  >" . tr("Продължи") . "</div>";
 echo "</a>";
 echo "</div>";

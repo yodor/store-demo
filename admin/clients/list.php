@@ -13,7 +13,6 @@ include_once("beans/UsersBean.php");
 $menu = array();
 
 $page = new AdminPage();
-$page->checkAccess(ROLE_CLIENTS_MENU);
 
 $bean = new UsersBean();
 $h_delete = new DeleteItemResponder($bean);

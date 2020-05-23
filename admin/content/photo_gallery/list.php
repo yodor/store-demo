@@ -8,12 +8,8 @@ include_once("components/GalleryView.php");
 
 
 $page = new AdminPage();
-$page->checkAccess(ROLE_CONTENT_MENU);
 
-$action_add = new Action("", "add.php", array());
-$action_add->setAttribute("action", "add");
-$action_add->setAttribute("title", "Add Photo");
-$page->addAction($action_add);
+
 
 $bean = new GalleryPhotosBean();
 

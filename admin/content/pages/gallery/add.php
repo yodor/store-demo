@@ -10,7 +10,6 @@ $rc = new BeanKeyCondition(new DynamicPagesBean(), "list.php");
 
 
 $page = new AdminPage();
-$page->checkAccess(ROLE_CONTENT_MENU);
 
 $event_photos = new DynamicPagePhotosBean();
 $event_photos->select()->where = $rc->getURLParameter()->text(TRUE);

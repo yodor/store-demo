@@ -14,15 +14,12 @@ include_once("iterators/SQLQuery.php");
 
 $menu = array(
 
-    new MenuItem("Inventory", "inventory/list.php", "list-add.png"),
-    //     new MenuItem("Color Gallery", "color_gallery/list.php?prodID", "list-add.png"),
-    //     new MenuItem("Photo Gallery", "gallery/list.php?prodID", "list-add.png"),
-    //     new MenuItem("Add Product", "add.php", "list-add.png"),
+    new MenuItem("Inventory", "inventory/list.php", "list"),
+
 
 );
 
 $page = new AdminPage();
-$page->checkAccess(ROLE_CONTENT_MENU);
 
 $page->setPageMenu($menu);
 

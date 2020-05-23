@@ -147,7 +147,10 @@ class ClassAttributeField extends DataIteratorField
                     var catID = $(this).val();
 
                     var req = new JSONRequest();
-                    req.setURL("?ajax=1&cmd=ClassAttributeField&type=render&catID=" + catID + "&prodID=<?php echo $this->prodID;?>");
+                    req.setResponder("ClassAttributeField");
+                    req.setFunction("render");
+                    req.setParameter("catID", catID);
+                    req.setParameter("prodID", <?php echo $this->prodID;?>);
 
                     req.start(
                         function (request_result) {

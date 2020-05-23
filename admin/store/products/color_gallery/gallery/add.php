@@ -11,8 +11,6 @@ $rc = new BeanKeyCondition(new ProductColorsBean(), "../list.php");
 $menu = array();
 
 $page = new AdminPage();
-$page->checkAccess(ROLE_CONTENT_MENU);
-
 
 $photos = new ProductColorPhotosBean();
 $photos->select()->where = $rc->getURLParameter()->text(TRUE);

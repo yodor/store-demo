@@ -6,7 +6,6 @@ include_once("components/TableView.php");
 
 
 $page = new AdminPage();
-$page->checkAccess(ROLE_CONTENT_MENU);
 
 
 

@@ -14,13 +14,10 @@ include_once("iterators/SQLQuery.php");
 $menu = array();
 
 $page = new AdminPage();
-$page->checkAccess(ROLE_CONTENT_MENU);
-
 
 $bean = new StoreColorsBean();
 
 $h_delete = new DeleteItemResponder($bean);
-
 
 $view = new TableView($bean->query());
 $view->setCaption("Available Colors");
@@ -43,7 +40,6 @@ $act->getActions()->append($h_delete->createAction());
 $act->getActions()->append(new RowSeparator());
 
 $view->getColumn("actions")->setCellRenderer($act);
-
 
 $page->startRender();
 

@@ -10,7 +10,7 @@ include_once("components/GalleryView.php");
 $menu = array();
 
 $page = new AdminPage();
-$page->checkAccess(ROLE_CONTENT_MENU);
+
 $page->setAccessibleTitle("Banners Gallery");
 
 $rc = new BeanKeyCondition(new SectionsBean(), "../list.php", array("section_title"));

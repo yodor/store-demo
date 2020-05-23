@@ -7,7 +7,6 @@ include_once("class/beans/GalleryPhotosBean.php");
 include_once("forms/PhotoForm.php");
 
 $page = new AdminPage();
-$page->checkAccess(ROLE_CONTENT_MENU);
 
 $event_photos = new GalleryPhotosBean();
 

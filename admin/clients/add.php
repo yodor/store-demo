@@ -6,7 +6,6 @@ include_once("beans/UsersBean.php");
 
 
 $page = new AdminPage();
-$page->checkAccess(ROLE_CLIENTS_MENU);
 
 $view = new BeanFormEditor(new UsersBean(), new RegisterClientInputForm());
 

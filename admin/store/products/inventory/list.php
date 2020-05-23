@@ -24,9 +24,7 @@ $prodID = -1;
 try {
 
     $rc = new BeanKeyCondition(new ProductsBean(), FALSE, array("product_name"));
-    //   $menu=array(
-    // 	  new MenuItem("Add Inventory", "add.php".$rc->qrystr, "list-add.png"),
-    //   );
+
     $prodID = (int)$rc->getID();
 
     $action_add = new Action("", "add.php?prodID=$prodID", array());

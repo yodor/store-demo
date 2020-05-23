@@ -19,7 +19,7 @@ $menu = array(new MenuItem("Секции", "sections/list.php", "class:store sec
 
 $page->checkAccess(ROLE_CONTENT_MENU);
 
-$page->startRender($menu);
+$page->setPageMenu($menu);
 
 echo "Управление на магазина";
 

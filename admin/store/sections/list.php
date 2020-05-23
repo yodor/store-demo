@@ -5,7 +5,7 @@ include_once("class/beans/SectionsBean.php");
 include_once("components/TableView.php");
 
 $page = new AdminPage();
-$page->checkAccess(ROLE_CONTENT_MENU);
+
 
 $bean = new SectionsBean();
 

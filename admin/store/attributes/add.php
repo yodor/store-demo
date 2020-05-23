@@ -6,7 +6,6 @@ include_once("class/beans/AttributesBean.php");
 
 
 $page = new AdminPage();
-$page->checkAccess(ROLE_CONTENT_MENU);
 
 
 $view = new BeanFormEditor(new AttributesBean(), new AttributeInputForm());

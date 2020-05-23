@@ -11,7 +11,6 @@ $rc = new BeanKeyCondition(new ProductColorsBean(), "../list.php" . queryString(
 
 
 $page = new AdminPage();
-$page->checkAccess(ROLE_CONTENT_MENU);
 
 
 $page->setAccessibleTitle("Color Scheme Photos");

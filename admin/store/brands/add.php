@@ -7,7 +7,6 @@ include_once("class/beans/BrandsBean.php");
 
 
 $page = new AdminPage();
-$page->checkAccess(ROLE_CONTENT_MENU);
 
 
 $view = new BeanFormEditor(new BrandsBean(), new BrandInputForm());

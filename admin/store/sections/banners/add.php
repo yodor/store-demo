@@ -11,7 +11,6 @@ $rc = new BeanKeyCondition(new SectionsBean(), "../list.php");
 $menu = array();
 
 $page = new AdminPage();
-$page->checkAccess(ROLE_CONTENT_MENU);
 
 $photos = new SectionBannersBean();
 $photos->select()->where = $rc->getURLParameter()->text(TRUE);

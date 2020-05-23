@@ -14,7 +14,6 @@ include_once("components/KeywordSearch.php");
 include_once("iterators/SQLQuery.php");
 
 $page = new AdminPage();
-$page->checkAccess(ROLE_CONTENT_MENU);
 
 $rc = new BeanKeyCondition(new ProductsBean(), "../list.php", array("product_name"));
 

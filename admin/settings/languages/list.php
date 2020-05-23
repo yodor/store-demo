@@ -4,7 +4,7 @@ include_once("templates/admin/BeanListPage.php");
 
 $cmp = new BeanListPage();
 
-$menu = array(new MenuItem("Translator", "translator/list.php", "applications-development-translation.png"));
+$menu = array(new MenuItem("Translator", "translator/list.php", "translator"));
 $cmp->getPage()->setPageMenu($menu);
 
 $cmp->setBean(new LanguagesBean());

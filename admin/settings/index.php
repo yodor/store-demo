@@ -6,9 +6,9 @@ $page = new AdminPage("Settings");
 
 $menu = array(
 
-    new MenuItem("Administrators", "admins/list.php", "irc-operator.png"),
-    new MenuItem("Languages", "languages/list.php", "applications-education-language.png"),
-    new MenuItem("SEO", "seo.php", "applications-education-language.png"),
+    new MenuItem("Administrators", "admins/list.php", "admin_users"),
+    new MenuItem("Languages", "languages/list.php", "language"),
+    new MenuItem("SEO", "seo.php", "seo"),
 
 );
 

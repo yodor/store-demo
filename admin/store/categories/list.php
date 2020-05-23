@@ -7,7 +7,6 @@ include_once("components/renderers/items/TextTreeItem.php");
 
 
 $page = new AdminPage();
-$page->checkAccess(ROLE_CONTENT_MENU);
 
 
 $bean = new ProductCategoriesBean();

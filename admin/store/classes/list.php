@@ -13,8 +13,6 @@ include_once("iterators/SQLQuery.php");
 $menu = array();
 
 $page = new AdminPage();
-$page->checkAccess(ROLE_CONTENT_MENU);
-
 
 $bean = new ProductClassesBean();
 

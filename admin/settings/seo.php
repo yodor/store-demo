@@ -7,7 +7,6 @@ include_once("forms/processors/ConfigFormProcessor.php");
 include_once("forms/renderers/FormRenderer.php");
 
 $page = new AdminPage("SEO");
-$page->checkAccess(ROLE_CONFIG_MENU);
 
 $config = ConfigBean::Factory();
 $config->setSection("seo");

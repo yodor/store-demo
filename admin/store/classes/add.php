@@ -8,7 +8,6 @@ include_once("class/beans/ProductsBean.php");
 $menu = array();
 
 $page = new AdminPage();
-$page->checkAccess(ROLE_CONTENT_MENU);
 
 
 $view = new BeanFormEditor(new ProductClassesBean(), new ProductClassInputForm());

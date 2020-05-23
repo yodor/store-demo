@@ -19,7 +19,7 @@ include_once("list.php");
 
 $menu = array();
 
-$page->startRender($menu);
+$page->startRender();
 
 $scomp->render();
 

@@ -8,7 +8,6 @@ include_once("forms/processors/ConfigFormProcessor.php");
 include_once("forms/renderers/FormRenderer.php");
 
 $page = new AdminPage();
-$page->checkAccess(ROLE_ORDERS_MENU);
 
 $config = ConfigBean::factory();
 $config->setSection("delivery_prices");

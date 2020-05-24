@@ -11,7 +11,6 @@ $rc = new BeanKeyCondition(new ProductsBean(), "../list.php");
 $menu = array();
 
 $page = new AdminPage();
-$page->checkAccess(ROLE_CONTENT_MENU);
 
 
 $photos = new ProductPhotosBean();

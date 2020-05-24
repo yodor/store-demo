@@ -5,7 +5,6 @@ include_once("class/beans/OrdersBean.php");
 include_once("class/utils/OrdersSQL.php");
 
 $page = new AdminPage();
-$page->checkAccess(ROLE_ORDERS_MENU);
 
 $bean = new OrdersBean();
 

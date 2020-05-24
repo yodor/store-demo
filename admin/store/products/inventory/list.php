@@ -15,8 +15,6 @@ include_once("class/beans/ProductColorPhotosBean.php");
 include_once("class/beans/ProductsBean.php");
 
 $page = new AdminPage();
-$page->checkAccess(ROLE_CONTENT_MENU);
-
 
 
 $prodID = -1;

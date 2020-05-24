@@ -7,7 +7,6 @@ include_once("class/beans/ProductsBean.php");
 
 
 $page = new AdminPage();
-$page->checkAccess(ROLE_CONTENT_MENU);
 
 
 Session::Set("sizing.list", $page->getPageURL());

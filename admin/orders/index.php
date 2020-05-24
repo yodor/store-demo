@@ -13,9 +13,7 @@ $menu = array(new MenuItem("Активни", "active.php", "class:orders icon_co
 
 );
 
-$page->checkAccess(ROLE_CONTENT_MENU);
-
-$page->startRender($menu);
+$page->setPageMenu($menu);
 
 echo tr("Управление на поръчки");
 

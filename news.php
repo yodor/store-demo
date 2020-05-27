@@ -20,7 +20,7 @@ if (isset($_GET[$prkey])) {
 }
 
 $qry = $nb->query();
-$qry->select->where = " $prkey='$itemID' ";
+$qry->select->where()->add($prkey, $itemID);
 $qry->select->limit = " 1 ";
 $qry->select->order_by = " item_date DESC ";
 
@@ -106,7 +106,7 @@ function drawLatestNews($num, $selected_year = FALSE, $selected_month = FALSE)
     $qry = $nb->query();
     $qry->select->order_by = " item_date DESC ";
     $qry->select->limit = "3";
-    $qry->select->fields = " $nb->key(), item_title, item_date ";
+    $qry->select->fields()->set( $nb->key(), "item_title", "item_date");
     $qry->exec();
 
     while ($item_row = $qry->next()) {

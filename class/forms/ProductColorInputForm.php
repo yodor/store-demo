@@ -19,7 +19,10 @@ class ProductColorInputForm extends InputForm
         $rend->setIterator($scb->query());
         $rend->getItemRenderer()->setValueKey("color");
         $rend->getItemRenderer()->setLabelKey("color");
-        $rend->addon_content = "<a class='Action' action='new' href='../../colors/add.php'>" . tr("Нов цветови код") . "</a>";
+
+        $action = new Action("new", "../../colors/add.php");
+        $action->setContents(tr("Нов цветови код"));
+        $rend->getAddonContainer()->append($action);
 
         $opt = $rend->getItemRenderer();
         $opt->addDataAttribute("color_code");

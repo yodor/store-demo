@@ -5,7 +5,7 @@ include_once("class/components/renderers/cells/OrderDeliveryCellRenderer.php");
 include_once("class/components/renderers/cells/OrderInvoiceCellRenderer.php");
 include_once("class/components/renderers/cells/OrderItemsCellRenderer.php");
 include_once("components/TableView.php");
-include_once("components/renderers/cells/DateFieldCellRenderer.php");
+include_once("components/renderers/cells/DateCellRenderer.php");
 include_once("iterators/SQLQuery.php");
 include_once("beans/UsersBean.php");
 include_once("class/beans/ClientAddressesBean.php");
@@ -36,7 +36,8 @@ if (isset($_GET["orderID"])) {
     $orderID = (int)$_GET["orderID"];
 }
 $qry = $orders->query();
-$qry->select->where = " orderID='$orderID' AND userID='$userID' ";
+$qry->select->where()->add("orderID", $orderID)->add("userID", $userID);
+
 $qry->select->limit = " 1 ";
 $num = $qry->exec();
 
@@ -100,7 +101,7 @@ echo "<span>" . tr("Сума") . "</span>";
 echo "</div>";
 
 $qry = $items->queryField("orderID", $orderID);
-$qry->select->fields = " piID, prodID, itemID, price, qty, product ";
+$qry->select->fields()->set("piID", "prodID", "itemID", "price", "qty", "product");
 $numItems = $qry->exec();
 
 $pos = 0;

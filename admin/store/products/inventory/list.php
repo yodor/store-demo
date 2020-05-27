@@ -3,7 +3,7 @@ include_once("session.php");
 include_once("class/pages/AdminPage.php");
 // include_once("class/beans/ProductsBean.php");
 include_once("components/TableView.php");
-include_once("components/renderers/cells/TableImageCellRenderer.php");
+include_once("components/renderers/cells/ImageCellRenderer.php");
 include_once("components/renderers/cells/ColorCodeCellRenderer.php");
 
 include_once("components/KeywordSearch.php");
@@ -55,10 +55,12 @@ if (isset($_GET["piID"])) {
 // $ksc = new KeywordSearch($search_fields);
 
 $select_inventory = $bean->select();
-$select_inventory->fields = " pi.*, pc.category_name, pcp.pclrpID,  sc.color_code,  p.brand_name, p.keywords, p.product_name, p.product_summary, p.class_name, p.section, 
- (SELECT GROUP_CONCAT(CONCAT_WS(':', ia.attribute_name, ia.value) SEPARATOR '<BR>') COLLATE 'utf8_general_ci' 
- FROM inventory_attributes ia 
- WHERE ia.piID=pi.piID GROUP BY ia.piID )  as inventory_attributes  ";
+$select_inventory->fields()->set("pi.*", "pc.category_name", "pcp.pclrpID",  "sc.color_code",  "p.brand_name", "p.keywords",
+                                 "p.product_name", "p.product_summary", "p.class_name", "p.section");
+$select_inventory->fields()->setExpression("(SELECT GROUP_CONCAT(CONCAT_WS(':', ia.attribute_name, ia.value) SEPARATOR '<BR>') COLLATE 'utf8_general_ci' 
+ FROM inventory_attributes ia  
+ WHERE ia.piID=pi.piID GROUP BY ia.piID )", "inventory_attributes");
+
 $select_inventory->from = " product_inventory pi 
 JOIN products p ON p.prodID = pi.prodID 
 JOIN product_categories pc ON pc.catID=p.catID LEFT 
@@ -70,7 +72,8 @@ JOIN product_photos pp ON pp.prodID = pi.prodID ";
 $select_inventory->group_by = " pi.piID ";
 
 if ($prodID > 0) {
-    $select_inventory->where = " pi.prodID = '$prodID' ";
+    $select_inventory->where()->add("pi.prodID", $prodID);
+
     $page->setName(tr("Inventory") . ": " . $rc->getData("product_name"));
 }
 else {
@@ -118,14 +121,14 @@ $view->addColumn(new TableColumn("inventory_attributes", "Attributes"));
 
 $view->addColumn(new TableColumn("actions", "Actions"));
 
-$ticr1 = new TableImageCellRenderer(-1, 64);
+$ticr1 = new ImageCellRenderer(-1, 64);
 $ticr1->setBean(new ProductColorPhotosBean());
 $ticr1->setBlobField("photo");
 $view->getColumn("pclrpID")->setCellRenderer($ticr1);
 
 $view->getColumn("color_code")->setCellRenderer(new ColorCodeCellRenderer());
 
-$act = new ActionsTableCellRenderer();
+$act = new ActionsCellRenderer();
 $act->getActions()->append(new Action("Edit", "add.php", array(new DataParameter("prodID"),
                                                     new DataParameter("editID", $bean->key()))));
 $act->getActions()->append(new PipeSeparator());

@@ -12,8 +12,8 @@ include_once("class/components/renderers/cells/OrderDeliveryCellRenderer.php");
 include_once("class/components/renderers/cells/OrderClientCellRenderer.php");
 include_once("class/components/renderers/cells/OrderInvoiceCellRenderer.php");
 
-include_once("components/renderers/cells/BooleanFieldCellRenderer.php");
-include_once("components/renderers/cells/DateFieldCellRenderer.php");
+include_once("components/renderers/cells/BooleanCellRenderer.php");
+include_once("components/renderers/cells/DateCellRenderer.php");
 
 include_once("components/KeywordSearch.php");
 include_once("iterators/SQLQuery.php");
@@ -92,14 +92,14 @@ $view->addColumn(new TableColumn("actions", "Actions"));
 
 // $view->getColumn("is_confirmed")->setCellRenderer(new BooleanFieldCellRenderer("Yes", "No"));
 // $view->getColumn("require_invoice")->setCellRenderer(new BooleanFieldCellRenderer("Yes", "No"));
-$view->getColumn("order_date")->setCellRenderer(new DateFieldCellRenderer());
+$view->getColumn("order_date")->setCellRenderer(new DateCellRenderer());
 
 $view->getColumn("userID")->setCellRenderer(new OrderClientCellRenderer());
 $view->getColumn("items")->setCellRenderer(new OrderItemsCellRenderer());
 $view->getColumn("delivery_type")->setCellRenderer(new OrderDeliveryCellRenderer());
 $view->getColumn("require_invoice")->setCellRenderer(new OrderInvoiceCellRenderer());
 
-$act = new ActionsTableCellRenderer();
+$act = new ActionsCellRenderer();
 
 // $act->addAction(
 

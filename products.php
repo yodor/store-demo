@@ -28,17 +28,14 @@ $treeView = $page->treeView;
 
 //construct initial relation query to aggregate with the tree view
 $product_selector = new SQLSelect();
-$product_selector->fields = "  ";
 
 $inventory_selector = new SQLSelect();
-$inventory_selector->fields = "  ";
 
 //color/size/price filters need NOT grouping! in the derived table
 $derived = clone $page->derived;
 $derived->group_by = " pi.prodID, pi.color ";
 
 $product_selector->from = " ( " . $derived->getSQL(FALSE, FALSE) . " ) as relation ";
-$product_selector->where = "  ";
 
 //process get filters
 $proc = new RelatedSourceFilterProcessor($bean, "prodID");
@@ -81,7 +78,7 @@ $treeView->setIterator(new SQLQuery($tree_selector, $bean->key(), $bean->getTabl
 
 $nodeID = $treeView->getSelectedID();
 
-$product_selector->fields = " relation.* "; //TODO list only needed fields here?
+$product_selector->fields()->set(" relation.* "); //TODO list only needed fields here?
 $product_selector = $bean->selectChildNodesWith($product_selector, $nodeID);
 
 $product_selector->group_by = " relation.prodID, relation.color ";
@@ -126,30 +123,31 @@ $derived_table = $derived->getSQL(FALSE, FALSE);
 
 //prepare filter fields source data
 $brand_select = new SQLSelect();
-$brand_select->fields = " brand_name ";
+$brand_select->fields()->set(" brand_name ");
 $brand_select->from = " ($derived_table) as relation ";
 $brand_select->group_by = " brand_name ";
 $brand_value = $proc->applyFiltersOn($treeView, $brand_select, "brand_name");
 
 $color_select = new SQLSelect();
-$color_select->fields = " color ";
+$color_select->fields()->set(" color ");
 $color_select->from = " ($derived_table) as relation ";
-$color_select->where = "  ";
+
 $color_select->order_by = " color ";
 $color_select->group_by = " color ";
 $color_value = $proc->applyFiltersOn($treeView, $color_select, "color");
 
 $size_select = new SQLSelect();
-$size_select->fields = " size_value ";
+$size_select->fields()->set(" size_value ");
 $size_select->from = " ($derived_table) as relation ";
-$size_select->where = "  ";
+
 $size_select->group_by = " size_value ";
 $size_select->order_by = " prodID ";
 $size_value = $proc->applyFiltersOn($treeView, $size_select, "size_value");
 
 $price_info = array();
 $price_select = new SQLSelect();
-$price_select->fields = " min(sell_price) as price_min, max(sell_price) as price_max ";
+$price_select->fields()->setExpression(" min(sell_price) " , "price_min");
+$price_select->fields()->setExpression(" max(sell_price) " , "price_max");
 $price_select->from = " ($derived_table) as relation ";
 
 //apply the other filters but skip self - slider shows always min-max of all products
@@ -169,14 +167,13 @@ $dyn_filters = array();
 try {
 
     $ia_name_select = new SQLSelect(); //clone $inventory_selector;
-    $ia_name_select->fields = "  ";
     $ia_name_select->from = " ($derived_table) as relation  ";
-    $ia_name_select->where = "   ";
+
 
     $proc->applyFiltersOn($treeView, $ia_name_select, "ia", TRUE);
 
-    $ia_name_select->fields = " distinct(relation.ia_name) as ia_name ";
-    $ia_name_select->combineSection("where", "  relation.ia_name  IS NOT NULL");
+    $ia_name_select->fields()->setExpression(" distinct(relation.ia_name) ", "ia_name");
+    $ia_name_select->where()->add("relation.ia_name", "NULL",   "IS NOT");
     // 		echo $ia_name_select->getSQL();
 
     $res = $db->query($ia_name_select->getSQL());
@@ -184,13 +181,15 @@ try {
     while ($row = $db->fetch($res)) {
         $name = $row["ia_name"];
         $sel = new SQLSelect();
-        $sel->fields = "  ";
         $sel->from = " ($derived_table) as relation  ";
 
         $value = $proc->applyFiltersOn($treeView, $sel, "ia");
 
-        $sel->fields = " distinct(relation.ia_value) as ia_value ";
-        $sel->combineSection("where", "  relation.ia_name = '$name' AND relation.ia_value > ''");
+        $sel->fields()->setExpression(" distinct(relation.ia_value) " , "ia_value");
+
+        $sel->where()->add("relation.ia_name", "'$name'");
+        $sel->where()->add("relation.ia_value" , "''", ">");
+
         // 		  $sel->order_by = " CAST(relation.ia_value AS DECIMAL(10,2)) ";
         $sel->order_by = " relation.ia_value ASC ";
 

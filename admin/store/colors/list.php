@@ -6,7 +6,7 @@ include_once("class/beans/ProductsBean.php");
 include_once("class/beans/StoreColorsBean.php");
 
 include_once("components/TableView.php");
-include_once("components/renderers/cells/TableImageCellRenderer.php");
+include_once("components/renderers/cells/ImageCellRenderer.php");
 include_once("components/renderers/cells/ColorCodeCellRenderer.php");
 include_once("components/KeywordSearch.php");
 include_once("iterators/SQLQuery.php");
@@ -32,7 +32,7 @@ $view->addColumn(new TableColumn("actions", "Actions"));
 
 $view->getColumn("color_code")->setCellRenderer(new ColorCodeCellRenderer());
 
-$act = new ActionsTableCellRenderer();
+$act = new ActionsCellRenderer();
 $act->getActions()->append(new Action("Edit", "add.php", array(new DataParameter("editID", $bean->key()))));
 $act->getActions()->append(new PipeSeparator());
 $act->getActions()->append($h_delete->createAction());

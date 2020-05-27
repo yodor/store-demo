@@ -26,7 +26,7 @@ class ProductColorPhotosBean extends OrderedDataBean
         $pclrpID = -1;
 
         $qry = $this->queryField("pclrID", $pclrID);
-        $qry->select->fields = $this->key();
+        $qry->select->fields()->set($this->key());
         $qry->select->order_by = " position ASC ";
         $qry->select->limit = " 1 ";
 

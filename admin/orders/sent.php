@@ -14,16 +14,15 @@ $h_send = new OrderStatusRequestResponder();
 
 $sel = new OrdersSQL();
 
-$sel->where = " o.status='" . OrdersBean::STATUS_SENT . "' ";
+$sel->where()->add("o.status", "'" . OrdersBean::STATUS_SENT . "'");
 
 include_once("list.php");
 
 $act = $view->getColumn("actions")->getCellRenderer();
 $act->getActions()->append(new Action("Потвърди завършване", "?cmd=order_status", array(new DataParameter("orderID"),
-                                                                             new URLParameter("status", OrdersBean::STATUS_COMPLETED),))
+                                                                                        new URLParameter("status", OrdersBean::STATUS_COMPLETED),))
 
 );
-
 
 $page->startRender();
 

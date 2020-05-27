@@ -3,8 +3,8 @@ include_once("pages/SparkAdminPage.php");
 include_once("components/MenuBarComponent.php");
 
 include_once("components/renderers/cells/BeanFieldCellRenderer.php");
-include_once("components/renderers/cells/CallbackTableCellRenderer.php");
-include_once("components/renderers/cells/BooleanFieldCellRenderer.php");
+include_once("components/renderers/cells/CallbackCellRenderer.php");
+include_once("components/renderers/cells/BooleanCellRenderer.php");
 
 class AdminPage extends SparkAdminPage
 {

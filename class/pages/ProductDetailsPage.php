@@ -77,7 +77,7 @@ class ProductDetailsPage extends ProductsPage
         $sel->order_by = " pi.view_counter ";
         $sel->group_by = " pi.prodID, pi.color ";
         $sel->limit = "4";
-        $sel->where = " p.section='{$this->section}' AND p.catID='{$this->sellable["catID"]}' ";
+        $sel->where()->add("p.section", "'{$this->section}'")->add("p.catID", $this->sellable["catID"]);
 
         $db = DBConnections::Get();
 
@@ -100,7 +100,7 @@ class ProductDetailsPage extends ProductsPage
         $sel->order_by = " pi.order_counter ";
         $sel->group_by = " pi.prodID, pi.color ";
         $sel->limit = "4";
-        $sel->where = " p.section='{$this->section}'  ";
+        $sel->where()->add("p.section", "'{$this->section}'");
 
         $db = DBConnections::Get();
 

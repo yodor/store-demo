@@ -9,7 +9,7 @@ include_once("beans/DynamicPagesBean.php");
 $rc = new BeanKeyCondition(new DynamicPagesBean(), "../list.php", array("item_title"));
 
 $bean = new DynamicPagePhotosBean();
-$bean->select()->where = $rc->getURLParameter()->text(TRUE);
+$bean->select()->where()->addURLParameter($rc->getURLParameter());
 
 $cmp = new GalleryViewPage();
 $cmp->setBean($bean);

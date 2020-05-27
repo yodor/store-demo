@@ -20,11 +20,10 @@ class ProductListItem extends DataIteratorItem implements IHeadContents
 
         $sel->from = " product_colors pc JOIN store_colors sc ON sc.color=pc.color  LEFT JOIN product_inventory pi ON pi.prodID=pc.prodID AND pi.color=pc.color";
 
-        $sel->fields = " pi.piID, pc.pclrID, pc.color, pc.prodID, sc.color_code,
-
-    (SELECT pclrpID FROM product_color_photos pcp WHERE pcp.pclrID=pc.pclrID ORDER BY position ASC LIMIT 1) as pclrpID,
-    (SELECT ppID FROM product_photos pp WHERE pp.prodID=pc.prodID ORDER BY position ASC LIMIT 1) as ppID,
-    (color_photo IS NOT NULL) as have_chip ";
+        $sel->fields()->set("pi.piID", "pc.pclrID", "pc.color", "pc.prodID", "sc.color_code");
+        $sel->fields()->setExpression("(SELECT pclrpID FROM product_color_photos pcp WHERE pcp.pclrID=pc.pclrID ORDER BY position ASC LIMIT 1)", "pclrpID");
+        $sel->fields()->setExpression("(SELECT ppID FROM product_photos pp WHERE pp.prodID=pc.prodID ORDER BY position ASC LIMIT 1)", "ppID");
+        $sel->fields()->setExpression("(color_photo IS NOT NULL)", "have_chip");
 
         $this->sel = $sel;
 
@@ -103,7 +102,8 @@ class ProductListItem extends DataIteratorItem implements IHeadContents
 
             foreach ($this->colors as $idx => $pclrID) {
 
-                $this->sel->where = " pc.prodID='{$this->data["prodID"]}' AND pc.pclrID='$pclrID' ";
+                $this->sel->where()->add("pc.prodID", $this->data["prodID"])->add("pc.pclrID", $pclrID);
+
                 //echo $this->sel->getSQL();
 
                 $res = $db->query($this->sel->getSQL());

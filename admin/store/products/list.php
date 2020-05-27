@@ -8,7 +8,7 @@ include_once("class/beans/ProductColorPhotosBean.php");
 include_once("class/beans/ProductInventoryBean.php");
 
 include_once("components/TableView.php");
-include_once("components/renderers/cells/TableImageCellRenderer.php");
+include_once("components/renderers/cells/ImageCellRenderer.php");
 include_once("components/KeywordSearch.php");
 include_once("iterators/SQLQuery.php");
 
@@ -40,13 +40,13 @@ $select_products = $bean->select();
 // min(weight) as weight_min, max(weight) as weight_max
 // ";
 
-$select_products->fields = " 
-SUM(pi.stock_amount) as stock_amount,
-min(pi.price) as price_min, max(pi.price) as price_max,
-group_concat(distinct(size_value) SEPARATOR '<BR>') as sizes, 
-p.prodID, p.product_name, p.class_name, p.brand_name, p.section, pc.category_name, p.visible, 
-p.price, p.old_price, p.buy_price, cc.pi_ids, replace(cc.colors, '|','<BR>') as colors, cc.color_photos, cc.have_chips, cc.color_ids, cc.product_photos
-";
+$select_products->fields()->setExpression("SUM(pi.stock_amount) as stock_amount", "stock_amount");
+$select_products->fields()->setExpression("MIN(pi.price)", "price_min");
+$select_products->fields()->setExpression("MAX(pi.price)", "price_max");
+$select_products->fields()->setExpression("group_concat(distinct(size_value) SEPARATOR '<BR>')", "sizes");
+$select_products->fields()->setExpression("replace(cc.colors, '|','<BR>')",  "colors");
+$select_products->fields()->set("p.prodID", "p.product_name", "p.class_name", "p.brand_name", "p.section", "pc.category_name", "p.visible",
+"p.price", "p.old_price", "p.buy_price", "cc.pi_ids", "cc.color_photos", "cc.have_chips", "cc.color_ids", "cc.product_photos");
 
 $select_products->from = " products p LEFT JOIN product_inventory pi ON pi.prodID = p.prodID LEFT JOIN color_chips cc ON cc.prodID = p.prodID JOIN product_categories pc ON pc.catID=p.catID ";
 $select_products->group_by = "  p.prodID, pi.prodID ";
@@ -81,20 +81,20 @@ $view->addColumn(new TableColumn("price_max", "Price Max"));
 
 $view->addColumn(new TableColumn("actions", "Actions"));
 
-$ticr1 = new TableImageCellRenderer(-1, 64);
+$ticr1 = new ImageCellRenderer(-1, 64);
 $ticr1->setBean(new ProductPhotosBean());
 $ticr1->setLimit(1);
 $view->getColumn("product_photos")->setCellRenderer($ticr1);
 
-$ticr2 = new TableImageCellRenderer(-1, 64);
+$ticr2 = new ImageCellRenderer(-1, 64);
 $ticr2->setBean(new ProductColorPhotosBean());
 $ticr2->setLimit(0);
 $view->getColumn("color_photos")->setCellRenderer($ticr2);
 
-$view->getColumn("visible")->setCellRenderer(new BooleanFieldCellRenderer("Yes", "No"));
+$view->getColumn("visible")->setCellRenderer(new BooleanCellRenderer("Yes", "No"));
 // $view->getColumn("promotion")->setCellRenderer(new BooleanFieldCellRenderer("Yes", "No"));
 
-$act = new ActionsTableCellRenderer();
+$act = new ActionsCellRenderer();
 $act->getActions()->append(new Action("Edit", "add.php", array(new DataParameter("editID", $bean->key()))));
 $act->getActions()->append(new PipeSeparator());
 $act->getActions()->append($h_delete->createAction());

@@ -62,7 +62,7 @@ class CartComponent extends Component implements IHeadContents
     public function requiredStyle()
     {
         $arr = parent::requiredStyle();
-        $arr[] = LOCAL . "css/CartComponent.css";
+        $arr[] = LOCAL . "/css/CartComponent.css";
         return $arr;
     }
 
@@ -117,7 +117,7 @@ class CartComponent extends Component implements IHeadContents
         //only one photo here
         echo "<td field='product_photo'>";
 
-        $this->image_popup->setAttribute("href", LOCAL . "details.php?prodID=$prodID&piID=$piID");
+        $this->image_popup->setAttribute("href", LOCAL . "/details.php?prodID=$prodID&piID=$piID");
 
         $pclrID = (int)$item["pclrID"];
 

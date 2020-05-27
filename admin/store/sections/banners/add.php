@@ -13,7 +13,7 @@ $menu = array();
 $page = new AdminPage();
 
 $photos = new SectionBannersBean();
-$photos->select()->where = $rc->getURLParameter()->text(TRUE);
+$photos->select()->where()->addURLParameter($rc->getURLParameter());
 
 $form = new PhotoForm();
 $field = new DataInput("link", "Link", 0);

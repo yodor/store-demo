@@ -25,7 +25,7 @@ $scomp = new KeywordSearch();
 $scomp->getForm()->setFields($search_fields);
 
 $sel = new SQLSelect();
-$sel->fields = " u.email, u.fullname, u.userID, u.phone, last_active, counter, date_signup, u.suspend ";
+$sel->fields()->set("u.email","u.fullname", "u.userID", "u.phone", "last_active", "counter", "date_signup", "u.suspend");
 $sel->from = " users u ";
 
 $filter = $scomp->filterSelect();
@@ -50,7 +50,7 @@ $view->addColumn(new TableColumn("suspend", "State"));
 
 $view->addColumn(new TableColumn("actions", "Actions"));
 
-$vis_act = new ActionsTableCellRenderer();
+$vis_act = new ActionsCellRenderer();
 $check_is_suspend = function (Action $act, array $data) {
     return ($data['suspend'] < 1);
 };
@@ -61,7 +61,7 @@ $vis_act->getActions()->append($h_toggle->createAction("Disable", "field=suspend
 $vis_act->getActions()->append($h_toggle->createAction("Enable", "field=suspend&status=0", $check_is_not_suspend));
 $view->getColumn("suspend")->setCellRenderer($vis_act);
 
-$act = new ActionsTableCellRenderer();
+$act = new ActionsCellRenderer();
 $act->getActions()->append(new Action("Edit", "add.php", array(new DataParameter("editID", $bean->key()))));
 $act->getActions()->append(new PipeSeparator());
 $act->getActions()->append($h_delete->createAction());
@@ -71,7 +71,9 @@ $view->getColumn("actions")->setCellRenderer($act);
 //store page URL to session and restore on confirm product add or insert
 Session::Set("clients.list", $page->getPageURL());
 
-$page->startRender($menu);
+$page->setPageMenu($menu);
+
+$page->startRender();
 
 $scomp->render();
 

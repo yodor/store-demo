@@ -5,7 +5,7 @@ include_once("class/pages/AdminPage.php");
 include_once("class/beans/ProductClassesBean.php");
 
 include_once("components/TableView.php");
-include_once("components/renderers/cells/TableImageCellRenderer.php");
+include_once("components/renderers/cells/ImageCellRenderer.php");
 include_once("components/KeywordSearch.php");
 include_once("iterators/SQLQuery.php");
 // include_once("class/beans/ProductInventoryPhotosBean.php");
@@ -19,7 +19,8 @@ $bean = new ProductClassesBean();
 $sql = $bean->select();
 
 $sql->from = " product_classes pc ";
-$sql->fields = " pc.*, (SELECT GROUP_CONCAT(attribute_name SEPARATOR '<BR>') FROM class_attributes ca WHERE ca.pclsID=pc.pclsID) as class_attributes ";
+$sql->fields()->set("pc.*");
+$sql->fields()->setExpression("(SELECT GROUP_CONCAT(attribute_name SEPARATOR '<BR>') FROM class_attributes ca WHERE ca.pclsID=pc.pclsID)", "class_attributes");
 
 $h_delete = new DeleteItemResponder($bean);
 
@@ -33,7 +34,7 @@ $view->addColumn(new TableColumn("class_attributes", "Attributes"));
 
 $view->addColumn(new TableColumn("actions", "Actions"));
 
-$act = new ActionsTableCellRenderer();
+$act = new ActionsCellRenderer();
 $act->getActions()->append(new Action("Edit", "add.php", array(new DataParameter("editID", $bean->key()))));
 $act->getActions()->append(new PipeSeparator());
 $act->getActions()->append($h_delete->createAction());

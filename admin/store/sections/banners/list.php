@@ -18,7 +18,7 @@ $rc = new BeanKeyCondition(new SectionsBean(), "../list.php", array("section_tit
 $page->setName(tr("Banners Gallery") . ": " . $rc->getData("section_title"));
 
 $bean = new SectionBannersBean();
-$bean->select()->where = $rc->getURLParameter()->text(TRUE);
+$bean->select()->where()->addURLParameter($rc->getURLParameter());
 
 $h_delete = new DeleteItemResponder($bean);
 

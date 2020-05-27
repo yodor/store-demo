@@ -82,7 +82,7 @@ class ClassAttributeField extends DataIteratorField
     public function requiredStyle()
     {
         $arr = parent::requiredStyle();
-        $arr[] = LOCAL . "css/ClassAttributeField.css";
+        $arr[] = LOCAL . "/css/ClassAttributeField.css";
         return $arr;
     }
 

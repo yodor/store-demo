@@ -57,7 +57,7 @@ class CurrencyRatesBean extends DBTableBean
         }
 
         $qry = $this->query();
-        $qry->select->where = " srcID='$dstID' AND dstID='$srcID' ";
+        $qry->select->where()->add("srcID", $dstID)->add("dstID", $srcID);
         $qry->select->limit = " 1 ";
 
         if ($row = $qry->next()) {

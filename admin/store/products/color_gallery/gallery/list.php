@@ -18,7 +18,7 @@ $page->setAccessibleTitle("Color Scheme Photos");
 $page->setName(tr("Color Scheme Photos") . ": " . $rc->getData("color"));
 
 $bean = new ProductColorPhotosBean();
-$bean->select()->where = $rc->getURLParameter()->text(TRUE);
+$bean->select()->where()->addURLParameter($rc->getURLParameter());
 
 $h_delete = new DeleteItemResponder($bean);
 

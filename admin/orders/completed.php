@@ -12,7 +12,7 @@ $bean = new OrdersBean();
 
 $sel = new OrdersSQL();
 
-$sel->where = " o.status='" . OrdersBean::STATUS_COMPLETED . "' ";
+$sel->where()->add("o.status", "'" . OrdersBean::STATUS_COMPLETED . "'");
 
 include_once("list.php");
 

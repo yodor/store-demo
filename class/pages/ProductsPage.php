@@ -23,7 +23,7 @@ class ProductsPage extends StorePage
         $derived = new ProductsSQL();
 
         if ($this->section) {
-            $derived->where = " p.section = '{$this->section}' ";
+            $derived->where()->add("p.section", "'{$this->section}'");
         }
 
         $this->derived = $derived;

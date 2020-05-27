@@ -12,7 +12,7 @@ $rc = new BeanKeyCondition(new DynamicPagesBean(), "list.php");
 $page = new AdminPage();
 
 $event_photos = new DynamicPagePhotosBean();
-$event_photos->select()->where = $rc->getURLParameter()->text(TRUE);
+$event_photos->select()->where()->addURLParameter($rc->getURLParameter());
 
 $view = new BeanFormEditor($event_photos, new PhotoForm());
 

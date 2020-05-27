@@ -12,10 +12,9 @@ $bean = new OrdersBean();
 
 $h_delete = new DeleteItemResponder($bean);
 
-
 $sel = new OrdersSQL();
 
-$sel->where = " o.status='" . OrdersBean::STATUS_CANCELED . "' ";
+$sel->where()->add("o.status", "'" . OrdersBean::STATUS_CANCELED . "'");
 
 include_once("list.php");
 

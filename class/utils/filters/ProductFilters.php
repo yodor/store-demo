@@ -1,5 +1,5 @@
 <?php
-include_once("utils/SQLSelect.php");
+include_once("sql/SQLSelect.php");
 
 // class GenderFilter implements IQueryFilter
 // {
@@ -31,13 +31,12 @@ class ColorFilter implements IQueryFilter
 
         if ($value) {
             $sel = new SQLSelect();
-            $sel->fields = "";
-            $sel->from = "";
+
             if (strcmp($value, "N/A") == 0 || strcmp($value, "NULL") == 0) {
-                $sel->where = " relation.color IS NULL ";
+                $sel->where()->add("relation.color","NULL", "IS");
             }
             else {
-                $sel->where = " relation.color='$value' ";
+                $sel->where()->add("relation.color", "'$value'");
             }
         }
 
@@ -54,13 +53,12 @@ class SizingFilter implements IQueryFilter
 
         if ($value) {
             $sel = new SQLSelect();
-            $sel->fields = "";
             $sel->from = "";
             if (strcmp($value, "N/A") == 0 || strcmp($value, "NULL") == 0) {
-                $sel->where = " relation.size_value IS NULL ";
+                $sel->where()->add("relation.size_value", "NULL",  "IS");
             }
             else {
-                $sel->where = " (relation.size_values LIKE '%$value|%' OR relation.size_values LIKE '%|$value%' OR relation.size_values='$value') ";
+                $sel->where()->add("(relation.size_values LIKE '%$value|%' OR relation.size_values LIKE '%|$value%' OR relation.size_values='$value')", "", "");
             }
         }
 
@@ -76,7 +74,6 @@ class PricingFilter implements IQueryFilter
 
         if ($value) {
             $sel = new SQLSelect();
-            $sel->fields = "";
             $sel->from = "";
 
             $price_range = explode("|", $value);
@@ -84,11 +81,11 @@ class PricingFilter implements IQueryFilter
                 $price_min = (float)$price_range[0];
                 $price_max = (float)$price_range[1];
 
-                $sel->where = " (  
+                $sel->where()->add( " (  
 		  (relation.price_min >= $price_min AND relation.price_min <= $price_max) 
 		  OR 
 		  (relation.price_max >= $price_min AND relation.price_max <=  $price_max) 
-		  )";
+		  )", "", "");
             }
 
         }
@@ -106,7 +103,7 @@ class InventoryAttributeFilter implements IQueryFilter
         if ($value) {
 
             $sel = new SQLSelect();
-            $sel->fields = "";
+
             $sel->from = "";
 
             //?ia=Материал:Пух|Години:10
@@ -120,14 +117,13 @@ class InventoryAttributeFilter implements IQueryFilter
                 if (!is_array($name_value) || count($name_value) != 2) continue;
 
                 $sel_current = new SQLSelect();
-                $sel_current->fields = "";
                 $sel_current->from = "";
 
                 //TODO: handle multiple values inside $filter_value - comma separated
                 $ia_name = DBConnections::Get()->escape($name_value[0]);
                 $ia_value = DBConnections::Get()->escape($name_value[1]);
 
-                $sel_current->where = " (relation.inventory_attributes LIKE '$ia_name:$ia_value|%' OR relation.inventory_attributes LIKE '%|$ia_name:$ia_value|%' OR relation.inventory_attributes LIKE '%|$ia_name:$ia_value' OR relation.inventory_attributes LIKE '$ia_name:$ia_value') ";
+                $sel_current->where()->add(" (relation.inventory_attributes LIKE '$ia_name:$ia_value|%' OR relation.inventory_attributes LIKE '%|$ia_name:$ia_value|%' OR relation.inventory_attributes LIKE '%|$ia_name:$ia_value' OR relation.inventory_attributes LIKE '$ia_name:$ia_value') ", "", "");
 
                 $sel = $sel->combineWith($sel_current);
             }

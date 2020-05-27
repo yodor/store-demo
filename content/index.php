@@ -71,7 +71,7 @@ echo "<div class='PagePhotos'>";
 
 $dpp = new DynamicPagePhotosBean();
 $qry = $dpp->queryField("dpID", $page_id, 1);
-$qry->select->fields = " ppID, caption ";
+$qry->select->fields()->set("ppID", "caption");
 $num_photos = $qry->exec();
 
 $image_popup = new ImagePopup();

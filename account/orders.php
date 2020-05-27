@@ -5,7 +5,7 @@ include_once("class/components/renderers/cells/OrderDeliveryCellRenderer.php");
 include_once("class/components/renderers/cells/OrderInvoiceCellRenderer.php");
 include_once("class/components/renderers/cells/OrderItemsCellRenderer.php");
 include_once("components/TableView.php");
-include_once("components/renderers/cells/DateFieldCellRenderer.php");
+include_once("components/renderers/cells/DateCellRenderer.php");
 include_once("iterators/SQLQuery.php");
 include_once("beans/UsersBean.php");
 include_once("class/beans/ClientAddressesBean.php");
@@ -24,9 +24,10 @@ $clients = new UsersBean();
 
 $sel = new SQLSelect();
 
-$sel->fields = " *, (SELECT concat(sum(oi.qty),' бр.') FROM order_items oi WHERE oi.orderID = o.orderID) as item_count ";
+$sel->fields()->set("*");
+$sel->fields()->setExpression(" (SELECT concat(sum(oi.qty),' бр.') FROM order_items oi WHERE oi.orderID = o.orderID) ", "item_count");
 $sel->from = " orders o ";
-$sel->where = " o.userID='" . $page->getUserID() . "'";
+$sel->where()->add("o.userID", $page->getUserID());
 $sel->order_by = " 'Processing', 'Sent', 'Completed' ";
 
 $view = new TableView(new SQLQuery($sel, "orderID"));
@@ -57,14 +58,14 @@ $view->addColumn(new TableColumn("actions", "Действия"));
 
 // $view->getColumn("is_confirmed")->setCellRenderer(new BooleanFieldCellRenderer("Yes", "No"));
 // $view->getColumn("require_invoice")->setCellRenderer(new BooleanFieldCellRenderer("Yes", "No"));
-$view->getColumn("order_date")->setCellRenderer(new DateFieldCellRenderer());
+$view->getColumn("order_date")->setCellRenderer(new DateCellRenderer());
 
 // $view->getColumn("userID")->setCellRenderer(new OrderClientCellRenderer());
 // $view->getColumn("items")->setCellRenderer(new OrderItemsCellRenderer());
 // $view->getColumn("delivery_type")->setCellRenderer(new OrderDeliveryCellRenderer());
 // $view->getColumn("require_invoice")->setCellRenderer(new BooleanFieldCellRenderer("Да", "Не"));
 
-$act = new ActionsTableCellRenderer();
+$act = new ActionsCellRenderer();
 
 $act->getActions()->append(new Action("Покажи детайли", "order_details.php", array(new DataParameter("orderID"))));
 

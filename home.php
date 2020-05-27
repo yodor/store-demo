@@ -31,7 +31,7 @@ while ($section = $qry->next()) {
     $sectionName = $section["section_title"];
     $secID = $section["secID"];
 
-    $sel->where = " p.section='$sectionName' ";
+    $sel->where()->add("p.section", "'$sectionName'");
 
     $prodQry = new SQLQuery($sel, "p.prodID");
     $num = $prodQry->exec();
@@ -44,7 +44,7 @@ while ($section = $qry->next()) {
 
     $qry1 = $banners->queryField("secID", $secID, 1);
     $qry1->select->order_by = " RAND() ";
-    $qry1->select->fields = " sbID, caption, link, position ";
+    $qry1->select->fields()->set("sbID", "caption", "link", "position");
     $num = $qry1->exec();
 
     if ($banner = $qry1->next()) {

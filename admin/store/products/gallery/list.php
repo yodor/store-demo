@@ -13,16 +13,12 @@ $page = new AdminPage();
 
 $page->setAccessibleTitle("Photo Gallery");
 
-
-
 $rc = new BeanKeyCondition(new ProductsBean(), "../list.php", array("product_name"));
-
-
 
 $page->setName(tr("Product Gallery") . ": " . $rc->getData("product_name"));
 
 $bean = new ProductPhotosBean();
-$bean->select()->where = $rc->getURLParameter()->text(TRUE);
+$bean->select()->where()->addURLParameter($rc->getURLParameter());
 
 $h_delete = new DeleteItemResponder($bean);
 
@@ -34,7 +30,8 @@ $gv->getItemActions()->addURLParameter($rc->getURLParameter());
 
 Session::Set("products.gallery", $page->getPageURL());
 
-$page->startRender($menu);
+$page->setPageMenu($menu);
+$page->startRender();
 
 $gv->render();
 

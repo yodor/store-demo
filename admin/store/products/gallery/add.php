@@ -14,7 +14,7 @@ $page = new AdminPage();
 
 
 $photos = new ProductPhotosBean();
-$photos->select()->where = $rc->getURLParameter()->text(TRUE);
+$photos->select()->where()->addURLParameter($rc->getURLParameter());
 
 $view = new BeanFormEditor($photos, new PhotoForm());
 

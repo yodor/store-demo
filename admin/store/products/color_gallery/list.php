@@ -9,7 +9,7 @@ include_once("class/beans/ProductInventoryBean.php");
 include_once("class/beans/ProductColorPhotosBean.php");
 
 include_once("components/TableView.php");
-include_once("components/renderers/cells/TableImageCellRenderer.php");
+include_once("components/renderers/cells/ImageCellRenderer.php");
 include_once("components/KeywordSearch.php");
 include_once("iterators/SQLQuery.php");
 
@@ -23,14 +23,13 @@ $bean = new ProductColorsBean();
 
 $h_delete = new DeleteItemResponder($bean);
 
-
 // $search_fields = array("prodID", "product_code", "product_name", "color", "size");
 // $ksc = new KeywordSearch($search_fields);
 
 $select_colors = $bean->select();
-$select_colors->fields = " pclr.*, p.product_name ";
+$select_colors->fields()->set("pclr.*", "p.product_name");
 $select_colors->from = " product_colors pclr LEFT JOIN products p ON p.prodID = pclr.prodID ";
-$select_colors->where = " pclr.prodID = " . $rc->getID();
+$select_colors->where()->add("pclr.prodID", $rc->getID());
 
 $page->setName(tr("Color Scheme") . ": " . $rc->getData("product_name"));
 
@@ -54,16 +53,16 @@ $view->addColumn(new TableColumn("color_photo", "Color Chip"));
 
 $view->addColumn(new TableColumn("actions", "Actions"));
 
-$ticr1 = new TableImageCellRenderer(-1, 64);
+$ticr1 = new ImageCellRenderer(-1, 64);
 $ticr1->setBean(new ProductColorsBean(), "color_photo");
 $view->getColumn("color_photo")->setCellRenderer($ticr1);
 
-$ticr2 = new TableImageCellRenderer(-1, 64);
+$ticr2 = new ImageCellRenderer(-1, 64);
 $ticr2->setBean(new ProductColorPhotosBean());
 $ticr2->setLimit(0);
 $view->getColumn("photo")->setCellRenderer($ticr2);
 
-$act = new ActionsTableCellRenderer();
+$act = new ActionsCellRenderer();
 $act->getActions()->append(new Action("Edit", "add.php", array(new DataParameter("editID", $bean->key()))));
 $act->getActions()->append(new PipeSeparator());
 $act->getActions()->append($h_delete->createAction());
@@ -73,7 +72,6 @@ $act->getActions()->append(new RowSeparator());
 $act->getActions()->append(new Action("Photos", "gallery/list.php", array(new DataParameter($bean->key(), $bean->key()))));
 
 $view->getColumn("actions")->setCellRenderer($act);
-
 
 $page->startRender();
 

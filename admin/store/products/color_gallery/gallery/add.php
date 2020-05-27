@@ -13,7 +13,7 @@ $menu = array();
 $page = new AdminPage();
 
 $photos = new ProductColorPhotosBean();
-$photos->select()->where = $rc->getURLParameter()->text(TRUE);
+$photos->select()->where()->addURLParameter($rc->getURLParameter());
 
 $view = new BeanFormEditor($photos, new PhotoForm());
 

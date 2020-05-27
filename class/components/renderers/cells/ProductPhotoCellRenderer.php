@@ -1,8 +1,8 @@
 <?php
 include_once("storage/StorageItem.php");
-include_once("components/renderers/cells/TableImageCellRenderer.php");
+include_once("components/renderers/cells/ImageCellRenderer.php");
 
-class ProductPhotoCellRenderer extends TableImageCellRenderer
+class ProductPhotoCellRenderer extends ImageCellRenderer
 {
 
     protected function constructItems(array &$row)

@@ -12,12 +12,12 @@ class ProductClassInputForm extends InputForm
     {
         parent::__construct();
 
-        $field = DataInputFactory::Create(DataInputFactory::TEXT, "class_name", "Име на класа", 1);
+        $field = DataInputFactory::Create(DataInputFactory::TEXT, "class_name", "Class Name", 1);
         $this->addInput($field);
 
         $field->enableTranslator(FALSE);
 
-        $field1 = new ArrayDataInput("attribute_name", "Атрибут", 0);
+        $field1 = new ArrayDataInput("attribute_name", "Attributes", 0);
         $field1->allow_dynamic_addition = TRUE;
         $field1->getProcessor()->setTransactBean(new ClassAttributesBean());
         // 	  $field1->getValueTransactor()->process_datasource_foreign_keys = true;
@@ -26,7 +26,7 @@ class ProductClassInputForm extends InputForm
         $attribs = new AttributesBean();
 
         $rend = new SelectField($field1);
-        $rend->setIterator($attribs->query());
+        $rend->setIterator($attribs->queryFull());
         $rend->getItemRenderer()->setValueKey("name");
         $rend->getItemRenderer()->setLabelKey("name");
 
@@ -34,9 +34,8 @@ class ProductClassInputForm extends InputForm
 
         $arend = new ArrayField($rend);
 
-        $act = new Action("New attribute", "../attributes/add.php");
-        $act->setName("Нов атрибут");
-        $act->setAttribute("action", "inline-new");
+        $act = new Action("inline-new", "../attributes/add.php");
+        $act->setContents("New attribute");
         $arend->addControl($act);
 
         $this->addInput($field1);

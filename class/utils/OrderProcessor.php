@@ -52,7 +52,7 @@ class OrderProcessor
 
             $config = ConfigBean::Factory();
             $config->setSection("delivery_prices");
-            $delivery_price = (float)$config->getValue($cart->getDeliveryType(), 1);
+            $delivery_price = (float)$config->get($cart->getDeliveryType(), 1);
 
             $order = array();
             $order["delivery_price"] = sprintf("%0.2f", $delivery_price);
@@ -90,7 +90,7 @@ class OrderProcessor
 
             foreach ($items as $piID => $qty) {
 
-                $item = $inventory->getByID($piID, array("price"));
+                $item = $inventory->getByID($piID, "price");
                 $line_total = (float)sprintf("%0.2f", ($qty * $item["price"]));
                 $order_total = $order_total + $line_total;
 
@@ -114,7 +114,7 @@ class OrderProcessor
                 $item = $inventory->getByID($piID);
                 $prodID = (int)$item["prodID"];
 
-                $product = $products->getByID($prodID, array("prodID", "brand_name", "product_name"));
+                $product = $products->getByID($prodID, "prodID", "brand_name", "product_name");
 
                 $product_details = "Продукт||{$product["product_name"]}//Цвят||{$item["color"]}//Размер||{$item["size_value"]}//Марка||{$product["brand_name"]}//Код|| {$piID}-{$prodID}";
 

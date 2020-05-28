@@ -23,7 +23,7 @@ try {
     $prkey = $b->key();
     $rrow = array();
     $qry = $b->queryField($prkey, $page_id, 1);
-    $qry->select->fields = " item_title, content, visible ";
+    $qry->select->fields()->set(" item_title, content, visible ");
     $num = $qry->exec();
     if ($num < 1) throw new Exception("This page is not available.");
     $rrow = $qry->next();

@@ -59,7 +59,7 @@ class CartComponent extends Component implements IHeadContents
 
     }
 
-    public function requiredStyle()
+    public function requiredStyle() : array
     {
         $arr = parent::requiredStyle();
         $arr[] = LOCAL . "/css/CartComponent.css";
@@ -278,7 +278,7 @@ class CartComponent extends Component implements IHeadContents
                 echo "</td>";
 
                 echo "<td class='value delivery'>";
-                $delivery_price = $config->getValue($this->cart->getDeliveryType());
+                $delivery_price = $config->get($this->cart->getDeliveryType());
                 $this->deliver_price = $delivery_price;
 
                 //              $price = $currency_rates->getPrice($delivery_price);

@@ -1,5 +1,5 @@
-@import url("admin_base.css");
-@import url("admin_mobile.css") (max-width: 1000px);
+@import url("AdminPage_base.css");
+@import url("AdminPage_mobile.css") (max-width: 1000px);
 
 /*.AdminPage .left_menu {
   font-size:14px;

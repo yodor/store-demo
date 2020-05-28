@@ -1,6 +1,6 @@
 <?php
 include_once("session.php");
-include_once("class/pages/AdminPage.php");
+include_once("templates/admin/BeanListPage.php");
 // include_once("class/beans/ProductsBean.php");
 include_once("components/TableView.php");
 include_once("components/renderers/cells/ImageCellRenderer.php");
@@ -35,33 +35,31 @@ catch (Exception $e) {
 
 }
 
-$bean = new ProductInventoryBean();
+$cmp = new BeanListPage();
 
-$h_delete = new DeleteItemResponder($bean);
+
+$bean = new ProductInventoryBean();
 
 $search_fields = array("product_name", "category_name", "class_name", "product_summary", "keywords", "brand_name",
                        "section", "color", "inventory_attributes");
 
-$ksc = new KeywordSearch();
-$ksc->getForm()->setFields($search_fields);
-$ksc->getForm()->getRenderer()->setAttribute("method", "get");
+$cmp->getSearch()->getForm()->setFields($search_fields);
+
 
 $piID = -1;
 if (isset($_GET["piID"])) {
     $piID = (int)$_GET["piID"];
 }
 
-// $search_fields = array("prodID", "product_code", "product_name", "color", "size");
-// $ksc = new KeywordSearch($search_fields);
+$qry = $bean->query();
+$qry->select->fields()->set("pi.*", "pc.category_name", "pcp.pclrpID",  "sc.color_code",  "p.brand_name", "p.keywords",
+                            "p.product_name", "p.product_summary", "p.class_name", "p.section");
 
-$select_inventory = $bean->select();
-$select_inventory->fields()->set("pi.*", "pc.category_name", "pcp.pclrpID",  "sc.color_code",  "p.brand_name", "p.keywords",
-                                 "p.product_name", "p.product_summary", "p.class_name", "p.section");
-$select_inventory->fields()->setExpression("(SELECT GROUP_CONCAT(CONCAT_WS(':', ia.attribute_name, ia.value) SEPARATOR '<BR>') COLLATE 'utf8_general_ci' 
+$qry->select->fields()->setExpression("(SELECT GROUP_CONCAT(CONCAT_WS(':', ia.attribute_name, ia.value) SEPARATOR '<BR>') COLLATE 'utf8_general_ci' 
  FROM inventory_attributes ia  
  WHERE ia.piID=pi.piID GROUP BY ia.piID )", "inventory_attributes");
 
-$select_inventory->from = " product_inventory pi 
+$qry->select->from = " product_inventory pi 
 JOIN products p ON p.prodID = pi.prodID 
 JOIN product_categories pc ON pc.catID=p.catID LEFT 
 JOIN product_colors pclr ON pclr.pclrID = pi.pclrID LEFT 
@@ -69,84 +67,50 @@ JOIN product_color_photos pcp ON pcp.pclrID = pi.pclrID LEFT
 JOIN store_colors sc ON sc.color=pclr.color LEFT  
 JOIN color_chips cc ON cc.prodID = p.prodID LEFT 
 JOIN product_photos pp ON pp.prodID = pi.prodID ";
-$select_inventory->group_by = " pi.piID ";
+$qry->select->group_by = " pi.piID ";
 
 if ($prodID > 0) {
-    $select_inventory->where()->add("pi.prodID", $prodID);
+    $qry->select->where()->add("pi.prodID", $prodID);
 
     $page->setName(tr("Inventory") . ": " . $rc->getData("product_name"));
 }
 else {
-    $page->setName(tr("All Products Inventory"));
+    //$page->setName(tr("All Products Inventory"));
 }
 
 $view_inventory = new SQLSelect();
-$view_inventory->from = "(" . $select_inventory->getSQL(FALSE, FALSE) . ") as derived ";
+$view_inventory->fields()->set("*");
+$view_inventory->from = "(" . $qry->select->getSQL(FALSE, FALSE) . ") as derived ";
 
-$ksc->processSearch($view_inventory);
 
-$view = new TableView(new SQLQuery($view_inventory, "piID"));
-$view->setCaption("Inventory List");
-$view->setDefaultOrder(" prodID DESC ");
+$cmp->setListFields(array("piID"=>"ID", "prodID"=>"ProdID","section"=>"Section","pclrpID"=>"Color Scheme",
+                        "product_name"=>"Product Name", "category_name"=>"Category Name","brand_name"=>"Brand Name",
+                        "class_name"=>"Class", "color"=>"Color", "size"=>"Size","stock_amount"=>"Stock Amount", "price"=>"Price",
+                        "bui_price"=>"Buy Price", "old_price"=>"Old Price", "weight"=>"Weight", "inventory_attributes"=>"Attributes"));
 
-$view->addColumn(new TableColumn("piID", "ID"));
+$iterator = new SQLQuery($view_inventory, "piID", $bean->getTableName());
+$cmp->setIterator($iterator);
+$cmp->setBean($bean);
 
-$view->addColumn(new TableColumn("prodID", "ProdID"));
+$cmp->initView();
+$view = $cmp->getView();
 
-$view->addColumn(new TableColumn("section", "Section"));
-
-$view->addColumn(new TableColumn("pclrpID", "Color Scheme"));
-
-$view->addColumn(new TableColumn("product_name", "Product Name"));
-
-$view->addColumn(new TableColumn("category_name", "Category"));
-
-$view->addColumn(new TableColumn("brand_name", "Brand"));
-
-// $view->addColumn(new TableColumn("product_photo","Product Photo"));
-
-$view->addColumn(new TableColumn("class_name", "Class"));
-
-$view->addColumn(new TableColumn("color", "Color Name"));
-$view->addColumn(new TableColumn("color_code", "Color Code"));
-$view->addColumn(new TableColumn("size_value", "Size"));
-$view->addColumn(new TableColumn("stock_amount", "Stock Amount"));
-
-$view->addColumn(new TableColumn("price", "Price"));
-$view->addColumn(new TableColumn("buy_price", "Buy Price"));
-$view->addColumn(new TableColumn("old_price", "Old Price"));
-$view->addColumn(new TableColumn("weight", "Weight"));
-
-$view->addColumn(new TableColumn("inventory_attributes", "Attributes"));
-
-$view->addColumn(new TableColumn("actions", "Actions"));
+$view->setDefaultOrder("prodID DESC");
 
 $ticr1 = new ImageCellRenderer(-1, 64);
 $ticr1->setBean(new ProductColorPhotosBean());
 $ticr1->setBlobField("photo");
 $view->getColumn("pclrpID")->setCellRenderer($ticr1);
 
-$view->getColumn("color_code")->setCellRenderer(new ColorCodeCellRenderer());
+//$view->getColumn("color_code")->setCellRenderer(new ColorCodeCellRenderer());
 
-$act = new ActionsCellRenderer();
-$act->getActions()->append(new Action("Edit", "add.php", array(new DataParameter("prodID"),
-                                                    new DataParameter("editID", $bean->key()))));
-$act->getActions()->append(new PipeSeparator());
-$act->getActions()->append($h_delete->createAction());
+$act = $cmp->viewItemActions();
 
-$act->getActions()->append(new RowSeparator());
+$act->append(new RowSeparator());
 
-$act->getActions()->append(new Action("Add Copy", "add.php", array(new DataParameter("prodID"),
+$act->append(new Action("Copy", "add.php", array(new DataParameter("prodID"),
                                                         new DataParameter("copyID", $bean->key()))));
 
-$view->getColumn("actions")->setCellRenderer($act);
-
-
-$page->startRender();
-
-$ksc->render();
-$view->render();
-
-$page->finishRender();
+$cmp->render();
 
 ?>

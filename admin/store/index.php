@@ -20,6 +20,10 @@ $menu = array(new MenuItem("Секции", "sections/list.php", "class:store sec
 
 $page->setPageMenu($menu);
 
+$page->navigation()->clear();
+
+$page->startRender();
+
 echo "Управление на магазина";
 
 $page->finishRender();

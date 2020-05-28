@@ -1,39 +1,15 @@
 <?php
 include_once("session.php");
-include_once("class/pages/AdminPage.php");
-include_once("beans/ConfigBean.php");
+include_once("templates/admin/ConfigEditorPage.php");
 include_once("forms/SEOConfigForm.php");
-include_once("forms/processors/ConfigFormProcessor.php");
-include_once("forms/renderers/FormRenderer.php");
 
-$page = new AdminPage("SEO");
-
-$config = ConfigBean::Factory();
-$config->setSection("seo");
+$cmp = new ConfigEditorPage();
+$cmp->setConfigSection("seo");
 
 $form = new SEOConfigForm();
-$config->loadForm($form);
+$cmp->setForm($form);
 
-$rend = new FormRenderer($form);
-$rend->setClassName("config_form");
+$cmp->getPage()->navigation()->clear();
 
-$proc = new ConfigFormProcessor();
-
-$form->setProcessor($proc);
-
-$proc->process($form);
-
-if ($proc->getStatus() == IFormProcessor::STATUS_OK) {
-    Session::SetAlert("Configuration Updated");
-    header("Location: seo.php");
-    exit;
-}
-
-$page->navigation()->clear();
-
-$page->startRender();
-
-$rend->render();
-
-$page->finishRender();
+$cmp->render();
 ?>

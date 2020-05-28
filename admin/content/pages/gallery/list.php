@@ -5,18 +5,15 @@ include_once("templates/admin/GalleryViewPage.php");
 include_once("beans/DynamicPagePhotosBean.php");
 include_once("beans/DynamicPagesBean.php");
 
-
 $rc = new BeanKeyCondition(new DynamicPagesBean(), "../list.php", array("item_title"));
 
-$bean = new DynamicPagePhotosBean();
-$bean->select()->where()->addURLParameter($rc->getURLParameter());
-
 $cmp = new GalleryViewPage();
-$cmp->setBean($bean);
-$cmp->getPage()->setName(tr("Photo Gallery").": " . $rc->getData("item_title"));
-$cmp->getPage()->setAccessibleTitle($cmp->getPage()->getName());
+$cmp->setRequestCondition($rc);
 
+$bean = new DynamicPagePhotosBean();
 $cmp->setBean($bean);
+
+$cmp->getPage()->setName(tr("Photo Gallery") . ": " . $rc->getData("item_title"));
 
 $cmp->render();
 

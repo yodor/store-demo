@@ -17,7 +17,7 @@ $form = new InvoiceDetailsInputForm();
 $form->setName("InvoiceDetails");
 
 $editID = -1;
-$row = $ccb->findFieldValue("userID", $page->getUserID());
+$row = $ccb->getResult("userID", $page->getUserID());
 if ($row) {
     $editID = $row[$ccb->key()];
     $form->loadBeanData($editID, $ccb);

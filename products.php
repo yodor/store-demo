@@ -107,7 +107,7 @@ else {
     $view = new ItemView(new SQLQuery($product_selector, "piID"));
     $view->setItemRenderer(new ProductListItem());
 }
-$view->items_per_page = 12;
+$view->setItemsPerPage(12);
 
 $sort_prod = new PaginatorSortField("relation.prodID", "Най-нови");
 $view->getPaginator()->addSortField($sort_prod);

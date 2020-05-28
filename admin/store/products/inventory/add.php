@@ -23,11 +23,10 @@ $bean = new ProductInventoryBean();
 $copyID = -1;
 if (isset($_GET["copyID"])) {
     $copyID = (int)$_GET["copyID"];
-
 }
 
 $view = new BeanFormEditor($bean, $form);
-$view->reload_url = Session::Get("inventory.list");
+//$view->reload_url = Session::Get("inventory.list");
 
 // $view->getTransactor()->assignInsertValue("insert_date", DBConnections::get()->dateTime());
 $view->getTransactor()->appendValue("prodID", $prodID);

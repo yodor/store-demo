@@ -90,7 +90,7 @@ $cart = $page->getCart();
 $reqform = new RequireInvoiceInputForm();
 
 $idb = new InvoiceDetailsBean();
-$idbrow = $idb->findFieldValue("userID", $page->getUserID());
+$idbrow = $idb->getResult("userID", $page->getUserID());
 if (!$idbrow) {
     $reqform->getInput("require_invoice")->setValue(FALSE);
 }
@@ -142,7 +142,7 @@ echo "<div class='value'>";
 if (strcmp($cart->getDeliveryType(), Cart::DELIVERY_USERADDRESS) == 0) {
     $form = new ClientAddressInputForm();
     $bean = new ClientAddressesBean();
-    $row = $bean->findFieldValue("userID", $page->getUserID());
+    $row = $bean->getResult("userID", $page->getUserID());
     if (!$row) {
         header("Location: delivery_address.php");
         exit;
@@ -159,7 +159,7 @@ if (strcmp($cart->getDeliveryType(), Cart::DELIVERY_USERADDRESS) == 0) {
 else if (strcmp($cart->getDeliveryType(), Cart::DELIVERY_EKONTOFFICE) == 0) {
     $form = new EkontOfficeInputForm();
     $bean = new EkontAddressesBean();
-    $row = $bean->findFieldValue("userID", $page->getUserID());
+    $row = $bean->getResult("userID", $page->getUserID());
     if (!$row) {
         header("Location: delivery_ekont.php");
         exit;

@@ -73,13 +73,13 @@ class ClassAttributeField extends DataIteratorField
         $this->setItemRenderer(new ClassAttributeItem());
 
         $cab = new ClassAttributesBean();
-        $this->setIterator($cab->query());
+        $this->setIterator($cab->queryFull());
         $this->getItemRenderer()->setValueKey("caID");
         $this->getItemRenderer()->setLabelKey("attribute_name");
 
     }
 
-    public function requiredStyle()
+    public function requiredStyle() : array
     {
         $arr = parent::requiredStyle();
         $arr[] = LOCAL . "/css/ClassAttributeField.css";

@@ -11,7 +11,7 @@ $cab = new ClientAddressesBean();
 $form = new ClientAddressInputForm();
 
 $editID = -1;
-$row = $cab->findFieldValue("userID", $page->getUserID());
+$row = $cab->getResult("userID", $page->getUserID());
 if ($row) {
     $editID = $row[$cab->key()];
     $form->loadBeanData($editID, $cab);

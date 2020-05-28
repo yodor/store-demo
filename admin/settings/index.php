@@ -14,6 +14,8 @@ $menu = array(
 
 $page->setPageMenu($menu);
 
+$page->navigation()->clear();
+
 $page->startRender();
 
 $page->finishRender();

@@ -8,11 +8,11 @@ class AttributeInputForm extends InputForm
     {
         parent::__construct();
 
-        $field = new DataInput("name", "Име на атрибут", 1);
+        $field = new DataInput("name", "Name", 1);
         new TextField($field);
         $this->addInput($field);
 
-        $field = new DataInput("unit", "Мярна единица", 0);
+        $field = new DataInput("unit", "Unit", 0);
         new TextField($field);
         $this->addInput($field);
     }

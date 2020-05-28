@@ -53,7 +53,7 @@ else if ($proc->getStatus() == FormProcessor::STATUS_OK) {
     $delivery_type = $page->getCart()->getDeliveryType();
     if (strcmp($delivery_type, Cart::DELIVERY_USERADDRESS) == 0) {
 
-        $cabrow = $bean->findFieldValue("userID", $page->getUserID());
+        $cabrow = $bean->getResult("userID", $page->getUserID());
         if (!$cabrow) {
             header("Location: delivery_address.php");
             exit;

@@ -1,43 +1,20 @@
 <?php
 include_once("session.php");
-include_once("class/pages/AdminPage.php");
+include_once("templates/admin/BeanListPage.php");
 include_once("class/beans/AttributesBean.php");
-include_once("components/TableView.php");
 
-$menu = array();
+$cmp = new BeanListPage();
 
-$page = new AdminPage();
+$cmp->setListFields(array("name"=>"Name","unit"=>"Unit", "type"=>"Type"));
 
+$cmp->setBean(new AttributesBean());
 
-$bean = new AttributesBean();
+$cmp->initView();
+$cmp->getView()->setDefaultOrder(" name ASC ");
 
-$h_delete = new DeleteItemResponder($bean);
+$cmp->getPage()->navigation()->clear();
 
+$cmp->render();
 
-$view = new TableView($bean->query());
-$view->setCaption("Store attributes list");
-$view->setDefaultOrder(" name ASC ");
-
-$view->addColumn(new TableColumn($bean->key(), "ID"));
-$view->addColumn(new TableColumn("name", "Name"));
-$view->addColumn(new TableColumn("unit", "Unit"));
-$view->addColumn(new TableColumn("type", "Type"));
-
-$view->addColumn(new TableColumn("actions", "Actions"));
-
-$act = new ActionsCellRenderer();
-$act->getActions()->append(new Action("Edit", "add.php", array(new DataParameter("editID", $bean->key()))));
-$act->getActions()->append(new PipeSeparator());
-$act->getActions()->append($h_delete->createAction());
-
-$view->getColumn("actions")->setCellRenderer($act);
-
-Session::Set("attributes.list", $page->getPageURL());
-
-$page->startRender();
-
-$view->render();
-
-$page->finishRender();
 
 ?>

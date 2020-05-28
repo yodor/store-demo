@@ -18,7 +18,7 @@ class OrderConfirmationMailer extends Mailer
         $userID = (int)$order["userID"];
 
         $users = new UsersBean();
-        $user = $users->fieldValues($userID, array("userID", "fullname", "email", "phone"));
+        $user = $users->getByID($userID, "userID", "fullname", "email", "phone");
 
         $this->to = $user["email"];
 

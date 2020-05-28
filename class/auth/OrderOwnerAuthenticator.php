@@ -17,7 +17,7 @@ class OrderOwnerAuthenticator extends UserAuthenticator
             $orders = new OrdersBean();
             $orderID = (int)$user_data[$orders->key()];
 
-            $order_userID = (int)$orders->fieldValue($orderID, "userID");
+            $order_userID = (int)$orders->getValue($orderID, "userID");
 
             if ($logged_userID == $order_userID) {
                 debug("Authenticated userID is matching the order ownerID");

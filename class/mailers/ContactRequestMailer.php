@@ -10,7 +10,7 @@ class ContactRequestMailer extends Mailer
         $config = ConfigBean::Factory();
         $config->setSection("global");
 
-        $this->to = $config->getValue("admin_email");
+        $this->to = $config->get("admin_email");
 
         $subject = "Contact Request - crID: $crID";
 

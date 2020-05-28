@@ -35,7 +35,6 @@ if ($filter) {
 
 $view = new TableView(new SQLQuery($sel, "userID"));
 $view->setDefaultOrder(" userID DESC ");
-$view->items_per_page = 20;
 
 $view->addColumn(new TableColumn("userID", "ID"));
 

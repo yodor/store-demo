@@ -1,21 +1,14 @@
 <?php
 include_once("session.php");
-include_once("class/pages/AdminPage.php");
+include_once("templates/admin/BeanEditorPage.php");
 include_once("class/forms/AttributeInputForm.php");
 include_once("class/beans/AttributesBean.php");
 
 
-$page = new AdminPage();
+$cmp = new BeanEditorPage();
 
-
-$view = new BeanFormEditor(new AttributesBean(), new AttributeInputForm());
-
-$view->processInput();
-
-$page->startRender();
-
-$view->render();
-
-$page->finishRender();
+$cmp->setBean(new AttributesBean());
+$cmp->setForm(new AttributeInputForm());
+$cmp->render();
 
 ?>

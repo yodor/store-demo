@@ -1,23 +1,13 @@
 <?php
 include_once("session.php");
-include_once("class/pages/AdminPage.php");
+include_once("templates/admin/BeanEditorPage.php");
 include_once("class/forms/StoreSizeInputForm.php");
 include_once("class/beans/StoreSizesBean.php");
-include_once("class/beans/ProductsBean.php");
 
-$menu = array();
+$cmp = new BeanEditorPage();
+$cmp->setBean(new StoreSizesBean());
+$cmp->setForm(new StoreSizeInputForm());
 
-$page = new AdminPage();
-
-
-$view = new BeanFormEditor(new StoreSizesBean(), new StoreSizeInputForm());
-
-$view->processInput();
-
-$page->startRender();
-
-$view->render();
-
-$page->finishRender();
+$cmp->render();
 
 ?>

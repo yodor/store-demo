@@ -30,7 +30,7 @@ class ProductListItem extends DataIteratorItem implements IHeadContents
         $this->photo = new StorageItem();
     }
 
-    public function requiredStyle()
+    public function requiredStyle() : array
     {
         $arr = parent::requiredStyle();
         $arr[] = LOCAL . "/css/ProductListItem.css";

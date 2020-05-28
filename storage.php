@@ -1,6 +1,5 @@
 <?php
-define("SKIP_LANGUAGE", 1);
-define("PERSISTENT_DB", 1);
+define("STORAGE_REQUEST", 1);
 
 include_once("session.php");
 Session::Close();

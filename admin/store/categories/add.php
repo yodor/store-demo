@@ -1,20 +1,14 @@
 <?php
 include_once("session.php");
-include_once("class/pages/AdminPage.php");
+include_once("templates/admin/BeanEditorPage.php");
 include_once("class/forms/ProductCategoryInputForm.php");
 include_once("class/beans/ProductCategoriesBean.php");
 
+$cmp = new BeanEditorPage();
 
-$page = new AdminPage();
+$cmp->setBean(new ProductCategoriesBean());
+$cmp->setForm(new ProductCategoryInputForm());
 
-$view = new BeanFormEditor(new ProductCategoriesBean(), new ProductCategoryInputForm());
-
-$view->processInput();
-
-$page->startRender();
-
-$view->render();
-
-$page->finishRender();
+$cmp->render();
 
 ?>

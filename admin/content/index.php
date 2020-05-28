@@ -15,7 +15,9 @@ $menu = array(new MenuItem("Menu Items", "menus/index.php", "menu"),
 
 $page->setPageMenu($menu);
 
-echo "Content Management";
+$page->navigation()->clear();
 
+$page->startRender();
+echo "Content Management";
 $page->finishRender();
 ?>

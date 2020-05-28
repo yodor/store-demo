@@ -1,22 +1,13 @@
 <?php
 include_once("session.php");
-include_once("class/pages/AdminPage.php");
+include_once("templates/admin/BeanEditorPage.php");
 include_once("class/forms/BrandInputForm.php");
 include_once("class/beans/BrandsBean.php");
 
+$cmp = new BeanEditorPage();
 
-
-$page = new AdminPage();
-
-
-$view = new BeanFormEditor(new BrandsBean(), new BrandInputForm());
-
-$view->processInput();
-
-$page->startRender();
-
-$view->render();
-
-$page->finishRender();
+$cmp->setBean(new BrandsBean());
+$cmp->setForm(new BrandInputForm());
+$cmp->render();
 
 ?>

@@ -23,7 +23,8 @@ class ProductInputForm extends InputForm
         $field = DataInputFactory::Create(DataInputFactory::SELECT, "section", "Секция", 1);
         $rend = $field->getRenderer();
         $sb = new SectionsBean();
-        $rend->setIterator($sb->query());
+
+        $rend->setIterator($sb->query($sb->key(),"section_title"));
         $rend->getItemRenderer()->setValueKey("section_title");
         $rend->getItemRenderer()->setLabelKey("section_title");
         $this->addInput($field);
@@ -31,7 +32,8 @@ class ProductInputForm extends InputForm
         $field = DataInputFactory::Create(DataInputFactory::NESTED_SELECT, "catID", "Категория", 1);
         $bean1 = new ProductCategoriesBean();
         $rend = $field->getRenderer();
-        $rend->setIterator($bean1->query());
+
+        $rend->setIterator(new SQLQuery($bean1->selectTree(array("category_name")), $bean1->key(), $bean1->getTableName()));
         $rend->getItemRenderer()->setValueKey("catID");
         $rend->getItemRenderer()->setLabelKey("category_name");
 
@@ -40,7 +42,8 @@ class ProductInputForm extends InputForm
         $field = DataInputFactory::Create(DataInputFactory::SELECT, "brand_name", "Марка", 1);
         $rend = $field->getRenderer();
         $brands = new BrandsBean();
-        $rend->setIterator($brands->query());
+
+        $rend->setIterator($brands->query($brands->key(), "brand_name"));
         $rend->getItemRenderer()->setValueKey("brand_name");
         $rend->getItemRenderer()->setLabelKey("brand_name");
         $this->addInput($field);
@@ -48,7 +51,7 @@ class ProductInputForm extends InputForm
         $field = DataInputFactory::Create(DataInputFactory::SELECT, "class_name", "Продуктов клас", 0);
         $rend = $field->getRenderer();
         $pcb = new ProductClassesBean();
-        $rend->setIterator($pcb->query());
+        $rend->setIterator($pcb->query($pcb->key(), "class_name"));
         $rend->getItemRenderer()->setValueKey("class_name");
         $rend->getItemRenderer()->setLabelKey("class_name");
         $this->addInput($field);
@@ -75,11 +78,11 @@ class ProductInputForm extends InputForm
         $field1->allow_dynamic_addition = TRUE;
         $field1->source_label_visible = TRUE;
 
-        $features_source = new ProductFeaturesBean();
-        $field1->getProcessor()->setTransactBean($features_source);
+        $features = new ProductFeaturesBean();
+        $field1->getProcessor()->setTransactBean($features);
 
         $renderer = new TextField($field1);
-        $renderer->setIterator($features_source->query());
+        $renderer->setIterator($features->queryFull());
 
         $field1->setValidator(new EmptyValueValidator());
         new InputProcessor($field1);

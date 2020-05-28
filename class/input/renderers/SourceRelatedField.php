@@ -36,7 +36,7 @@ class IteratorRelatedField extends DataIteratorField
         $this->addClassName(get_class($query));
     }
 
-    public function requiredStyle()
+    public function requiredStyle() : array
     {
         $arr = parent::requiredStyle();
         $arr[] = LOCAL . "/css/SourceRelatedField.css";

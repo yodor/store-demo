@@ -9,7 +9,7 @@ class OrderClientCellRenderer extends TableCellRenderer
     {
         global $clients;
 
-        $client = $clients->getByID($this->userID, array("fullname", "email", "phone"));
+        $client = $clients->getByID($this->userID, "fullname", "email", "phone");
 
         echo "<div class='group client_data'>";
         echo "<div class='item fullname'>";

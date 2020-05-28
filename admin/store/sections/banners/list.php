@@ -1,37 +1,19 @@
 <?php
 include_once("session.php");
-include_once("class/pages/AdminPage.php");
-
+include_once("templates/admin/GalleryViewPage.php");
 include_once("class/beans/SectionBannersBean.php");
 include_once("class/beans/SectionsBean.php");
 
-include_once("components/GalleryView.php");
-
-$menu = array();
-
-$page = new AdminPage();
-
-$page->setAccessibleTitle("Banners Gallery");
 
 $rc = new BeanKeyCondition(new SectionsBean(), "../list.php", array("section_title"));
 
-$page->setName(tr("Banners Gallery") . ": " . $rc->getData("section_title"));
 
-$bean = new SectionBannersBean();
-$bean->select()->where()->addURLParameter($rc->getURLParameter());
+$cmp = new GalleryViewPage();
+$cmp->setRequestCondition($rc);
 
-$h_delete = new DeleteItemResponder($bean);
+$cmp->getPage()->setName(tr("Banners Gallery") . ": " . $rc->getData("section_title"));
 
-$h_repos = new ChangePositionResponder($bean);
+$cmp->setBean(new SectionBannersBean());
 
-
-$gv = new GalleryView($bean);
-$gv->getItemActions()->addURLParameter($rc->getURLParameter());
-
-$page->startRender();
-
-$gv->render();
-
-$page->finishRender();
-
+$cmp->render();
 ?>

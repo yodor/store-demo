@@ -53,7 +53,7 @@ $form = new EkontOfficeInputForm();
 $form->setName("EkontOffice");
 
 $empty = "";
-$eorow = $bean->findFieldValue("userID", $page->getUserID());
+$eorow = $bean->getResult("userID", $page->getUserID());
 if (!$eorow) {
     $empty = "empty";
 }

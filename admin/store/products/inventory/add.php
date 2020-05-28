@@ -1,19 +1,21 @@
 <?php
 include_once("session.php");
-include_once("class/pages/AdminPage.php");
+include_once("templates/admin/BeanEditorPage.php");
 include_once("class/forms/ProductInventoryInputForm.php");
 include_once("class/beans/ProductInventoryBean.php");
 include_once("class/beans/ProductsBean.php");
 
+$rc = new BeanKeyCondition(new ProductsBean(), "../list.php", array("product_name", "class_name", "brand_name",
+                                                                    "section"));
+$prodID = (int)$rc->getID();
 
-$page = new AdminPage();
+$cmp = new BeanEditorPage();
+$cmp->setRequestCondition($rc);
 
+$pageName = $rc->getData("section") . " / " . $rc->getData("class_name") .
+    " / " . $rc->getData("brand_name") . " / " . $rc->getData("product_name");
 
-Session::Set("sizing.list", $page->getPageURL());
-Session::Set("product.color_scheme", $page->getPageURL());
-
-$ensure_product = new BeanKeyCondition(new ProductsBean(), "../list.php", array("product_name"));
-$prodID = (int)$ensure_product->getID();
+$cmp->getPage()->setName($pageName);
 
 $form = new ProductInventoryInputForm();
 $form->setProductID($prodID);
@@ -25,24 +27,17 @@ if (isset($_GET["copyID"])) {
     $copyID = (int)$_GET["copyID"];
 }
 
-$view = new BeanFormEditor($bean, $form);
-//$view->reload_url = Session::Get("inventory.list");
+$cmp->setBean($bean);
+$cmp->setForm($form);
 
-// $view->getTransactor()->assignInsertValue("insert_date", DBConnections::get()->dateTime());
-$view->getTransactor()->appendValue("prodID", $prodID);
+$cmp->initView();
 
-$page->setName("Inventory: " . $ensure_product->getData("product_name"));
-
-$view->processInput(); //redirect on successfully add or edit?
+$cmp->getEditor()->getTransactor()->appendValue("prodID", $prodID);
 
 if ($copyID > 0) {
     $form->loadBeanData($copyID, $bean);
 }
 
-$page->startRender();
-
-$view->render();
-
-$page->finishRender();
+$cmp->render();
 
 ?>

@@ -25,7 +25,7 @@ class ProductInventoryInputForm extends InputForm
 
         $field = DataInputFactory::Create(DataInputFactory::SELECT, "pclrID", "Цветова схема", 0);
         $colors = new ProductColorsBean();
-        $field->getRenderer()->setIterator($colors->query());
+        $field->getRenderer()->setIterator($colors->query("pclrID", "color"));
 
         $field->getRenderer()->getItemRenderer()->setValueKey("pclrID");
         $field->getRenderer()->getItemRenderer()->setLabelKey("color");
@@ -36,7 +36,7 @@ class ProductInventoryInputForm extends InputForm
 
         $field = DataInputFactory::Create(DataInputFactory::SELECT, "size_value", "Оразмеряване", 0);
         $sizes = new StoreSizesBean();
-        $field->getRenderer()->setIterator($sizes->query());
+        $field->getRenderer()->setIterator($sizes->query("size_value"));
         $field->getRenderer()->getItemRenderer()->setValueKey("size_value");
         $field->getRenderer()->getItemRenderer()->setLabelKey("size_value");
 
@@ -74,7 +74,7 @@ class ProductInventoryInputForm extends InputForm
         $rend = new IteratorRelatedField($field);
 
         $bean = new ClassAttributesBean();
-        $rend->setIterator($bean->query());
+        $rend->setIterator($bean->queryFull());
 
         $rend->getItemRenderer()->setValueKey("value");
         $rend->getItemRenderer()->setLabelKey("attribute_name");
@@ -86,11 +86,9 @@ class ProductInventoryInputForm extends InputForm
     {
         $this->prodID = (int)$prodID;
 
-        $this->getInput("pclrID")->getRenderer()->getIterator()->select->where = " prodID='{$this->prodID}' ";
+        $this->getInput("pclrID")->getRenderer()->getIterator()->select->where()->add("prodID", $this->prodID);
 
         $this->getInput("pclrID")->getRenderer()->addon_content = "<a class='Action' action='inline-new' href='../color_gallery/add.php?prodID={$this->prodID}'>" . tr("Нова цветова схема") . "</a>";
-
-        // 	  $this->getField("size_value")->getRenderer()->setFilter(" WHERE prodID='{$this->prodID}' ");
 
         $prods = new ProductsBean();
         $this->product = $prods->getByID($this->prodID);
@@ -99,10 +97,14 @@ class ProductInventoryInputForm extends InputForm
 
         $rend->setCaption(tr("Продуктов клас") . ": " . $this->product["class_name"]);
 
-        $sel = $rend->getIterator()->select;
-        $sel->where = " ca.class_name='{$this->product["class_name"]}' ";
+        $iterator = $rend->getIterator();
+        if (!($iterator instanceof SQLQuery))throw new Exception("Incorrect iterator");
+
+        $sel = $iterator->select;
+        $sel->fields()->reset();
+        $sel->fields()->set("ca.*", "attr.unit AS attribute_unit", "attr.type AS attribute_type");
         $sel->from = $rend->getIterator()->name() . " ca LEFT JOIN attributes attr ON attr.name = ca.attribute_name ";
-        $sel->fields = " ca.*, attr.unit as attribute_unit, attr.type attribute_type ";
+        $sel->where()->add("ca.class_name", "'{$this->product["class_name"]}'");
 
         //debug($sel->getSQL());
 
@@ -120,15 +122,20 @@ class ProductInventoryInputForm extends InputForm
 
         $rend = $this->getInput("value")->getRenderer();
 
-        $sel = $rend->getIterator()->select;
+        $iterator = $rend->getIterator();
+        if (!($iterator instanceof SQLQuery))throw new Exception("Incorrect iterator");
+
+        $sel = $iterator->select;
+
+        $sel->fields()->reset();
+        $sel->fields()->set(" ca.*", "iav.value", "attr.unit AS attribute_unit", "attr.type AS attribute_type");
 
         $sel->from = $rend->getIterator()->name() . " ca LEFT 
         JOIN inventory_attribute_values iav ON iav.caID = ca.caID AND iav.piID='$editID' LEFT 
         JOIN attributes attr ON attr.name = ca.attribute_name ";
 
-        $sel->where = " ca.class_name='{$this->product["class_name"]}'";
+        $sel->where()->add("ca.class_name", "'{$this->product["class_name"]}'");
 
-        $sel->fields = " ca.*, iav.value, attr.unit as attribute_unit, attr.type attribute_type ";
 
     }
 

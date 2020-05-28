@@ -79,7 +79,7 @@ class ClassAttributeField extends DataIteratorField
 
     }
 
-    public function requiredStyle() : array
+    public function requiredStyle(): array
     {
         $arr = parent::requiredStyle();
         $arr[] = LOCAL . "/css/ClassAttributeField.css";
@@ -89,9 +89,10 @@ class ClassAttributeField extends DataIteratorField
     public function setCategoryID($catID)
     {
         $this->catID = $catID;
-        $this->iterator->select->fields = " ca.*, ma.name as attribute_name, ma.unit, ma.type ";
+        $this->iterator->select->fields()->set("ca.*", "ma.name AS attribute_name", "ma.unit", "ma.type");
         $this->iterator->select->from = $this->iterator->name() . " ca, attributes ma ";
-        $this->iterator->select->where = "ca.catID='$catID' AND ma.maID=ca.maID";
+        $this->iterator->select->where()->add("ca.catID", $catID);
+        $this->iterator->select->where()->add("ma.maID", "ca.maID");
 
     }
 
@@ -99,9 +100,10 @@ class ClassAttributeField extends DataIteratorField
     {
         $this->prodID = (int)$prodID;
         if ($this->prodID > 0) {
-            $this->iterator->select->fields = "ca.*, ma.name as attribute_name, ma.unit, ma.type, cav.value, cav.prodID";
+            $this->iterator->select->fields()->set("ca.*", "ma.name AS attribute_name", "ma.unit", "ma.type", "cav.value", "cav.prodID");
             $this->iterator->select->from = $this->iterator->name() . " ca LEFT JOIN class_attribute_values cav ON ca.caID = cav.caID , attributes ma ";
-            $this->iterator->select->where = "ma.maID=ca.maID AND ca.catID='{$this->catID}'";
+            $this->iterator->select->where()->add("ma.maID", "ca.maID");
+            $this->iterator->select->where()->add("ca.catID", $this->catID);
             $this->iterator->select->group_by = "ca.caID";
             $this->iterator->select->having = "(cav.prodID='{$this->prodID}' OR cav.prodID IS NULL)";
         }

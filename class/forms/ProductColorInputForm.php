@@ -31,11 +31,6 @@ class ProductColorInputForm extends InputForm
         // 	$field->enableTranslator(true);
 
         $input = DataInputFactory::Create(DataInputFactory::SESSION_IMAGE, "color_photo", "Чип за цвета", 0);
-        // 	$input->setSource(new ProductPhotosBean());
-        // 	$input->transact_mode = InputField::TRANSACT_OBJECT;
-        // 	$input->getValueTransactor()->max_slots = 10;
-
-        $input->getProcessor()->transact_mode = InputProcessor::TRANSACT_OBJECT;
         $input->getProcessor()->max_slots = 1;
         $this->addInput($input);
 
@@ -43,10 +38,7 @@ class ProductColorInputForm extends InputForm
         $bean = new ProductColorPhotosBean();
 
         $input->getProcessor()->setTransactBean($bean);
-
-        $input->getProcessor()->transact_mode = InputProcessor::TRANSACT_OBJECT;
         $input->getProcessor()->max_slots = 10;
-
         $this->addInput($input);
 
     }

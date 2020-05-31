@@ -20,7 +20,6 @@ class NewsItemInputForm extends InputForm
         $this->addInput($field);
 
         $field = DataInputFactory::Create(DataInputFactory::SESSION_IMAGE, "photo", "Снимка", 1);
-        $field->getProcessor()->transact_mode = InputProcessor::TRANSACT_OBJECT;
         $field->getProcessor()->max_slots = 1;
         $this->addInput($field);
 

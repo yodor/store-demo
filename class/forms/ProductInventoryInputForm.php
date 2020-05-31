@@ -62,7 +62,6 @@ class ProductInventoryInputForm extends InputForm
         //1. input is taking array of values (ArrayDataInput)
         //2. renderer is drawing single element with many items (DataSourceField)
         $field = new ArrayDataInput("value", "Атрибути на класа", 0);
-        $field->allow_dynamic_addition = FALSE;
 
         $field->source_label_visible = TRUE;
 

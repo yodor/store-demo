@@ -45,7 +45,6 @@ class ClassAttributeFieldResponder extends JSONResponder
     public function _render(JSONResponse $req)
     {
         $field = new ArrayDataInput("value", "Category Attributes", 0);
-        $field->allow_dynamic_addition = FALSE;
         $field->source_label_visible = TRUE;
 
         $bean1 = new ClassAttributeValuesBean();

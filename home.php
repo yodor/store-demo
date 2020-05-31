@@ -15,7 +15,7 @@ $page->startRender();
 
 $banners = new SectionBannersBean();
 
-$qry = $page->sections->query();
+$qry = $page->sections->query("secID", "section_title");
 $qry->select->order_by = " position ASC ";
 
 $sel = new ProductsSQL();
@@ -42,9 +42,9 @@ while ($section = $qry->next()) {
     $secion_url = LOCAL . "/products.php?section=$sectionName";
     echo "<a class='caption' href='$secion_url'>$sectionName</a>";
 
-    $qry1 = $banners->queryField("secID", $secID, 1);
+    $qry1 = $banners->queryField("secID", $secID, 1, "sbID", "caption", "link", "position");
     $qry1->select->order_by = " RAND() ";
-    $qry1->select->fields()->set("sbID", "caption", "link", "position");
+
     $num = $qry1->exec();
 
     if ($banner = $qry1->next()) {

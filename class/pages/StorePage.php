@@ -57,10 +57,6 @@ class StorePage extends SparkPage
 
         $this->sections = new SectionsBean();
 
-        // 	$this->menu_bar->getItemRenderer()->disableSubmenuRenderer();
-
-        $this->addMeta("viewport", "width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0");
-
         if (isset($_GET["section"])) {
             $section = DBConnections::Get()->escape($_GET["section"]);
             $qry = $this->sections->queryField("section_title", $section, 1);

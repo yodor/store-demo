@@ -75,7 +75,6 @@ class ProductInputForm extends InputForm
         $this->addInput($field);
 
         $field1 = new ArrayDataInput("feature", "Характеристики", 0);
-        $field1->allow_dynamic_addition = TRUE;
         $field1->source_label_visible = TRUE;
 
         $features = new ProductFeaturesBean();

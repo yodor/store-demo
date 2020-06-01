@@ -4,7 +4,7 @@ include_once("session.php");
 include_once("class/pages/DemoPage.php");
 
 include_once("class/beans/NewsItemsBean.php");
-include_once("components/PublicationArchiveComponent.php");
+include_once("components/PublicationsComponent.php");
 
 $page = new DemoPage();
 
@@ -24,14 +24,14 @@ $qry->select->where()->add($prkey, $itemID);
 $qry->select->limit = " 1 ";
 $qry->select->order_by = " item_date DESC ";
 
-$pac = new PublicationArchiveComponent(new NewsItemsBean(), LOCAL . "/news.php");
+$pac = new PublicationsComponent(new NewsItemsBean(), LOCAL . "/news.php");
 
-$selected_year = $pac->getYear();
-$selected_month = $pac->getMonth();
+$selected_year = $pac->getSelectedYear();
+$selected_month = $pac->getSelectedMonth();
 
 $num = -1;
 
-if ($pac->haveSelection()) {
+if ($pac->isProcessed()) {
 
     $qry->where = " YEAR(item_date)='$selected_year' AND MONTHNAME(item_date)='$selected_month' ";
     $qry->limit = "";

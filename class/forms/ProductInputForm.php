@@ -20,7 +20,7 @@ class ProductInputForm extends InputForm
     {
         parent::__construct();
 
-        $field = DataInputFactory::Create(DataInputFactory::SELECT, "section", "Секция", 1);
+        $field = DataInputFactory::Create(DataInputFactory::SELECT, "section", "Section", 1);
         $rend = $field->getRenderer();
         $sb = new SectionsBean();
 
@@ -29,7 +29,7 @@ class ProductInputForm extends InputForm
         $rend->getItemRenderer()->setLabelKey("section_title");
         $this->addInput($field);
 
-        $field = DataInputFactory::Create(DataInputFactory::NESTED_SELECT, "catID", "Категория", 1);
+        $field = DataInputFactory::Create(DataInputFactory::NESTED_SELECT, "catID", "Category", 1);
         $bean1 = new ProductCategoriesBean();
         $rend = $field->getRenderer();
 
@@ -39,7 +39,7 @@ class ProductInputForm extends InputForm
 
         $this->addInput($field);
 
-        $field = DataInputFactory::Create(DataInputFactory::SELECT, "brand_name", "Марка", 1);
+        $field = DataInputFactory::Create(DataInputFactory::SELECT, "brand_name", "Brand", 1);
         $rend = $field->getRenderer();
         $brands = new BrandsBean();
 
@@ -48,7 +48,7 @@ class ProductInputForm extends InputForm
         $rend->getItemRenderer()->setLabelKey("brand_name");
         $this->addInput($field);
 
-        $field = DataInputFactory::Create(DataInputFactory::SELECT, "class_name", "Продуктов клас", 0);
+        $field = DataInputFactory::Create(DataInputFactory::SELECT, "class_name", "Product Class", 0);
         $rend = $field->getRenderer();
         $pcb = new ProductClassesBean();
         $rend->setIterator($pcb->query($pcb->key(), "class_name"));
@@ -56,25 +56,25 @@ class ProductInputForm extends InputForm
         $rend->getItemRenderer()->setLabelKey("class_name");
         $this->addInput($field);
 
-        $field = DataInputFactory::Create(DataInputFactory::TEXT, "product_name", "Име на продукта", 1);
+        $field = DataInputFactory::Create(DataInputFactory::TEXT, "product_name", "Product Name", 1);
         $this->addInput($field);
 
-        $field = DataInputFactory::Create(DataInputFactory::CHECKBOX, "visible", "Видим (в продажба)", 0);
+        $field = DataInputFactory::Create(DataInputFactory::CHECKBOX, "visible", "Visible (on-sale)", 0);
         $this->addInput($field);
 
         // 	$field = DataInputFactory::CreateField(DataInputFactory::CHECKBOX, "promotion", "Promotion", 0);
         // 	$this->addField($field);
 
-        $field = DataInputFactory::Create(DataInputFactory::MCE_TEXTAREA, "product_summary", "Описание", 0);
+        $field = DataInputFactory::Create(DataInputFactory::MCE_TEXTAREA, "product_summary", "Description", 0);
         $this->addInput($field);
 
         // 	$field = DataInputFactory::CreateField(DataInputFactory::MCE_TEXTAREA, "product_description", "Product Description", 0);
         // 	$this->addField($field);
 
-        $field = DataInputFactory::Create(DataInputFactory::TEXTAREA, "keywords", "Ключови думи", 0);
+        $field = DataInputFactory::Create(DataInputFactory::TEXTAREA, "keywords", "Keywords", 0);
         $this->addInput($field);
 
-        $field1 = new ArrayDataInput("feature", "Характеристики", 0);
+        $field1 = new ArrayDataInput("feature", "Features", 0);
         $field1->source_label_visible = TRUE;
 
         $features = new ProductFeaturesBean();

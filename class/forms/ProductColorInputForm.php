@@ -12,7 +12,7 @@ class ProductColorInputForm extends InputForm
 
         parent::__construct();
 
-        $field = DataInputFactory::Create(DataInputFactory::SELECT, "color", "Цветови код", 1);
+        $field = DataInputFactory::Create(DataInputFactory::SELECT, "color", "Color Code", 1);
 
         $rend = $field->getRenderer();
         $scb = new StoreColorsBean();
@@ -30,15 +30,13 @@ class ProductColorInputForm extends InputForm
         $this->addInput($field);
         // 	$field->enableTranslator(true);
 
-        $input = DataInputFactory::Create(DataInputFactory::SESSION_IMAGE, "color_photo", "Чип за цвета", 0);
-        $input->getProcessor()->max_slots = 1;
+        $input = DataInputFactory::Create(DataInputFactory::SESSION_IMAGE, "color_photo", "Color Chip", 0);
         $this->addInput($input);
 
-        $input = DataInputFactory::Create(DataInputFactory::SESSION_IMAGE, "photo", "Снимки", 0);
+        $input = DataInputFactory::Create(DataInputFactory::SESSION_IMAGE, "photo", "Product Photos", 0);
         $bean = new ProductColorPhotosBean();
 
-        $input->getProcessor()->setTransactBean($bean);
-        $input->getProcessor()->max_slots = 10;
+        $input->getProcessor()->setTransactBean($bean,10);
         $this->addInput($input);
 
     }

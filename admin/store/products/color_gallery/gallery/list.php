@@ -13,8 +13,6 @@ $rc = new BeanKeyCondition(new ProductColorsBean(), "../list.php" . queryString(
 $page = new AdminPage();
 
 
-$page->setAccessibleTitle("Color Scheme Photos");
-
 $page->setName(tr("Color Scheme Photos") . ": " . $rc->getData("color"));
 
 $bean = new ProductColorPhotosBean();

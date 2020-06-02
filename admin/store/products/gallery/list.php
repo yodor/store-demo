@@ -11,8 +11,6 @@ $menu = array();
 
 $page = new AdminPage();
 
-$page->setAccessibleTitle("Photo Gallery");
-
 $rc = new BeanKeyCondition(new ProductsBean(), "../list.php", array("product_name"));
 
 $page->setName(tr("Product Gallery") . ": " . $rc->getData("product_name"));

@@ -1,5 +1,8 @@
 php*error*
 error*log
+/sparkfront
+/config/dbconfig.php
+/session.php
 *.zip
 .ftpquota
 .well-known

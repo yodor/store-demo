@@ -37,9 +37,8 @@ catch (Exception $e) {
 }
 
 $menu1 = new MainMenu();
-$menu1->setMenuBeanClass("MenuItemsBean");
-// $parentID=0, MenuItem $parent_item = NULL, $key="menuID", $title="menu_title"
-$menu1->constructMenuItems(0, NULL, "menuID", "menu_title");
+$menu1->setBean(new MenuItemsBean());
+$menu1->construct();
 
 $menu_bar1 = new MenuBarComponent($menu1);
 $menu_bar1->setName("MenuItemsBean");

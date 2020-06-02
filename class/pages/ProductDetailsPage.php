@@ -50,7 +50,7 @@ class ProductDetailsPage extends ProductsPage
                 $main_menu->setSelectedItem($item);
             }
         }
-        $main_menu->updateSelectedMenu();
+        $main_menu->constructSelectedPath();
     }
 
     public function getCategoryPath()

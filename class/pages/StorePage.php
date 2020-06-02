@@ -48,8 +48,8 @@ class StorePage extends SparkPage
 
         $menu = new MainMenu();
 
-        $menu->setMenuBeanClass("MenuItemsBean", "");
-        $menu->constructMenuItems(0, NULL, "menuID", "menu_title");
+        $menu->setBean(new MenuItemsBean());
+        $menu->construct();
 
         $this->menu_bar = new MenuBarComponent($menu);
 
@@ -163,7 +163,7 @@ class StorePage extends SparkPage
     {
         $main_menu = $this->menu_bar->getMainMenu();
 
-        $main_menu->selectActiveMenus(MainMenu::FIND_INDEX_LOOSE);
+        $main_menu->selectActive();
 
     }
 

@@ -27,7 +27,10 @@ class StorePage extends SparkPage
 
     public $keyword_search = NULL;
 
-    protected $cart = NULL;
+    /**
+     * @var Cart
+     */
+    protected $cart;
 
     public $client_name = "";
 
@@ -73,7 +76,10 @@ class StorePage extends SparkPage
         $search_fields = array("relation.product_name", "relation.product_summary", "relation.keywords",
                                "relation.color", "relation.inventory_attributes");
 
-        $ksc = new KeywordSearch($search_fields, "relation");
+        $ksc = new KeywordSearch();
+        $ksc->getForm()->setFields($search_fields);
+        //, "relation");
+
         $ksc->getForm()->getInput("keyword")->getRenderer()->setInputAttribute("placeholder", "Търси ...");
         $ksc->getForm()->getRenderer()->setAttribute("method", "get");
         $ksc->getForm()->getRenderer()->setAttribute("action", LOCAL . "/products.php");

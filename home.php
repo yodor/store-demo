@@ -22,6 +22,9 @@ $sel = new ProductsSQL();
 $sel->order_by = " pi.order_counter DESC, pi.view_counter DESC ";
 $sel->group_by = " pi.prodID, pi.color ";
 $sel->limit = "4";
+//echo $sel->getSQL();
+
+$prodQry = new SQLQuery($sel, "pi.prodID");
 
 $qry->exec();
 
@@ -31,9 +34,9 @@ while ($section = $qry->next()) {
     $sectionName = $section["section_title"];
     $secID = $section["secID"];
 
+    $sel->where()->clear();
     $sel->where()->add("p.section", "'$sectionName'");
 
-    $prodQry = new SQLQuery($sel, "p.prodID");
     $num = $prodQry->exec();
     if ($num < 1) continue;
 

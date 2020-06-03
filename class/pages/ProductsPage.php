@@ -7,12 +7,10 @@ include_once("components/Action.php");
 class ProductsPage extends StorePage
 {
 
-    public $derived_table = NULL;
-    public $derived = NULL;
 
-    public $action_renderer = NULL;
+    public $derived;
 
-    public $product_categories = NULL;
+    public $product_categories;
 
     public function __construct()
     {

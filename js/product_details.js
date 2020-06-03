@@ -190,13 +190,19 @@ function updatePrice() {
 }
 
 function addToCart() {
-    var selected_piID = $(".sell_price .value").attr("pid");
-    var stock_amount = parseInt($(".stock_amount .value").html());
+    let selected_piID = $(".sell_price .value").attr("pid");
+    let stock_amount = parseInt($(".stock_amount .value").html());
     console.log("Stock amount: " + stock_amount);
     if (stock_amount < 1) {
         showAlert("В момента няма наличност от този артикул");
     } else {
-        window.location.href = LOCAL + "checkout/cart.php?addItem&piID=" + selected_piID;
+        let url = new URL(LOCAL+"/checkout/cart.php", location.href);
+        url.searchParams.set("addItem", "");
+        url.searchParams.set("piID", selected_piID);
+
+        //window.location.href = LOCAL + "checkout/cart.php?addItem&piID=" + selected_piID;
+        window.location.href=url.href;
+
     }
 
 

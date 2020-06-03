@@ -142,12 +142,12 @@ foreach ($sellable as $pos => $row) {
         }
     }
 
-    //use the color chip from product color scheme
-    if ((int)$row["have_chip"] > 0) {
-        $item = array("id" => $pclrID, "class" => "ProductColorsBean&field=color_photo");
-        $color_chips[$pclrID] = $item;
-    }
-    else {
+//    //use the color chip from product color scheme
+//    if ((int)$row["have_chip"] > 0) {
+//        $item = array("id" => $pclrID, "class" => "ProductColorsBean&field=color_photo");
+//        $color_chips[$pclrID] = $item;
+//    }
+//    else {
         //no chip assigned - use first image from the gallery if there is atleast one coloring scheme setup
         if (isset($galleries[$pclrID][0])) {
             $color_chips[$pclrID] = $galleries[$pclrID][0];
@@ -157,7 +157,7 @@ foreach ($sellable as $pos => $row) {
             $item = array("id" => $pclrID);
             $color_chips[$pclrID] = $item;
         }
-    }
+//    }
 
 }
 

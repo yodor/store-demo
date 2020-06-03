@@ -29,8 +29,6 @@ $treeView = $page->treeView;
 //construct initial relation query to aggregate with the tree view
 $product_selector = new SQLSelect();
 
-$inventory_selector = new SQLSelect();
-
 //color/size/price filters need NOT grouping! in the derived table
 $derived = clone $page->derived;
 $derived->group_by = " pi.prodID, pi.color ";
@@ -40,7 +38,7 @@ $product_selector->from = " ( " . $derived->getSQL(FALSE, FALSE) . " ) as relati
 //process get filters
 $proc = new RelatedSourceFilterProcessor($bean, "prodID");
 
-$proc->addFilter("keyword", $page->keyword_search);
+//$proc->addFilter("keyword", $page->keyword_search);
 
 $proc->addFilter("brand_name", "brand_name");
 $proc->addFilter("color", new ColorFilter());
@@ -79,7 +77,7 @@ $treeView->setIterator(new SQLQuery($tree_selector, $bean->key(), $bean->getTabl
 $nodeID = $treeView->getSelectedID();
 
 $product_selector->fields()->set(" relation.* "); //TODO list only needed fields here?
-$product_selector = $bean->selectChildNodesWith($product_selector, $nodeID);
+$product_selector = $bean->selectChildNodesWith($product_selector, "relation", $nodeID);
 
 $product_selector->group_by = " relation.prodID, relation.color ";
 

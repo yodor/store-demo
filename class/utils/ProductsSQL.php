@@ -7,32 +7,60 @@ class ProductsSQL extends SQLSelect
     {
         parent::__construct();
 
-        $this->fields()->set("iav.value AS ia_value", "ca.attribute_name AS ia_name", "pc.catID", "pc.category_name", "pp.ppID", "pi.piID", "pi.size_value", "pi.color", "pi.pclrID", "pi.prodID", "pi.stock_amount", "p.product_name", "p.brand_name", "p.product_summary", "p.keywords", "p.promotion", "p.visible", "p.class_name", "p.section", "p.old_price", "p.insert_date", "p.update_date", "sc.color_code");
+        $this->fields()->set("iav.value AS ia_value", "ca.attribute_name AS ia_name",
+                             "pc.catID", "pc.category_name", "pp.ppID", "pi.piID", "pi.size_value",
+                             "pi.color", "pi.pclrID",  "pi.prodID", "pi.stock_amount", "p.product_name",
+                             "p.brand_name", "p.product_summary", "p.keywords", "p.promotion",
+                             "p.visible", "p.class_name", "p.section", "p.old_price",
+                             "p.insert_date", "p.update_date", "sc.color_code");
 
-        $this->fields()->setExpression("(pclrs.color_photo IS NOT NULL)", "have_chip");
+//        $this->fields()->setExpression("(pclrs.color_photo IS NOT NULL)", "have_chip");
+
+        $this->fields()->setExpression("(SELECT 
+        GROUP_CONCAT(inventories.piID SEPARATOR '|') FROM 
+        (SELECT pi1.piID, pclrpID, pi1.prodID FROM product_color_photos pcp 
+        LEFT JOIN product_colors pc ON pc.pclrID=pcp.pclrID LEFT JOIN product_inventory pi1 ON pi1.pclrID=pc.pclrID GROUP BY pcp.pclrID ORDER BY pcp.pclrID DESC) inventories WHERE inventories.prodID=pi.prodID)", "inventory_ids");
+
         $this->fields()->setExpression("(SELECT 
         GROUP_CONCAT(DISTINCT(pi1.size_value) SEPARATOR '|') 
         FROM product_inventory pi1 
         WHERE pi1.prodID=pi.prodID AND (pi1.pclrID = pi.pclrID OR pi.pclrID IS NULL) 
         GROUP BY pi.pclrID )", "size_values");
 
+        //series color id - same product all inventory color ids
         $this->fields()->setExpression("(SELECT 
-        GROUP_CONCAT(DISTINCT(pi2.color) SEPARATOR '|') 
-        FROM product_inventory pi2 
-        WHERE pi2.prodID=pi.prodID 
-        ORDER BY pclrID ASC )", "colors");
+        GROUP_CONCAT(DISTINCT(pi1.pclrID) SEPARATOR '|') 
+        FROM product_inventory pi1 
+        WHERE pi1.prodID=pi.prodID 
+        ORDER BY pclrID DESC )", "color_ids");
 
+        //series color photo id - same product all inventory color photo ids
         $this->fields()->setExpression("(SELECT 
-        GROUP_CONCAT(DISTINCT(pi3.pclrID) SEPARATOR '|') 
-        FROM product_inventory pi3 
-        WHERE pi3.prodID=pi.prodID 
-        ORDER BY pclrID ASC )", "color_ids");
+        GROUP_CONCAT(inventory_photos.pclrpID SEPARATOR '|') FROM 
+        (SELECT pclrpID, prodID FROM product_color_photos pcp 
+        LEFT JOIN product_colors pc ON pc.pclrID=pcp.pclrID GROUP BY pcp.pclrID ORDER BY pcp.pclrID DESC) inventory_photos WHERE inventory_photos.prodID=pi.prodID )", "color_photo_ids");
 
+        //series color name - same product all inventory color names
+        $this->fields()->setExpression("(SELECT 
+        GROUP_CONCAT(DISTINCT(pi1.color) SEPARATOR '|') 
+        FROM product_inventory pi1 
+        WHERE pi1.prodID=pi.prodID 
+        ORDER BY pclrID DESC )", "color_names");
+
+        //series color code - same product all inventory color codes
+        $this->fields()->setExpression("(SELECT 
+        GROUP_CONCAT(DISTINCT(sc4.color_code) SEPARATOR '|') 
+        FROM product_inventory pi1 LEFT JOIN store_colors sc4 ON sc4.color=pi1.color
+        WHERE pi1.prodID=pi.prodID 
+        ORDER BY pclrID DESC )", "color_codes");
+
+        //this item inventory attributes
         $this->fields()->setExpression("(SELECT 
         GROUP_CONCAT(DISTINCT(CONCAT(ca.attribute_name,':', cast(iav.value as char))) SEPARATOR '|') 
         FROM inventory_attribute_values iav JOIN class_attributes ca ON ca.caID = iav.caID 
         WHERE iav.piID = pi.piID)", "inventory_attributes");
 
+        //this item color photo id
         $this->fields()->setExpression("(SELECT 
         pclrpID 
         FROM product_color_photos pcp 

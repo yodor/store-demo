@@ -38,20 +38,20 @@ class ProductDetailsPage extends ProductsPage
         $this->setTitle(constructSiteTitle($title));
     }
 
-    protected function selectActiveMenu()
-    {
-        //$this->selectActiveMenus = false;
-        $main_menu = $this->menu_bar->getMainMenu();
-        $main_menu->unselectAll();
-
-        $items = $main_menu->getMenuItems();
-        foreach ($items as $idx => $item) {
-            if (strcmp($item->getTitle(), $this->section) == 0) {
-                $main_menu->setSelectedItem($item);
-            }
-        }
-        $main_menu->constructSelectedPath();
-    }
+//    protected function selectActiveMenu()
+//    {
+//        //$this->selectActiveMenus = false;
+//        $main_menu = $this->menu_bar->getMainMenu();
+//        $main_menu->unselectAll();
+//
+//        $items = $main_menu->getMenuItems();
+//        foreach ($items as $idx => $item) {
+//            if (strcmp($item->getTitle(), $this->section) == 0) {
+//                $main_menu->setSelectedItem($item);
+//            }
+//        }
+//        $main_menu->constructSelectedPath();
+//    }
 
     public function getCategoryPath()
     {

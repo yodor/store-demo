@@ -68,7 +68,7 @@ if ($num_filters) {
 //
 
 //construct the aggregated tree query
-$tree_selector = $bean->selectTreeRelation($product_selector, "relation", "prodID", "prodID", array("category_name"));
+$tree_selector = $bean->selectTreeRelation($product_selector, "relation", "prodID", array("category_name"));
 // echo $tree_selector->getSQL();
 
 //set the the iterator

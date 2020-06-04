@@ -1,6 +1,7 @@
 <?php
 include_once("session.php");
 include_once("class/pages/ProductDetailsPage.php");
+include_once("class/beans/ProductFeaturesBean.php");
 
 $page = new ProductDetailsPage();
 
@@ -308,14 +309,36 @@ echo "<div class='cart_link'>";
 echo "<a class='cart_add' href='javascript:addToCart()'>" . tr("Добави в кошница") . "</a>";
 echo "</div>";
 
-echo "<div class='summary'>";
-echo "<label>" . tr("Описание") . "</label>";
-echo "<span class='value'>" . $sellable_variation["product_summary"] . "</span>";
-echo "</div>";
+
 
 echo "</div>"; //side_pane
 
 echo "<div class='clear'></div>";
+
+echo "<div class='features'>";
+
+$features = new ProductFeaturesBean();
+$qry = $features->queryField("prodID", $prodID);
+$qry->select->fields()->set("feature");
+$num = $qry->exec();
+if ($num) {
+    echo "<label class='caption'>" . tr("Особености") . "</label>";
+    echo "<ul>";
+    while($data = $qry->next()) {
+        echo "<li>";
+        echo $data["feature"];
+        echo "</li>";
+    }
+    echo "</ul>";
+}
+
+echo "</div>";
+
+echo "<div class='summary'>";
+echo "<label class='caption'>" . tr("Описание") . "</label>";
+echo "<span class='value'>" . $sellable_variation["product_summary"] . "</span>";
+echo "</div>";
+
 
 echo "<div class='category_products product_group'>";
 $page->renderSameCategoryProducts();

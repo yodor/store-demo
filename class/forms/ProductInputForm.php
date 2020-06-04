@@ -74,19 +74,20 @@ class ProductInputForm extends InputForm
         $field = DataInputFactory::Create(DataInputFactory::TEXTAREA, "keywords", "Keywords", 0);
         $this->addInput($field);
 
+
         $field1 = new ArrayDataInput("feature", "Features", 0);
         $field1->source_label_visible = TRUE;
+
+        $field1->setValidator(new EmptyValueValidator());
+        $proc = new InputProcessor($field1);
+
+        $renderer = new TextField($field1);
+        new ArrayField($renderer);
 
         $features = new ProductFeaturesBean();
         $field1->getProcessor()->setTransactBean($features);
 
-        $renderer = new TextField($field1);
         $renderer->setIterator($features->queryFull());
-
-        $field1->setValidator(new EmptyValueValidator());
-        new InputProcessor($field1);
-
-        new ArrayField($renderer);
 
         $this->addInput($field1);
 

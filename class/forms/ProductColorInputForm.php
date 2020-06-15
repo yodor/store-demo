@@ -7,7 +7,7 @@ include_once("class/beans/StoreColorsBean.php");
 class ProductColorInputForm extends InputForm
 {
 
-    public function __construct($prodID)
+    public function __construct(int $prodID)
     {
 
         parent::__construct();
@@ -16,7 +16,7 @@ class ProductColorInputForm extends InputForm
 
         $rend = $field->getRenderer();
         $scb = new StoreColorsBean();
-        $rend->setIterator($scb->query());
+        $rend->setIterator($scb->query($scb->key(), "color"));
         $rend->getItemRenderer()->setValueKey("color");
         $rend->getItemRenderer()->setLabelKey("color");
 

@@ -1,6 +1,6 @@
 <?php
 include_once("session.php");
-include_once("class/pages/AdminPage.php");
+include_once("templates/admin/BeanEditorPage.php");
 include_once("class/beans/ProductColorsBean.php");
 include_once("class/beans/ProductColorPhotosBean.php");
 
@@ -8,22 +8,12 @@ include_once("forms/PhotoForm.php");
 
 $rc = new BeanKeyCondition(new ProductColorsBean(), "../list.php");
 
-$menu = array();
-
-$page = new AdminPage();
+$cmp = new BeanEditorPage();
+$cmp->setRequestCondition($rc);
 
 $photos = new ProductColorPhotosBean();
-$photos->select()->where()->addURLParameter($rc->getURLParameter());
+$cmp->setBean($photos);
+$cmp->setForm(new PhotoForm());
+$cmp->render();
 
-$view = new BeanFormEditor($photos, new PhotoForm());
-
-$view->getTransactor()->appendURLParameter($rc->getURLParameter());
-
-$view->processInput();
-
-$page->startRender();
-
-$view->render();
-
-$page->finishRender();
 ?>

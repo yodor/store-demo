@@ -40,6 +40,7 @@ class ProductListItem extends DataIteratorItem implements IHeadContents, IPhotoR
         $this->photo = new StorageItem();
 
         $this->chip = new StorageItem();
+
         $this->chip->className = "ProductColorPhotosBean";
 
         $this->detailsURL = new URLBuilder();
@@ -124,7 +125,7 @@ class ProductListItem extends DataIteratorItem implements IHeadContents, IPhotoR
         //echo $this->sel->getSQL();
 
         echo "<a href='{$this->detailsURL->url()}' class='product_link'>";
-        $img_href = $this->photo->hrefThumb($this->width, $this->height);
+        $img_href = $this->photo->hrefImage($this->width, $this->height);
         echo "<img src='$img_href'>";
         echo "</a>";
 

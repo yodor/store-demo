@@ -32,7 +32,7 @@ $cmp->setForm($form);
 
 $cmp->initView();
 
-$cmp->getEditor()->getTransactor()->appendValue("prodID", $prodID);
+//$cmp->getEditor()->getTransactor()->appendValue("prodID", $prodID);
 
 if ($copyID > 0) {
     $form->loadBeanData($copyID, $bean);

@@ -104,12 +104,12 @@ class StorePage extends SparkPage
         return $this->menu_bar;
     }
 
-    public function getSection()
+    public function getSection() : ?string
     {
         return $this->section;
     }
 
-    public function setSection($section)
+    public function setSection(string $section)
     {
         $this->section = $section;
     }

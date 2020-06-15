@@ -1,31 +1,18 @@
 <?php
 include_once("session.php");
-include_once("class/pages/AdminPage.php");
+include_once("templates/admin/BeanEditorPage.php");
 include_once("class/forms/ProductColorInputForm.php");
 include_once("class/beans/ProductColorsBean.php");
 include_once("class/beans/ProductsBean.php");
 
-$menu = array();
-
-$page = new AdminPage();
-
-
 $ensure_product = new BeanKeyCondition(new ProductsBean(), "../list.php", array("product_name"));
 
-$view = new BeanFormEditor(new ProductColorsBean(), new ProductColorInputForm($ensure_product->getID()));
+$cmp = new BeanEditorPage();
+$cmp->setRequestCondition($ensure_product);
+$cmp->setBean(new ProductColorsBean());
+$cmp->setForm(new ProductColorInputForm($ensure_product->getID()));
 
-Session::Set("color_codes.list", $page->getPageURL());
-
-$view->getTransactor()->appendValue("prodID", $ensure_product->getID());
-
-$page->setName("Color Scheme: " . $ensure_product->getData("product_name"));
-
-$view->processInput();
-
-$page->startRender();
-
-$view->render();
-
-$page->finishRender();
+$cmp->getPage()->setName(tr("Color Scheme") . ": " . $ensure_product->getData("product_name"));
+$cmp->render();
 
 ?>

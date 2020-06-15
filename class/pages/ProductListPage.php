@@ -40,7 +40,9 @@ class ProductListPage extends ProductsPage
     {
         $nodeID = $this->treeView->getSelectedID();
         $title = array();
-        $title[] = $this->getSection();
+        if ($this->getSection()) {
+            $title[] = $this->getSection();
+        }
         if ($nodeID > 0) {
             $category_path = $this->product_categories->getParentNodes($nodeID, array("category_name"));
             foreach ($category_path as $idx => $catinfo) {

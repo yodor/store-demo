@@ -22,8 +22,6 @@ $select_colors->fields()->setExpression("(SELECT pcp.pclrpID FROM product_color_
 $select_colors->from = " product_colors pclr LEFT JOIN products p ON p.prodID = pclr.prodID ";
 $select_colors->where()->add("pclr.prodID", $rc->getID());
 
-
-
 $cmp->setIterator(new SQLQuery($select_colors, $bean->key(), $bean->getTableName()));
 
 $cmp->setListFields(array("pclrpID"=>"Scheme Photo", "color"=>"Color", "color_photo"=>"Color Chip"));

@@ -1,37 +1,22 @@
 <?php
 include_once("session.php");
-include_once("class/pages/AdminPage.php");
+include_once("templates/admin/GalleryViewPage.php");
 
 include_once("class/beans/ProductColorPhotosBean.php");
 include_once("class/beans/ProductColorsBean.php");
 
-include_once("components/GalleryView.php");
+$rc = new BeanKeyCondition(new ProductColorsBean(), "../list.php", array("color"));
 
-$rc = new BeanKeyCondition(new ProductColorsBean(), "../list.php" . queryString($_GET), array("color"));
+$cmp = new GalleryViewPage();
 
+$cmp->getPage()->setName(tr("Color Scheme Photos") . ": " . $rc->getData("color"));
 
-$page = new AdminPage();
+$cmp->setRequestCondition($rc);
 
-
-$page->setName(tr("Color Scheme Photos") . ": " . $rc->getData("color"));
 
 $bean = new ProductColorPhotosBean();
-$bean->select()->where()->addURLParameter($rc->getURLParameter());
+$cmp->setBean($bean);
 
-$h_delete = new DeleteItemResponder($bean);
-
-$h_repos = new ChangePositionResponder($bean);
-
-
-$gv = new GalleryView($bean);
-$gv->getItemActions()->addURLParameter($rc->getURLParameter());
-
-Session::Set("color_scheme.photos", $page->getPageURL());
-
-$page->startRender();
-
-$gv->render();
-
-$page->finishRender();
+$cmp->render();
 
 ?>

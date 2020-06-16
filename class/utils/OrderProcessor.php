@@ -24,7 +24,7 @@ class OrderProcessor
     {
         debug("Using userID='$userID'");
 
-        if (count($cart->getItems()) < 1) throw new Exception("Вашата кошница е празна");
+        if (count($cart->items()) < 1) throw new Exception("Вашата кошница е празна");
 
         $page = StorePage::Instance();
         if ($page->getUserID() < 1) {
@@ -48,7 +48,7 @@ class OrderProcessor
 
             $cart_data = array();
 
-            $items = $cart->getItems();
+            $items = $cart->items();
 
             $config = ConfigBean::Factory();
             $config->setSection("delivery_prices");
@@ -175,7 +175,7 @@ class OrderProcessor
 
             debug("OrderProcessor::createOrder() finalizing transaction ... ");
             $db->commit();
-            $cart->clearCart();
+            $cart->clear();
 
             debug("OrderProcessor::createOrder() order completed ... ");
         }

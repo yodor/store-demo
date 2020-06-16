@@ -19,7 +19,7 @@ $confirm_success = FALSE;
 $error_details = "";
 
 ob_start();
-$confirm_proc = new OrderConfirmProcessor();
+$confirm_proc = new ConfirmOrder();
 try {
     $confirm_proc->process();
     $confirm_success = TRUE;

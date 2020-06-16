@@ -33,7 +33,7 @@ class CheckoutPage extends StorePage
     public function ensureCartItems()
     {
 
-        $items = $this->cart->getItems();
+        $items = $this->cart->items();
 
         if (count($items) < 1) {
             Session::SetAlert(tr("Вашата кошница е празна"));

@@ -31,7 +31,7 @@ if (isset($_GET["addItem"])) {
             Session::SetAlert(tr("Няма повече наличност от този артикул"));
         }
         else {
-            $page->getCart()->addItem($piID);
+            $page->getCart()->add($piID);
             Session::Set("last_added", serialize(array("piID" => $piID, "prodID" => $item["prodID"])));
         }
 
@@ -51,7 +51,7 @@ else if (isset($_GET["removeItem"])) {
     }
     try {
         $item = $inventory->getByID($piID);
-        $page->getCart()->removeItem($piID);
+        $page->getCart()->remove($piID);
     }
     catch (Exception $e) {
 
@@ -79,7 +79,7 @@ else if (isset($_GET["clearItem"])) {
 }
 else if (isset($_GET["clear"])) {
 
-    $page->getCart()->clearCart();
+    $page->getCart()->clear();
 
     header("Location:cart.php");
     exit;

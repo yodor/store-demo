@@ -21,7 +21,7 @@ class HeaderCartPanel extends Component
         global $currency_rates, $products;
         //= SitePage::getInstance()->prods;
 
-        $items = $cart->getItems();
+        $items = $cart->items();
         $num_items = count($items);
         if (count($items) > 0) {
 

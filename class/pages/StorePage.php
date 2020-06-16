@@ -16,6 +16,8 @@ include_once("class/beans/SectionsBean.php");
 include_once("class/utils/Cart.php");
 include_once("auth/UserAuthenticator.php");
 
+include_once("utils/CurrencyConverter.php");
+
 class StorePage extends SparkPage
 {
 

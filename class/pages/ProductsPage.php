@@ -65,7 +65,7 @@ class ProductsPage extends StorePage
             $qarr["section"] = $this->section;
             $qarr["catID"] = $category["catID"];
             $link = LOCAL . "/products.php" . queryString($qarr);
-            $actions[] = new Action($category["category_name"], $link, array());
+            $actions[] = $category_action;
         }
 
         return $actions;

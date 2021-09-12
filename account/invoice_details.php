@@ -40,10 +40,16 @@ else if ($proc->getStatus() == FormProcessor::STATUS_ERROR) {
 
 $page->startRender();
 
-$page->setTitle(tr("Детайли за фактуриране"));
-echo "<div class='caption'>" . $page->getTitle() . "</div>";
+echo "<div class='column'>";
 
+$page->setTitle(tr("Детайли за фактуриране"));
+echo "<h1 class='Caption'>" . $page->getTitle() . "</h1>";
+
+echo "<div class='panel'>";
 $frend->render();
+echo "</div>";
+
+echo "</div>"; //column
 
 $page->finishRender();
 ?>

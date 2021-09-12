@@ -1,24 +1,27 @@
 <?php
 include_once("session.php");
 include_once("class/pages/AccountPage.php");
-include_once("class/components/renderers/cells/OrderDeliveryCellRenderer.php");
-include_once("class/components/renderers/cells/OrderInvoiceCellRenderer.php");
-include_once("class/components/renderers/cells/OrderItemsCellRenderer.php");
+
 include_once("components/TableView.php");
 include_once("components/renderers/cells/DateCellRenderer.php");
-include_once("iterators/SQLQuery.php");
-include_once("beans/UsersBean.php");
+
 include_once("class/beans/ClientAddressesBean.php");
-include_once("class/beans/EkontAddressesBean.php");
+include_once("class/beans/CourierAddressesBean.php");
 include_once("class/beans/InvoiceDetailsBean.php");
 include_once("class/beans/OrderItemsBean.php");
+include_once("class/beans/OrdersBean.php");
+
 
 $page = new AccountPage();
 
-$ekont_addresses = new EkontAddressesBean();
+//invoke OrdersBean before OrderItemsBean to allow auto creation of the table structure
+$orders = new OrdersBean();
+$order_items = new OrderItemsBean();
+
+$courier_addresses = new CourierAddressesBean();
 $client_addresses = new ClientAddressesBean();
 $invoices = new InvoiceDetailsBean();
-$order_items = new OrderItemsBean();
+
 
 $clients = new UsersBean();
 
@@ -44,26 +47,14 @@ $view->addColumn(new TableColumn("item_count", "Продукти"));
 
 $view->addColumn(new TableColumn("total", "Сума"));
 
-// $view->addColumn(new TableColumn("delivery_price", "Delivery Price"));
+$view->addColumn(new TableColumn("status", "Status"));
 
-// $view->addColumn(new TableColumn("delivery_type", "Delivery Type"));
-
-// $view->addColumn(new TableColumn("note", "Забележка"));
-
-// $view->addColumn(new TableColumn("require_invoice", "Фактуриране"));
-
-$view->addColumn(new TableColumn("status", "Статус"));
-
-$view->addColumn(new TableColumn("actions", "Действия"));
+$view->addColumn(new TableColumn("actions", "Actions"));
 
 // $view->getColumn("is_confirmed")->setCellRenderer(new BooleanFieldCellRenderer("Yes", "No"));
 // $view->getColumn("require_invoice")->setCellRenderer(new BooleanFieldCellRenderer("Yes", "No"));
 $view->getColumn("order_date")->setCellRenderer(new DateCellRenderer());
 
-// $view->getColumn("userID")->setCellRenderer(new OrderClientCellRenderer());
-// $view->getColumn("items")->setCellRenderer(new OrderItemsCellRenderer());
-// $view->getColumn("delivery_type")->setCellRenderer(new OrderDeliveryCellRenderer());
-// $view->getColumn("require_invoice")->setCellRenderer(new BooleanFieldCellRenderer("Да", "Не"));
 
 $act = new ActionsCellRenderer();
 
@@ -71,11 +62,17 @@ $act->getActions()->append(new Action("Покажи детайли", "order_deta
 
 $view->getColumn("actions")->setCellRenderer($act);
 
+$view->getColumn("status")->getCellRenderer()->translation_enabled = true;
+
 $page->startRender();
 $page->setTitle(tr("История на поръчките"));
 
-echo "<div class='caption'>" . $page->getTitle() . "</div>";
+echo "<div class='column'>";
+echo "<h1 class='Caption'>" . $page->getTitle() . "</h1>";
+echo "<div class='panel'>";
 $view->render();
+echo "</div>";
+echo "</div>";
 
 $page->finishRender();
 ?>

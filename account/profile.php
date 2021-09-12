@@ -7,12 +7,17 @@ include_once("class/forms/processors/RegisterClientFormProcessor.php");
 $page = new AccountPage();
 
 $form = new RegisterClientInputForm();
+$form->removeInput("accept_terms");
 
 $form->loadBeanData($page->getUserID(), new UsersBean());
+$form->getInput("email")->setEditable(false);
+$form->getInput("email")->getRenderer()->getAddonContainer()->clear();
+$form->getInput("password")->setValue("");
+$form->getInput("password")->setRequired(false);
 
 $frend = new FormRenderer($form);
 $frend->setLayout(FormRenderer::FIELD_VBOX);
-$frend->getSubmitButton()->setContents("Update");
+$frend->getSubmitButton()->setContents("Submit");
 
 $proc = new RegisterClientFormProcessor();
 $proc->setEditID($page->getUserID());
@@ -31,17 +36,21 @@ else if ($proc->getStatus() == FormProcessor::STATUS_ERROR) {
 
 $page->startRender();
 
+echo "<div class='column'>";
 $page->setTitle(tr("Клиентски профил"));
 
-echo "<div class='caption'>" . $page->getTitle() . "</div>";
+echo "<h1 class='Caption'>" . $page->getTitle() . "</h1>";
 
+echo "<div class='panel'>";
 $frend->render();
+echo "</div>";
 
-echo "<div class='caption'>" . tr("Парола за достъп") . "</div>";
+//echo "<h1 class='Caption'>" . tr("Парола за достъп") . "</h1>";
+//
+//echo "<a class='ColorButton' href='generate_password.php'>";
+//echo tr("Генерирай нова парола");
+//echo "</a>";
 
-echo "<a class='ColorButton' href='generate_password.php'>";
-echo tr("Генерирай нова парола");
-echo "</a>";
-
+echo "</div>";
 $page->finishRender();
 ?>

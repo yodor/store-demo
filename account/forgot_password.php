@@ -3,7 +3,8 @@ include_once("session.php");
 include_once("class/pages/AccountPage.php");
 
 include_once("beans/UsersBean.php");
-include_once("class/mailers/ForgotPasswordMailer.php");
+include_once("mailers/ForgotPasswordMailer.php");
+
 include_once("class/forms/ForgotPasswordInputForm.php");
 
 include_once("auth/Authenticator.php");
@@ -36,7 +37,8 @@ class ForgotPasswordProcessor extends FormProcessor
             $update_row["password"] = md5($random_pass);
             if (!$users->update($userID, $update_row, $db)) throw new Exception("Невъзможна промяна на запис: " . $db->getError());
 
-            $fpm = new ForgotPasswordMailer($email, $random_pass);
+            $login_url = SITE_URL.LOCAL."/account/";
+            $fpm = new ForgotPasswordMailer($email, $random_pass, $login_url);
             $fpm->send();
 
             $db->commit();
@@ -74,19 +76,23 @@ $page->startRender();
 
 $page->setTitle("Забравена парола");
 
-echo "<div class='caption'>";
-echo $page->getTitle();
-echo "</div>";
+echo "<div class='column'>";
 
-echo "<div class='panel'>";
+    echo "<h1 class='Caption'>";
+    echo $page->getTitle();
+    echo "</h1>";
 
-echo tr("Въведете Вашият email aдрес от момента на регистрация в сайта и натиснете бутон 'Изпрати'");
-echo "<BR>";
-echo tr("Вашата нова парола ще бъде изпратена на този адрес.");
+    echo "<div class='panel'>";
 
-echo "<BR><BR>";
+        echo tr("Въведете Вашият email aдрес от момента на регистрация в сайта и натиснете бутон 'Изпрати'");
+        echo "<BR>";
+        echo tr("Вашата нова парола ще бъде изпратена на този адрес.");
 
-$frend->render();
+        echo "<BR><BR>";
+
+        $frend->render();
+
+    echo "</div>";
 
 echo "</div>";
 

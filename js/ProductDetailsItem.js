@@ -6,7 +6,7 @@ function formatPrice(n)
 
 function updatePrice() {
     //return;
-    console.log("Update Price");
+    //console.log("Update Price");
 
     let active_color = $(".color_chooser .value .color_button[active='1']");
     let active_size = $(".size_chooser .value .size_button[active='1']");
@@ -24,9 +24,10 @@ function updatePrice() {
     let amount_info = $(".group.stock_amount .value");
     $(".group.stock_amount").addClass("disabled");
 
-    let sell_price = $(".group.pricing .sell_price .sell .value");
-    let old_price = $(".group.pricing .sell_price .old .value");
-    $(".group.pricing .sell_price .old").addClass("disabled");
+    let sell_price = $(".group.pricing .price_info .sell .value");
+    let old_price = $(".group.pricing .price_info .old .value");
+    $(".group.pricing .price_info .old").addClass("disabled");
+    $(".images .image_preview").removeClass("promo");
 
     let priceInfo = null;
     if (piID>0) {
@@ -58,8 +59,9 @@ function updatePrice() {
 
         old_price.text(formatPrice(priceInfo.old_price));
 
-        if ((priceInfo.sell_price != priceInfo.old_price) && priceInfo.old_price>0) {
-            $(".group.pricing .sell_price .old").removeClass("disabled");
+        if (sellable.isPromotion(piID)) {
+            $(".group.pricing .price_info .old").removeClass("disabled");
+            $(".images .image_preview").addClass("promo");
         }
 
     }
@@ -104,12 +106,12 @@ function changeColor(elm) {
 }
 
 function changeSizing(elm) {
-    let size_button = $(".size_chooser .value .size_button");
-    size_button.attr("active", "0");
+    let size_buttons = $(".size_chooser .value .size_button");
+    size_buttons.attr("active", "0");
 
     $(elm).attr("active", "1");
 
-    $(".current_size .value").text(size_button.text());
+    $(".current_size .value").text($(elm).text());
 
     updatePrice();
 }
@@ -324,13 +326,13 @@ function addToCart() {
         return;
     }
 
-    if (stock_amount < 1) {
-        showAlert("В момента няма наличност от този артикул");
-        return;
-    }
+    // if (stock_amount < 1) {
+    //     showAlert("В момента няма наличност от този артикул");
+    //     return;
+    // }
 
     let url = new URL(LOCAL+"/checkout/cart.php", location.href);
-    url.searchParams.set("addItem", "");
+    url.searchParams.set("add", "");
     url.searchParams.set("piID", selected_piID);
 
     //window.location.href = LOCAL + "checkout/cart.php?addItem&piID=" + selected_piID;

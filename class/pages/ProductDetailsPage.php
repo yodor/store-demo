@@ -1,40 +1,154 @@
 <?php
-include_once("class/pages/ProductsPage.php");
-include_once("class/components/renderers/items/ProductListItem.php");
+include_once("class/pages/ProductListPage.php");
 
-class ProductDetailsPage extends ProductsPage
+include_once("class/components/ProductsTape.php");
+
+include_once("class/utils/PriceInfo.php");
+include_once("class/utils/SellableItem.php");
+
+
+class ProductDetailsPage extends ProductListPage
 {
 
     protected $sellable = NULL;
-    protected $list_item = NULL;
 
     public function __construct()
     {
         parent::__construct();
-        $this->list_item = new ProductListItem();
 
         $this->addCSS(LOCAL . "/css/product_details.css");
-        $this->addCSS(LOCAL . "/css/product_details.css");
 
-        $this->addJS(LOCAL . "/js/product_details.js");
+
+        $prodID = -1;
+        if (isset($_GET["prodID"])) {
+            $prodID = (int)$_GET["prodID"];
+        }
+        $piID = -1;
+
+
+        if (isset($_GET["piID"])) {
+            $piID = (int)$_GET["piID"];
+        }
+
+        try {
+
+            $qry = $this->bean->query();
+            $qry->select->where()->add("prodID", $prodID);
+
+            //$qry->select->fields()->set("p.long_description");
+
+            $qry->select->group_by = "piID";
+
+            //$qry->select->order_by = " ssz2.position ASC ";
+
+            $num = $qry->exec();
+
+            if ($num < 1) throw new Exception("Product does not exist or is not accessible now");
+
+            $this->sellable = new SellableItem($prodID);
+
+            while ($item = $qry->nextResult()) {
+
+                if ((int)$piID == (int)$item->get("piID")) {
+
+                    $this->sellable->setInventoryID($piID);
+                }
+
+                $this->sellable->addInventoryData($item);
+
+
+            }
+
+            $this->sellable->finalize();
+        }
+        catch (Exception $e) {
+
+            Session::set("alert", "Този продукт е недостъпен. Грешка: " . $e->getMessage());
+            header("Location: list.php");
+            exit;
+        }
+
+        $piID = $this->sellable->getActiveInventoryID();
+
+        $this->section = $this->sellable->getData($piID,"section");
+
+
+        $this->loadCategoryPath($this->sellable->getData($piID,"catID"));
+
+        $description = "";
+        if ($this->sellable->getCaption()) {
+            $description = $this->sellable->getCaption();
+        }
+        else if ($this->sellable->getDescription()) {
+            $description = $this->sellable->getDescription();
+        }
+        $description = strip_tags($description);
+
+        $keywords = $this->sellable->getKeywords();
+        if (strlen(trim($keywords)) == 0) {
+            $keywords = $this->sellable->getData($piID, "category_name");
+        }
+
+        $keywords = str_replace("Етикети: ", "", $keywords);
+        $keywords = str_replace("Етикет: ", "", $keywords);
+
+        $keywords = strtolower($keywords);
+
+        $this->addMeta("description", prepareMeta($description));
+        if($keywords) {
+            $this->addMeta("keywords", prepareMeta($keywords));
+        }
+        $this->addOGTag("title", $this->sellable->getTitle());
+        $main_photo = $this->sellable->getMainPhoto();
+        if ($main_photo instanceof StorageItem) {
+            $this->addOGTag("image", fullURL($this->sellable->getMainPhoto()->hrefImage(600, -1)));
+
+            $this->addOGTag("image:height", "600");
+            $this->addOGTag("image:width", "600");
+            $this->addOGTag("image:alt", $this->sellable->getTitle());
+        }
+
+        $this->updateViewCounter();
+
     }
 
-    public function setSellableItem($sellable)
+    public function getSellable(): SellableItem
     {
-        $this->setSection($sellable["section"]);
-        $this->sellable = $sellable;
+        return $this->sellable;
+    }
+
+    protected function updateViewCounter()
+    {
+        $sql = new SQLUpdate();
+        $sql->from = "product_inventory pi";
+        $sql->set("pi.view_counter", "pi.view_counter+1");
+        $sql->where()->add("pi.prodID", $this->sellable->getProductID());
+        $sql->where()->add("pi.piID", $this->sellable->getActiveInventoryID());
+
+        $db = DBConnections::Get();
+        try {
+            $db->transaction();
+            $db->query($sql->getSQL());
+            $db->commit();
+        }
+        catch (Exception $e) {
+            $db->rollback();
+            debug("Unable to increment view count: ".$db->getError());
+        }
     }
 
     protected function constructTitle()
     {
         $title = array();
-        $title[] = $this->sellable["section"];
+        $title[] = "Продукти";
 
-        $category_path = $this->product_categories->getParentNodes($this->sellable["catID"], array("category_name"));
+        $category_path = $this->getCategoryPath();
+
         foreach ($category_path as $idx => $catinfo) {
             $title[] = $catinfo["category_name"];
         }
-        $title[] = $this->sellable["product_name"];
+
+        $title[] = $this->sellable->getTitle();
         $this->setTitle(constructSiteTitle($title));
     }
 
@@ -53,67 +167,44 @@ class ProductDetailsPage extends ProductsPage
         $main_menu->constructSelectedPath();
     }
 
-    public function getCategoryPath()
-    {
-        return $this->product_categories->getParentNodes($this->sellable["catID"], array("category_name"));
-    }
-
-//    protected function constructPathActions()
-//    {
-//
-//        $actions = parent::constructPathActions();
-//
-//        $actions[] = new Action($this->sellable["product_name"], "", array());
-//
-//        return $actions;
-//
-//    }
-
     public function renderSameCategoryProducts()
     {
-        echo "<div class='caption'>" . tr("Още продукти от тази категория") . "</div>";
+        $catID = (int)$this->sellable->getData($this->sellable->getActiveInventoryID(), "catID");
+
+        $title = tr("Още продукти от тази категория");
 
         $sel = new ProductsSQL();
         $sel->order_by = " pi.view_counter ";
         $sel->group_by = " pi.prodID, pi.color ";
+        $sel->order_by = " rand() ";
         $sel->limit = "4";
-        $sel->where()->add("p.section", "'{$this->section}'")->add("p.catID", $this->sellable["catID"]);
+        $sel->where()->add("p.catID", $catID);
 
-        $db = DBConnections::Get();
+        $tape = new ProductsTape(new SQLQuery($sel, "prodID"), $title);
+        $action = $tape->getTitleAction();
+        $action->getURLBuilder()->buildFrom(LOCAL."/products/list.php");
+        $action->getURLBuilder()->add(new URLParameter("catID", $catID));
 
-        //         echo $sel->getSQL();
-        $res = $db->query($sel->getSQL());
-        if (!$res) throw new Exception("Unable to query products from section='{$this->section}' and catID='{$this->sellable["catID"]}'. Error: " . $db->getError());
-
-        while ($row = $db->fetch($res)) {
-            $this->list_item->setData($row);
-            $this->list_item->render();
-        }
-        $db->free($res);
+        $tape->render();
     }
 
-    public function renderMostOrderedProducts()
+    public function renderOtherProducts()
     {
-        echo "<div class='caption'>" . tr("Най-продавани от тази секция") . "</div>";
+        $title = tr("Други продукти");
 
         $sel = new ProductsSQL();
-        $sel->order_by = " pi.order_counter ";
+        $sel->order_by = " pi.view_counter ";
         $sel->group_by = " pi.prodID, pi.color ";
+        $sel->order_by = " rand() ";
         $sel->limit = "4";
-        $sel->where()->add("p.section", "'{$this->section}'");
 
-        $db = DBConnections::Get();
-
-        //         echo $sel->getSQL();
-        $res = $db->query($sel->getSQL());
-        if (!$res) throw new Exception("Unable to query products from section='{$this->section}' and catID='{$this->sellable["catID"]}'. Error: " . $db->getError());
-
-        while ($row = $db->fetch($res)) {
-            $this->list_item->setData($row);
-            $this->list_item->render();
-        }
-        $db->free($res);
+        $tape = new ProductsTape(new SQLQuery($sel, "prodID"), $title);
+        $action = $tape->getTitleAction();
+        $action->getURLBuilder()->buildFrom(LOCAL."/products/list.php");
+        $tape->render();
     }
+
+
 }
 
 ?>

@@ -13,43 +13,43 @@ include_once("input/DataInputFactory.php");
 include_once("beans/MenuItemsBean.php");
 include_once("class/beans/SectionsBean.php");
 
-include_once("class/utils/Cart.php");
 include_once("auth/UserAuthenticator.php");
 
 include_once("utils/CurrencyConverter.php");
+
+include_once("class/beans/ProductCategoriesBean.php");
+
+include_once("utils/Cart.php");
 
 class StorePage extends SparkPage
 {
 
     protected $menu_bar = NULL;
 
-    public $sections = NULL;
 
-    protected $section = "";
-
-    public $keyword_search = NULL;
 
     /**
-     * @var Cart
+     * @var KeywordSearch|null
      */
-    protected $cart;
+    protected $keyword_search = NULL;
 
     public $client_name = "";
 
     public function __construct()
     {
+
         $this->auth = new UserAuthenticator();
         $this->loginURL = LOCAL . "/account/login.php";
 
         parent::__construct();
+
+        $this->authorize();
 
         if ($this->context) {
 
             $this->client_name = $this->context->getData()->get(SessionData::FULLNAME);
 
         }
-
-        $this->cart = new Cart();
 
         $menu = new MainMenu();
 
@@ -59,61 +59,49 @@ class StorePage extends SparkPage
         $this->menu_bar = new MenuBarComponent($menu);
 
         $this->menu_bar->setName("StorePage");
+        $this->menu_bar->toggle_first = true;
 
-        $this->sections = new SectionsBean();
-
-        if (isset($_GET["section"])) {
-            $section = DBConnections::Get()->escape($_GET["section"]);
-            $qry = $this->sections->queryField("section_title", $section, 1);
-            $num = $qry->exec();
-            if ($num < 1) {
-                $this->section = "";
-            }
-            else {
-                $this->section = $section;
-            }
-        }
-
-        //construct filters 
-        $search_fields = array("relation.product_name", "relation.product_summary", "relation.keywords",
-                               "relation.color", "relation.inventory_attributes");
 
         $ksc = new KeywordSearch();
-        $ksc->getForm()->setFields($search_fields);
-        //, "relation");
-
+        //just initialize the keyword form here. Search fields are initialized in ProductsListPage as form is posted there
         $ksc->getForm()->getInput("keyword")->getRenderer()->setInputAttribute("placeholder", "Търси ...");
         $ksc->getForm()->getRenderer()->setAttribute("method", "get");
-        $ksc->getForm()->getRenderer()->setAttribute("action", LOCAL . "/products.php");
-        $ksc->getForm()->setCompareExpression("relation.inventory_attributes", array("%:{keyword}|%", "%:{keyword}"));
+        $ksc->getForm()->getRenderer()->setAttribute("action", LOCAL . "/products/list.php");
+
+        $ksc->getButton("search")->setContents("");
+
         $this->keyword_search = $ksc;
 
         $this->addCSS(LOCAL . "/css/store.css");
-        $this->addCSS("//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css");
+        //$this->addCSS("//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css");
 
-        $this->addJS("//code.jquery.com/ui/1.11.4/jquery-ui.js");
+        //$this->addJS("//code.jquery.com/ui/1.11.4/jquery-ui.js");
         $this->addJS(SPARK_LOCAL . "/js/URI.js");
 
-    }
+        $pc = new ProductCategoriesBean();
+        $qry = $pc->query("category_name");
+        $num = $qry->exec();
+        $kewords = array();
+        while ($result = $qry->next()) {
+            $keywords[] = mb_strtolower($result["category_name"]);
+        }
 
-    public function getCart()
-    {
-        return $this->cart;
+        $this->keywords = implode(", ", $keywords);
+
+        $this->addOGTag("title", "%title%");
+        $this->addOGTag("description", "%meta_description%");
+        $this->addOGTag("url", fullURL($this->getPageURL()));
+        $this->addOGTag("site_name", SITE_TITLE);
+        $this->addOGTag("type",	"website");
+        //<meta name="twitter:card" content="summary_large_image" />
+        //meta name="twitter:description" content="&nbsp; Продукти от категория &#8222;Джинси&#8220; Нови продукти Категории продукти Последно от блога [carousel_slide id=&#8217;1344&#8242;]" />
+        //<meta name="twitter:title" content="Начало - ВИКИ МАШИНИ" />
+
     }
 
     public function getMenuBar()
     {
         return $this->menu_bar;
-    }
-
-    public function getSection() : ?string
-    {
-        return $this->section;
-    }
-
-    public function setSection(string $section)
-    {
-        $this->section = $section;
     }
 
     public function startRender()
@@ -124,54 +112,99 @@ class StorePage extends SparkPage
 
         $this->selectActiveMenu();
 
-        echo "<div class='full' align=center>";
+        echo "<div class='section header'>";
+            echo "<div class='full'>";
 
-        echo "<div class='header '>";
-        echo "<div class='aside'>";
+            echo "<div class='space left'></div>";
 
-        echo "<div class='links'>";
-        echo "<div class='login_pane'>";
-        if ($this->context) {
-            echo "<a href='" . LOCAL . "/account/' class='account_link'>{$this->client_name}</a>";
-        }
-        else {
-            echo "<a href='" . LOCAL . "/account/login.php' class='account_link'>" . tr("Вход") . " / " . tr("Регистрация") . "</a>";
-        }
-        echo "</div>";
+            echo "<div class='content'>";
 
-        echo "<a href='" . LOCAL . "/checkout/cart.php' class='checkout_link'>" . tr("Кошница") . " (" . $this->cart->getItemCount() . ")</a>";
-        echo "<a href='" . LOCAL . "/contacts.php' class='contacts_link'>" . tr("Контакти") . "</a>";
+            $logo_href=LOCAL."/home.php";
+            echo "<a class='logo' href='{$logo_href}' title='logo'></a>";
 
-        echo "</div>";
+            $cfg = new ConfigBean();
+            $cfg->setSection("store_config");
 
-        echo "<div class='search_pane'>";
-        $this->keyword_search->render();
-        echo "<div class='clear'></div>";
-        echo "</div>";
+            echo "<div class='marquee'>";
 
-        echo "</div>";
+            echo "<marquee>".$cfg->get("marquee_text")."</marquee>";
+            echo "</div>";
 
-        echo "<div class='clear'></div>";
+            echo "</div>";//content
 
-        echo "<a class='logo' href='" . LOCAL . "/'></a>";
-        echo "</div>";
+            echo "<div class='space right'></div>";
 
-        echo "</div>";
+            echo "</div>"; //full
+        echo "</div>"; //section header
 
-        echo "<div class='full border_bottom' align=center>";
-        $this->menu_bar->render();
-        echo "</div>";
+        echo "<div class='section menu'>";
+            echo "<div class='full'>";
+            echo "<div class='space left'></div>";
+            echo "<div class='content' >";
 
-        echo "<div class='full' align=center>";
-        echo "<div class='main_content container'>"; //inner contents
+                echo "<div class='menuwrap'>";
+
+                    $this->menu_bar->render();
+
+                    echo "<div class='group'>";
+                        echo "<div class='search_pane'>";
+                        $this->keyword_search->render();
+                        echo "<div class='clear'></div>";
+                        echo "</div>";
+
+                        echo "<div class='customer_pane'>";
+
+
+                            $icon_contents = "<span class='icon'></span>";
+                            $button_account = new Action();
+                            $button_account->getURLBuilder()->buildFrom(LOCAL . "/account/login.php");
+                            $button_account->setAttribute("title", tr("Account"));
+                            $button_account->setClassName("button account");
+                            $button_account->setContents($icon_contents);
+                            if ($this->context) {
+                                $button_account->getURLBuilder()->buildFrom(LOCAL . "/account/");
+                                $button_account->addClassName("logged");
+                            }
+                            $button_account->render();
+
+
+                            $button_cart = new Action();
+                            $button_cart->getURLBuilder()->buildFrom(LOCAL . "/checkout/cart.php");
+                            $button_cart->setAttribute("title", tr("Cart"));
+                            $button_cart->addClassName("button cart");
+
+                            $button_contents = $icon_contents;
+                            $cart_items = Cart::Instance()->itemsCount();
+                            if ($cart_items>0) {
+                                $button_cart->setAttribute("item_count", $cart_items);
+                                $button_contents.= "<span class='items_dot'>$cart_items</span>";
+                            }
+                            $button_cart->setContents($button_contents);
+                            $button_cart->render();
+
+                        echo "</div>"; //customer_pane
+                    echo "</div>";//group
+
+                echo "</div>";//menuwrap
+
+            echo "</div>"; //content
+            echo "<div class='space right'></div>";
+            echo "</div>";//full
+        echo "</div>";//section menu
+
+        echo "<div class='section main'>";
+            echo "<div class='full page'>";
+            echo "<div class='space left'></div>";
+            echo "<div class='content'>";
+
 
     }
 
     protected function selectActiveMenu()
     {
-        $main_menu = $this->menu_bar->getMainMenu();
 
-        $main_menu->selectActive();
+        $main_menu = $this->menu_bar->getMainMenu();
+        $main_menu->selectActive(array(MainMenu::MATCH_FULL,MainMenu::MATCH_PARTIAL));
 
     }
 
@@ -187,46 +220,61 @@ class StorePage extends SparkPage
     public function finishRender()
     {
 
-        echo "</div>"; //main_content
-        echo "</div>"; //full align=center
+        echo "</div>"; //page_content
+        echo "<div class='space right'></div>";
+        echo "</div>"; //full page
+        echo "</div>";//section main
 
-        echo "<div class='full black' align=center>";
-        echo "<div class='footer container'>";
+        echo "<div class='section footer'>";
+            echo "<div class='full'>";
+            echo "<div class='space left'></div>";
+                echo "<div class='content'>";
+    //
 
-        echo "<div class='links'>";
-        //main menu and other links
-        echo "<div class='menu'>";
-        $items = $this->menu_bar->getMainMenu()->getMenuItems();
-        foreach ($items as $idx => $item) {
-            echo "<a href='{$item->getHref()}'>" . tr($item->getTitle()) . "</a>";
-        }
-        echo "</div>";//menu
+        $cfg = new ConfigBean();
+        $cfg->setSection("store_config");
+        $facebook_href = $cfg->get("facebook_url", "/");
+        $instagram_href = $cfg->get("instagram_url", "/");
+        $youtube_href = $cfg->get("youtube_url", "/");
+        $phone = $cfg->get("phone", "");
 
-        echo "<div class='other'>";
-        echo "<a href='" . LOCAL . "/terms_usage.php'>" . tr("Условия за ползване") . "</a>";
-        echo "<a href='" . LOCAL . "/terms_delivery.php'>" . tr("Условия за доставка") . "</a>";
-        echo "</div>";
+                echo "<div class='social'>";
+                    echo "<a class='slot facebook' title='facebook' href='{$facebook_href}'></a>";
+                    echo "<a class='slot instagram' title='instagram' href='{$instagram_href}'></a>";
+                    echo "<a class='slot youtube' title='youtube' href='{$youtube_href}'></a>";
+                    echo "<a class='slot contacts' title='contacts' href='".LOCAL."/contacts.php'></a>";
+                    echo "<a class='slot terms' title='terms' href='".LOCAL."/terms_usage.php"."'></a>";
+                    echo "<a class='slot phone' title='phone' href='tel:$phone'></a>";
+                echo "</div>";
 
-        echo "</div>";
-
-        echo "<div class='social_links'>";
-        //social media links
-        echo "</div>";
-
-        echo "<div class='logo'></div>";
-
-        echo "</div>";//footer
-        echo "</div>";//full
-
-        echo "<div class='full black footer_bottom' align=center>";
-        echo tr("MM Fashion Shop. Web Design - saturnosoft.biz");
-        echo "</div>";
+                echo "</div>";//content
+            echo "<div class='space right'></div>";
+            echo "</div>";//full
+        echo "</div>"; //section footer
 
         echo "\n";
         echo "\n<!-- finishRender StorePage-->\n";
 
         $this->constructTitle();
+?>
+        <script type="text/javascript">
 
+            //to check when element get's position sticky
+            var observer = new IntersectionObserver(function(entries) {
+                // no intersection
+                if (entries[0].intersectionRatio === 0)
+                    document.querySelector(".section.menu").classList.add("sticky");
+                // fully intersects
+                else if (entries[0].intersectionRatio === 1)
+                    document.querySelector(".section.menu").classList.remove("sticky");
+            }, {
+                threshold: [0, 1]
+            });
+
+
+            observer.observe(document.querySelector(".section.header"));
+        </script>
+<?php
         parent::finishRender();
 
     }

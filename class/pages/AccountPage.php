@@ -41,11 +41,13 @@ class AccountPage extends StorePage
 
         echo "<div class='columns'>";
 
-        echo "<div class='column left'>";
+
 
         //render menu items
         if ($this->context) {
-            echo "<div class='account_menu'>";
+            echo "<div class='column account_menu'>";
+
+            echo "<div class='menu_links'>";
             $menu_items = $this->account_menu->getMenuItems();
             foreach ($menu_items as $idx => $item) {
                 echo "<a class='item' href='" . $item->getHref() . "'>";
@@ -53,16 +55,18 @@ class AccountPage extends StorePage
                 echo "</a>";
             }
             echo "</div>";
-        }
-        echo "</div>";
 
-        echo "<div class='column right'>";
+            echo "</div>"; //column account
+        }
+
+
+
 
     }
 
     public function finishRender()
     {
-        echo "</div>";//column right
+
         echo "</div>";//columns
         parent::finishRender();
     }

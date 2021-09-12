@@ -7,14 +7,15 @@ class ProductsSQL extends SQLSelect
     {
         parent::__construct();
 
-        $this->fields()->set("iav.value AS ia_value", "ca.attribute_name AS ia_name",
+        $this->fields()->set("ssz2.position AS sizing_position",
+            "iav.value AS ia_value", "ca.attribute_name AS ia_name",
                              "pc.catID", "pc.category_name", "pp.ppID", "pi.piID", "pi.size_value",
                              "pi.color", "pi.pclrID",  "pi.prodID", "pi.stock_amount", "p.product_name",
-                             "p.brand_name", "p.product_summary", "p.keywords", "p.promotion",
-                             "p.visible", "p.class_name", "p.section", "p.old_price",
+                             "p.brand_name", "p.product_description", "p.long_description", "p.keywords",
+                             "p.visible", "p.class_name", "p.section", "p.promo_price", "p.price",
                              "p.insert_date", "p.update_date", "sc.color_code");
 
-//        $this->fields()->setExpression("(pclrs.color_photo IS NOT NULL)", "have_chip");
+        //        $this->fields()->setExpression("(pclrs.color_photo IS NOT NULL)", "have_chip");
 
         $this->fields()->setExpression("(SELECT 
         GROUP_CONCAT(inventories.piID SEPARATOR '|') FROM 
@@ -67,11 +68,22 @@ class ProductsSQL extends SQLSelect
         WHERE pcp.pclrID=pi.pclrID 
         ORDER BY position ASC LIMIT 1)", "pclrpID");
 
-        $this->fields()->setExpression("pi.price - (pi.price * (coalesce(sp.discount_percent,0)) / 100.0)", "sell_price");
+        $this->fields()->setExpression(
+            "
+            if (coalesce(sp.discount_percent,0)>0, pi.price - (pi.price * (coalesce(sp.discount_percent,0)) / 100.0), if(pi.promo_price>0, pi.promo_price, pi.price) )",
+            "sell_price");
+        //$this->fields()->setExpression("(SELECT min(pi4.price - (pi4.price * (coalesce(sp.discount_percent,0)) / 100.0)) FROM product_inventory pi4 WHERE pi4.prodID=pi.prodID )", "price_min");
+        //$this->fields()->setExpression("(SELECT max(pi5.price - (pi5.price * (coalesce(sp.discount_percent,0)) / 100.0)) FROM product_inventory pi5 WHERE pi5.prodID=pi.prodID )", "price_max");
+
+        $this->fields()->setExpression("coalesce(sp.discount_percent,0)", "discount_percent");
+
+
+
         $this->fields()->setExpression("(SELECT min(pi4.price - (pi4.price * (coalesce(sp.discount_percent,0)) / 100.0)) FROM product_inventory pi4 WHERE pi4.prodID=pi.prodID )", "price_min");
         $this->fields()->setExpression("(SELECT max(pi5.price - (pi5.price * (coalesce(sp.discount_percent,0)) / 100.0)) FROM product_inventory pi5 WHERE pi5.prodID=pi.prodID )", "price_max");
 
-        $this->fields()->setExpression("coalesce(sp.discount_percent,0)", "discount_percent");
+
+        //$this->fields()->setExpression("(SELECT ppID FROM product_photos pp WHERE pp.prodID = pi.prodID ORDER BY position ASC LIMIT 1)","ppID");
 
         $this->from = " product_inventory pi 
 
@@ -80,13 +92,23 @@ JOIN product_categories pc ON pc.catID=p.catID
 
 LEFT JOIN store_promos sp ON (sp.targetID = p.catID AND sp.target='Category' AND sp.start_date <= NOW() AND sp.end_date >= NOW()) 
 LEFT JOIN product_colors pclrs ON pclrs.pclrID = pi.pclrID
+
 LEFT JOIN inventory_attribute_values iav ON iav.piID=pi.piID 
 LEFT JOIN class_attributes ca ON ca.caID=iav.caID 
 
 LEFT JOIN store_colors sc ON sc.color=pi.color
 LEFT JOIN product_photos pp ON pp.prodID=pi.prodID
-
+LEFT JOIN store_sizes ssz2 ON ssz2.size_value=pi.size_value
 ";
+
+    }
+    public function createView(string $view_name="sellable_products")
+    {
+
+        $sql = "CREATE VIEW IF NOT EXISTS $view_name AS ({$this->getSQL()})";
+        $db = DBConnections::Get();
+        $res = $db->query($sql);
+        $db->free($res);
 
     }
 }

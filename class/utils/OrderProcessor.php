@@ -1,12 +1,13 @@
 <?php
 // $GLOBALS["DEBUG_OUTPUT"] = 1;
 
-include_once("class/utils/Cart.php");
+include_once("utils/Cart.php");
 include_once("class/beans/OrdersBean.php");
 include_once("class/beans/OrderItemsBean.php");
-include_once("class/beans/EkontAddressesBean.php");
+include_once("class/beans/CourierAddressesBean.php");
 include_once("class/beans/ClientAddressesBean.php");
-
+include_once("class/forms/DeliveryAddressForm.php");
+include_once("class/forms/ClientAddressInputForm.php");
 include_once("class/beans/ProductsBean.php");
 include_once("class/beans/ProductInventoryBean.php");
 include_once("class/beans/ProductColorPhotosBean.php");
@@ -15,16 +16,47 @@ include_once("beans/ConfigBean.php");
 class OrderProcessor
 {
 
+    protected $orderID = -1;
+
+    /**
+     * @var bool flag to enable lowering the stock amount of the purchased inventory
+     */
+    protected $manage_stock_amount = false;
+
+    /**
+     * @var bool flag to enable increasing the order counter of the purchased inventory
+     */
+    protected $manage_order_counter = true;
+
     public function __construct()
     {
 
     }
 
-    public function createOrder(Cart $cart, int $userID)
+    public function setManageStockAmount(bool $mode)
     {
-        debug("Using userID='$userID'");
+        $this->manage_stock_amount = $mode;
+    }
 
-        if (count($cart->items()) < 1) throw new Exception("Вашата кошница е празна");
+    public function setManageOrderCount(bool $mode)
+    {
+        $this->manage_order_counter = $mode;
+    }
+
+    public function getOrderID() : int
+    {
+        return $this->orderID;
+    }
+
+    public function createOrder()
+    {
+
+
+        $cart = Cart::Instance();
+
+        if ($cart->itemsCount() < 1) throw new Exception("Вашата кошница е празна");
+        if (is_null($cart->getDelivery()->getSelectedCourier())) throw new Exception("Не сте избрали куриер");
+        if (is_null($cart->getDelivery()->getSelectedCourier()->getSelectedOption())) throw new Exception("Не сте избрали адрес за доставка");
 
         $page = StorePage::Instance();
         if ($page->getUserID() < 1) {
@@ -32,84 +64,89 @@ class OrderProcessor
             throw new Exception("Изисква регистриран потребител");
         }
 
-        $db = DBConnections::Factory();
-        $orderID = -1;
+        $userID = $page->getUserID();
+
+        debug("Using userID='$userID'");
+
+        $db = DBConnections::Get();
+
+        $this->orderID = -1;
 
         try {
 
             $db->transaction();
 
             $inventory = new ProductInventoryBean();
-            $inventory->setDB($db);
 
             $orders = new OrdersBean();
-            $eab = new EkontAddressesBean();
-            $uab = new ClientAddressesBean();
-
-            $cart_data = array();
+            $eab = new CourierAddressesBean();
 
             $items = $cart->items();
 
-            $config = ConfigBean::Factory();
-            $config->setSection("delivery_prices");
-            $delivery_price = (float)$config->get($cart->getDeliveryType(), 1);
 
             $order = array();
-            $order["delivery_price"] = sprintf("%0.2f", $delivery_price);
-            $order["delivery_type"] = $cart->getDeliveryType();
 
-            $deliver_address = array();
-            if (strcmp($cart->getDeliveryType(), Cart::DELIVERY_USERADDRESS) == 0) {
-                $qry = $uab->queryField("userID", $userID);
-                $num = $qry->exec();
-                if ($num < 1) throw new Exception("Недостъпен адрес за доставка");
-                $client_address = $qry->next();
-                $deliver_address[] = $client_address["postcode"];
-                $deliver_address[] = $client_address["city"];
-                $deliver_address[] = $client_address["address1"];
-                $deliver_address[] = $client_address["address2"];
+            $courier = $cart->getDelivery()->getSelectedCourier();
+            $option = $courier->getSelectedOption();
+
+            $order["delivery_price"] = $option->getPrice();
+
+            $order["delivery_courier"] = $courier->getID();
+
+            $order["delivery_option"] = $option->getID();
+
+            $uab = new ClientAddressesBean();
+
+            if ($option->getID() == DeliveryOption::USER_ADDRESS) {
+
+                $uabrow = $uab->getResult("userID", $userID);
+
+                $form = new ClientAddressInputForm();
+                $form->loadBeanData($uabrow[$uab->key()], $uab);
+
+                $order["delivery_address"] = $db->escape($form->serializeXML());
+
             }
-            else if (strcmp($cart->getDeliveryType(), Cart::DELIVERY_EKONTOFFICE) == 0) {
-                $qry = $eab->queryField("userID", $userID);
+            else if ($option->getID() == DeliveryOption::COURIER_OFFICE) {
+                $qry = $eab->queryField("userID", $userID, 1, "office");
                 $num = $qry->exec();
                 if ($num < 1) throw new Exception("Недостъпен адрес за доставка");
                 $ekont_address = $qry->next();
-                $deliver_address[] = $ekont_address["office"];
+                $order["delivery_address"] = $db->escape($ekont_address["office"]);
             }
             else {
                 throw new Exception("Недостъпен начин на доставка");
             }
 
-            $order["delivery_address"] = implode(" ", $deliver_address);
-
             $order["note"] = $cart->getNote();
-            $order["require_invoice"] = $cart->getRequireInvoice();
+            $order["require_invoice"] = (int)$cart->getRequireInvoice();
             $order["userID"] = $userID;
 
             $order_total = (float)0;
 
-            foreach ($items as $piID => $qty) {
-
-                $item = $inventory->getByID($piID, "price");
-                $line_total = (float)sprintf("%0.2f", ($qty * $item["price"]));
-                $order_total = $order_total + $line_total;
-
+            foreach ($items as $piID => $cartItem) {
+                if (!$cartItem instanceof CartItem) continue;
+                $order_total = $order_total + $cartItem->getLineTotal();
             }
-            $order_total = $order_total + $delivery_price;
+
+            $order_total = $order_total + $option->getPrice();
             $order["total"] = $order_total;
 
-            $orderID = $orders->insert($order, $db);
-            if ($orderID < 1) throw new Exception("Unable to insert order: " . $db->getError());
+            $this->orderID = $orders->insert($order, $db);
+            if ($this->orderID < 1) throw new Exception("Unable to insert order: " . $db->getError());
+
+            debug("Created orderID: {$this->orderID} - for clientID: $userID - Filling order items ...");
 
             $order_items = new OrderItemsBean();
             $products = new ProductsBean();
-            $products->setDB($db);
 
             $photos = new ProductColorPhotosBean();
             $gallery_photos = new ProductPhotosBean();
 
             $pos = 1;
-            foreach ($items as $piID => $qty) {
+            foreach ($items as $piID => $cartItem) {
+
+                if (!$cartItem instanceof CartItem) continue;
 
                 $item = $inventory->getByID($piID);
                 $prodID = (int)$item["prodID"];
@@ -153,39 +190,53 @@ class OrderProcessor
                     debug("Unable to copy source product photos. ProdID=$prodID | InvID=$piID | Exception: " . $e->getMessage());
                 }
 
+
+
                 $order_item = array();
                 $order_item["piID"] = $piID;
-                $order_item["qty"] = $qty;
-                $order_item["price"] = $item["price"];
+                $order_item["qty"] = $cartItem->getQuantity();
+                $order_item["price"] = $cartItem->getPrice();
                 $order_item["position"] = $pos;
-                $order_item["orderID"] = $orderID;
+                $order_item["orderID"] = $this->orderID;
                 $order_item["product"] = $product_details;
                 $order_item["prodID"] = $prodID;
-                $order_item["photo"] = DBConnections::get()->escape($item_photo);
+                $order_item["photo"] = DBConnections::Get()->escape($item_photo);
 
                 $itemID = $order_items->insert($order_item, $db);
                 if ($itemID < 1) throw new Exception("Unable to insert order item: " . $db->getError());
 
-                $inventory_update = array("stock_amount"  => ($item["stock_amount"] - $qty),
-                                          "order_counter" => ($item["order_counter"] + 1));
-                if (!$inventory->update($piID, $inventory_update, $db)) throw new Exception("Unable to update inventory statistics: " . $db->getError());
+                $inventory_update = array();
+
+                if ($this->manage_stock_amount) {
+                    $inventory_update["stock_amount"] = ($item["stock_amount"] - $cartItem->getQuantity());
+                }
+                if ($this->manage_order_counter) {
+                    $inventory_update["order_counter"] = ($item["order_counter"] + 1);
+                }
+
+                if (count($inventory_update)>0) {
+                    if (!$inventory->update($piID, $inventory_update, $db)) throw new Exception("Unable to update inventory statistics: " . $db->getError());
+                }
 
                 $pos++;
             }
 
-            debug("OrderProcessor::createOrder() finalizing transaction ... ");
+            debug("OrderProcessor::createOrder() finalizing transaction for orderID='{$this->orderID}' ... ");
             $db->commit();
-            $cart->clear();
 
-            debug("OrderProcessor::createOrder() order completed ... ");
+            $cart->clear();
+            $cart->store();
+
+            debug("OrderProcessor::createOrder() completed for orderID='{$this->orderID}' ... ");
         }
         catch (Exception $e) {
-            $orderID = -1;
+            $this->orderID = -1;
             $db->rollback();
+
             throw new Exception($e->getMessage());
 
         }
-        return $orderID;
+        return $this->orderID;
     }
 
 }

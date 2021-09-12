@@ -1,9 +1,11 @@
 <?php
 include_once("class/utils/SellableDataParser.php");
 
-class SellableItem {
+class SellableItem implements JsonSerializable {
+
 
     protected $dataParser = null;
+
 
     protected $prodID = -1;
 
@@ -21,6 +23,7 @@ class SellableItem {
     protected $main_photo = null;
 
     //access by piID
+    protected $rawData = array();
     protected $attributes = array();
     protected $prices = array();
     protected $sizes = array();
@@ -32,7 +35,7 @@ class SellableItem {
     protected $color_chips = array();
     protected $galleries = array();
 
-    protected $data = array();
+    //protected $data = array();
 
 
     public function __construct(int $prodID, SellableDataParser $dataParser=null)
@@ -46,6 +49,23 @@ class SellableItem {
         }
 
 
+    }
+
+    public function getData(int $piID, string $key)
+    {
+        $result = $this->rawData[$piID];
+
+        return $result->get($key);
+    }
+
+    public function setRawResult(int $piID, RawResult $result)
+    {
+        $this->rawData[$piID] = $result;
+    }
+
+    public function finalize()
+    {
+        $this->dataParser->processMainPhoto($this);
     }
 
     public function setSizeValue(int $piID, string $size_value)
@@ -108,12 +128,25 @@ class SellableItem {
         return $this->prices[$piID];
     }
 
+    public function isPromotion(int $piID) : bool
+    {
+        $result = false;
+
+        $priceInfo = $this->prices[$piID];
+        if (!$priceInfo instanceof PriceInfo) return $result;
+        if ($priceInfo->getOldPrice()!=$priceInfo->getSellPrice() && $priceInfo->getOldPrice()>0) {
+            $result = true;
+        }
+
+        return $result;
+    }
+
     public function setColorID(int $piID, int $pclrID)
     {
         $this->colors[$piID] = $pclrID;
     }
 
-    public function getColorIDs(int $piID) : int
+    public function getColorID(int $piID) : int
     {
         return $this->colors[$piID];
     }
@@ -159,24 +192,25 @@ class SellableItem {
         return $this->piID;
     }
 
-    public function addInventoryData(array $result)
+    public function addInventoryData(RawResult $result)
     {
+
         $this->dataParser->parse($this, $result);
 
     }
 
-    public function setData(int $piID, array $result)
-    {
-        $this->data[$piID] = $result;
-    }
-
-    public function getData(string $key) : ?string
-    {
-        if (isset($this->data[$this->getActiveInventoryID()][$key])) {
-            return $this->data[$this->getActiveInventoryID()][$key];
-        }
-        return null;
-    }
+//    public function setData(int $piID, array $result)
+//    {
+//        $this->data[$piID] = $result;
+//    }
+//
+//    public function getData(string $key) : ?string
+//    {
+//        if (isset($this->data[$this->getActiveInventoryID()][$key])) {
+//            return $this->data[$this->getActiveInventoryID()][$key];
+//        }
+//        return null;
+//    }
 
     public function getKeywords() : string
     {
@@ -296,5 +330,11 @@ class SellableItem {
     //    public function setPrice(int $pclrID, string $size_value, int $piID, PriceInfo $pinfo) {
     //        $this->prices[$pclrID][$size_value][$piID] = $pinfo;
     //    }
+
+
+    public function jsonSerialize() : array
+    {
+        return get_object_vars($this);
+    }
 }
 ?>

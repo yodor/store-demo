@@ -1,6 +1,6 @@
 <?php
 
-class Cart
+class Cart1
 {
     private $items = array();
 
@@ -24,14 +24,12 @@ class Cart
         $this->delivery_options = array(Cart::DELIVERY_USERADDRESS, Cart::DELIVERY_EKONTOFFICE);
     }
 
-    public function setDeliveryType($delivery_type)
+    public function setDeliveryType(?string $delivery_type)
     {
-        //         if (!in_array($delivery_type, $this->delivery_options)) {
-        //             $this->delivery_type = Cart::DELIVERY_USERADDRESS;
-        //         }
-        //         else {
-        //
-        //         }
+         if (!in_array($delivery_type, $this->delivery_options) || !is_null($delivery_type)) {
+             $this->delivery_type = NULL;
+         }
+
         $this->delivery_type = $delivery_type;
         $this->storeCart();
     }
@@ -47,7 +45,7 @@ class Cart
             return "Доставка до регистриран адрес";
         }
         else if (strcmp($delivery_type, Cart::DELIVERY_EKONTOFFICE) == 0) {
-            return "Доставка до офис на еконт";
+            return "Доставка до офис на 'Eконт'";
         }
         else {
             return "Непозант";
@@ -79,11 +77,14 @@ class Cart
     private function loadCart()
     {
         if (isset($_SESSION["cart"])) {
-            $cart = unserialize($_SESSION["cart"]);
-            $this->items = $cart["items"];
-            $this->delivery_type = $cart["delivery_type"];
-            $this->note = $cart["note"];
-            $this->require_invoice = $cart["require_invoice"];
+            @$cart = unserialize($_SESSION["cart"]);
+            if (is_array($cart)) {
+                $this->items = $cart["items"];
+                $this->delivery_type = $cart["delivery_type"];
+                $this->note = $cart["note"];
+                $this->require_invoice = $cart["require_invoice"];
+
+            }
 
         }
     }

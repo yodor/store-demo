@@ -45,7 +45,7 @@ $qry->select->fields()->setExpression("MAX(pi.price)", "price_max");
 $qry->select->fields()->setExpression("group_concat(distinct(size_value) SEPARATOR '<BR>')", "sizes");
 $qry->select->fields()->setExpression("replace(cc.colors, '|','<BR>')",  "colors");
 $qry->select->fields()->set("p.prodID", "p.product_name", "p.class_name", "p.brand_name", "p.section", "pc.category_name", "p.visible",
-"p.price", "p.old_price", "p.buy_price", "cc.pi_ids", "cc.color_photos", "cc.have_chips", "cc.color_ids", "cc.product_photos");
+"p.price", "p.promo_price", "p.buy_price", "cc.pi_ids", "cc.color_photos", "cc.have_chips", "cc.color_ids", "cc.product_photos");
 
 $qry->select->from = " products p LEFT JOIN product_inventory pi ON pi.prodID = p.prodID LEFT JOIN color_chips cc ON cc.prodID = p.prodID JOIN product_categories pc ON pc.catID=p.catID ";
 $qry->select->group_by = "  p.prodID, pi.prodID ";

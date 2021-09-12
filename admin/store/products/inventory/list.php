@@ -76,7 +76,7 @@ $cmp->setListFields(array("piID"                 => "ID", "prodID" => "ProdID", 
                           "pclrpID"              => "Color Scheme", "product_name" => "Product",
                           "category_name"        => "Category", "brand_name" => "Brand", "class_name" => "Class",
                           "color"                => "Color", "size_value" => "Size", "stock_amount" => "In Stock",
-                          "price"                => "Price", "bui_price" => "Buy Price", "old_price" => "Old Price",
+                          "price"                => "Price", "bui_price" => "Buy Price", "promo_price" => "Promo Price",
                           "weight"               => "Weight", "inventory_attributes" => "Attributes"));
 
 if ($prodID > 0) {

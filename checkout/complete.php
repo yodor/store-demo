@@ -1,18 +1,8 @@
 <?php
 include_once("session.php");
-
-include_once("class/mailers/OrderConfirmationMailer.php");
-
 include_once("class/pages/CheckoutPage.php");
 
-include_once("class/utils/OrderProcessor.php");
-
-include_once("class/mailers/OrderConfirmationAdminMailer.php");
-include_once("class/mailers/OrderErrorAdminMailer.php");
-
 $page = new CheckoutPage();
-
-$page->ensureClient();
 
 $orderID = 0;
 if (isset($_GET["orderID"])) {
@@ -21,17 +11,29 @@ if (isset($_GET["orderID"])) {
 
 $page->startRender();
 
-$page->setTitle(tr("Поръчката е завършена"));
+$page->setTitle(tr("Завършена поръчка"));
 
-echo "<div class='caption'>" . tr("Поръчката е завършена") . "</div>";
-echo tr("Номер на поръчката") . ": " . $orderID;
-echo "<BR><BR>";
-echo tr("Благодарим Ви че пазарувахте при нас");
-echo "<BR><BR>";
-echo tr("Ще се свържем с Вас на посочения e-mail с детйли относно Вашата поръчка");
-echo "<BR><BR>";
-echo tr("Можете да разгледате поръчките си от секция - ") . "<a href='" . LOCAL . "/account/'>" . tr("Клиенти") . "</a>";
-echo "<BR><BR>";
+echo "<div class='column'>";
+
+    echo "<div class='Caption'>" . tr("Завършена поръчка") . "</div>";
+
+    echo "<div class='success_message'>";
+
+        echo "<div class='tick_mark'></div>";
+
+        echo "<div class='Caption'>".tr("Благодарим Ви че пазарувахте при нас!")."</div>";
+
+        if ($orderID>0) {
+            echo tr("Номер на поръчката") . ": " . $orderID;
+            echo "<BR><BR>";
+        }
+
+        echo tr("Ще се свържем с Вас относно детйали за Вашата поръчка");
+
+    echo "</div>"; // success_message
+
+echo "</div>"; //column
+
 
 $page->finishRender();
 ?>

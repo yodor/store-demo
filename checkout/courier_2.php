@@ -1,8 +1,12 @@
 <?php
-include_once("session.php");
-include_once("class/pages/CheckoutPage.php");
-include_once("class/forms/EkontOfficeInputForm.php");
-include_once("class/beans/EkontAddressesBean.php");
+if (!isset($courier)) exit;
+if (!isset($page)) exit;
+
+if (!$page instanceof CheckoutPage) exit;
+if (!$courier instanceof DeliveryCourier) exit;
+
+include_once("class/forms/CourierOfficeInputForm.php");
+include_once("class/beans/CourierAddressesBean.php");
 
 class EkontOfficeFormProcessor extends FormProcessor
 {
@@ -35,21 +39,19 @@ class EkontOfficeFormProcessor extends FormProcessor
         //will do insert or update
         $dbt->processBean();
 
+
+        Cart::Instance()->getDelivery()->getSelectedCourier()->setSelectedOption(DeliveryOption::COURIER_OFFICE);
+
         header("Location: confirm.php");
         exit;
     }
 }
 
-$page = new CheckoutPage();
-
-$page->ensureCartItems();
-$page->ensureClient();
-
-$bean = new EkontAddressesBean();
+$bean = new CourierAddressesBean();
 $proc = new EkontOfficeFormProcessor();
 $proc->setBean($bean);
 
-$form = new EkontOfficeInputForm();
+$form = new CourierOfficeInputForm();
 $form->setName("EkontOffice");
 
 $empty = "";
@@ -75,55 +77,48 @@ $page->drawCartItems();
 
 echo "<div class='item ekont_office $empty'>";
 
-echo "<div class='Caption'>" . tr("Избран офис на Еконт") . "</div>";
+    echo "<div class='Caption'>" . tr("Избран офис на Еконт") . "</div>";
 
-echo "<div class='selected_office'>";
-echo str_replace("\r", "<br>", $form->getInput("office")->getValue());
-echo "</div>";
+    echo "<div class='selected_office'>";
+    echo str_replace("\r", "<br>", $form->getInput("office")->getValue());
+    echo "</div>";
 
-$frend->startRender();
-$frend->renderInputs();//($form->getInput("office"));
-$frend->renderSubmitValue();
-$frend->finishRender();
+    $frend->startRender();
+    $frend->renderInputs();//($form->getInput("office"));
+    $frend->renderSubmitValue();
+    $frend->finishRender();
 
-echo "<a class='ColorButton' href='javascript:changeEkontOffice();'>" . tr("Изберете друг офис") . "</a>";
+    echo "<a class='ColorButton' href='javascript:changeEkontOffice();'>" . tr("Изберете друг офис") . "</a>";
 
 echo "</div>";//ekont_office
 
 echo "<div class='item ekont_locator'>";
 
-echo "<div class='Caption'>";
-echo tr("Изберете офис на Еконт за доставка");
-echo "</div>";
+    echo "<div class='Caption'>";
+    echo tr("Изберете офис на Еконт за доставка");
+    echo "</div>";
 ?>
-<iframe id="ekont_frame" scrolling="no" frameborder="0" style="border: medium none; width: 800px; height: 450px;"
-        allowtransparency="true" src="http://www.bgmaps.com/templates/econt?office_type=all&shop_url=<?php
-echo SITE_URL; ?>"></iframe>
+
+    <iframe async id="ekont_frame" height=450 width="100%" border=0 frameborder="0" allowtransparency="true" src="https://www.bgmaps.com/templates/econt?office_type=all&shop_url=<?php
+    echo SITE_URL; ?>"></iframe>
+
 <?php
 echo "</div>"; //ekont_locator
 
-// $back_url = Session::get("checkout.navigation.back", $page->getPageURL());
+$back_url = Session::get("checkout.navigation.back", "delivery.php");
 
-echo "<div class='navigation'>";
+$action = $page->getAction(CheckoutPage::NAV_LEFT);
+$action->setTitle(tr("Назад"));
+$action->setClassName("edit");
+$action->getURLBuilder()->buildFrom($back_url);
 
-echo "<div class='slot left'>";
-echo "<a href='delivery.php'>";
-echo "<img src='" . LOCAL . "/images/cart_edit.png'>";
-echo "<div class='ColorButton checkout_button' >" . tr("Назад") . "</div>";
-echo "</a>";
-echo "</div>";
+$action = $page->getAction(CheckoutPage::NAV_RIGHT);
+$action->setTitle(tr("Продължи"));
+$action->setClassName("checkout");
+$action->getURLBuilder()->buildFrom("javascript:document.forms.EkontOffice.submit()");
 
-echo "<div class='slot center'>";
-echo "</div>";
+$page->renderNavigation();
 
-echo "<div class='slot right'>";
-echo "<a href='javascript:document.forms.EkontOffice.submit();'>";
-echo "<img src='" . LOCAL . "/images/cart_checkout.png'>";
-echo "<div class='ColorButton checkout_button'  >" . tr("Продължи") . "</div>";
-echo "</a>";
-echo "</div>";
-
-echo "</div>";
 
 ?>
 <script type='text/javascript'>

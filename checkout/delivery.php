@@ -1,10 +1,9 @@
 <?php
 include_once("session.php");
 include_once("class/pages/CheckoutPage.php");
-include_once("class/forms/DeliveryAddressForm.php");
-include_once("class/beans/ClientAddressesBean.php");
+include_once("class/forms/DeliveryCourierForm.php");
 
-class DeliveryAddressProcessor extends FormProcessor
+class DeliveryCourierProcessor extends FormProcessor
 {
 
     protected function processImpl(InputForm $form)
@@ -12,66 +11,63 @@ class DeliveryAddressProcessor extends FormProcessor
 
         parent::processImpl($form);
 
-        $page = StorePage::Instance();
-        $cart = $page->getCart();
+        $cart = Cart::Instance();
 
-        $delivery_type = $form->getInput("delivery_type")->getValue();
+        $delivery_courier = $form->getInput("delivery_courier")->getValue();
 
-        $cart->setDeliveryType($delivery_type[0]);
-
+        $cart->getDelivery()->setSelectedCourier($delivery_courier[0]);
+        $cart->store();
     }
 
 }
 
 $page = new CheckoutPage();
+
 $page->ensureCartItems();
 $page->ensureClient();
 
-// $page->getCart()->setDeliveryType(NULL);
+$cart = Cart::Instance();
+//$cart->getDelivery()->setSelectedCourier(DeliveryCourier::NONE);
+//$cart->store();
 
-$form = new DeliveryAddressForm();
-$form->setName("DeliveryAddress");
+$form = new DeliveryCourierForm();
+$form->setName("DeliveryCourier");
 
-$proc = new DeliveryAddressProcessor();
+$proc = new DeliveryCourierProcessor();
 
 $frend = new FormRenderer($form);
 
-$bean = new ClientAddressesBean();
 
 $proc->process($form);
 
+
+$courier = $cart->getDelivery()->getSelectedCourier();
+
+
 if ($proc->getStatus() == FormProcessor::STATUS_NOT_PROCESSED) {
-    $delivery_type = $page->getCart()->getDeliveryType();
-    $form->getInput("delivery_type")->setValue($delivery_type);
+
+    if (!is_null($courier)) {
+
+        $form->getInput("delivery_courier")->setValue($courier->getID());
+    }
 }
 else if ($proc->getStatus() == FormProcessor::STATUS_ERROR) {
     Session::set("alert", $proc->getMessage());
 
 }
 else if ($proc->getStatus() == FormProcessor::STATUS_OK) {
-    // 		echo $delivery_type[0]; exit;
-    $delivery_type = $page->getCart()->getDeliveryType();
-    if (strcmp($delivery_type, Cart::DELIVERY_USERADDRESS) == 0) {
 
-        $cabrow = $bean->getResult("userID", $page->getUserID());
-        if (!$cabrow) {
-            header("Location: delivery_address.php");
-            exit;
-        }
-        else {
-            header("Location: confirm.php");
-            exit;
-        }
+    if (!is_null($courier)) {
 
-    }
-    else if (strcmp($delivery_type, Cart::DELIVERY_EKONTOFFICE) == 0) {
-        header("Location: delivery_ekont.php");
+        header("Location: delivery_option.php");
         exit;
+
     }
+
 }
 
 $page->startRender();
-$page->setTitle(tr("Начин на доставка"));
+$page->setTitle(tr("Избор на куриер"));
 
 // echo "UserID: ".$page->getUserID();
 
@@ -79,40 +75,32 @@ $page->drawCartItems();
 
 // $page->showShippingInfo();
 
-echo "<div class='delivery_address'>";
+echo "<div class='delivery_courier'>";
 
-echo "<div class='caption'>" . $page->getTitle() . "</div>";
+echo "<h1 class='Caption'>" . $page->getTitle() . "</h1>";
 
 $frend->startRender();
 $frend->renderInputs();
 $frend->renderSubmitValue();
 $frend->finishRender();
 
+echo "</div>";
+
 $back_url = Session::get("checkout.navigation.back", "cart.php");
 
-echo "<div class='navigation'>";
+$action = $page->getAction(CheckoutPage::NAV_LEFT);
+$action->setTitle(tr("Назад"));
+$action->setClassName("edit");
+$action->getURLBuilder()->buildFrom($back_url);
 
-echo "<div class='slot left'>";
-echo "<a href='cart.php'>";
-echo "<img src='" . LOCAL . "/images/cart_edit.png'>";
-echo "<div class='ColorButton checkout_button' >" . tr("Назад") . "</div>";
-echo "</a>";
-echo "</div>";
+$action = $page->getAction(CheckoutPage::NAV_RIGHT);
+$action->setTitle(tr("Продължи"));
+$action->setClassName("checkout");
+$action->getURLBuilder()->buildFrom("javascript:document.forms.DeliveryCourier.submit();");
 
-echo "<div class='slot center'>";
-//     echo "<div class='note'>";
-//         echo "<i>".tr("Натискайки бутона 'Продължи' Вие се съгласявате с нашите")."&nbsp;"."<a  href='".LOCAL."/terms.php'>".tr("Условия за ползване")."</a></i>";
-//     echo "</div>";
-echo "</div>";
+$page->renderNavigation();
 
-echo "<div class='slot right'>";
-echo "<a href='javascript:document.forms.DeliveryAddress.submit();'>";
-echo "<img src='" . LOCAL . "/images/cart_checkout.png'>";
-echo "<div class='ColorButton checkout_button'>" . tr("Продължи") . "</div>";
-echo "</a>";
-echo "</div>";
-
-echo "</div>";
+Session::set("checkout.navigation.back", $page->getPageURL());
 
 $page->finishRender();
 ?>

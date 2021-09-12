@@ -5,6 +5,7 @@ include_once("class/forms/ClientAddressInputForm.php");
 include_once("class/beans/ClientAddressesBean.php");
 include_once("class/forms/processors/ClientAddressFormProcessor.php");
 
+
 $page = new CheckoutPage();
 
 $page->ensureCartItems();
@@ -33,7 +34,7 @@ $form->setProcessor($proc);
 $proc->process($form);
 
 if ($proc->getStatus() == FormProcessor::STATUS_OK) {
-    //   Session::set("DeliveryDetailsForm", serialize($dform));
+    Cart::Instance()->getDelivery()->getSelectedCourier()->setSelectedOption(DeliveryOption::USER_ADDRESS);
     header("Location: confirm.php");
     exit;
 }
@@ -49,32 +50,26 @@ $page->drawCartItems();
 
 echo "<div class='delivery_details'>";
 
-echo "<div class='caption'>" . tr("Адрес за доставка") . "</div>";
+echo "<h1 class='Caption'>" . tr("Адрес за доставка") . "</h1>";
 
 $frend->render();
 
-// $back_url = Session::get("checkout.navigation.back", $page->getPageURL());
+$back_url = Session::get("checkout.navigation.back", $page->getPageURL());
 
-echo "<div class='navigation'>";
+$action = $page->getAction(CheckoutPage::NAV_LEFT);
+$action->setTitle(tr("Назад"));
+$action->setClassName("edit");
+$action->getURLBuilder()->buildFrom($back_url);
 
-echo "<div class='slot left'>";
-echo "<a href='delivery.php'>";
-echo "<img src='" . LOCAL . "/images/cart_edit.png'>";
-echo "<div class='ColorButton checkout_button' >" . tr("Назад") . "</div>";
-echo "</a>";
-echo "</div>";
+$action = $page->getAction(CheckoutPage::NAV_RIGHT);
+$action->setTitle(tr("Продължи"));
+$action->setClassName("checkout");
+$action->getURLBuilder()->buildFrom("javascript:document.forms.ClientAddressInputForm.submit();");
 
-echo "<div class='slot center'>";
-echo "</div>";
 
-echo "<div class='slot right'>";
-echo "<a href='javascript:document.forms.ClientAddressInputForm.submit();'>";
-echo "<img src='" . LOCAL . "/images/cart_checkout.png'>";
-echo "<div class='ColorButton checkout_button'  >" . tr("Продължи") . "</div>";
-echo "</a>";
-echo "</div>";
+$page->renderNavigation();
 
-echo "</div>";
+echo "</div>"; //delivery_details
 
 $page->finishRender();
 ?>

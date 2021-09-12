@@ -6,8 +6,8 @@ include_once("class/forms/ClientAddressInputForm.php");
 include_once("class/beans/ClientAddressesBean.php");
 include_once("class/forms/InvoiceDetailsInputForm.php");
 include_once("class/beans/InvoiceDetailsBean.php");
-include_once("class/forms/EkontOfficeInputForm.php");
-include_once("class/beans/EkontAddressesBean.php");
+include_once("class/forms/CourierOfficeInputForm.php");
+include_once("class/beans/CourierAddressesBean.php");
 
 include_once("class/utils/OrderProcessor.php");
 include_once("class/mailers/OrderConfirmationMailer.php");
@@ -36,15 +36,19 @@ class RequireInvoiceFormProcessor extends FormProcessor
         if ($this->getStatus() != FormProcessor::STATUS_OK) return;
 
         $page = SparkPage::Instance();
-        $cart = $page->getCart();
 
-        $cabrow = $this->bean->findFieldValue("userID", $page->getUserID());
-        if ($cabrow) {
+        $cart = Cart::Instance();
+        $cart->setRequireInvoice($form->getInput("require_invoice")->getValue());
+        $cart->store();
+
+        $cabrow = $this->bean->getResult("userID", $page->getUserID());
+        if (!$cabrow) {
             header("Location: invoice_details.php");
             exit;
         }
 
-        $cart->setRequireInvoice($form->getInput("require_invoice")->getValue());
+
+
 
     }
 
@@ -55,7 +59,7 @@ class OrderNoteInputForm extends InputForm
     public function __construct()
     {
         parent::__construct();
-        $field = DataInputFactory::Create(DataInputFactory::TEXTAREA, "note", "Забележка", 0);
+        $field = DataInputFactory::Create(DataInputFactory::TEXTAREA, "note", "Бележка", 0);
         $field->getRenderer()->setInputAttribute("maxlength", "200");
         $this->addInput($field);
     }
@@ -69,10 +73,9 @@ class OrderNoteFormProcessor extends FormProcessor
 
         if ($this->getStatus() != FormProcessor::STATUS_OK) return;
 
-        $page = SparkPage::Instance();
-        $cart = $page->getCart();
-
+        $cart = Cart::Instance();
         $cart->setNote($form->getInput("note")->getValue());
+        $cart->store();
 
         header("Location: finalize.php");
         exit;
@@ -84,7 +87,20 @@ $page = new CheckoutPage();
 $page->ensureCartItems();
 $page->ensureClient();
 
-$cart = $page->getCart();
+$cart = Cart::Instance();
+
+$courier = $cart->getDelivery()->getSelectedCourier();
+if (is_null($courier)) {
+    header("Location: delivery.php");
+    exit;
+}
+else {
+    if (is_null($courier->getSelectedOption())) {
+        header("Location: delivery_option.php");
+        exit;
+    }
+}
+
 
 //request invoice
 $reqform = new RequireInvoiceInputForm();
@@ -102,14 +118,16 @@ $reqproc = new RequireInvoiceFormProcessor();
 $reqproc->setBean($idb);
 
 $frend = new FormRenderer($reqform);
-
+$frend->getSubmitLine()->setEnabled(false);
 $reqproc->process($reqform);
+
 
 //order note
 $noteform = new OrderNoteInputForm();
 $noteform->getInput("note")->setValue($cart->getNote());
 
 $nfrend = new FormRenderer($noteform);
+$nfrend->getSubmitLine()->setEnabled(false);
 
 $noteproc = new OrderNoteFormProcessor();
 $noteproc->process($noteform);
@@ -120,12 +138,12 @@ $page->setTitle(tr("Потвърди поръчка"));
 
 $page->drawCartItems();
 
-echo "<div class='item delivery_type'>";
+echo "<div class='item delivery_courier'>";
 
-echo "<div class='caption'>" . tr("Начин на доставка") . "</div>";
+echo "<h1 class='Caption'>" . tr("Куриер за доставка") . "</h1>";
 
 echo "<div class='value'>";
-echo tr(Cart::getDeliveryTypeText($cart->getDeliveryType()));
+echo tr($cart->getDelivery()->getSelectedCourier()->getTitle());
 echo "</div>";
 
 echo "<a class='ColorButton' href='delivery.php'>";
@@ -134,12 +152,28 @@ echo "</a>";
 
 echo "</div>"; //item delivery_type
 
-echo "<div class='item address'>";
 
-echo "<div class='caption'>" . tr("Адрес за доставка") . "</div>";
+echo "<div class='item delivery_type'>";
+
+echo "<h1 class='Caption'>" . tr("Начин на доставка") . "</h1>";
 
 echo "<div class='value'>";
-if (strcmp($cart->getDeliveryType(), Cart::DELIVERY_USERADDRESS) == 0) {
+echo tr($cart->getDelivery()->getSelectedCourier()->getSelectedOption()->getTitle());
+echo "</div>";
+
+echo "<a class='ColorButton' href='delivery_option.php'>";
+echo tr("Промени");
+echo "</a>";
+
+echo "</div>"; //item delivery_type
+
+echo "<div class='item address'>";
+
+echo "<h1 class='Caption'>" . tr("Адрес за доставка") . "</h1>";
+
+echo "<div class='value'>";
+$option = $cart->getDelivery()->getSelectedCourier()->getSelectedOption();
+if ($option->getID() == DeliveryOption::USER_ADDRESS) {
     $form = new ClientAddressInputForm();
     $bean = new ClientAddressesBean();
     $row = $bean->getResult("userID", $page->getUserID());
@@ -156,19 +190,19 @@ if (strcmp($cart->getDeliveryType(), Cart::DELIVERY_USERADDRESS) == 0) {
     echo "</a>";
 
 }
-else if (strcmp($cart->getDeliveryType(), Cart::DELIVERY_EKONTOFFICE) == 0) {
-    $form = new EkontOfficeInputForm();
-    $bean = new EkontAddressesBean();
+else if ($option->getID() == DeliveryOption::COURIER_OFFICE) {
+    $form = new CourierOfficeInputForm();
+    $bean = new CourierAddressesBean();
     $row = $bean->getResult("userID", $page->getUserID());
     if (!$row) {
-        header("Location: delivery_ekont.php");
+        header("Location: delivery_courier.php");
         exit;
     }
 
     $form->loadBeanData($row[$bean->key()], $bean);
     $form->renderPlain();
 
-    echo "<a class='ColorButton' href='delivery_ekont.php'>";
+    echo "<a class='ColorButton' href='delivery_courier.php'>";
     echo tr("Промени");
     echo "</a>";
 }
@@ -178,7 +212,7 @@ echo "</div>";// item address
 
 echo "<div class='item invoicing'>";
 
-echo "<div class='caption'>" . tr("Фактуриране") . "</div>";
+echo "<h1 class='Caption'>" . tr("Фактуриране") . "</h1>";
 
 $frend->render();
 
@@ -197,33 +231,57 @@ echo "</div>";
 echo "</div>";
 
 echo "<div class='item note'>";
-echo "<div class='caption'>" . tr("Забележка") . "</div>";
+echo "<h1 class='Caption'>" . tr("Бележка към поръчката") . "</h1>";
 $nfrend->render();
 echo "</div>";
 
-echo "<div class='navigation'>";
 
-echo "<div class='slot left'>";
-echo "<a href='cart.php'>";
-echo "<img src='" . LOCAL . "/images/cart_edit.png'>";
-echo "<div class='ColorButton checkout_button' >" . tr("Назад") . "</div>";
-echo "</a>";
-echo "</div>";
+$action = $page->getAction(CheckoutPage::NAV_LEFT);
+$action->setTitle(tr("Назад"));
+$action->setClassName("edit");
+$action->getURLBuilder()->buildFrom("cart.php");
 
-echo "<div class='slot center'>";
-echo "<div class='note'>";
-echo "<i>" . tr("Натискайки бутона 'Потвърди поръчка' Вие се съгласявате с нашите") . "&nbsp;" . "<a  href='" . LOCAL . "/terms_usage.php'>" . tr("Условия за ползване") . "</a>&nbsp; " . tr("и") . "&nbsp<a  href='" . LOCAL . "terms_delivery.php'>" . tr("Условия за доставка") . "</a></i>";
-echo "</div>";
-echo "</div>";
+$cmp = $page->getNavigation()->getByName(CheckoutPage::NAV_CENTER);
+if ($cmp instanceof ClosureComponent) {
+    $render = function (ClosureComponent $cmp) {
+        echo "<div class='note'>";
+        echo "<i>" . tr("Натискайки бутона 'Потвърди поръчка' Вие се съгласявате с нашите") . "&nbsp;" . "<a  href='" . LOCAL . "/terms_usage.php'>" . tr("Условия за ползване") . "</a></i>";
+        echo "</div>";
+    };
+    $cmp->setClosure($render);
+}
 
-echo "<div class='slot right'>";
-echo "<a href='javascript:document.forms.OrderNote.submit()'>";
-echo "<img src='" . LOCAL . "/images/cart_checkout.png'>";
-echo "<div class='ColorButton checkout_button'  >" . tr("Потвърди поръчка") . "</div>";
-echo "</a>";
-echo "</div>";
+$action = $page->getAction(CheckoutPage::NAV_RIGHT);
+$action->setTitle(tr("Потвърди поръчка"));
+$action->setClassName("checkout");
+$action->getURLBuilder()->buildFrom("javascript:document.forms.OrderNoteInputForm.submit()");
 
-echo "</div>";
+
+$page->renderNavigation();
+//
+//echo "<div class='navigation'>";
+//
+//echo "<div class='slot left'>";
+//echo "<a href='cart.php'>";
+//echo "<img src='" . LOCAL . "/images/cart_edit.svg'>";
+//echo "<div class='ColorButton checkout_button' >" . tr("Назад") . "</div>";
+//echo "</a>";
+//echo "</div>";
+//
+//echo "<div class='slot center'>";
+//echo "<div class='note'>";
+//echo "<i>" . tr("Натискайки бутона 'Потвърди поръчка' Вие се съгласявате с нашите") . "&nbsp;" . "<a  href='" . LOCAL . "/terms_usage.php'>" . tr("Условия за ползване") . "</a></i>";
+//echo "</div>";
+//echo "</div>";
+//
+//echo "<div class='slot right'>";
+//echo "<a href='javascript:document.forms.OrderNoteInputForm.submit()'>";
+//echo "<img src='" . LOCAL . "/images/cart_checkout.svg'>";
+//echo "<div class='ColorButton checkout_button'  >" . tr("Потвърди поръчка") . "</div>";
+//echo "</a>";
+//echo "</div>";
+//
+//echo "</div>";
 
 Session::set("checkout.navigation.back", $page->getPageURL());
 

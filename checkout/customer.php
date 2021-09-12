@@ -1,116 +1,93 @@
 <?php
 include_once("session.php");
 include_once("class/pages/CheckoutPage.php");
+include_once("class/forms/ClientAddressInputForm.php");
+include_once("class/mailers/FastOrderAdminMailer.php");
 
-include_once("class/forms/RegisterClientInputForm.php");
-include_once("class/forms/processors/RegisterClientFormProcessor.php");
+class FastOrderProcessor extends FormProcessor {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+    protected function processImpl(InputForm $form)
+    {
+        parent::processImpl($form);
 
-include_once("auth/UserAuthenticator.php");
-include_once("responders/AuthenticatorResponder.php");
-include_once("forms/LoginForm.php");
-include_once("forms/renderers/LoginFormRenderer.php");
+        $cart = Cart::Instance();
+
+        if ($cart->itemsCount()<1) throw new Exception(tr("Your shopping cart is empty"));
+
+        if ($form instanceof ClientAddressInputForm) {
+            $mailer = new FastOrderAdminMailer($form);
+            $mailer->send();
+            $cart->clear();
+            $cart->store();
+            header("Location: complete.php");
+            exit;
+        }
+
+        throw new Exception("Incorrect InputForm class - expecting 'ClientAddressInputForm'");
+
+    }
+}
 
 $page = new CheckoutPage();
+$page->ensureCartItems();
 
 if ($page->getUserID() > 0) {
-    header("Location:delivery.php");
+    header("Location: confirm.php");
     exit;
 }
-
-$auth = new UserAuthenticator();
-
-$req = new AuthenticatorResponder($auth, "doLogin");
-$req->setCancelUrl(LOCAL . "/checkout/customer.php");
-$req->setSuccessUrl(LOCAL . "/checkout/delivery.php");
-
-
-if ($auth->authorize()) {
-    header("Location: delivery.php");
-    exit;
+else {
+    Session::Set("login.redirect", LOCAL."/checkout/confirm.php");
+//    header("Location: ".LOCAL."/account/login.php");
+//    exit;
 }
 
-$af = new LoginForm();
-$afr = new LoginFormRenderer($af, $req);
-
-$action = $afr->getTextSpace()->get(0);
-if ($action instanceof Action) {
-    $action->getURLBuilder()->buildFrom(LOCAL . "/account/forgot_password.php");
-}
-
-$form = new RegisterClientInputForm();
-$form->setName("RegisterClient");
-
-$frender = new FormRenderer($form);
-
-$proc = new RegisterClientFormProcessor();
-
+$form = new ClientAddressInputForm(true);
+$frend = new FormRenderer($form);
+$proc = new FastOrderProcessor();
 $proc->process($form);
 
-if ($proc->getStatus() == IFormProcessor::STATUS_ERROR) {
-    Session::SetAlert($proc->getMessage());
-}
-else if ($proc->getStatus() == IFormProcessor::STATUS_OK) {
-
-    header("Location: delivery.php");
-    exit;
-}
-
-header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-header("Expires: 0");
+$page->setTitle(tr("Fast Order"));
 
 $page->startRender();
-$page->setTitle(tr("Клиенти"));
 
-echo "<div class='item login'>";
+echo "<div class='columns'>";
 
-echo "<div class='caption'>" . tr("Регистрирани Клиенти") . "</div>";
+echo "<div class='column fast_order'>";
 
-echo "<div class='login_component'>";
-echo "<div class='inner'>";
-$afr->render();
-echo "</div>";
-echo "</div>";
+    echo "<h1 class='Caption'>".tr("Бърза поръчка")."</h1>";
 
-echo "</div>";
+    echo "<div class='panel'>";
+    $frend->render();
+    echo "</div>";
 
-//
-echo "<div class='item register'>";
+echo "</div>"; //column
 
-echo "<div class='caption'>" . tr("Нови Клиенти") . "</div>";
 
-echo "<div class='panel'>";
+echo "<div class='column login'>"; //register
 
-$frender->render();
+    echo "<h1 class='Caption'>".tr("Вече имате профил?")."</h1>";
 
-echo "</div>";
+    echo "<div class='panel'>";
+    echo "<a class='ColorButton' href='".LOCAL."/account/login.php'>".tr("Login")."</a>";
+    echo "</div>";
 
-echo "</div>";
+echo "</div>"; //column
 
-echo "<div class='navigation'>";
+echo "<div class='column register'>"; //register
 
-echo "<div class='slot left'>";
-echo "<a href='cart.php'>";
-echo "<img src='" . LOCAL . "/images/cart_edit.png'>";
-echo "<div class='ColorButton checkout_button' >" . tr("Назад") . "</div>";
-echo "</a>";
-echo "</div>";
+    echo "<h1 class='Caption'>" . tr("Все още нямате профил ?") . "</h1>";
 
-echo "<div class='slot center'>";
-//     echo "<div class='note'>";
-//         echo "<i>".tr("Натискайки бутона 'Продължи' Вие се съгласявате с нашите")."&nbsp;"."<a  href='".LOCAL."/terms.php'>".tr("Условия за ползване")."</a></i>";
-//     echo "</div>";
-echo "</div>";
+    echo "<div class='panel'>";
+    echo "<a class='ColorButton' href='".LOCAL."/account/register.php'>".tr("Регистрация")."</a>";
+    echo "</div>"; //panel
 
-echo "<div class='slot right'>";
-echo "<a href='javascript:document.forms.RegisterClient.submit();'>";
-echo "<img src='" . LOCAL . "/images/cart_checkout.png'>";
-echo "<div class='ColorButton checkout_button'>" . tr("Продължи") . "</div>";
-echo "</a>";
-echo "</div>";
-//
-//
+echo "</div>"; //column
 
-echo "</div>";
+echo "</div>";//columns
 
 $page->finishRender();
+
 ?>

@@ -21,14 +21,18 @@ $orderID = -1;
 try {
 
     $oproc = new OrderProcessor();
-    $orderID = $oproc->createOrder($page->getCart(), $page->getUserID());
+
+    $oproc->createOrder();
+
+    $orderID = $oproc->getOrderID();
 
     try {
         $mailer = new OrderConfirmationMailer($orderID);
         $mailer->send();
     }
     catch (Exception $em) {
-        error_log("Unable to email confirmation message for order to user: " . $em->getMessage());
+
+        error_log("Unable to email confirmation message for order to client: " . $em->getMessage());
     }
     try {
         $mcopy = new OrderConfirmationAdminMailer($orderID);
@@ -44,7 +48,7 @@ try {
 catch (Exception $e) {
     Session::SetAlert(tr("Възникна грешка при обработка на Вашата поръчка.") . "<BR>" . tr("Details") . ": " . $e->getMessage());
     try {
-        $oem = new OrderErrorAdminMailer();
+        $oem = new OrderErrorAdminMailer($e->getMessage());
         $oem->send();
     }
     catch (Exception $oeme) {

@@ -101,26 +101,18 @@ class StorePage extends SparkPage
     {
         parent::headStart();
 
-        $this->renderLinkedData();
-
-    }
-
-    protected function renderLinkedData()
-    {
-
-
         $cfg = new ConfigBean();
         $cfg->setSection("store_config");
         $phone = $cfg->get("phone", "");
 
 
-        $ldata = (object)array(
+        $org_data = array(
             "@context"=>"http://schema.org",
             "@type"=>"Organization",
             "name"=> SITE_TITLE,
             "url"=> SITE_URL,
             "logo"=> SITE_URL."/images/logo_header.svg",
-            "contactPoint"=> (object)array(
+            "contactPoint"=> array(
                 "@type"=>"ContactPoint",
                 "telephone"=>$phone,
                 "contactType"=>"sales",
@@ -129,11 +121,15 @@ class StorePage extends SparkPage
             )
         );
 
+        $this->renderLDJSON($org_data);
 
+    }
+
+    public function renderLDJSON(array $data)
+    {
         echo "<script type='application/ld+json'>";
-        echo json_encode($ldata, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+        echo json_encode($data, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
         echo "</script>";
-
     }
 
     public function getMenuBar()

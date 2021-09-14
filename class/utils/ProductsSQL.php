@@ -13,7 +13,8 @@ class ProductsSQL extends SQLSelect
                              "pi.color", "pi.pclrID",  "pi.prodID", "pi.stock_amount", "p.product_name",
                              "p.brand_name", "p.product_description", "p.long_description", "p.keywords",
                              "p.visible", "p.class_name", "p.section", "p.promo_price", "p.price",
-                             "p.insert_date", "p.update_date", "sc.color_code");
+                             "p.insert_date", "p.update_date", "sc.color_code",
+            "pi.order_counter, pi.view_counter");
 
         //        $this->fields()->setExpression("(pclrs.color_photo IS NOT NULL)", "have_chip");
 

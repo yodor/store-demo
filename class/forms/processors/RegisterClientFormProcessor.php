@@ -3,7 +3,7 @@ include_once("forms/processors/FormProcessor.php");
 include_once("forms/InputForm.php");
 include_once("beans/UsersBean.php");
 include_once("auth/Authenticator.php");
-include_once("class/mailers/RegisterCustomerPasswordMailer.php");
+include_once("class/mailers/RegisterCustomerActivationMailer.php");
 
 class RegisterClientFormProcessor extends FormProcessor
 {
@@ -32,6 +32,7 @@ class RegisterClientFormProcessor extends FormProcessor
             $email_exists = $users->emailExists($email);
 
             if ($email_exists) {
+
                 $form->getInput("email")->setError("Този имейл адрес е вече регистриран.");
                 throw new Exception(tr("Вие избрахте регистрирация, но имейлът е вече регистриран при нас. Ако сте регистриран клиент изберете вход за регистриран потребител."));
             }
@@ -41,17 +42,34 @@ class RegisterClientFormProcessor extends FormProcessor
             $urow["email"] = strtolower(trim($form->getInput("email")->getValue()));
             $urow["phone"] = $form->getInput("phone")->getValue();
 
-            $password = Authenticator::RandomToken(8);
+            $urow["password"] = $form->getInput("pass")->getValue();
 
-            $urow["password"] = md5($password);
-            $urow["is_confirmed"] = 1;
+
+            //automatic registration without activation email
+//            $password = Authenticator::RandomToken(8);
+//
+//            $urow["password"] = md5($password);
+//            $urow["confirmed"] = 1;
+//            $urow["date_signup"] = DBConnections::Get()->dateTime();
+//
+//            $auth = new UserAuthenticator();
+//
+//            $context = $auth->register($urow);
+//
+//            $mailer = new RegisterCustomerPasswordMailer($context->getID(), $password, $urow["fullname"], $urow["email"]);
+//            $mailer->send();
+            //
+
+            //registration requires activation email
+            $confirm_code = Authenticator::RandomToken(32);
+            $urow["confirmed"] = 0;
             $urow["date_signup"] = DBConnections::Get()->dateTime();
+            $urow["confirm_code"] = $confirm_code;
 
-            $auth = new UserAuthenticator();
+            $userID = $users->insert($urow);
+            if ($userID<1) throw new Exception(tr("Неуспешна регистрация. Моля опитайте по късно или се свържете с нас."));
 
-            $context = $auth->register($urow);
-
-            $mailer = new RegisterCustomerPasswordMailer($context->getID(), $password, $urow["fullname"], $urow["email"]);
+            $mailer = new RegisterCustomerActivationMailer($urow["fullname"], $urow["email"], $confirm_code);
             $mailer->send();
 
         }
@@ -67,7 +85,7 @@ class RegisterClientFormProcessor extends FormProcessor
                 //check if email exists and is for different ID
                 $existingID = $users->email2id($email);
                 if ((int)$existingID != (int)$this->editID) {
-                    throw new Exception("Този email адрес е вече регистриран");
+                    throw new Exception("Този e-mail адрес е вече регистриран");
                 }
             }
 

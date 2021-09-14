@@ -1,11 +1,11 @@
 <?php
 include_once("session.php");
-include_once("class/pages/DemoPage.php");
+include_once("class/pages/StorePage.php");
 include_once("beans/DynamicPagePhotosBean.php");
 // include_once("beans/DynamicPagesBean.php");
 include_once("beans/MenuItemsBean.php");
 
-$page = new DemoPage();
+$page = new StorePage();
 
 if (!isset($_GET["page_id"]) || !isset($_GET["page_class"])) {
 
@@ -74,20 +74,20 @@ $qry->select->fields()->set("ppID", "caption");
 $num_photos = $qry->exec();
 
 $image_popup = new ImagePopup();
-$image_popup->setBean($bean);
-$image_popup->setAttribute("rel", "DynamicPagePhotosBean");
+$image_popup->setBean($dpp);
+$image_popup->setAttribute("rel", get_class($dpp));
 
 if ($num_photos && $dpprow = $qry->next()) {
     $photo_id = $dpprow["ppID"];
 
-    echo "<div class='photo_item' id='$photo_id' class='DynamicPagePhotosBean'>";
+    echo "<div class='photo_item' id='$photo_id' class='{get_class($dpp)}'>";
 
     $image_popup->setID($photo_id);
     $image_popup->render();
 
-    echo "<div class='caption'>";
+    echo "<h1 class='Caption'>";
     echo $dpprow["caption"];
-    echo "</div>";
+    echo "</h1>";
 
     echo "</div>";
 

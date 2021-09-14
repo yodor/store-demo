@@ -67,7 +67,7 @@ while ($$nb->fetchNext($item_row)) {
     echo "<div class='content'>";
     $item = new StorageItem();
     $item->id = $itemID;
-    $item->className = NewsItemsBean;
+    $item->className = "NewsItemsBean";
     $img_href = $item->hrefCrop(-1, 256);
     echo "<img src='$img_href'>";
     echo $item_row["content"];
@@ -81,7 +81,7 @@ echo "</div>"; //column_main
 
 echo "<div class='column other'>";
 echo "<div class='latest'>";
-echo "<div class='caption'>";
+echo "<div class='Caption'>";
 echo tr("Latest News");
 echo "</div>";
 drawLatestNews(3);
@@ -89,7 +89,7 @@ drawLatestNews(3);
 echo "</div>";
 
 echo "<div class='archive'>";
-echo "<div class='caption'>";
+echo "<div class='Caption'>";
 echo tr("News Archive");
 echo "</div>";
 $pac->render();

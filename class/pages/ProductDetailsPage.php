@@ -32,14 +32,15 @@ class ProductDetailsPage extends ProductListPage
 
         try {
 
-            $qry = $this->bean->query();
-            $qry->select->where()->add("prodID", $prodID);
+            $this->setSellableProducts(new SellableProducts());
 
-            //$qry->select->fields()->set("p.long_description");
+            $qry = $this->bean->queryFull();
+            $qry->setKey("piID");
+
+            $qry->select->where()->add("prodID", $prodID);
 
             $qry->select->group_by = "piID";
 
-            //$qry->select->order_by = " ssz2.position ASC ";
 
             $num = $qry->exec();
 
@@ -173,14 +174,14 @@ class ProductDetailsPage extends ProductListPage
 
         $title = tr("Още продукти от тази категория");
 
-        $sel = new ProductsSQL();
-        $sel->order_by = " pi.view_counter ";
-        $sel->group_by = " pi.prodID, pi.color ";
-        $sel->order_by = " rand() ";
-        $sel->limit = "4";
-        $sel->where()->add("p.catID", $catID);
+        $qry = $this->bean->queryFull();
+        $qry->select->where()->add("catID", $catID);
+        $qry->select->order_by = " rand() ";
+        $qry->select->group_by = " prodID ";
+        $qry->select->limit = "4";
 
-        $tape = new ProductsTape(new SQLQuery($sel, "prodID"), $title);
+        $tape = new ProductsTape($title);
+        $tape->setIterator($qry);
         $action = $tape->getTitleAction();
         $action->getURLBuilder()->buildFrom(LOCAL."/products/list.php");
         $action->getURLBuilder()->add(new URLParameter("catID", $catID));
@@ -192,13 +193,14 @@ class ProductDetailsPage extends ProductListPage
     {
         $title = tr("Други продукти");
 
-        $sel = new ProductsSQL();
-        $sel->order_by = " pi.view_counter ";
-        $sel->group_by = " pi.prodID, pi.color ";
-        $sel->order_by = " rand() ";
-        $sel->limit = "4";
+        $qry = $this->bean->queryFull();
+        $qry->select->order_by = " rand() ";
+        $qry->select->group_by = " prodID ";
+        $qry->select->limit = "4";
 
-        $tape = new ProductsTape(new SQLQuery($sel, "prodID"), $title);
+
+        $tape = new ProductsTape($title);
+        $tape->setIterator($qry);
         $action = $tape->getTitleAction();
         $action->getURLBuilder()->buildFrom(LOCAL."/products/list.php");
         $tape->render();

@@ -9,10 +9,17 @@ class DeliveryAddressForm extends InputForm
     {
         parent::__construct();
 
-        $data = new ArrayDataIterator(array(Cart::DELIVERY_USERADDRESS => "Моят регистриран адрес",
-                                            Cart::DELIVERY_EKONTOFFICE => "До офис на Еконт"));
+        $cart = Cart::Instance();
+        $options = $cart->getDelivery()->getSelectedCourier()->getOptions();
 
-        $field = new DataInput("delivery_type", "Изберете адрес", 1);
+        $option_values = array();
+        foreach ($options as $id=>$option)  {
+            $option_values[$id] = $option->getTitle();
+        }
+
+        $data = new ArrayDataIterator($option_values);
+
+        $field = new DataInput("delivery_option", "Изберете адрес за доставка", 1);
 
         $radio = new RadioField($field);
         $radio->setIterator($data);

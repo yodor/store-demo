@@ -29,19 +29,19 @@ class InvoiceDetailsInputForm extends InputForm
         $this->addInput($field);
     }
 
-    public function renderPlain()
-    {
-        echo "<div class='InvoiceDetailsList'>";
-
-        foreach ($this->getInputs() as $index => $field) {
-            echo "<div class='address_item'>";
-            echo "<label>" . tr($field->getLabel()) . ": </label>";
-            echo "<span>" . strip_tags(stripslashes($field->getValue())) . "</span>";
-            echo "</div>";
-        }
-
-        echo "</div>";
-    }
+//    public function renderPlain()
+//    {
+//        echo "<div class='InvoiceDetailsList'>";
+//
+//        foreach ($this->getInputs() as $index => $field) {
+//            echo "<div class='address_item'>";
+//            echo "<label>" . tr($field->getLabel()) . ": </label>";
+//            echo "<span>" . strip_tags(stripslashes($field->getValue())) . "</span>";
+//            echo "</div>";
+//        }
+//
+//        echo "</div>";
+//    }
 }
 
 ?>

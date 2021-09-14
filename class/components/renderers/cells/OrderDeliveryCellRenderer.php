@@ -25,7 +25,7 @@ class OrderDeliveryCellRenderer extends TableCellRenderer
         if (strcmp($this->data["delivery_type"], Cart::DELIVERY_EKONTOFFICE) == 0) {
             global $ekont_addresses;
             $row = $ekont_addresses->getByRef("userID", $userID);
-            echo "<div class='caption'>" . tr("Офис на еконт") . "</div>";
+            echo "<div class='Caption'>" . tr("Офис на еконт") . "</div>";
 
             echo "<div class='item office'>";
             echo "<label>" . tr("Адрес") . "</label>";
@@ -37,7 +37,7 @@ class OrderDeliveryCellRenderer extends TableCellRenderer
             global $client_addresses;
             $row = $client_addresses->getByRef("userID", $userID);
 
-            echo "<div class='caption'>" . tr("Регистриран адрес на клиента") . "</div>";
+            echo "<div class='Caption'>" . tr("Регистриран адрес на клиента") . "</div>";
 
             echo "<div class='item city'>";
             echo "<label>" . tr("Град") . "</label>";

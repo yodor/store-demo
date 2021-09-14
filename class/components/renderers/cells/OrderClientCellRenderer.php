@@ -5,11 +5,18 @@ class OrderClientCellRenderer extends TableCellRenderer
 {
     protected $userID = -1;
 
+    protected $clients;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->clients = new UsersBean();
+    }
+
     protected function renderImpl()
     {
-        global $clients;
 
-        $client = $clients->getByID($this->userID, "fullname", "email", "phone");
+        $client = $this->clients->getByID($this->userID, "fullname", "email", "phone");
 
         echo "<div class='group client_data'>";
         echo "<div class='item fullname'>";

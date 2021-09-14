@@ -76,7 +76,7 @@ echo "<div class='column right orders'>";
 
 if ($proc->getStatus() == IFormProcessor::STATUS_OK) {
 
-    echo "<div class='caption'>";
+    echo "<div class='Caption'>";
     echo tr("Състояние на поръчка");
     echo "</div>";
 
@@ -87,7 +87,7 @@ if ($proc->getStatus() == IFormProcessor::STATUS_OK) {
 }
 else {
 
-    echo "<div class='caption'>";
+    echo "<div class='Caption'>";
     echo tr("Състояние на поръчка");
     echo "</div>";
 

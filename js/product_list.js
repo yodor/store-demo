@@ -35,4 +35,14 @@ function clearFilters() {
     window.location = url;
 }
 
-
+function togglePanel(elm)
+{
+    let e = $(elm).parents(".panel").first().children(".viewport").first();
+    let is_hidden = e.css("display");
+    if (is_hidden == "none") {
+        e.css("display", "inline-block");
+    }
+    else {
+        e.css("display", "none");
+    }
+}

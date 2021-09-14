@@ -12,7 +12,7 @@ class InvoiceDetailsBean extends DBTableBean
  `address1` varchar(255) NOT NULL,
  `address2` varchar(255) DEFAULT NULL,
  `vat` varchar(255) NOT NULL,
- `vat_registered` tinyint(1) NOT NULL,
+ `vat_registered` tinyint(1) NULL DEFAULT '0',
  `userID` int(11) unsigned NOT NULL,
  PRIMARY KEY (`ccID`),
  UNIQUE KEY `userID` (`userID`),

@@ -21,7 +21,6 @@ class ProductDetailsItem extends Component implements IHeadContents
 
         $this->sellable = $item;
 
-
     }
 
     public function requiredStyle(): array
@@ -69,6 +68,19 @@ class ProductDetailsItem extends Component implements IHeadContents
                 echo "<a class='ImagePopup' itemClass='{$main_photo->className}' itemID='{$main_photo->id}' title='".attributeValue($product_name)."'>";
                     echo "<img itemprop='image' alt='".attributeValue($product_name)."' src='$photo_href'>";
                 echo "</a>";
+
+                $piID = $this->sellable->getActiveInventoryID();
+                $priceInfo = $this->sellable->getPriceInfo($piID);
+
+                echo "<div class='discount_label'>";
+                if ($priceInfo->getDiscountPercent()>0) {
+                    echo " -".$priceInfo->getDiscountPercent()."%</div>";
+                }
+                else {
+                    echo tr("Промо");
+                }
+                echo "</div>";
+
             echo "</div>";
 
             //image galleries per color
@@ -130,23 +142,19 @@ class ProductDetailsItem extends Component implements IHeadContents
             echo "</div>"; //group sizing
 
             echo "<div class='group attributes' >";
-            //        $attributes = $sellable->getAttributes($piID);
-            //
-            //        foreach ($attributes as $idx=>$item) {
-            //            echo "<div class='item'><label>{$item["name"]}</label><span class='value'>{$item["value"]}</span></label></div>";
-            //        }
+
             echo "</div>"; //attributes
 
 
             $piID = $this->sellable->getActiveInventoryID();
 
-            $info = $this->sellable->getPriceInfo($piID);
+            $priceInfo = $this->sellable->getPriceInfo($piID);
 
             echo "<div class='group stock_amount disabled'>";
 
                 echo "<div class='item stock_amount'>";
                     echo "<label>" . tr("Наличност")."</label>";
-                    echo "<span class='value'>".$info->getStockAmount()."</span>";
+                    echo "<span class='value'>".$priceInfo->getStockAmount()."</span>";
                     echo "<span class='unit'> бр.</span>";
                 echo "</div>";
 
@@ -154,23 +162,18 @@ class ProductDetailsItem extends Component implements IHeadContents
 
             echo "<div class='group pricing'>";
 
-            echo "<div class='item sell_price' itemprop='offers' itemscope itemtype='http://schema.org/Offer'>";
+            echo "<div class='item price_info' itemprop='offers' itemscope itemtype='http://schema.org/Offer'>";
 
-                $sell_price = $info->getSellPrice();
-                $old_price = $info->getOldPrice();
 
-                $enabled="disabled";
-                if ((float)$sell_price != (float)$old_price && (float)$old_price > 0) {
-                    $enabled="";
-                }
+                $enabled= ($this->sellable->isPromotion($piID)) ? "" : "disabled";
 
                 echo "<div class='old $enabled'>";
-                echo "<span class='value'>" . sprintf("%0.2f", $old_price) . "</span>";
+                echo "<span class='value'>" . sprintf("%0.2f", $priceInfo->getOldPrice()) . "</span>";
                 echo "&nbsp;<span class='currency'>лв.</span>";
                 echo "</div>";
 
                 echo "<div class='sell'>";
-                echo "<span class='value' itemprop='price'>" . sprintf("%0.2f", $sell_price) . "</span>";
+                echo "<span class='value' itemprop='price'>" . sprintf("%0.2f", $priceInfo->getSellPrice()) . "</span>";
                 echo "<meta itemprop='priceCurrency' content='BGN'>";
                 echo "&nbsp;<span class='currency'>лв.</span>";
                 echo "</div>";
@@ -181,7 +184,23 @@ class ProductDetailsItem extends Component implements IHeadContents
 
 
             echo "<div class='group cart_link'>";
-                echo "<a class='cart_add' href='javascript:addToCart()'>" . tr("Поръчай") . "</a>";
+
+                echo "<a class='cart_add' href='javascript:addToCart()'>";
+                    echo "<span class='icon'></span>";
+                    echo "<span>".tr("Поръчай")."</span>";
+                echo "</a>";
+
+                $config = ConfigBean::Factory();
+                $config->setSection("store_config");
+                $phone = $config->get("phone", "");
+                if ($phone) {
+                    echo "<a class='order_phone' href='tel:$phone'>";
+                    //echo "<label>".tr("Телефон за поръчки")."</label>";
+                    echo "<span class='icon'></span>";
+                    echo "<span>$phone</span>";
+                    echo "</a>";
+                }
+
             echo "</div>";
 
             echo "<div class='clear'></div>";
@@ -205,7 +224,7 @@ class ProductDetailsItem extends Component implements IHeadContents
         $num = $qry->exec();
         if ($num) {
             echo "<div class='item features'>";
-            echo "<div class='Caption'>" . tr("Свойства") . "</div>";
+            echo "<h1 class='Caption'>" . tr("Свойства") . "</h1>";
             echo "<div class='contents'>";
             echo "<ul>";
             while ($data = $qry->nextResult()) {
@@ -231,7 +250,7 @@ class ProductDetailsItem extends Component implements IHeadContents
     {
 
 
-        echo "<meta itemprop='url' content='".attributeValue(fullURL($this->url))."'>";
+        echo "<meta itemprop='url' content='".attributeValue($this->url)."'>";
 
         $content = array();
         foreach ($this->categories as $idx=>$catinfo) {

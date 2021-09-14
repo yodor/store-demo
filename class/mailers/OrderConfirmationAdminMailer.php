@@ -4,19 +4,25 @@ include_once("mailers/Mailer.php");
 class OrderConfirmationAdminMailer extends Mailer
 {
 
-    public function __construct($orderID)
+    public function __construct(int $orderID)
     {
+        parent::__construct();
 
         $this->to = ORDER_ADMIN_EMAIL;
 
-        $this->subject = "Нова поръчка / New order - ID:$orderID ";
+        $this->subject = "Нова поръчка - OrderID:$orderID";
 
-        $message = "OrderID: $orderID\r\n<BR>";
+        $message = "Нова поръчка беше направена на " . SITE_DOMAIN;
+        $message .= "\r\n\r\n";
+        $message .= "OrderID: $orderID";
+        $message .= "\r\n\r\n";
 
-        $order_link = SITE_URL . LOCAL . "/admin/orders/list.php?orderID=$orderID";
+        $message .= "\r\n\r\n";
+        $order_link = SITE_URL . LOCAL . "/admin/orders/active.php?orderID=$orderID";
+        $message .= "Кликнете по долу за да видите поръчката.";
+        $message .= "\r\n\r\n";
 
-        $message .= "Можете да видите поръчката на адрес - ";
-        $message .= "<a href='$order_link'>$order_link</a>";
+        $message .= "<a href='$order_link'>Списък поръчки</a>";
 
         $this->body = $this->templateMessage($message);
 

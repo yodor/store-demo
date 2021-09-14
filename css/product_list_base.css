@@ -1,62 +1,95 @@
-.main_content {
-    display: inline-table;
-    box-sizing: border-box;
+.section.main .content {
+    padding-top:20px;
+    text-align:center;
+    font-size:80%;
 }
-
-.main_content .column {
+.section.main .content .column {
     display: table-cell;
     vertical-align: top;
     box-sizing: border-box;
+    text-align:left;
 }
 
-.main_content .column.left {
+/*.section.main .content .column.left:not([section='Галерия']) {*/
+/*    display:none;*/
+/*}*/
 
-  max-width:180px;
-  padding-right:20px;
-  
-}
-.main_content .column.left .panel {
-    display:block;
-    margin-bottom:20px;
-}
-.main_content .column.left .caption {
-    color:gray;
-    font-weight:normal;
-    display:block;
-/*     font-size:1.4em; */
+.section.main .content .column.left {
+    width:270px;
+    padding-left:20px;
+    padding-right:20px;
 
 }
-.main_content .column.product_list {
-    max-width: 900px;
+
+.section.main .content .column.left .panel {
+    display: block;
+    margin-bottom: 20px;
+}
+
+.section.main .content .column.left .panel .viewport {
+    display:inline-block;
 }
 
 
-/*.product_list .KeywordSearch {
-  float:right;
+.section.main .content .column.left .panel .Caption {
+    color: #aaaaaa;
+    font-weight: normal;
+    display: block;
+    padding-top:0;
+    text-align:left;
+
+    cursor:pointer;
+    font-size:110%;
 }
-.product_list .KeywordSearch .InputLabel {
-  display:none;
+
+.section.main .content .column.left .panel .Caption .toggle {
+    width:2em;
+    height:25px;
+    display:none;
+    /*border:1px solid red;*/
+
+    vertical-align: text-bottom;
+    /*margin-top: -4px;*/
+    margin-right: 5px;
+
 }
-.product_list .KeywordSearch .buttons {
-  vertical-align:bottom;
+.panel .Caption .toggle:after,
+.panel .Caption .toggle:before,
+.panel .Caption .toggle DIV {
+    background-color: gray;
+    border-radius: 3px;
+    content: '';
+    display: block;
+    height: 4px;
+    margin: 5px 0;
 }
-.product_list .KeywordSearch .buttons [name='clear'] {
-  display:none;
-}*/
+
+.section.main .content .column.product_list {
+    /*padding-right:20px;*/
+}
+
+.TreeView .Action {
+    color:black;
+}
+
+.TreeView .Node[active='1'] .Action {
+    color:red;
+    font-weight:normal !important;
+    text-decoration:none !important;
+    font-weight:bold !important;
+}
+
 
 .TreeView .Node {
     font-size: 1.2em;
 }
 
-FORM[name='filters'] {
-
+FORM[name='ProductListFilterInputForm'] {
+    display: block !important;
+    text-align: center !important;
 }
 
-.filters {
-    display: inline-block;
-}
-
-.filters FORM {
+.filters  {
     display: block;
 }
 
@@ -84,7 +117,7 @@ FORM[name='filters'] {
     margin-bottom: 5px;
     font-size: 1.2em;
 
-    color: #1875ac;
+    color: black;
     /*   font-family: 'Roboto Condensed', sans-serif; */
 
 }
@@ -104,28 +137,48 @@ FORM[name='filters'] {
     padding-right: 7px;
 }
 
-.filters BUTTON {
+.filters.panel  {
+    text-align:center;
+}
+.filters.panel BUTTON {
     margin-top: 20px;
+
 }
 
-.filters .label {
 
 
+
+.ItemView {
+    width:100%;
+    box-sizing:border-box;
+    position:relative;
+}
+
+.ItemView .Caption {
+    float: left;
+    position: absolute;
+    top: 0;
+    padding-top:0;
+    padding-bottom:0;
 }
 
 .ItemView .viewport {
-    margin-left: -5px;
-    margin-right: -5px;
+    /*margin-left: -5px;*/
+    /*margin-right: -5px;*/
+    text-align:center;
 }
 
 .ItemView .PaginatorTopComponent {
     background: none;
     background-color: transparent !important;
+    border-spacing:0;
+    color:black;
 }
 
 .ItemView .PaginatorBottomComponent {
     background: none;
     background-color: transparent !important;
+    color:black;
 }
 
 .PaginatorTopComponent .view_mode {
@@ -134,6 +187,7 @@ FORM[name='filters'] {
 
 .PaginatorTopComponent .sort_fields {
     text-align: right;
+    padding-right:20px;
 }
 
 .PaginatorTopComponent .sort_fields .direction {
@@ -141,13 +195,12 @@ FORM[name='filters'] {
     font-weight: bold;
     color: black;
     text-decoration: none;
-    font-size: 1.5em;
-
 }
 
 .PaginatorTopComponent .page_navigation.short {
     display: none;
 }
+
 
 
 /*.InputComponent {

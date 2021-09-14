@@ -5,8 +5,8 @@ class ClientAddressesBean extends DBTableBean
 {
     protected $createString = "CREATE TABLE `client_addresses` (
  `uaID` int(11) unsigned NOT NULL AUTO_INCREMENT,
- `fullname` varchar(255) NOT NULL,
- `phone` varchar(255) NOT NULL,
+ `fullname` varchar(255)  NULL DEFAULT '',
+ `phone` varchar(255)  NULL DEFAULT '',
  `city` varchar(255) NOT NULL,
  `postcode` varchar(255) NOT NULL,
  `address1` varchar(255) NOT NULL,

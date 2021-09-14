@@ -59,8 +59,7 @@ class StorePage extends SparkPage
         $this->menu_bar = new MenuBarComponent($menu);
 
         $this->menu_bar->setName("StorePage");
-        $this->menu_bar->toggle_first = true;
-
+        $this->menu_bar->toggle_first = TRUE;
 
         $ksc = new KeywordSearch();
         //just initialize the keyword form here. Search fields are initialized in ProductsListPage as form is posted there
@@ -92,10 +91,48 @@ class StorePage extends SparkPage
         $this->addOGTag("description", "%meta_description%");
         $this->addOGTag("url", fullURL($this->getPageURL()));
         $this->addOGTag("site_name", SITE_TITLE);
-        $this->addOGTag("type",	"website");
+        $this->addOGTag("type", "website");
         //<meta name="twitter:card" content="summary_large_image" />
         //meta name="twitter:description" content="&nbsp; Продукти от категория &#8222;Джинси&#8220; Нови продукти Категории продукти Последно от блога [carousel_slide id=&#8217;1344&#8242;]" />
         //<meta name="twitter:title" content="Начало - ВИКИ МАШИНИ" />
+    }
+
+    protected function headStart()
+    {
+        parent::headStart();
+
+        $this->renderLinkedData();
+
+    }
+
+    protected function renderLinkedData()
+    {
+
+
+        $cfg = new ConfigBean();
+        $cfg->setSection("store_config");
+        $phone = $cfg->get("phone", "");
+
+
+        $ldata = (object)array(
+            "@context"=>"http://schema.org",
+            "@type"=>"Organization",
+            "name"=> SITE_TITLE,
+            "url"=> SITE_URL,
+            "logo"=> SITE_URL."/images/logo_header.svg",
+            "contactPoint"=> (object)array(
+                "@type"=>"ContactPoint",
+                "telephone"=>$phone,
+                "contactType"=>"sales",
+                "areaServed"=>substr(DEFAULT_LANGUAGE_ISO3, 0,2),
+                "availableLanguage"=>DEFAULT_LANGUAGE
+            )
+        );
+
+
+        echo "<script type='application/ld+json'>";
+        echo json_encode($ldata, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+        echo "</script>";
 
     }
 

@@ -12,26 +12,29 @@ include_once("components/ItemView.php");
 
 include_once("class/components/renderers/items/ProductListItem.php");
 include_once("class/beans/SellableProducts.php");
+include_once("utils/GETVariableFilter.php");
+
+include_once("components/BreadcrumbList.php");
+include_once("components/ClosureComponent.php");
 
 class ProductListPage extends StorePage
 {
 
     /**
-     * @var SectionsBean|null
+     * @var SellableProducts|null
      */
-    protected $sections = NULL;
+    protected $bean = null;
 
     /**
-     * Currently selected section (processed as get variable)
-     * @var string
+     * @var SectionsBean|null
      */
-    protected $section = "";
-
+    public $sections = NULL;
 
     /**
      * @var ProductCategoriesBean
      */
-    public $product_categories;
+    public $product_categories = NULL;
+
 
     /**
      * @var NestedSetTreeView|null
@@ -39,71 +42,63 @@ class ProductListPage extends StorePage
     protected $treeView = NULL;
 
     /**
-     * filtered version of products_select
-     * @var SQLSelect
+     * Used to render products/tree/filters
+     * @var SQLSelect|null
      */
-    protected $select;
+    protected $select = NULL;
 
     /**
      * Filters form component
-     * @var ProductListFilter
+     * @var ProductListFilter|null
      */
-    protected $filters;
+    protected $filters = NULL;
 
     /**
      * Products list component
-     * @var ItemView
+     * @var ItemView|null
      */
-    protected $view;
-
-    const SECTION_KEY = "section";
+    protected $view = NULL;
 
     /**
-     * @var SellableProducts|null
+     * Currently selected section (processed as get variable)
+     * @var string
      */
-    protected $bean = null;
+    protected $section = "";
 
-    public function __construct(SellableProducts $bean=NULL)
+    /**
+     * @var GETVariableFilter|null
+     */
+    protected $section_filter = NULL;
+
+    /**
+     * @var GETVariableFilter|null
+     */
+    protected $category_filter = NULL;
+
+    /**
+     * Array holding the current selected category branch starting from nodeID to the top
+     * @var array
+     */
+    protected $category_path = array();
+
+
+    protected $breadcrumb = null;
+
+    public function __construct()
     {
         parent::__construct();
 
-        $this->bean = $bean;
-        if (is_null($bean)) {
-//            $this->product_select = new ProductsSQL();
-//            $psql = new ProductsSQL();
-//            $psql->createView("sellable_inventory");
-
-            $this->bean = new SellableProducts();
-
-        }
-
-
-
-        //echo $this->product_select->getSQL();
-        //        exit;
 
         $this->sections = new SectionsBean();
+        $this->section_filter = new GETVariableFilter("section", "section");
 
         $this->product_categories = new ProductCategoriesBean();
-
-
-        $search_fields = array("product_name", "product_description", "long_description", "keywords");
-        //$search_fields = array("p.product_name", "p.product_description", "p.long_description", "p.keywords");
-
-        $this->keyword_search->getForm()->setFields($search_fields);
-
-        //$this->keyword_search->getForm()->setCompareExpression("relation.inventory_attributes", array("%:{keyword}|%", "%:{keyword}"));
-
+        $this->category_filter = new GETVariableFilter("catID", "catID");
 
         //Initialize product categories tree
         $treeView = new NestedSetTreeView();
         $treeView->setName("products_tree");
         $treeView->open_all = FALSE;
-
-        //default - all categories not filtered or aggregated
-        $treeSelect = $this->product_categories->selectTree(array("category_name"));
-        $treeQry = new SQLQuery($treeSelect, $this->product_categories->key(), $this->product_categories->getTableName());
-        $treeView->setIterator($treeQry);
 
         //item renderer for the tree view
         $ir = new TextTreeItem();
@@ -117,21 +112,11 @@ class ProductListPage extends StorePage
         $this->treeView = $treeView;
 
 
-        //main products select - no grouping here as filters are not applied yet
-        $this->select = clone $this->bean->select();
-
         //empty filters - renderer iterators are not set yet
         $this->filters = new ProductListFilter();
 
-        //default products select all products from all categories
-        $products_list = clone $this->select;
-        $products_list->group_by = " prodID, color ";
 
-
-//echo $products_list->getSQL();
-
-        $this->view = new ItemView(new SQLQuery($products_list, "prodID"));
-
+        $this->view = new ItemView();
         $this->view->setItemRenderer(new ProductListItem());
         $this->view->setItemsPerPage(12);
 
@@ -145,7 +130,43 @@ class ProductListPage extends StorePage
 
         $this->addCSS(LOCAL . "/css/product_list.css");
         $this->addJS(LOCAL . "/js/product_list.js");
+
+        $this->breadcrumb = new BreadcrumbList();
+
     }
+
+    /**
+     * Post CTOR initialization
+     */
+    public function initialize()
+    {
+        //main products select - no grouping here as filters are not applied yet
+        if (is_null($this->bean)) {
+            throw new Exception("SellableProducts not set");
+        }
+        $this->select = clone $this->bean->select();
+
+        $search_fields = array("product_name", "product_description", "long_description", "keywords");
+        $this->keyword_search->getForm()->setFields($search_fields);
+        //$this->keyword_search->getForm()->setCompareExpression("relation.inventory_attributes", array("%:{keyword}|%", "%:{keyword}"));
+
+        //default - all categories not filtered or aggregated
+        $treeSelect = $this->product_categories->selectTree(array("category_name"));
+        $treeQry = new SQLQuery($treeSelect, $this->product_categories->key(), $this->product_categories->getTableName());
+        $this->treeView->setIterator($treeQry);
+
+        //default products select all products from all categories
+        $products_list = clone $this->select;
+        $products_list->group_by = " prodID, color ";
+        //echo $products_list->getSQL();
+        $this->view->setIterator(new SQLQuery($products_list, "prodID"));
+    }
+
+    public function setSellableProducts(SellableProducts $bean)
+    {
+        $this->bean = $bean;
+    }
+
 
     //process get vars
     public function processInput()
@@ -157,21 +178,23 @@ class ProductListPage extends StorePage
         // 3 category
         // 4 filters
 
-        if (isset($_GET[self::SECTION_KEY])) {
-            $section = DBConnections::Get()->escape($_GET[self::SECTION_KEY]);
-            $qry = $this->sections->queryField("section_title", $section, 1);
+        $this->section = "";
+
+
+        $this->section_filter->processInput();
+
+        if ($this->section_filter->isProcessed()) {
+
+            $value = $this->section_filter->getValue();
+
+            $qry = $this->sections->queryField("section_title", $value, 1);
+            //section exists
             $num = $qry->exec();
-            if ($num < 1) {
-                $this->section = "";
+            if ($num > 0) {
+                $this->section = $value;
             }
-            else {
-                $this->section = $section;
 
-            }
-        }
-
-        if ($this->section) {
-            $this->select->where()->add("section", "'{$this->section}'");
+            $this->select->where()->add("section", "'{$value}'");
         }
 
         $this->keyword_search->processInput();
@@ -180,72 +203,66 @@ class ProductListPage extends StorePage
             $this->keyword_search->getForm()->prepareClauseCollection("AND")->copyTo($this->select->where());
         }
 
-        //select the active category node
-        if (isset($_GET[$this->product_categories->key()])) {
-            $this->treeView->setSelectedID((int)$_GET[$this->product_categories->key()]);
+        $this->category_filter->processInput();
+        if ($this->category_filter->isProcessed()) {
+            $this->treeView->setSelectedID((int)$this->category_filter->getValue());
         }
 
-        //update filters to select values from aggregated products and selected category
+
         $nodeID = $this->treeView->getSelectedID();
+        if ($nodeID > 0) {
+            $this->loadCategoryPath($nodeID);
+        }
+
+        //clone the main products select here to keep the tree siblings visible
+        $products_tree = clone $this->select;
+
+        //unset - will use catID and category name from selectChildNodesWith
+        $this->select->fields()->unset("catID");
+        $this->select->fields()->unset("category_name");
+
+        $this->select = $this->product_categories->selectChildNodesWith($this->select, "sellable_products", $nodeID, array("catID", "category_name"));
 
         if ($this->filters instanceof ProductListFilter) {
-            $filters_select = clone $this->select;
-            //$filters_select = $this->select;
 
-            if ($nodeID > 0) {
-                //match p.catID to be inside nodeID and its child node IDs
-                $filters_select = $this->product_categories->selectChildNodesWith($filters_select, "sellable_products", $nodeID);
-
-                $this->loadCategoryPath($nodeID);
-            }
-
-            $filters_select->fields()->unset("catID");
-            $filters_select->fields()->unset("category_name");
-
-            $this->filters->getForm()->setSQLSelect($filters_select);
+            //set initial products select. create attribute filters need to append the data inputs only.
+            $this->filters->getForm()->setSQLSelect($this->select);
             $this->filters->getForm()->createAttributeFilters();
-            $this->filters->getForm()->updateIterators();
+            //update here if all filter values needs to be visible
+            //$this->filters->getForm()->updateIterators();
 
+            //assign values from the query string to the data inputs
             $this->filters->processInput();
 
-            //update the main select filtered by color and/or size
             $filters_where = $this->filters->getForm()->prepareClauseCollection(" AND ");
-            //var_dump($filters_where);
+            //products list filtered
             $filters_where->copyTo($this->select->where());
+
+            //tree view filtered
+            $filters_where->copyTo($products_tree->where());
+            //echo $this->select->getSQL()."<HR>";
+
+            //filter values will be limited to the selection only
+            //set again - rendering will use this final select
+            $this->filters->getForm()->setSQLSelect($this->select);
+            $this->filters->getForm()->updateIterators();
+
         }
 
-//        $having_clauses = $this->filters->getForm()->prepareHavingClause();
-//        echo $clauses->getSQL(false);
-
-//        $this->select->having = $clauses->getSQL(false);
-//        echo $this->select->getSQL()."<HR>";
-
-
-
-
-        $products_list = clone $this->select;
-
-        $products_list->fields()->unset("catID");
-        $products_list->fields()->unset("category_name");
-
-        //match all products whose catID is nodeID or nodeID child nodes
-        $products_list = $this->product_categories->selectChildNodesWith($products_list, "sellable_products", $nodeID, array("catID", "category_name"));
-        $products_list->group_by = " prodID, color ";
-
-        //echo $products_list->getSQL();
+        //setup grouping for the list item view
+        $this->select->group_by = " prodID, color ";
 
         //primary key is prodID as we group by prodID(Products) not piID(ProductInventory)
-        $this->view->setIterator(new SQLQuery($products_list, "prodID"));
+        $this->view->setIterator(new SQLQuery($this->select, "prodID"));
 
 
-
-        //$this->select is already filtered at this point from filters_processor
-        $products_tree = clone $this->select;
-        //select only required fields for the treeView
+        //construct category tree for the products that will be listed
+        //keep same grouping as the products list
+        $products_tree->group_by = $this->select->group_by;
+        //select only fields needed in the treeView iterator
         $products_tree->fields()->reset();
         $products_tree->fields()->set("prodID", "catID");
-        //
-        $products_tree->group_by = " prodID, color ";
+        //echo $products_tree->getSQL();
 
         $products_tree = $products_tree->getAsDerived();
         $products_tree->fields()->set("relation.prodID", "relation.catID");
@@ -304,27 +321,31 @@ class ProductListPage extends StorePage
             $title[] = $catinfo["category_name"];
         }
 
-//        $nodeID = $this->treeView->getSelectedID();
-//        if ($nodeID > 0) {
-//
-//        }
-
         $this->setTitle(constructSiteTitle($title));
     }
 
-    protected $category_path = array();
+
 
     public function getCategoryPath()
     {
         return $this->category_path;
     }
 
+    /**
+     * Load the current selected category branch into the category_path array. Starting from nodeID to the top
+     * @param int $nodeID
+     */
     protected function loadCategoryPath(int $nodeID)
     {
         $category_path = $this->product_categories->getParentNodes($nodeID, array("catID", "category_name"));
 
         if ($category_path) {
             $this->category_path = $category_path;
+
+            $length = count($category_path);
+            if ($length>0) {
+                $this->view->setName($category_path[$length-1]["category_name"]);
+            }
         }
         else {
             $this->category_path = array();
@@ -335,11 +356,12 @@ class ProductListPage extends StorePage
     {
         $actions = $this->constructPathActions();
 
-        echo "<h1 class='Caption category_path'>";
-        if ($actions) {
-            Action::RenderActions($actions);
+        $this->breadcrumb->clear();
+        foreach ($actions as $idx=>$cmp) {
+            $this->breadcrumb->append($cmp);
         }
-        echo "</h1>";
+
+        $this->breadcrumb->render();
     }
 
     protected function constructPathActions()
@@ -380,7 +402,7 @@ class ProductListPage extends StorePage
     }
 
     /**
-     * Return the active selected section for products filtering
+     * Return the active selected section title
      * @return string
      */
     public function getSection() : string
@@ -424,23 +446,6 @@ class ProductListPage extends StorePage
 
         Session::set("shopping.list", $this->getPageURL());
 
-        ?>
-        <script type="text/javascript">
-            function togglePanel(elm)
-            {
-                let e = $(elm).parents(".panel").first().children(".viewport").first();
-                let is_hidden = e.css("display");
-                if (is_hidden == "none") {
-                    e.css("display", "inline-block");
-                }
-                else {
-                    e.css("display", "none");
-                }
-
-
-            }
-        </script>
-        <?php
     }
 }
 

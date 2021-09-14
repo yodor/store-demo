@@ -11,7 +11,24 @@
     text-align:center;
     width:648px;
     overflow:hidden;
+    position:relative;
+}
 
+.images .image_preview .discount_label {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: red;
+    color: white;
+    border-radius: 25px;
+    padding: 10px;
+    margin-top:10px;
+    margin-right:10px;
+    display:none;
+}
+
+.images .image_preview.promo .discount_label {
+    display:block;
 }
 
 .images .image_preview A {
@@ -56,7 +73,7 @@
     display:none !important;
 }
 .images .image_gallery .list .item[active='1'] {
-    border:1px dotted gray;
+    outline:1px solid #ff6600;
 }
 
 
@@ -97,7 +114,7 @@
 }
 
 .side_pane .group .item {
-    display:inline-block;
+    display:block;
     vertical-align:top;
 }
 
@@ -124,7 +141,11 @@
 
 }
 
-.side_pane .sell_price {
+.side_pane .group.attributes {
+    border-bottom: 1px solid #c6c6c6;
+}
+
+.side_pane .price_info {
 
     font-size: 2em;
     /*     text-align:center; */
@@ -136,7 +157,7 @@
     display: inline-block;
 }
 
-.side_pane .sell_price .old {
+.side_pane .price_info .old {
     text-decoration: line-through;
 }
 
@@ -195,7 +216,7 @@
 }
 
 
-.side_pane .cart_link {
+.side_pane .group.cart_link {
 
     text-align: center;
     float:right;
@@ -213,6 +234,36 @@
     background-color:black;
     font-size:150%;
     text-transform:uppercase;
+    text-align:left;
+}
+.side_pane .cart_link A SPAN {
+    vertical-align: top;
+    margin-top:0.3em;
+    margin-left:0.6em;
+    display:inline-block;
+
+}
+
+.side_pane .cart_link .icon {
+    width:32px;
+    height:32px;
+    background-repeat:no-repeat;
+    display:inline-block;
+    background-position: center center;
+    background-size:contain;
+    margin:0;
+}
+.side_pane .cart_link .cart_add .icon {
+    background-image:url("../images/cart.svg");
+}
+
+.side_pane .cart_link .order_phone .icon {
+    background-image:url("../images/phone_icon.svg");
+}
+
+.side_pane .cart_link .order_phone {
+    background-color:#999999;
+    margin-top:2em;
 }
 
 .side_pane .summary {
@@ -256,14 +307,14 @@
 }
 
 .color_chooser .color_button[active="1"] {
-    border: 1px dashed red;
+    outline: 1px dashed #ff6600;
 }
 
 .color_chooser .color_button IMG {
 
     display: block;
-    width: 68px;
-    height: 68px;
+    width: 64px;
+    height: 64px;
 
 }
 
@@ -271,8 +322,8 @@
     cursor: pointer;
     vertical-align: top;
     display: inline-block;
-    width: 68px;
-    height: 68px;
+    width: 64px;
+    height: 64px;
 }
 
 
@@ -282,6 +333,9 @@
     vertical-align: top;
     margin-bottom: 10px;
     /*   text-align:center; */
+
+    border-bottom: 1px solid #c6c6c6;
+    padding-bottom:1em;
 
 }
 
@@ -299,7 +353,10 @@
     font-size: 1em;
 
 }
-
+.side_pane .group.sizing .current_size {
+    display: block;
+    margin-bottom: 0.5em;
+}
 .size_chooser .size_button {
     display: inline-block;
     border: 1px solid #cccccc;
@@ -320,5 +377,6 @@
 }
 
 .size_chooser .size_button[active="1"] {
-    border: 1px dashed red;
+    outline: 1px dashed #ff6600;
 }
+

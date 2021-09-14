@@ -1,13 +1,15 @@
 .CartComponent {
     margin-bottom: 40px;
+
 }
 
 .CartComponent .cart_view {
     width: 100%;
     border-collapse: collapse;
 
-    border-spacing: 0px;
+    border-spacing: 0;
     border-bottom: 1px solid black;
+
 }
 
 .CartComponent TR[label='heading'] TH {
@@ -28,6 +30,7 @@
 .CartComponent TD[field='cart_empty'] {
     padding: 20px;
     font-size: 1.3em;
+    white-space: break-spaces;
 }
 
 .CartComponent TR[label='item'] TD {
@@ -47,13 +50,14 @@
     text-align: center;
     font-size: 1.7em;
 
-    color: #ee2a32;
+    color: #ff6600;
 
 }
 
 .CartComponent TR[label='item'] TD[field='product_model'] {
     font-size: 1.3em;
     text-align: left;
+    white-space: break-spaces;
 }
 
 /*.CartComponent TR[label='item'] TD[field='qty'] .qty {
@@ -67,8 +71,9 @@
 
     font-size: 2.5em;
 
-    color: black;
     vertical-align: -0.1em;
+
+    color: #ff6600;
 }
 
 

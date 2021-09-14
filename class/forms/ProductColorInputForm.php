@@ -16,7 +16,9 @@ class ProductColorInputForm extends InputForm
 
         $rend = $field->getRenderer();
         $scb = new StoreColorsBean();
-        $rend->setIterator($scb->query($scb->key(), "color"));
+        $iterator = $scb->query($scb->key(), "color","color_code");
+        $iterator->select->order_by = " color ASC ";
+        $rend->setIterator($iterator);
         $rend->getItemRenderer()->setValueKey("color");
         $rend->getItemRenderer()->setLabelKey("color");
 

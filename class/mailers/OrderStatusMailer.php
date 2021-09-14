@@ -6,11 +6,12 @@ include_once("beans/UsersBean.php");
 class OrderStatusMailer extends Mailer
 {
 
-    public function __construct($orderID, $status)
+    public function __construct(int $orderID, string $status)
     {
+        parent::__construct();
 
         $orders = new OrdersBean();
-        $order = $orders->getByID($orderID);
+        $order = $orders->getByID($orderID, "userID");
 
         $userID = (int)$order["userID"];
 
@@ -19,29 +20,21 @@ class OrderStatusMailer extends Mailer
 
         $this->to = $user["email"];
 
-        $this->subject = "Вашата поръчка / Your order ID:$orderID";
+        $this->subject = "Вашата поръчка от ".SITE_DOMAIN;
 
-        $message = "Здравейте, {$user["fullname"]}<br><br>\r\n\r\n";
+        $message = "Здравейте, {$user["fullname"]}\r\n\r\n";
 
-        $message .= "Статусът на Вашата поръчка от " . SITE_DOMAIN . " беше обновен на: ";
+        $message .= "Състоянието на Вашата поръчка от " . SITE_DOMAIN . " беше обновено: ";
 
-        $message .= $status . "<br>\r\n";
-        $message .= "\r\n\r\n<br><br>";
+        $message .= tr($status) . "\r\n";
+        $message .= "\r\n\r\n";
 
-        $message .= "<BR><BR>\r\n\r\nС Уважение,<BR>\r\n";
+        $message .= "\r\n\r\n";
+
+        $message .= "Поздрави,";
+        $message .= "\r\n";
         $message .= SITE_DOMAIN;
 
-        $message .= "<BR><BR>\r\n\r\n";
-
-        $message .= "Hello, {$user["fullname"]}<br><br>\r\n\r\n";
-
-        $message .= "The status of your order at " . SITE_DOMAIN . " was updated to: ";
-
-        $message .= $status . "<br>\r\n";
-        $message .= "\r\n\r\n<br><br>";
-
-        $message .= "<BR><BR>\r\n\r\nSincerely,<BR>\r\n";
-        $message .= SITE_DOMAIN;
 
         $this->body = $this->templateMessage($message);
 

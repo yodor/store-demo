@@ -40,7 +40,7 @@ echo "</div>";
 
 echo "<div class='column right orders'>";
 
-echo "<div class='caption'>";
+echo "<div class='Caption'>";
 echo tr("Потвърждаване на поръчка");
 echo "</div>";
 
@@ -91,7 +91,7 @@ else {
 
     echo "</div>";
 
-    echo "<div class='caption'>";
+    echo "<div class='Caption'>";
     echo tr("Детайли");
     echo "</div>";
 

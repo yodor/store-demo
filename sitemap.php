@@ -1,20 +1,20 @@
 <?php
 include_once("session.php");
-include_once("class/utils/ProductsSQL.php");
+include_once("class/beans/SellableProducts.php");
+
+$bean = new SellableProducts();
+
 
 echo "<?xml version='1.0' encoding='UTF-8'?>";
 echo "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
-
-$products_select = new ProductsSQL();
 renderItem(fullURL(LOCAL."/home.php"));
 renderItem(fullURL(LOCAL."/products/list.php"));
 renderItem(fullURL(LOCAL."/products/promo.php"));
 renderItem(fullURL(LOCAL."/contacts.php"));
 
-$qry = new SQLQuery($products_select);
-$qry->select->fields()->set("p.prodID");
-$qry->select->fields()->set("p.update_date");
+$bean->select()->group_by = " prodID ";
 
+$qry = $bean->query("prodID", "update_date");
 $num = $qry->exec();
 while ($result = $qry->nextResult()) {
     $prodID = $result->get("prodID");

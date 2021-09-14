@@ -1,8 +1,14 @@
 <?php
 include_once("components/renderers/items/DataIteratorItem.php");
+include_once("components/renderers/IHeadContents.php");
+include_once("components/renderers/IPhotoRenderer.php");
 include_once("storage/StorageItem.php");
-include_once("class/beans/ProductColorPhotosBean.php");
 
+include_once("utils/URLBuilder.php");
+include_once("utils/DataParameter.php");
+
+include_once("class/beans/ProductColorPhotosBean.php");
+include_once("class/beans/ProductPhotosBean.php");
 
 class ProductListItem extends DataIteratorItem implements IHeadContents, IPhotoRenderer
 {
@@ -38,7 +44,7 @@ class ProductListItem extends DataIteratorItem implements IHeadContents, IPhotoR
     /**
      * @var bool
      */
-    protected $haveColorSeries = false;
+    protected $haveColorSeries = FALSE;
 
     public function __construct()
     {
@@ -58,12 +64,21 @@ class ProductListItem extends DataIteratorItem implements IHeadContents, IPhotoR
         $this->setAttribute("itemscope", "");
         $this->setAttribute("itemtype", "http://schema.org/Product");
 
-
     }
 
     public function getDetailsURL(): URLBuilder
     {
         return $this->detailsURL;
+    }
+
+    public function getPhoto(): StorageItem
+    {
+        return $this->photo;
+    }
+
+    public function getColorsCount() : int
+    {
+        return $this->numColors;
     }
 
     public function requiredStyle(): array

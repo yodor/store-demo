@@ -1,43 +1,54 @@
 <?php
 include_once("session.php");
-include_once("class/beans/GalleryPhotosBean.php");
-include_once("sql/SQLSelect.php");
-include_once("iterators/SQLQuery.php");
-include_once("class/utils/ProductsSQL.php");
+include_once("class/beans/SellableProducts.php");
+include_once("class/components/renderers/items/ProductListItem.php");
 
 header( "Content-Type: text/csv" );
 header( "Content-Disposition: attachment;filename=catalog.csv");
 $fp = fopen("php://output", "w");
 
-$keys = array("id", "content_id", "title", "description", "availability", "condition", "price", "link", "image_link", "brand", "product_type");
+$keys = array("id", "content_id", "title", "description", "availability", "condition", "link", "image_link", "brand", "product_type", "price");
 
 fputcsv($fp, $keys);
 
-$sel = new ProductsSQL();
-$sel->group_by = " pi.prodID ";
-$sel->order_by = " p.insert_date DESC ";
+$bean = new SellableProducts();
 
+$query = $bean->queryFull();
+$query->select->group_by = " prodID, color ";
+$query->select->order_by = " update_date DESC ";
 
-$qry = new SQLQuery($sel, "prodID");
-$qry->exec();
+$query->exec();
 
-while ($row = $qry->next()) {
-    $id = $row["prodID"];
-    $photoID = $row["ppID"];
+$item = new ProductListItem();
+
+while ($result = $query->nextResult()) {
+    $prodID = $result->get("prodID");
+    $piID = $result->get("piID");
+
+    $data = $result->getAll();
+    $item->setData($data);
 
     $export_row = array();
-    $export_row["id"] = $row["prodID"];
-    $export_row["content_id"] = $row["prodID"];
-    $export_row["title"] = $row["product_name"];
-    $export_row["description"] = $row["product_name"];
+    $export_row["id"] = $prodID.".".$piID;
+    $export_row["content_id"] = $prodID.".".$piID;
+    $export_row["title"] = $result->get("product_name");
+    $export_row["description"] = $result->get("product_name");
     $export_row["availability"] = "in stock";
     $export_row["condition"] = "new";
-    $export_row["price"] = $row["sell_price"];
-    $export_row["link"] = "https://viki-max.com/products/details.php?prodID=$id";
-    $export_row["image_link"] = "https://viki-max.com/storage.php?cmd=image&id=$photoID&class=ProductPhotosBean";
-    $export_row["brand"] = "viki-max";
-    $export_row["product_type"] = $row["category_name"];
+
+    $link = $item->getDetailsURL()->url();
+    $export_row["link"] = fullURL($link);
+
+    $image_link = $item->getPhoto()->hrefImage(640,-1);
+    $export_row["image_link"] = fullURL($image_link);
+    $export_row["brand"] = $result->get("brand_name");
+    $export_row["product_type"] = $result->get("category_name");
+
+
+    $export_row["price"] = $result->get("sell_price");
+
     fputcsv($fp, $export_row);
+
 }
 
 

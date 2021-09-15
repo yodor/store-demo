@@ -9,7 +9,7 @@ include_once("class/beans/InvoiceDetailsBean.php");
 include_once("class/beans/OrderItemsBean.php");
 include_once("class/beans/OrdersBean.php");
 include_once("class/forms/ClientAddressInputForm.php");
-include_once("utils/Cart.php");
+include_once("store/utils/Cart.php");
 
 include_once("class/forms/InvoiceDetailsInputForm.php");
 include_once("class/beans/InvoiceDetailsBean.php");
@@ -17,7 +17,7 @@ include_once("class/beans/InvoiceDetailsBean.php");
 
 $page = new AdminPage();
 
-$page->addCSS(LOCAL."/css/print.css");
+$page->addCSS(STORE_LOCAL."/css/print.css");
 
 $ekont_addresses = new CourierAddressesBean();
 $client_addresses = new ClientAddressesBean();
@@ -166,7 +166,7 @@ echo "</div>";//panel
                     $piID = $item["piID"];
                     $prodID = $item["prodID"];
 
-                    echo "<a class='item photo' href='" . LOCAL . "/product/details.php?prodID=$prodID&piID=$piID'>";
+                    echo "<a class='item photo' href='" . LOCAL . "/products/details.php?prodID=$prodID&piID=$piID'>";
                     $href = StorageItem::Image($item["itemID"], get_class($items), 100, 100);
                     echo "<img src='$href'>";
                     echo "</a>";

@@ -2,10 +2,10 @@
 include_once("session.php");
 include_once("templates/admin/BeanListPage.php");
 
-include_once("class/beans/ProductsBean.php");
-include_once("class/beans/ProductColorsBean.php");
+include_once("store/beans/ProductsBean.php");
+include_once("store/beans/ProductColorsBean.php");
 
-include_once("class/beans/ProductColorPhotosBean.php");
+include_once("store/beans/ProductColorPhotosBean.php");
 include_once("components/renderers/cells/ColorCodeCellRenderer.php");
 
 $rc = new BeanKeyCondition(new ProductsBean(), "../list.php", array("product_name"));

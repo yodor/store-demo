@@ -1,12 +1,12 @@
 <?php
 include_once("session.php");
-include_once("class/pages/StorePage.php");
+include_once("store/pages/StorePage.php");
 include_once("components/BeanFormEditor.php");
-include_once("class/beans/ContactRequestsBean.php");
-include_once("class/forms/ContactRequestForm.php");
-include_once("class/mailers/ContactRequestMailer.php");
-include_once("class/beans/ContactAddressesBean.php");
-include_once("class/forms/processors/ContactRequestProcessor.php");
+include_once("store/beans/ContactRequestsBean.php");
+include_once("store/forms/ContactRequestForm.php");
+include_once("store/mailers/ContactRequestMailer.php");
+include_once("store/beans/ContactAddressesBean.php");
+include_once("store/forms/processors/ContactRequestProcessor.php");
 
 $page = new StorePage();
 $page->setTitle(tr("Контакти"));

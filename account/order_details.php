@@ -1,16 +1,16 @@
 <?php
 include_once("session.php");
-include_once("class/pages/AccountPage.php");
+include_once("store/pages/AccountPage.php");
 
-include_once("class/beans/ClientAddressesBean.php");
-include_once("class/beans/CourierAddressesBean.php");
-include_once("class/beans/InvoiceDetailsBean.php");
-include_once("class/beans/OrderItemsBean.php");
-include_once("class/beans/OrdersBean.php");
-include_once("class/forms/ClientAddressInputForm.php");
+include_once("store/beans/ClientAddressesBean.php");
+include_once("store/beans/CourierAddressesBean.php");
+include_once("store/beans/InvoiceDetailsBean.php");
+include_once("store/beans/OrderItemsBean.php");
+include_once("store/beans/OrdersBean.php");
+include_once("store/forms/ClientAddressInputForm.php");
 
 $page = new AccountPage();
-$page->addCSS(LOCAL."/css/print.css");
+$page->addCSS(STORE_LOCAL."/css/print.css");
 
 $courier_addresses = new CourierAddressesBean();
 $client_addresses = new ClientAddressesBean();
@@ -146,7 +146,7 @@ echo "<div class='column details'>";
                     $piID = $item["piID"];
                     $prodID = $item["prodID"];
 
-                    echo "<a class='item photo' href='" . LOCAL . "/product/details.php?prodID=$prodID&piID=$piID'>";
+                    echo "<a class='item photo' href='" . LOCAL . "/products/details.php?prodID=$prodID&piID=$piID'>";
                     $href = StorageItem::Image($item["itemID"], get_class($items), 100, 100);
                     echo "<img src='$href'>";
                     echo "</a>";

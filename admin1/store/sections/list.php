@@ -1,7 +1,7 @@
 <?php
 include_once("session.php");
 include_once("templates/admin/BeanListPage.php");
-include_once("class/beans/SectionsBean.php");
+include_once("store/beans/SectionsBean.php");
 
 $cmp = new BeanListPage();
 

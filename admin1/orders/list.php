@@ -2,15 +2,15 @@
 include_once("components/TableView.php");
 
 include_once("beans/UsersBean.php");
-include_once("class/beans/ClientAddressesBean.php");
-include_once("class/beans/EkontAddressesBean.php");
-include_once("class/beans/InvoiceDetailsBean.php");
-include_once("class/beans/OrderItemsBean.php");
+include_once("store/beans/ClientAddressesBean.php");
+include_once("store/beans/EkontAddressesBean.php");
+include_once("store/beans/InvoiceDetailsBean.php");
+include_once("store/beans/OrderItemsBean.php");
 
-include_once("class/components/renderers/cells/OrderItemsCellRenderer.php");
-include_once("class/components/renderers/cells/OrderDeliveryCellRenderer.php");
-include_once("class/components/renderers/cells/OrderClientCellRenderer.php");
-include_once("class/components/renderers/cells/OrderInvoiceCellRenderer.php");
+include_once("store/components/renderers/cells/OrderItemsCellRenderer.php");
+include_once("store/components/renderers/cells/OrderDeliveryCellRenderer.php");
+include_once("store/components/renderers/cells/OrderClientCellRenderer.php");
+include_once("store/components/renderers/cells/OrderInvoiceCellRenderer.php");
 
 include_once("components/renderers/cells/BooleanCellRenderer.php");
 include_once("components/renderers/cells/DateCellRenderer.php");

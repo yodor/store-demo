@@ -1,19 +1,19 @@
 <?php
 include_once("session.php");
 include_once("class/pages/StorePage.php");
-include_once("class/beans/ProductCategoriesBean.php");
-include_once("class/beans/ProductCategoryPhotosBean.php");
+include_once("store/beans/ProductCategoriesBean.php");
+include_once("store/beans/ProductCategoryPhotosBean.php");
 
-include_once("class/beans/SectionsBean.php");
-include_once("class/beans/SectionBannersBean.php");
-include_once("class/utils/ProductsSQL.php");
-include_once("class/components/ProductsTape.php");
-include_once("class/beans/SellableProducts.php");
+include_once("store/beans/SectionsBean.php");
+include_once("store/beans/SectionBannersBean.php");
+include_once("store/utils/ProductsSQL.php");
+include_once("store/components/ProductsTape.php");
+include_once("store/beans/SellableProducts.php");
 
 $page = new StorePage();
 $page->setTitle("Начало");
 
-$page->addCSS(LOCAL."/css/ProductListItem.css");
+$page->addCSS(STORE_LOCAL."/css/ProductListItem.css");
 
 $page->startRender();
 

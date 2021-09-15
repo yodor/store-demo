@@ -1,7 +1,7 @@
 <?php
 include_once("session.php");
 include_once("templates/admin/BeanListPage.php");
-include_once("class/beans/ContactRequestsBean.php");
+include_once("store/beans/ContactRequestsBean.php");
 include_once("components/renderers/cells/ClosureCellRenderer.php");
 
 $bean = new ContactRequestsBean();

@@ -1,7 +1,7 @@
 <?php
 include_once("session.php");
-include_once("class/pages/CheckoutPage.php");
-include_once("class/forms/DeliveryCourierForm.php");
+include_once("store/pages/CheckoutPage.php");
+include_once("store/forms/DeliveryCourierForm.php");
 
 class DeliveryCourierProcessor extends FormProcessor
 {

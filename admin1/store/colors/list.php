@@ -2,7 +2,7 @@
 include_once("session.php");
 include_once("templates/admin/BeanListPage.php");
 include_once ("components/renderers/cells/ColorCodeCellRenderer.php");
-include_once("class/beans/StoreColorsBean.php");
+include_once("store/beans/StoreColorsBean.php");
 
 $cmp = new BeanListPage();
 

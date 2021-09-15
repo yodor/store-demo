@@ -1,6 +1,6 @@
 <?php
 include_once("session.php");
-include_once("class/beans/SellableProducts.php");
+include_once("store/beans/SellableProducts.php");
 
 $bean = new SellableProducts();
 

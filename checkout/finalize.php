@@ -1,14 +1,14 @@
 <?php
 include_once("session.php");
 
-include_once("class/mailers/OrderConfirmationMailer.php");
+include_once("store/mailers/OrderConfirmationMailer.php");
 
-include_once("class/pages/CheckoutPage.php");
+include_once("store/pages/CheckoutPage.php");
 
-include_once("class/utils/OrderProcessor.php");
+include_once("store/utils/OrderProcessor.php");
 
-include_once("class/mailers/OrderConfirmationAdminMailer.php");
-include_once("class/mailers/OrderErrorAdminMailer.php");
+include_once("store/mailers/OrderConfirmationAdminMailer.php");
+include_once("store/mailers/OrderErrorAdminMailer.php");
 
 $page = new CheckoutPage();
 

@@ -1,8 +1,8 @@
 <?php
 include_once("session.php");
-include_once("class/pages/CheckoutPage.php");
-include_once("class/forms/ClientAddressInputForm.php");
-include_once("class/mailers/FastOrderAdminMailer.php");
+include_once("store/pages/CheckoutPage.php");
+include_once("store/forms/ClientAddressInputForm.php");
+include_once("store/mailers/FastOrderAdminMailer.php");
 
 class FastOrderProcessor extends FormProcessor {
     public function __construct()

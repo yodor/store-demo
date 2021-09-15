@@ -1,15 +1,15 @@
 <?php
 include_once("session.php");
-include_once("class/pages/AccountPage.php");
+include_once("store/pages/AccountPage.php");
 
 include_once("components/TableView.php");
 include_once("components/renderers/cells/DateCellRenderer.php");
 
-include_once("class/beans/ClientAddressesBean.php");
-include_once("class/beans/CourierAddressesBean.php");
-include_once("class/beans/InvoiceDetailsBean.php");
-include_once("class/beans/OrderItemsBean.php");
-include_once("class/beans/OrdersBean.php");
+include_once("store/beans/ClientAddressesBean.php");
+include_once("store/beans/CourierAddressesBean.php");
+include_once("store/beans/InvoiceDetailsBean.php");
+include_once("store/beans/OrderItemsBean.php");
+include_once("store/beans/OrdersBean.php");
 
 
 $page = new AccountPage();

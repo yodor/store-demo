@@ -1,8 +1,8 @@
 <?php
 include_once("session.php");
 include_once("templates/admin/BeanEditorPage.php");
-include_once("class/forms/ProductInputForm.php");
-include_once("class/beans/ProductsBean.php");
+include_once("store/forms/ProductInputForm.php");
+include_once("store/beans/ProductsBean.php");
 
 
 $cmp = new BeanEditorPage();

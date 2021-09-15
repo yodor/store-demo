@@ -1,12 +1,12 @@
 <?php
 include_once("session.php");
 
-include_once("class/pages/DemoPage.php");
+include_once("store/pages/StorePage.php");
 
-include_once("class/beans/NewsItemsBean.php");
+include_once("store/beans/NewsItemsBean.php");
 include_once("components/PublicationsComponent.php");
 
-$page = new DemoPage();
+$page = new StorePage();
 
 $page->addCSS(LOCAL . "/css/news.css");
 

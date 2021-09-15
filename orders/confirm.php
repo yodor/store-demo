@@ -1,17 +1,17 @@
 <?php
 include_once("session.php");
-include_once("class/pages/ProductsPage.php");
+include_once("store/pages/ProductsPage.php");
 
-include_once("class/beans/OrdersBean.php");
+include_once("store/beans/OrdersBean.php");
 
-include_once("class/forms/OrderAddressInputForm.php");
+include_once("store/forms/OrderAddressInputForm.php");
 include_once("beans/UsersBean.php");
-include_once("class/beans/UserDetailsBean.php");
+include_once("store/beans/UserDetailsBean.php");
 include_once("auth/Authenticator.php");
 
-include_once("class/mailers/RegisterDetailsPasswordMailer.php");
-include_once("class/mailers/OrderConfirmedAdminMailer.php");
-include_once("class/forms/processors/OrderConfirmProcessor.php");
+include_once("store/mailers/RegisterDetailsPasswordMailer.php");
+include_once("store/mailers/OrderConfirmedAdminMailer.php");
+include_once("store/forms/processors/OrderConfirmProcessor.php");
 
 $page = new ProductsPage();
 

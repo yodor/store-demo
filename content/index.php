@@ -1,6 +1,6 @@
 <?php
 include_once("session.php");
-include_once("class/pages/StorePage.php");
+include_once("store/pages/StorePage.php");
 include_once("beans/DynamicPagePhotosBean.php");
 // include_once("beans/DynamicPagesBean.php");
 include_once("beans/MenuItemsBean.php");

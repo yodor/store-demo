@@ -2,7 +2,7 @@
 include_once("session.php");
 include_once("templates/admin/GalleryViewPage.php");
 
-include_once("class/beans/GalleryPhotosBean.php");
+include_once("store/beans/GalleryPhotosBean.php");
 
 $cmp = new GalleryViewPage();
 

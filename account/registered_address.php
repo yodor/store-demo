@@ -1,9 +1,9 @@
 <?php
 include_once("session.php");
-include_once("class/pages/AccountPage.php");
-include_once("class/forms/ClientAddressInputForm.php");
-include_once("class/beans/ClientAddressesBean.php");
-include_once("class/forms/processors/ClientAddressFormProcessor.php");
+include_once("store/pages/AccountPage.php");
+include_once("store/forms/ClientAddressInputForm.php");
+include_once("store/beans/ClientAddressesBean.php");
+include_once("store/forms/processors/ClientAddressFormProcessor.php");
 
 $page = new AccountPage();
 

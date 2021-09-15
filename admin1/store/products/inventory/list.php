@@ -5,10 +5,10 @@ include_once("templates/admin/BeanListPage.php");
 include_once("components/renderers/cells/ImageCellRenderer.php");
 include_once("components/renderers/cells/ColorCodeCellRenderer.php");
 
-include_once("class/beans/ProductInventoryBean.php");
-include_once("class/beans/ProductPhotosBean.php");
-include_once("class/beans/ProductColorPhotosBean.php");
-include_once("class/beans/ProductsBean.php");
+include_once("store/beans/ProductInventoryBean.php");
+include_once("store/beans/ProductPhotosBean.php");
+include_once("store/beans/ProductColorPhotosBean.php");
+include_once("store/beans/ProductsBean.php");
 
 $prodID = -1;
 

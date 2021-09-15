@@ -1,7 +1,8 @@
 <?php
 include_once("session.php");
-include_once("class/pages/CheckoutPage.php");
-include_once("utils/Cart.php");
+include_once("store/pages/CheckoutPage.php");
+include_once("store/utils/Cart.php");
+include_once("store/beans/SellableProducts.php");
 
 $page = new CheckoutPage();
 $page->modify_enabled = TRUE;
@@ -22,8 +23,8 @@ $piID = -1;
 if (isset($_GET["piID"])) {
     $piID = (int)$_GET["piID"];
 
-    $qry = new SQLQuery(new ProductsSQL(), "pi.piID");
-    $qry->select->where()->add("pi.piID", $piID);
+    $bean = new SellableProducts();
+    $qry = $bean->query("piID");
     $qry->select->limit = " 1 ";
 
     $exception = null;

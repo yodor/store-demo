@@ -12,10 +12,10 @@ class AdminPage extends SparkAdminPage
     public function __construct()
     {
         parent::__construct();
-        MenuItem::$icon_path = SPARK_LOCAL . "/images/admin/spark_icons/";
+        MenuItem::$icon_path = STORE_LOCAL . "/images/admin/spark_icons/";
 
         $this->addMeta("viewport", "width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0");
-        $this->addCSS(LOCAL . "/css/AdminPage.css");
+        $this->addCSS(STORE_LOCAL . "/css/AdminPage.css");
     }
 
 }

@@ -1,8 +1,8 @@
 <?php
 include_once("session.php");
 include_once("class/pages/AdminPage.php");
-include_once("class/beans/OrdersBean.php");
-include_once("class/utils/OrdersSQL.php");
+include_once("store/beans/OrdersBean.php");
+include_once("store/utils/OrdersSQL.php");
 
 $page = new AdminPage();
 

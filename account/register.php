@@ -1,13 +1,13 @@
 <?php
 include_once("session.php");
 
-include_once("class/pages/AccountPage.php");
-include_once("class/forms/RegisterClientInputForm.php");
-include_once("class/forms/processors/RegisterClientFormProcessor.php");
+include_once("store/pages/AccountPage.php");
+include_once("store/forms/RegisterClientInputForm.php");
+include_once("store/forms/processors/RegisterClientFormProcessor.php");
 
 $page = new AccountPage(FALSE);
 
-$page->addJS(LOCAL."/js/RegisterForm.js");
+$page->addJS(STORE_LOCAL."/js/RegisterForm.js");
 $page->addJS(SPARK_LOCAL."/js/md5.js");
 
 $form = new RegisterClientInputForm();

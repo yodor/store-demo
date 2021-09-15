@@ -1,8 +1,8 @@
 <?php
 include_once("session.php");
 include_once("templates/admin/BeanEditorPage.php");
-include_once("class/beans/ProductColorsBean.php");
-include_once("class/beans/ProductColorPhotosBean.php");
+include_once("store/beans/ProductColorsBean.php");
+include_once("store/beans/ProductColorPhotosBean.php");
 
 include_once("forms/PhotoForm.php");
 

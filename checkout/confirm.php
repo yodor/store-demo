@@ -1,17 +1,17 @@
 <?php
 include_once("session.php");
 
-include_once("class/pages/CheckoutPage.php");
-include_once("class/forms/ClientAddressInputForm.php");
-include_once("class/beans/ClientAddressesBean.php");
-include_once("class/forms/InvoiceDetailsInputForm.php");
-include_once("class/beans/InvoiceDetailsBean.php");
-include_once("class/forms/CourierOfficeInputForm.php");
-include_once("class/beans/CourierAddressesBean.php");
+include_once("store/pages/CheckoutPage.php");
+include_once("store/forms/ClientAddressInputForm.php");
+include_once("store/beans/ClientAddressesBean.php");
+include_once("store/forms/InvoiceDetailsInputForm.php");
+include_once("store/beans/InvoiceDetailsBean.php");
+include_once("store/forms/CourierOfficeInputForm.php");
+include_once("store/beans/CourierAddressesBean.php");
 
-include_once("class/utils/OrderProcessor.php");
-include_once("class/mailers/OrderConfirmationMailer.php");
-include_once("class/mailers/OrderConfirmationAdminMailer.php");
+include_once("store/utils/OrderProcessor.php");
+include_once("store/mailers/OrderConfirmationMailer.php");
+include_once("store/mailers/OrderConfirmationAdminMailer.php");
 
 class RequireInvoiceInputForm extends InputForm
 {

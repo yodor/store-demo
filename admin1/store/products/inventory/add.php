@@ -1,9 +1,9 @@
 <?php
 include_once("session.php");
 include_once("templates/admin/BeanEditorPage.php");
-include_once("class/forms/ProductInventoryInputForm.php");
-include_once("class/beans/ProductInventoryBean.php");
-include_once("class/beans/ProductsBean.php");
+include_once("store/forms/ProductInventoryInputForm.php");
+include_once("store/beans/ProductInventoryBean.php");
+include_once("store/beans/ProductsBean.php");
 
 $rc = new BeanKeyCondition(new ProductsBean(), "../list.php", array("product_name", "class_name", "brand_name",
                                                                     "section"));

@@ -5,8 +5,8 @@ if (!isset($page)) exit;
 if (!$page instanceof CheckoutPage) exit;
 if (!$courier instanceof DeliveryCourier) exit;
 
-include_once("class/forms/CourierOfficeInputForm.php");
-include_once("class/beans/CourierAddressesBean.php");
+include_once("store/forms/CourierOfficeInputForm.php");
+include_once("store/beans/CourierAddressesBean.php");
 
 class EkontOfficeFormProcessor extends FormProcessor
 {

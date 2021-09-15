@@ -1,9 +1,9 @@
 <?php
 include_once("session.php");
-include_once("class/pages/AccountPage.php");
-include_once("class/beans/InvoiceDetailsBean.php");
-include_once("class/forms/InvoiceDetailsInputForm.php");
-include_once("class/forms/processors/InvoiceDetailsFormProcessor.php");
+include_once("store/pages/AccountPage.php");
+include_once("store/beans/InvoiceDetailsBean.php");
+include_once("store/forms/InvoiceDetailsInputForm.php");
+include_once("store/forms/processors/InvoiceDetailsFormProcessor.php");
 
 $page = new AccountPage();
 

@@ -1,14 +1,14 @@
 <?php
 include_once("session.php");
-include_once("class/pages/ProductsPage.php");
+include_once("store/pages/ProductsPage.php");
 
-include_once("class/beans/OrdersBean.php");
+include_once("store/beans/OrdersBean.php");
 
 include_once("forms/processors/FormProcessor.php");
 include_once("forms/renderers/FormRenderer.php");
 
-include_once("class/forms/OrderStatusInputForm.php");
-include_once("class/forms/OrderAddressInputForm.php");
+include_once("store/forms/OrderStatusInputForm.php");
+include_once("store/forms/OrderAddressInputForm.php");
 
 class OrderStatusProcessor extends FormProcessor
 {

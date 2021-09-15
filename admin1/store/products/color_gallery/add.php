@@ -1,9 +1,9 @@
 <?php
 include_once("session.php");
 include_once("templates/admin/BeanEditorPage.php");
-include_once("class/forms/ProductColorInputForm.php");
-include_once("class/beans/ProductColorsBean.php");
-include_once("class/beans/ProductsBean.php");
+include_once("store/forms/ProductColorInputForm.php");
+include_once("store/beans/ProductColorsBean.php");
+include_once("store/beans/ProductsBean.php");
 
 $ensure_product = new BeanKeyCondition(new ProductsBean(), "../list.php", array("product_name"));
 

@@ -1,7 +1,7 @@
 <?php
 include_once("session.php");
 include_once("templates/admin/NestedSetViewPage.php");
-include_once("class/beans/ProductCategoriesBean.php");
+include_once("store/beans/ProductCategoriesBean.php");
 
 $cmp = new NestedSetViewPage();
 

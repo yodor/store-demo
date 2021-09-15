@@ -1,9 +1,9 @@
 <?php
 include_once("session.php");
-include_once("class/pages/AccountPage.php");
+include_once("store/pages/AccountPage.php");
 include_once("beans/UsersBean.php");
-include_once("class/forms/ActivateProfileInputForm.php");
-include_once("class/forms/processors/ActivateProfileFormProcessor.php");
+include_once("store/forms/ActivateProfileInputForm.php");
+include_once("store/forms/processors/ActivateProfileFormProcessor.php");
 
 $page = new AccountPage(FALSE);
 

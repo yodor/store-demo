@@ -2,12 +2,12 @@
 include_once("session.php");
 include_once("templates/admin/BeanListPage.php");
 
-include_once("class/beans/ProductsBean.php");
-include_once("class/beans/ProductPhotosBean.php");
-include_once("class/beans/ProductColorPhotosBean.php");
-include_once("class/beans/ProductInventoryBean.php");
-include_once("class/beans/SectionsBean.php");
-include_once("class/beans/ProductCategoriesBean.php");
+include_once("store/beans/ProductsBean.php");
+include_once("store/beans/ProductPhotosBean.php");
+include_once("store/beans/ProductColorPhotosBean.php");
+include_once("store/beans/ProductInventoryBean.php");
+include_once("store/beans/SectionsBean.php");
+include_once("store/beans/ProductCategoriesBean.php");
 
 class ProductFilterInputForm extends InputForm {
     public function __construct()

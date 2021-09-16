@@ -1,8 +1,8 @@
 <?php
 include_once("session.php");
 include_once("class/pages/AdminPage.php");
-include_once("class/beans/ProductsBean.php");
-include_once("class/beans/ProductPhotosBean.php");
+include_once("store/beans/ProductsBean.php");
+include_once("store/beans/ProductPhotosBean.php");
 
 include_once("forms/PhotoForm.php");
 

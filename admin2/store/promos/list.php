@@ -4,8 +4,8 @@ include_once("templates/admin/BeanListPage.php");
 include_once("components/renderers/cells/ImageCellRenderer.php");
 include_once("components/renderers/cells/BooleanCellRenderer.php");
 
-include_once("class/beans/StorePromosBean.php");
-include_once("class/beans/ProductCategoriesBean.php");
+include_once("store/beans/StorePromosBean.php");
+include_once("store/beans/ProductCategoriesBean.php");
 
 $bean = new StorePromosBean();
 $product_categories = new ProductCategoriesBean();

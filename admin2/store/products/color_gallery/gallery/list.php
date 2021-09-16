@@ -2,9 +2,9 @@
 include_once("session.php");
 include_once("templates/admin/GalleryViewPage.php");
 
-include_once("class/beans/ProductColorPhotosBean.php");
-include_once("class/beans/ProductColorsBean.php");
-include_once("class/beans/ProductsBean.php");
+include_once("store/beans/ProductColorPhotosBean.php");
+include_once("store/beans/ProductColorsBean.php");
+include_once("store/beans/ProductsBean.php");
 
 $rc = new BeanKeyCondition(new ProductColorsBean(), "../list.php", array("color"));
 

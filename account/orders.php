@@ -1,6 +1,6 @@
 <?php
 include_once("session.php");
-include_once("store/pages/AccountPage.php");
+include_once("class/pages/AccountPage.php");
 
 include_once("components/TableView.php");
 include_once("components/renderers/cells/DateCellRenderer.php");

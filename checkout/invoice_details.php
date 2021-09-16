@@ -1,6 +1,6 @@
 <?php
 include_once("session.php");
-include_once("store/pages/CheckoutPage.php");
+include_once("class/pages/CheckoutPage.php");
 
 include_once("store/forms/InvoiceDetailsInputForm.php");
 include_once("store/beans/InvoiceDetailsBean.php");

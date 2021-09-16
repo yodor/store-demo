@@ -5,7 +5,7 @@ include_once("responders/AuthenticatorResponder.php");
 include_once("forms/LoginForm.php");
 include_once("forms/renderers/LoginFormRenderer.php");
 
-include_once("store/pages/AccountPage.php");
+include_once("class/pages/AccountPage.php");
 
 
 $page = new AccountPage(FALSE);

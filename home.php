@@ -6,7 +6,7 @@ include_once("store/beans/ProductCategoryPhotosBean.php");
 
 include_once("store/beans/SectionsBean.php");
 include_once("store/beans/SectionBannersBean.php");
-include_once("store/utils/ProductsSQL.php");
+
 include_once("store/components/ProductsTape.php");
 include_once("store/beans/SellableProducts.php");
 

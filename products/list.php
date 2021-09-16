@@ -1,6 +1,6 @@
 <?php
 include_once("session.php");
-include_once("store/pages/ProductListPage.php");
+include_once("class/pages/ProductListPage.php");
 
 $page = new ProductListPage();
 $page->setSellableProducts(new SellableProducts());

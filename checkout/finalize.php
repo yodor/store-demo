@@ -3,7 +3,7 @@ include_once("session.php");
 
 include_once("store/mailers/OrderConfirmationMailer.php");
 
-include_once("store/pages/CheckoutPage.php");
+include_once("class/pages/CheckoutPage.php");
 
 include_once("store/utils/OrderProcessor.php");
 

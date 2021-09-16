@@ -1,6 +1,6 @@
 <?php
 include_once("session.php");
-include_once("store/pages/ProductDetailsPage.php");
+include_once("class/pages/ProductDetailsPage.php");
 include_once("store/components/renderers/items/ProductDetailsItem.php");
 
 $page = new ProductDetailsPage();

@@ -1,6 +1,6 @@
 <?php
 include_once("session.php");
-include_once("store/pages/AdminPage.php");
+include_once("class/pages/AdminPage.php");
 
 $menu = array();
 

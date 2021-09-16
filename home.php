@@ -43,7 +43,7 @@ while ($section = $qry->nextResult()) {
     $query_tape->select->where()->clear();
     $query_tape->select->where()->add("section", "'{$sectionName}'");
 
-    echo "<div class='section $sectionName'>";
+    echo "<div class='section'>";
 
         $secion_url = LOCAL . "/products/list.php?section=$sectionName";
         echo "<a href='$secion_url' title='$sectionName'><h1 class='Caption'>$sectionName</h1></a>";

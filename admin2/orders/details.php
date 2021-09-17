@@ -3,16 +3,16 @@ include_once("session.php");
 include_once("class/pages/AdminPage.php");
 
 include_once("beans/UsersBean.php");
-include_once("class/beans/ClientAddressesBean.php");
-include_once("class/beans/CourierAddressesBean.php");
-include_once("class/beans/InvoiceDetailsBean.php");
-include_once("class/beans/OrderItemsBean.php");
-include_once("class/beans/OrdersBean.php");
-include_once("class/forms/ClientAddressInputForm.php");
-include_once("store/utils/Cart.php");
+include_once("store/beans/ClientAddressesBean.php");
+include_once("store/beans/CourierAddressesBean.php");
+include_once("store/beans/InvoiceDetailsBean.php");
+include_once("store/beans/OrderItemsBean.php");
+include_once("store/beans/OrdersBean.php");
+include_once("store/forms/ClientAddressInputForm.php");
+include_once("store/utils/cart/Cart.php");
 
-include_once("class/forms/InvoiceDetailsInputForm.php");
-include_once("class/beans/InvoiceDetailsBean.php");
+include_once("store/forms/InvoiceDetailsInputForm.php");
+include_once("store/beans/InvoiceDetailsBean.php");
 
 
 $page = new AdminPage();

@@ -1,6 +1,6 @@
 <?php
 include_once("session.php");
-include_once("class/components/OrdersListPage.php");
+include_once("store/components/OrdersListPage.php");
 
 
 $page = new OrdersListPage();

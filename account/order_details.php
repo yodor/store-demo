@@ -147,7 +147,7 @@ echo "<div class='column details'>";
                     $prodID = $item["prodID"];
 
                     echo "<a class='item photo' href='" . LOCAL . "/products/details.php?prodID=$prodID&piID=$piID'>";
-                    $href = StorageItem::Image($item["itemID"], get_class($items), 100, 100);
+                    $href = StorageItem::Image($item["itemID"], get_class($items), 100, -1);
                     echo "<img src='$href'>";
                     echo "</a>";
 
@@ -171,8 +171,14 @@ echo "<div class='column details'>";
         echo "<div class='group total'>";
             echo "<div class='item products_total'>";
                 echo "<label>" . tr("Продукти общо") . "</label>";
-                echo "<span>" . formatPrice($order["total"] - $order["delivery_price"]) . "</span>";
+                echo "<span>" . formatPrice($order["total"] - $order["delivery_price"] + $order["discount_amount"]) . "</span>";
             echo "</div>";
+
+            echo "<div class='item discount_amount'>";
+                echo "<label>" . tr("Отстъпки") . "</label>";
+                echo "<span>" . formatPrice($order["discount_amount"]) . "</span>";
+            echo "</div>";
+
             echo "<div class='item delivey_price'>";
                 echo "<label>" . tr("Доставка") . "</label>";
                 echo "<span>";

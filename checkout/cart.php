@@ -22,20 +22,20 @@ $piID = -1;
 
 if (isset($_GET["piID"])) {
     $piID = (int)$_GET["piID"];
+}
+
+
+//client adds product item to cart (lands from product details page)
+if (isset($_GET["add"])) {
 
     $bean = new SellableProducts();
-    $qry = $bean->query("piID");
-    $qry->select->limit = " 1 ";
+    $query = $bean->query("piID");
+    $query->select->where()->add("piID", $piID);
+    $query->select->limit = " 1 ";
 
-    $exception = null;
-    try {
-        $num = $qry->exec();
-    }
-    catch (Exception $e) {
-        $exception = $e;
-        throw $e;
-    }
-    if ($num<1 || !is_null($exception)) {
+    $num = $query->exec();
+
+    if ($num<1) {
         $cart->remove($piID);
         $cart->store();
 
@@ -44,11 +44,6 @@ if (isset($_GET["piID"])) {
         exit;
     }
 
-}
-
-//client adds product item to cart (lands from product details page)
-if (isset($_GET["add"])) {
-
     //increment amount
     if ($cart->contains($piID)) {
         $item = $cart->get($piID);
@@ -56,9 +51,10 @@ if (isset($_GET["add"])) {
     }
     else {
         try {
-            $result = $qry->nextResult();
-            $item = new CartItem($result->get("piID"), $result->get("sell_price"));
-            $cart->addItem($item);
+            if ($result = $query->nextResult()) {
+                $item = new CartItem($result->get("piID"), $result->get("sell_price"));
+                $cart->addItem($item);
+            }
         }
         catch (Exception $e) {
             debug("Error adding product to cart: ".$e->getMessage());
@@ -67,6 +63,7 @@ if (isset($_GET["add"])) {
     $cart->store();
     header("Location: cart.php");
     exit;
+
 //manage stock amount is disabled
 //        if ($item["stock_amount"] < 1) {
 //            Session::SetAlert(tr("Съжаляваме в момента няма наличност от този артикул"));

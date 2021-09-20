@@ -4,6 +4,7 @@ error*log
 /storefront
 /config/dbconfig.php
 /session.php
+/admin
 *.zip
 .ftpquota
 .well-known

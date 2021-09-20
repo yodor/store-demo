@@ -3,9 +3,9 @@ include_once ("store/pages/AccountPageBase.php");
 
 class AccountPage extends AccountPageBase
 {
-    public function __construct()
+    public function __construct($authorized_access = TRUE)
     {
-        parent::__construct();
+        parent::__construct($authorized_access);
 
     }
 

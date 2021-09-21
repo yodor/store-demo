@@ -3,7 +3,6 @@ include_once("session.php");
 include_once("class/pages/CheckoutPage.php");
 include_once("store/utils/cart/Cart.php");
 include_once("store/beans/SellableProducts.php");
-include_once("store/utils/cart/ICartListener.php");
 
 $page = new CheckoutPage();
 $page->modify_enabled = TRUE;

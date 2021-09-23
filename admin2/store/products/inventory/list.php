@@ -230,7 +230,7 @@ if ($prodID > 0) {
 
 $view_inventory = new SQLSelect();
 $view_inventory->fields()->set("derived.*");
-$view_inventory->from = "(" . $qry->select->getSQL(FALSE, FALSE) . ") as derived ";
+$view_inventory->from = "(" . $qry->select->getSQL() . ") as derived ";
 
 //echo $view_inventory->getSQL();
 

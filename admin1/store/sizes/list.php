@@ -10,7 +10,7 @@ $bean = new StoreSizesBean();
 
 $cmp->setBean($bean);
 
-$cmp->setListFields(array("size_value"=>"Size"));
+$cmp->setListFields(array("position"=>"Position", "size_value"=>"Size"));
 
 $cmp->initView();
 $cmp->getView()->setItemsPerPage(-1);

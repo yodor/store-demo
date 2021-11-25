@@ -47,6 +47,8 @@ $vis_act->getActions()->append($h_toggle->createAction("Disable", "field=suspend
 $vis_act->getActions()->append($h_toggle->createAction("Enable", "field=suspend&status=0", $check_is_not_suspend));
 $cmp->getView()->getColumn("suspend")->setCellRenderer($vis_act);
 
+$cmp->getPage()->getActions()->removeByAction("Add");
+$cmp->viewItemActions()->removeByAction("Edit");
 
 $cmp->render();
 

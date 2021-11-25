@@ -8,11 +8,12 @@ include_once("store/beans/ProductsBean.php");
 $ensure_product = new BeanKeyCondition(new ProductsBean(), "../list.php", array("product_name"));
 
 $cmp = new BeanEditorPage();
+$cmp->getPage()->setName(tr("Edit Color Scheme") . ": " . $ensure_product->getData("product_name"));
+
 $cmp->setRequestCondition($ensure_product);
 $cmp->setBean(new ProductColorsBean());
 $cmp->setForm(new ProductColorInputForm($ensure_product->getID()));
 
-$cmp->getPage()->setName(tr("Color Scheme") . ": " . $ensure_product->getData("product_name"));
 $cmp->render();
 
 ?>

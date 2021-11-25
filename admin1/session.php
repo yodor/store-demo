@@ -1,9 +1,10 @@
 <?php
-// $GLOBALS["DEBUG_OUTPUT"] = 1;
-$cdir = dirname(__FILE__);
-$realpath = realpath($cdir . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR);
-include_once($realpath . "/session.php");
-
+if (!isset($info)) {
+    $info = pathinfo($_SERVER['SCRIPT_FILENAME']);
+}
+$info = pathinfo($info["dirname"]);
+$parent = $info["dirname"];
+include_once($parent."/session.php");
 
 include_once("utils/MenuItem.php");
 $admin_menu = array();

@@ -42,13 +42,22 @@ $qry = $bean->query();
 $qry->select->fields()->setExpression("SUM(pi.stock_amount)", "stock_amount");
 $qry->select->fields()->setExpression("MIN(pi.price)", "price_min");
 $qry->select->fields()->setExpression("MAX(pi.price)", "price_max");
-$qry->select->fields()->setExpression("group_concat(distinct(size_value) SEPARATOR '<BR>')", "sizes");
-$qry->select->fields()->setExpression("replace(cc.colors, '|','<BR>')",  "colors");
+$qry->select->fields()->setExpression("group_concat(distinct(size_value) SEPARATOR '<BR>' )", "sizes");
 $qry->select->fields()->set("p.prodID", "p.product_name", "p.class_name", "p.brand_name", "p.section", "pc.category_name", "p.visible",
-"p.price", "p.promo_price", "p.buy_price", "cc.pi_ids", "cc.color_photos", "cc.have_chips", "cc.color_ids", "cc.product_photos");
+"p.price", "p.promo_price", "p.buy_price");
+$qry->select->fields()->setExpression("(SELECT pp.ppID FROM product_photos pp WHERE pp.prodID = p.prodID LIMIT 1)", "product_photos");
+$qry->select->fields()->setExpression("(SELECT 
+        GROUP_CONCAT(inventory_photos.pclrpID SEPARATOR '|') FROM 
+        (SELECT pclrpID, prodID FROM product_color_photos pcp 
+        LEFT JOIN product_colors pc ON pc.pclrID=pcp.pclrID GROUP BY pcp.pclrID ORDER BY pcp.position ASC) inventory_photos WHERE inventory_photos.prodID=pi.prodID )", "color_photos");
 
-$qry->select->from = " products p LEFT JOIN product_inventory pi ON pi.prodID = p.prodID LEFT JOIN color_chips cc ON cc.prodID = p.prodID JOIN product_categories pc ON pc.catID=p.catID ";
-$qry->select->group_by = "  p.prodID, pi.prodID ";
+$qry->select->from = " products p 
+                        LEFT JOIN product_inventory pi ON pi.prodID = p.prodID 
+                        JOIN product_categories pc ON pc.catID=p.catID ";
+
+$qry->select->group_by = "  p.prodID ";
+
+//echo $qry->select->getSQL();
 
 $cmp->setIterator($qry);
 $cmp->setBean($bean);

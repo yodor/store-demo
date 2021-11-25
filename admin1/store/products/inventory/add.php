@@ -1,7 +1,7 @@
 <?php
 include_once("session.php");
 include_once("templates/admin/BeanEditorPage.php");
-include_once("store/forms/ProductInventoryInputForm.php");
+include_once("ProductInventoryInputForm.php");
 include_once("store/beans/ProductInventoryBean.php");
 include_once("store/beans/ProductsBean.php");
 

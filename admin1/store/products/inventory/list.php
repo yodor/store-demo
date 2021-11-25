@@ -39,17 +39,28 @@ catch (Exception $e) {
     $cmp->getPage()->getActions()->removeByAction("Add");
 }
 
-$search_fields = array("product_name", "category_name", "class_name", "product_summary", "keywords", "brand_name",
+$search_fields = array("product_name", "category_name", "class_name", "product_description", "keywords", "brand_name",
                        "section", "color", "inventory_attributes");
 
 $cmp->getSearch()->getForm()->setFields($search_fields);
 
 $qry = $bean->query();
-$qry->select->fields()->set("pi.*", "pc.category_name", "pcp.pclrpID", "sc.color_code", "p.brand_name", "p.keywords", "p.product_name", "p.product_summary", "p.class_name", "p.section");
+$qry->select->fields()->set("pi.*",
+                            "pc.category_name",
+                            "pcp.pclrpID",
+                            "sc.color_code",
+                            "p.brand_name",
+                            "p.keywords",
+                            "p.product_name",
+                            "p.product_description", "p.class_name", "p.section");
 
-$qry->select->fields()->setExpression("(SELECT GROUP_CONCAT(CONCAT_WS(':', ia.attribute_name, ia.value) SEPARATOR '<BR>') COLLATE 'utf8_general_ci' 
- FROM inventory_attributes ia  
- WHERE ia.piID=pi.piID GROUP BY ia.piID )", "inventory_attributes");
+$qry->select->fields()->setExpression("(SELECT 
+        GROUP_CONCAT(DISTINCT(CONCAT(ca.attribute_name,':', cast(iav.value as char))) SEPARATOR '<BR>') 
+        FROM inventory_attribute_values iav JOIN class_attributes ca ON ca.caID = iav.caID 
+        WHERE iav.piID = pi.piID)", "inventory_attributes");
+//$qry->select->fields()->setExpression("(SELECT GROUP_CONCAT(CONCAT_WS(':', ia.attribute_name, ia.value) SEPARATOR '<BR>') COLLATE 'utf8_general_ci'
+// FROM inventory_attributes ia
+// WHERE ia.piID=pi.piID GROUP BY ia.piID )", "inventory_attributes");
 
 $qry->select->from = " product_inventory pi 
 JOIN products p ON p.prodID = pi.prodID 
@@ -57,7 +68,6 @@ JOIN product_categories pc ON pc.catID=p.catID LEFT
 JOIN product_colors pclr ON pclr.pclrID = pi.pclrID LEFT 
 JOIN product_color_photos pcp ON pcp.pclrID = pi.pclrID LEFT
 JOIN store_colors sc ON sc.color=pclr.color LEFT  
-JOIN color_chips cc ON cc.prodID = p.prodID LEFT 
 JOIN product_photos pp ON pp.prodID = pi.prodID ";
 $qry->select->group_by = " pi.piID ";
 

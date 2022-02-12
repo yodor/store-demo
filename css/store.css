@@ -1,0 +1,10 @@
+.home .section .Caption {
+    background-color:#cccccc;
+}
+
+.home .section .Caption A {
+    color:black;
+}
+.home .section .Caption A:hover {
+    color:var(--theme-accent);
+}

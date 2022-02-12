@@ -20,6 +20,14 @@ class ProductInputForm extends InputForm
     {
         parent::__construct();
 
+//        $field = DataInputFactory::Create(DataInputFactory::SELECT, "class_name", "Product Class", 0);
+//        $rend = $field->getRenderer();
+//        $pcb = new ProductClassesBean();
+//        $rend->setIterator($pcb->query($pcb->key(), "class_name"));
+//        $rend->getItemRenderer()->setValueKey("class_name");
+//        $rend->getItemRenderer()->setLabelKey("class_name");
+//        $this->addInput($field);
+
         $field = DataInputFactory::Create(DataInputFactory::SELECT, "section", "Section", 1);
         $rend = $field->getRenderer();
         $sb = new SectionsBean();
@@ -39,22 +47,14 @@ class ProductInputForm extends InputForm
 
         $this->addInput($field);
 
-//        $field = DataInputFactory::Create(DataInputFactory::TEXT_SEARCH, "brand_name", "Author", 1);
-//        $rend = $field->getRenderer();
-//        $brands = new BrandsBean();
-//
-//        $rend->setIterator($brands->query($brands->key(), "brand_name"));
-//        $rend->getItemRenderer()->setValueKey("brand_name");
-//        $rend->getItemRenderer()->setLabelKey("brand_name");
-//        $this->addInput($field);
+        $field = DataInputFactory::Create(DataInputFactory::SELECT, "brand_name", "Brand", 1);
+        $rend = $field->getRenderer();
+        $brands = new BrandsBean();
 
-//        $field = DataInputFactory::Create(DataInputFactory::SELECT, "class_name", "Product Class", 0);
-//        $rend = $field->getRenderer();
-//        $pcb = new ProductClassesBean();
-//        $rend->setIterator($pcb->query($pcb->key(), "class_name"));
-//        $rend->getItemRenderer()->setValueKey("class_name");
-//        $rend->getItemRenderer()->setLabelKey("class_name");
-//        $this->addInput($field);
+        $rend->setIterator($brands->query($brands->key(), "brand_name"));
+        $rend->getItemRenderer()->setValueKey("brand_name");
+        $rend->getItemRenderer()->setLabelKey("brand_name");
+        $this->addInput($field);
 
         $field = DataInputFactory::Create(DataInputFactory::TEXT, "product_name", "Заглавие", 1);
         $this->addInput($field);

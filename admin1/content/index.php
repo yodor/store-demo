@@ -11,6 +11,8 @@ $menu = array(new MenuItem("Menu Items", "menus/index.php", "menu"),
 
               new MenuItem("News", "news/list.php", "list"), new MenuItem("FAQ", "faq/list.php", "list"),
 
+              new MenuItem("Config", "config/list.php", "list"),
+
 );
 
 $page->setPageMenu($menu);

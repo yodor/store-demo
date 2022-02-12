@@ -15,46 +15,116 @@ $page->setTitle("Начало");
 
 $page->addCSS(STORE_LOCAL."/css/ProductListItem.css");
 
-$page->startRender();
 
-
-$sections = new SectionsBean();
-
-$qry = $sections->query("secID", "section_title");
-$qry->select->order_by = " position ASC ";
-
-$qry->exec();
-
-$sellable = new SellableProducts();
-$query_tape = $sellable->query(...$sellable->columnNames());
-$query_tape->select->order_by = " order_counter DESC, view_counter DESC ";
-$query_tape->select->group_by = SellableProducts::DefaultGrouping();
-
-$query_tape->select->limit = " 4 ";
+$banners = new SectionBannersBean();
 
 $tape = new ProductsTape();
 
+$item = new ProductListItem();
+
+$secBean = new SectionsBean();
+
+$qry = $secBean->query("secID", "section_title");
+$qry->select->order_by = " position ASC ";
+//$qry->select->where()->add("home_visible", 1);
+$qry->exec();
+$sections = array();
+
+while ($result = $qry->nextResult()) {
+    $sections[] = $result->getAll();
+}
+
+$sellables = new SellableProducts();
+$sellables->select()->order_by = " sell_price ASC ";
+$sellables->select()->group_by = " prodID ";
+$sellables->select()->limit = " 4 ";
+
+$qry->exec();
+
+$page->startRender();
+
 //TODO list only sections with products
-while ($section = $qry->nextResult()) {
+foreach ($sections as $idx=>$section) {
 
-    $sectionName = $section->get("section_title");
-    $secID = $section->get("secID");
+    $sectionName = $section["section_title"];
+    $secID = $section["secID"];
 
-    $query_tape->select->where()->clear();
-    $query_tape->select->where()->add("section", "'{$sectionName}'");
+    if (strcmp($sectionName, "Галерия")==0) {
+        $sellables->select()->order_by = " RAND() ";
+    }
+    else {
+        $sellables->select()->order_by = " sell_price ASC ";
+    }
 
-    echo "<div class='section'>";
+    $sellables->select()->where()->clear();
+    $sellables->select()->where()->add("section", "'$sectionName'");
 
-        $secion_url = LOCAL . "/products/list.php?section=$sectionName";
-        echo "<a href='$secion_url' title='$sectionName'><h1 class='Caption'>$sectionName</h1></a>";
+    $query = $sellables->queryFull();
+    $numItems = $query->exec();
 
-        $tape->setIterator($query_tape);
-        $tape->render();
+    //section with no products in it
+    if ($numItems < 1) continue;
+
+    echo "<div class='section $sectionName'>";
+
+    $secion_url = LOCAL . "/products/list.php?section=$sectionName";
+    echo "<h2 class='Caption'><a href='$secion_url' title='$sectionName'>$sectionName</h2>";
+
+    $qry1 = $banners->queryField("secID", $secID, 0, "sbID", "caption", "link", "position");
+    $qry1->select->order_by = " position ASC ";
+
+    $num = $qry1->exec();
+    if ($num) {
+
+        echo "<a class='banner' href='$secion_url' title='$sectionName'>";
+
+        while ($banner = $qry1->next()) {
+
+            $img_href = StorageItem::Image($banner["sbID"], $banners, 1200, -1);
+
+            echo "<img src='{$img_href}' alt='' loading='lazy'>";
+
+        }
+
+        echo "</a>";
+    }
+
+
+    echo "<div class='products'>";
+
+    $tape->setIterator($query);
+    $tape->render();
+    //
+    //    while ($row = $query->next()) {
+    //        $item->setData($row);
+    //        $item->render();
+    //    }
+
+    echo "</div>";
 
     echo "</div>";
 }
 
 Session::Set("shopping.list", $page->getPageURL());
+?>
+<script type="text/javascript">
+    function fadeBanners()
+    {
 
+        let sections = $(".section .banner");
+
+        for (var a=0;a<sections.length;a++) {
+            let section = sections[a];
+
+            $(section).children().first().appendTo($(section));
+        }
+        setTimeout(fadeBanners,3000);
+
+    }
+
+    onPageLoad(fadeBanners);
+</script>
+
+<?php
 $page->finishRender();
 ?>

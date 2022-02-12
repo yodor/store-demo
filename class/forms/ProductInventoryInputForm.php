@@ -95,9 +95,9 @@ class ProductInventoryInputForm extends InputForm
     {
         $this->prodID = (int)$prodID;
 
-//        $this->getInput("pclrID")->getRenderer()->getIterator()->select->where()->add("prodID", $this->prodID);
-//
-//        $this->getInput("pclrID")->getRenderer()->addon_content = "<a class='Action' action='inline-new' href='../color_gallery/add.php?prodID={$this->prodID}'>" . tr("Нова цветова схема") . "</a>";
+        $this->getInput("pclrID")->getRenderer()->getIterator()->select->where()->add("prodID", $this->prodID);
+
+        $this->getInput("pclrID")->getRenderer()->addon_content = "<a class='Action' action='inline-new' href='../color_gallery/add.php?prodID={$this->prodID}'>" . tr("Нова цветова схема") . "</a>";
 
         $prods = new ProductsBean();
         $this->product = $prods->getByID($this->prodID);

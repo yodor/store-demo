@@ -20,13 +20,13 @@ class ProductInputForm extends InputForm
     {
         parent::__construct();
 
-//        $field = DataInputFactory::Create(DataInputFactory::SELECT, "class_name", "Product Class", 0);
-//        $rend = $field->getRenderer();
-//        $pcb = new ProductClassesBean();
-//        $rend->setIterator($pcb->query($pcb->key(), "class_name"));
-//        $rend->getItemRenderer()->setValueKey("class_name");
-//        $rend->getItemRenderer()->setLabelKey("class_name");
-//        $this->addInput($field);
+        $field = DataInputFactory::Create(DataInputFactory::SELECT, "class_name", "Product Class", 0);
+        $rend = $field->getRenderer();
+        $pcb = new ProductClassesBean();
+        $rend->setIterator($pcb->query($pcb->key(), "class_name"));
+        $rend->getItemRenderer()->setValueKey("class_name");
+        $rend->getItemRenderer()->setLabelKey("class_name");
+        $this->addInput($field);
 
         $field = DataInputFactory::Create(DataInputFactory::SELECT, "section", "Section", 1);
         $rend = $field->getRenderer();

@@ -26,7 +26,7 @@ $secBean = new SectionsBean();
 
 $qry = $secBean->query("secID", "section_title");
 $qry->select->order_by = " position ASC ";
-//$qry->select->where()->add("home_visible", 1);
+$qry->select->where()->add("home_visible", 1);
 $qry->exec();
 $sections = array();
 
@@ -49,12 +49,12 @@ foreach ($sections as $idx=>$section) {
     $sectionName = $section["section_title"];
     $secID = $section["secID"];
 
-    if (strcmp($sectionName, "Галерия")==0) {
+//    if (strcmp($sectionName, "Галерия")==0) {
         $sellables->select()->order_by = " RAND() ";
-    }
-    else {
-        $sellables->select()->order_by = " sell_price ASC ";
-    }
+//    }
+//    else {
+//        $sellables->select()->order_by = " sell_price ASC ";
+//    }
 
     $sellables->select()->where()->clear();
     $sellables->select()->where()->add("section", "'$sectionName'");

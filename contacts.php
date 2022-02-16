@@ -14,7 +14,8 @@ $page->setTitle(tr("Контакти"));
 //$page->setTitle("Контакти");
 //
 
-
+$cfg = new ConfigBean();
+$cfg->setSection("store_config");
 
 $v = new BeanFormEditor(new ContactRequestsBean(), new ContactRequestForm());
 $v->setMessage("Заявката Ви е приета", BeanFormEditor::MESSAGE_ADD);
@@ -35,11 +36,21 @@ echo "<h1 class='Caption'>" . tr($page->getTitle()) . "</h1>";
 
 echo "<div class='columns'>";
 
+
+    $cabean = new ContactAddressesBean();
+    $qry = $cabean->queryFull();
+    $qry->select->order_by = " position ASC ";
+    $num_addresses = $qry->exec();
+
+    $maps_src = "";
+    if ($num_addresses<1) {
+        $maps_src = $cfg->get("maps_url");
+    }
     echo "<div class='column map'>";
 
         echo "<a name='map'></a>";
         echo "<div class='panel map'>";
-        echo "<iframe id=google_map src=''  frameborder='0' allowfullscreen='' aria-hidden='false' tabindex='0'></iframe>";
+        echo "<iframe id=google_map src='$maps_src'  frameborder='0' allowfullscreen='' aria-hidden='false' tabindex='0'></iframe>";
         echo "</div>";
 
     echo "</div>"; //column
@@ -49,7 +60,7 @@ echo "<div class='columns'>";
         $cabean = new ContactAddressesBean();
         $qry = $cabean->queryFull();
         $qry->select->order_by = " position ASC ";
-        $num = $qry->exec();
+        $num_addresses = $qry->exec();
         while ($carow = $qry->next()) {
 
             echo "<div class='details' pos='{$carow["position"]}' onClick='updateMap(this);' map-url='{$carow["map_url"]}'>";

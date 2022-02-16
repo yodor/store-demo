@@ -3,7 +3,7 @@
 global $defines;
 global $site_domain;
 
-$defines->set("SITE_TITLE", "Sparkbox Store");
+$defines->set("SITE_TITLE", "Store Demo");
 
 $defines->set("TRANSLATOR_ENABLED", TRUE);
 $defines->set("DB_ENABLED", TRUE);

@@ -108,7 +108,8 @@ $reqform = new RequireInvoiceInputForm();
 $idb = new InvoiceDetailsBean();
 $idbrow = $idb->getResult("userID", $page->getUserID());
 if (!$idbrow) {
-    $reqform->getInput("require_invoice")->setValue(FALSE);
+    $reqform->getInput("require_invoice")->setValue(false);
+    $cart->setRequireInvoice(false);
 }
 else {
     $reqform->getInput("require_invoice")->setValue($cart->getRequireInvoice());

@@ -19,4 +19,6 @@ $admin_menu[] = new MenuItem("Съдържание", ADMIN_LOCAL . "/content/ind
 
 $admin_menu[] = new MenuItem("Настройки", ADMIN_LOCAL . "/settings/index.php", "class:icon_settings");
 
+$admin_menu[] = new MenuItem("Контакти", ADMIN_LOCAL . "/contact_requests/list.php", "class:icon_settings");
+
 ?>

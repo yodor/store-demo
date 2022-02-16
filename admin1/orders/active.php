@@ -1,41 +1,30 @@
 <?php
 include_once("session.php");
-include_once("class/pages/AdminPage.php");
-include_once("store/beans/OrdersBean.php");
-include_once("store/responders/OrderStatusRequestHandler.php");
-include_once("responders/DeleteItemResponder.php");
-include_once("store/utils/OrdersSQL.php");
+include_once("store/components/OrdersListPage.php");
 
-$page = new AdminPage();
 
-$bean = new OrdersBean();
+$page = new OrdersListPage();
 
-$h_send = new OrderStatusRequestResponder();
 
-$h_delete = new DeleteItemResponder($bean);
+$page->getOrderListSQL()->where()->add("status", "'" . OrdersBean::STATUS_PROCESSING . "'");
 
-$sel = new OrdersSQL();
 
-$sel->where()->add("o.status", "'" . OrdersBean::STATUS_PROCESSING . "'");
+$view = $page->initView();
 
-include_once("list.php");
+$actions = $page->viewItemActions();
 
-$act = $view->getColumn("actions")->getCellRenderer();
-$act->getActions()->append(new Action("Потвърди изпращане", "?cmd=order_status", array(new DataParameter("orderID"),
-                                                                                       new URLParameter("status", OrdersBean::STATUS_SENT),))
-
-);
-$act->getActions()->append(new RowSeparator());
-$act->getActions()->append(new Action("Откажи изпращане", "?cmd=order_status", array(new DataParameter("orderID"),
-                                                                                     new URLParameter("status", OrdersBean::STATUS_CANCELED),))
-
+$actions->append(
+    new Action(tr("Confirm Sending"), "?cmd=order_status",
+               array(new DataParameter("orderID"), new URLParameter("status", OrdersBean::STATUS_SENT)))
 );
 
-$page->startRender();
+$actions->append(new RowSeparator());
 
-$scomp->render();
+$actions->append(
+    new Action(tr("Cancel Order"), "?cmd=order_status",
+               array(new DataParameter("orderID"), new URLParameter("status", OrdersBean::STATUS_CANCELED)))
+);
 
-$view->render();
 
-$page->finishRender();
+$page->render();
 ?>

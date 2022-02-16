@@ -1,24 +1,19 @@
 <?php
 include_once("session.php");
-include_once("class/pages/AdminPage.php");
-include_once("store/beans/OrdersBean.php");
-include_once("store/utils/OrdersSQL.php");
+include_once("store/components/OrdersListPage.php");
 
-$page = new AdminPage();
 
-$bean = new OrdersBean();
+$page = new OrdersListPage();
 
-$sel = new OrdersSQL();
 
-include_once("list.php");
+//$page->getOrderListSQL()->where()->add("status", "'" . OrdersBean::STATUS_PROCESSING . "'");
 
-$menu = array();
 
-$page->startRender($menu);
+$view = $page->initView();
 
-$scomp->render();
+$actions = $page->viewItemActions();
 
-$view->render();
 
-$page->finishRender();
+
+$page->render();
 ?>

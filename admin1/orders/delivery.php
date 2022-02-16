@@ -8,7 +8,7 @@ include_once("forms/processors/ConfigFormProcessor.php");
 include_once("forms/renderers/FormRenderer.php");
 
 $cmp = new ConfigEditorPage();
-$cmp->setConfigSection("delivery_prices");
+$cmp->setConfigSection("delivery_options");
 
 $form = new DeliveryConfigForm();
 $cmp->setForm($form);

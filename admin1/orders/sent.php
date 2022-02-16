@@ -1,34 +1,22 @@
 <?php
 include_once("session.php");
-include_once("class/pages/AdminPage.php");
-include_once("store/beans/OrdersBean.php");
-include_once("store/responders/OrderStatusRequestHandler.php");
-include_once("responders/DeleteItemResponder.php");
-include_once("store/utils/OrdersSQL.php");
+include_once("store/components/OrdersListPage.php");
 
-$page = new AdminPage();
 
-$bean = new OrdersBean();
+$page = new OrdersListPage();
 
-$h_send = new OrderStatusRequestResponder();
 
-$sel = new OrdersSQL();
+$page->getOrderListSQL()->where()->add("status", "'" . OrdersBean::STATUS_SENT . "'");
 
-$sel->where()->add("o.status", "'" . OrdersBean::STATUS_SENT . "'");
+$view = $page->initView();
+$actions = $page->viewItemActions();
 
-include_once("list.php");
 
-$act = $view->getColumn("actions")->getCellRenderer();
-$act->getActions()->append(new Action("Потвърди завършване", "?cmd=order_status", array(new DataParameter("orderID"),
+$actions->append(new Action("Потвърди завършване", "?cmd=order_status", array(new DataParameter("orderID"),
                                                                                         new URLParameter("status", OrdersBean::STATUS_COMPLETED),))
 
 );
 
-$page->startRender();
 
-$scomp->render();
-
-$view->render();
-
-$page->finishRender();
+$page->render();
 ?>

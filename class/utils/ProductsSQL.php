@@ -40,7 +40,7 @@ class ProductsSQL extends SQLSelect
         $this->fields()->setExpression("(SELECT 
         GROUP_CONCAT(inventory_photos.pclrpID SEPARATOR '|') FROM 
         (SELECT pclrpID, prodID FROM product_color_photos pcp 
-        LEFT JOIN product_colors pc ON pc.pclrID=pcp.pclrID GROUP BY pcp.pclrID ORDER BY pcp.pclrID DESC) inventory_photos WHERE inventory_photos.prodID=pi.prodID )", "color_photo_ids");
+        LEFT JOIN product_colors pc ON pc.pclrID=pcp.pclrID GROUP BY pcp.pclrID ORDER BY pcp.position ASC) inventory_photos WHERE inventory_photos.prodID=pi.prodID )", "color_photo_ids");
 
         //series color name - same product all inventory color names
         $this->fields()->setExpression("(SELECT 

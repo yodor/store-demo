@@ -17,6 +17,9 @@ function DBTransactor_onAfterCommit(BeanTransactor $transactor, DBDriver $db)
     if ($transactor->getEditID()<1) {
         $invrow = array("prodID"=> $lastID,
                         "stock_amount" => 1,
+                        "price"=>$values["price"],
+                        "buy_price"=>$values["buy_price"],
+                        "promo_price"=>$values["promo_price"],
         );
         $pibean->insert($invrow);
     }

@@ -72,6 +72,7 @@ $cmp->setListFields(
           "price"=>"Price",
           "promo_price"=>"Promo Price",
           "insert_date"=>"Insert Date",
+          "stock_amount"=>"Stock Amount",
           "update_date"=>"Update Date",
           //"inventory_attributes" => "Attributes"
     )
@@ -126,6 +127,8 @@ $qry->select->fields()->set("p.prodID", "p.product_name",  "pc.category_name", "
 "p.price", "p.promo_price", "p.insert_date", "p.update_date");
 //"pp.product_photo");
 $qry->select->fields()->setExpression("(SELECT ppID FROM product_photos pp WHERE pp.prodID = p.prodID LIMIT 1)", " cover ");
+$qry->select->fields()->setExpression("(SELECT sum(pi.stock_amount) FROM product_inventory pi WHERE pi.prodID = p.prodID )", " stock_amount ");
+
 $qry->select->from = " products p 
 LEFT JOIN product_inventory pi ON pi.prodID = p.prodID 
 LEFT JOIN product_categories pc ON pc.catID=p.catID

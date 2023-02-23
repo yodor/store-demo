@@ -5,41 +5,6 @@ include_once("store/forms/ProductInputForm.php");
 include_once("store/beans/ProductsBean.php");
 include_once("store/beans/ProductInventoryBean.php");
 
-//DBTableBean $bean, DBDriver $db, int $lastID, array $values
-function DBTransactor_onAfterCommit(BeanTransactor $transactor, DBDriver $db)
-{
-    $values = $transactor->getValues();
-    $lastID = $transactor->getLastID();
-
-    $pibean = new ProductInventoryBean();
-
-    //auto insert inventory
-    if ($transactor->getEditID()<1) {
-        $invrow = array("prodID"=> $lastID,
-                        "stock_amount" => 1,
-                        "price"=>$values["price"],
-                        "buy_price"=>$values["buy_price"],
-                        "promo_price"=>$values["promo_price"],
-        );
-        $pibean->insert($invrow);
-    }
-    else {
-        //populate prices from product
-        $update = new SQLUpdate($pibean->select());
-        $update->set("price", $values["price"]);
-        $update->set("buy_price", $values["buy_price"]);
-        $update->set("promo_price", $values["promo_price"]);
-        $update->where()->add("prodID", $lastID);
-
-
-        $db->transaction();
-        $db->query($update->getSQL());
-        $db->commit();
-
-    }
-
-}
-
 $cmp = new BeanEditorPage();
 $cmp->setBean(new ProductsBean());
 $cmp->setForm(new ProductInputForm());
@@ -48,8 +13,45 @@ if (isset($_GET["editID"])) {
     $cmp->getPage()->setName(tr("Редактиране на продукт"));
 }
 
-
 $cmp->initView();
+
+$closure = function(BeanTransactorEvent $event) {
+    if ($event->isEvent(BeanTransactorEvent::AFTER_COMMIT)) {
+        $transactor = $event->getSource();
+        $db = $event->getDB();
+        if (!$transactor instanceof BeanTransactor) throw new Exception("Incorrect event source class");
+        $values = $transactor->getValues();
+        $lastID = $transactor->getLastID();
+
+        $pibean = new ProductInventoryBean();
+
+        //auto insert inventory
+        if ($transactor->getEditID()<1) {
+            $invrow = array("prodID"=> $lastID,
+                            "stock_amount" => 1,
+                            "price"=>$values["price"],
+                            "buy_price"=>$values["buy_price"],
+                            "promo_price"=>$values["promo_price"],
+            );
+            $pibean->insert($invrow);
+        }
+        else {
+            //populate prices from product
+            $update = new SQLUpdate($pibean->select());
+            $update->set("price", $values["price"]);
+            $update->set("buy_price", $values["buy_price"]);
+            $update->set("promo_price", $values["promo_price"]);
+            $update->where()->add("prodID", $lastID);
+
+
+            $db->transaction();
+            $db->query($update->getSQL());
+            $db->commit();
+
+        }
+    }
+};
+$cmp->getEditor()->getTransactor()->getObserver()->setCallback($closure);
 
 $cmp->getEditor()->getTransactor()->assignInsertValue("insert_date", DBConnections::Get()->dateTime());
 $cmp->render();

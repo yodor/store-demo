@@ -11,8 +11,8 @@ $page->setName("Logo Management");
 $current = new SparkFile("logo");
 $current->setPath(CACHE_PATH);
 
-$origin_file = new SparkFile("/images/logo_header.origin");
-
+$origin_file = new SparkFile("logo_header.svg");
+$origin_file->setPath(INSTALL_PATH."/storefront/images/");
 
 $image_input = DataInputFactory::Create(DataInputFactory::SESSION_IMAGE, "logo", "Upload logo image (450px x 90px)", 1);
 

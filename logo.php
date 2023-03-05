@@ -14,7 +14,7 @@ if ($user_logo->exists()) {
 }
 else {
     $origin_logo = new SparkFile("logo_header.svg");
-    $origin_logo->setPath(INSTALL_PATH."/sparkfront/images/");
+    $origin_logo->setPath(INSTALL_PATH."/storefront/images/");
     $response->setFile($origin_logo);
     $response->send();
     exit;

@@ -15,6 +15,7 @@ $menu = array(new MenuItem("Menu Items", "menus/index.php", "menu"),
 
               new MenuItem("Config", "config/list.php", "list"),
 
+              new MenuItem("Config", "logo/list.php", "list"),
 );
 
 $page->setPageMenu($menu);

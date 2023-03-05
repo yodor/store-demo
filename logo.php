@@ -13,7 +13,7 @@ if ($user_logo->exists()) {
     exit;
 }
 else {
-    $origin_logo = new SparkFile("logo_header.origin");
+    $origin_logo = new SparkFile("logo_header.svg");
     $origin_logo->setPath(INSTALL_PATH);
     $response->setFile($origin_logo);
     $response->send();

@@ -123,14 +123,13 @@ $proc->process($form);
 //$qry->select->fields()->setExpression("MAX(pi.price)", "price_max");
 //$qry->select->fields()->setExpression("group_concat(distinct(ssz.size_value) ORDER BY ssz.position ASC SEPARATOR '<BR>')", "sizes");
 //$qry->select->fields()->setExpression("replace(cc.colors, '|','<BR>')",  "colors");
-$qry->select->fields()->set("p.prodID", "p.product_name",  "pc.category_name", "p.visible",
+$qry->select->fields()->set("p.prodID", "p.product_name",  "pc.category_name", "p.visible", "p.stock_amount",
 "p.price", "p.promo_price", "p.insert_date", "p.update_date");
 //"pp.product_photo");
 $qry->select->fields()->setExpression("(SELECT ppID FROM product_photos pp WHERE pp.prodID = p.prodID LIMIT 1)", " cover ");
-$qry->select->fields()->setExpression("(SELECT sum(pi.stock_amount) FROM product_inventory pi WHERE pi.prodID = p.prodID )", " stock_amount ");
 
 $qry->select->from = " products p 
-LEFT JOIN product_inventory pi ON pi.prodID = p.prodID 
+ 
 LEFT JOIN product_categories pc ON pc.catID=p.catID
 ";
 //LEFT JOIN store_sizes ssz ON ssz.size_value = pi.size_value

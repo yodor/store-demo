@@ -9,64 +9,80 @@ $page->modify_enabled = TRUE;
 
 $cart = Cart::Instance();
 
-$num = -1;
-$piID = -1;
 
+$sellable = null;
+$itemHash = "";
+$redirect = FALSE;
 try {
 
-    $redirect = FALSE;
+    if (isset($_GET["item"])) {
+        $itemHash = $_GET["item"];
+    }
 
-    if (isset($_GET["piID"])) {
-        $piID = (int)$_GET["piID"];
+    if (isset($_GET["add"])) {
 
-        $bean = new SellableProducts();
-        $query = $bean->query("piID");
-        $query->select->where()->add("piID", $piID);
-        $query->select->limit = " 1 ";
+        $prodID = -1;
 
-        $num = $query->exec();
-
-        if ($num < 1) {
-            throw new Exception("SellableProducts returned non positive result count");
+        if (isset($_GET["prodID"])) {
+            $prodID = (int)$_GET["prodID"];
         }
 
-        //client add product to cart
-        else if (isset($_GET["add"])) {
+        try {
 
-            if ($result = $query->nextResult()) {
+            if ($prodID < 1) throw new Exception("Product does not exist or is not accessible right now");
 
-                $stock_amount = $result->get("stock_amount");
-                if ($stock_amount < 1) throw new Exception("SellableProducts returned stock amount low");
+            $sellable = SellableItem::Load($prodID);
 
-                $item = new CartItem($result->get("piID"), $result->get("sell_price"));
-                $cart->addItem($item);
-                $redirect = TRUE;
+            if ($sellable->getStockAmount() < 1) throw new Exception("SellableProducts returned stock amount low");
+
+            $variant = null;
+            if (isset($_GET["variant"])) {
+                $variant = json_decode(base64_url_decode($_GET["variant"]));
+                foreach ($variant as $name => $value) {
+                    if ($sellable->haveVariant($name)) {
+                        $itemVariant = $sellable->getVariant($name);
+                        if ($itemVariant->haveParameter($value)) {
+                            $itemVariant->setSelected($value);
+                        }
+                    }
+                }
             }
-            else {
-                throw new Exception("Unable to fetch required SellableProduct to do add");
-            }
-        }
-        //client increase product item amount from the + button
-        else if (isset($_GET["increment"])) {
-            $cart->increment($piID);
+
+            $item = new CartEntry($sellable);
+            $cart->addItem($item);
+
             $redirect = TRUE;
+
+
+        } catch (Exception $e) {
+
+            Session::set("alert", "Този продукт е недостъпен. Грешка: " . $e->getMessage());
+            header("Location: list.php");
+            exit;
         }
-        //client decrease product item amount from the - button
-        else if (isset($_GET["decrement"])) {
-            $cart->decrement($piID);
-            $redirect = TRUE;
-        }
-        //client remove product item from the x button
-        else if (isset($_GET["remove"])) {
-            $cart->remove($piID);
-            $redirect = TRUE;
-        }
+    }
+
+    //client increase product item amount from the + button
+    else if (isset($_GET["increment"])) {
+        $cart->increment($itemHash);
+        $redirect = TRUE;
+    }
+    //client decrease product item amount from the - button
+    else if (isset($_GET["decrement"])) {
+        $cart->decrement($itemHash);
+        $redirect = TRUE;
+    }
+    //client remove product item from the x button
+    else if (isset($_GET["remove"])) {
+        $cart->remove($itemHash);
+        $redirect = TRUE;
     }
     else if (isset($_GET["clear"])) {
         $cart->clear();
         $redirect = true;
     }
 
+    //redirect to store cart in session and clean the url
     if ($redirect) {
         $cart->store();
         header("Location: cart.php");

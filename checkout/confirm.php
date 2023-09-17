@@ -259,30 +259,7 @@ $action->getURLBuilder()->buildFrom("javascript:document.forms.OrderNoteInputFor
 
 
 $page->renderNavigation();
-//
-//echo "<div class='navigation'>";
-//
-//echo "<div class='slot left'>";
-//echo "<a href='cart.php'>";
-//echo "<img src='" . LOCAL . "/images/cart_edit.svg'>";
-//echo "<div class='ColorButton checkout_button' >" . tr("Назад") . "</div>";
-//echo "</a>";
-//echo "</div>";
-//
-//echo "<div class='slot center'>";
-//echo "<div class='note'>";
-//echo "<i>" . tr("Натискайки бутона 'Потвърди поръчка' Вие се съгласявате с нашите") . "&nbsp;" . "<a  href='" . LOCAL . "/terms_usage.php'>" . tr("Условия за ползване") . "</a></i>";
-//echo "</div>";
-//echo "</div>";
-//
-//echo "<div class='slot right'>";
-//echo "<a href='javascript:document.forms.OrderNoteInputForm.submit()'>";
-//echo "<img src='" . LOCAL . "/images/cart_checkout.svg'>";
-//echo "<div class='ColorButton checkout_button'  >" . tr("Потвърди поръчка") . "</div>";
-//echo "</a>";
-//echo "</div>";
-//
-//echo "</div>";
+
 
 Session::set("checkout.navigation.back", $page->getPageURL());
 

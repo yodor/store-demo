@@ -5,7 +5,6 @@ include_once("store/mailers/OrderConfirmationMailer.php");
 
 include_once("class/pages/CheckoutPage.php");
 
-include_once("store/utils/OrderProcessor.php");
 
 include_once("store/mailers/OrderConfirmationAdminMailer.php");
 include_once("store/mailers/OrderErrorAdminMailer.php");
@@ -20,7 +19,7 @@ $orderID = -1;
 
 try {
 
-    $oproc = new OrderProcessor();
+    $oproc = $page->getOrderProcessor();
 
     $oproc->createOrder();
 

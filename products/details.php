@@ -7,8 +7,6 @@ $page = new ProductDetailsPage();
 
 $sellable = $page->getSellable();
 
-$piID = $sellable->getActiveInventoryID();
-
 $cmp = new ProductDetailsItem($sellable);
 $cmp->setURL(fullURL($page->getPageURL()));
 $cmp->setCategories($page->getCategoryPath());

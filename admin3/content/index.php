@@ -9,9 +9,13 @@ $menu = array(new MenuItem("Menu Items", "menus/index.php", "menu"),
 
               new MenuItem("Dynamic Pages", "pages/list.php", "list"),
 
-              new MenuItem("News", "news/list.php", "list"), new MenuItem("FAQ", "faq/list.php", "list"),
+              new MenuItem("FAQ", "faq/list.php", "list"),
+
+              new MenuItem("News", "news/list.php", "list"),
 
               new MenuItem("Config", "config/list.php", "list"),
+
+              new MenuItem("Logo", "logo/list.php", "list"),
 
 );
 

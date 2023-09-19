@@ -19,7 +19,7 @@ $orderID = -1;
 
 try {
 
-    $oproc = $page->getOrderProcessor();
+    $oproc = CheckoutPage::OrderProcessor();
 
     $oproc->createOrder();
 

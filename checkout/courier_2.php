@@ -80,7 +80,7 @@ echo "<div class='item ekont_office $empty'>";
     echo "<div class='Caption'>" . tr("Избран офис на Еконт") . "</div>";
 
     echo "<div class='selected_office'>";
-    echo str_replace("\r", "<br>", $form->getInput("office")->getValue());
+    echo str_replace("\r", "<br>", (string)$form->getInput("office")->getValue());
     echo "</div>";
 
     $frend->startRender();

@@ -11,6 +11,8 @@ $cart = Cart::Instance();
 
 $courier = $cart->getDelivery()->getSelectedCourier();
 
-include_once("courier_".$courier->getID().".php");
+$courier_id = $courier->getID();
+
+include_once("courier_office.php");
 
 ?>

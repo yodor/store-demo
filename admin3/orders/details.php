@@ -154,7 +154,7 @@ echo "</div>";//panel
                 echo "</div>"; //line
 
                 $qry = $items->queryField("orderID", $orderID);
-                $qry->select->fields()->set("piID", "prodID", "itemID", "price", "qty", "product");
+                $qry->select->fields()->set("prodID", "itemID", "price", "qty", "product");
                 $numItems = $qry->exec();
 
                 $pos = 0;
@@ -163,10 +163,10 @@ echo "</div>";//panel
                     echo "<div class='line'>";
                     echo "<div class='item pos'>$pos</div>";
 
-                    $piID = $item["piID"];
+
                     $prodID = $item["prodID"];
 
-                    echo "<a class='item photo' href='" . LOCAL . "/products/details.php?prodID=$prodID&piID=$piID'>";
+                    echo "<a class='item photo' href='" . LOCAL . "/products/details.php?prodID=$prodID'>";
                     $href = StorageItem::Image($item["itemID"], get_class($items), 100, 100);
                     echo "<img src='$href'>";
                     echo "</a>";
@@ -175,8 +175,8 @@ echo "</div>";//panel
 
                     $details = explode("//", $item["product"]);
                     foreach ($details as $index => $value) {
-                        $data = explode("||", $value);
-                        echo $data[0] . ": " . $data[1] . "<BR>";
+                        //$data = explode("||", $value);
+                        echo $value . "<BR>";
                     }
                     echo "</div>";
                     echo "<div class='item qty'>" . $item["qty"] . "</div>";

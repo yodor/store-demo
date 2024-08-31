@@ -12,7 +12,7 @@ class MultiAddInventoryProcessor extends FormProcessor {
     {
         parent::__construct();
     }
-    protected function processImpl(InputForm $form)
+    protected function processImpl(InputForm $form) : void
     {
         parent::processImpl($form);
 

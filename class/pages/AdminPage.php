@@ -8,7 +8,7 @@ class AdminPage extends AdminPageBase
     {
         parent::__construct();
 
-        $this->addCSS(STORE_LOCAL . "/css/AdminPage.css");
+        $this->head()->addCSS(STORE_LOCAL . "/css/AdminPage.css");
     }
 
 }

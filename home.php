@@ -13,7 +13,7 @@ include_once("store/beans/SellableProducts.php");
 $page = new StorePage();
 $page->setTitle("Начало");
 
-$page->addCSS(STORE_LOCAL."/css/ProductListItem.css");
+$page->head()->addCSS(STORE_LOCAL."/css/ProductListItem.css");
 
 
 $banners = new SectionBannersBean();

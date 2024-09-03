@@ -8,7 +8,7 @@ include_once("components/PublicationsComponent.php");
 
 $page = new StorePage();
 
-$page->addCSS(LOCAL . "/css/news.css");
+$page->head()->addCSS(LOCAL . "/css/news.css");
 
 $nb = new NewsItemsBean();
 $prkey = $nb->key();

@@ -6,7 +6,7 @@ class StorePage extends StorePageBase
     public function __construct()
     {
         parent::__construct();
-        $this->addCSS(LOCAL."/css/store.css");
+        $this->head()->addCSS(LOCAL."/css/store.css");
     }
 
 }

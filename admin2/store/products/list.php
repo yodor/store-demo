@@ -110,7 +110,7 @@ $frend = new FormRenderer($form);
 $frend->getSubmitLine()->setEnabled(false);
 $frend->setMethod(FormRenderer::METHOD_GET);
 $frend->setAttribute("autocomplete", "off");
-$cmp->append($frend);
+$cmp->items()->append($frend);
 
 
 $proc = new FormProcessor();

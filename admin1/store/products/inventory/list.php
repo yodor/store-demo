@@ -114,7 +114,7 @@ $act = $cmp->viewItemActions();
 $edit_action = $act->getByAction("Edit");
 $edit_action->getURLBuilder()->add(new DataParameter("prodID"));
 
-$act->append(new RowSeparator());
+$act->append(Action::RowSeparator());
 
 $act->append(new Action("Copy", "add.php", array(new DataParameter("prodID"),
                                                  new DataParameter("copyID", $bean->key()))));

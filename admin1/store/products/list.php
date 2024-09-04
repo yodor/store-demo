@@ -82,11 +82,11 @@ $view->getColumn("visible")->setCellRenderer(new BooleanCellRenderer("Yes", "No"
 
 
 $act = $cmp->viewItemActions();
-$act->append(new RowSeparator());
+$act->append(Action::RowSeparator());
 $act->append(new Action("Inventory", "inventory/list.php", array(new DataParameter("prodID", $bean->key()))));
-$act->append(new RowSeparator());
+$act->append(Action::RowSeparator());
 $act->append(new Action("Color Scheme", "color_gallery/list.php", array(new DataParameter("prodID", $bean->key()))));
-$act->append(new RowSeparator());
+$act->append(Action::RowSeparator());
 
 $act->append(new Action("Photo Gallery", "gallery/list.php", array(new DataParameter("prodID", $bean->key()))));
 

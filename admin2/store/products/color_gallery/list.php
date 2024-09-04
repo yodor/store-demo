@@ -54,7 +54,7 @@ if ($action_edit instanceof Action) {
     $action_edit->getURLBuilder()->add(new DataParameter($rc->getBean()->key(), $rc->getID()));
 }
 
-$act->append(new RowSeparator());
+$act->append(Action::RowSeparator());
 
 $act->append(
     new Action("Photos", "gallery/list.php",

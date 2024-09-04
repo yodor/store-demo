@@ -46,7 +46,7 @@ $act = $cmp->viewItemActions();
 
 $act->getByAction("Edit")->getURLBuilder()->add(new DataParameter("prodID", $rc->getID()));
 
-$act->append(new RowSeparator());
+$act->append(Action::RowSeparator());
 
 $act->append(new Action("Photos", "gallery/list.php", array(new DataParameter($bean->key(), $bean->key()))));
 

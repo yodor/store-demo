@@ -51,7 +51,7 @@ $cmp->getView()->getColumn("color_photo")->setCellRenderer($ticr1);
 $act = $cmp->viewItemActions();
 $action_edit = $act->getByAction("Edit");
 if ($action_edit instanceof Action) {
-    $action_edit->getURLBuilder()->add(new DataParameter($rc->getBean()->key(), $rc->getID()));
+    $action_edit->getURL()->add(new DataParameter($rc->getBean()->key(), $rc->getID()));
 }
 
 $act->append(Action::RowSeparator());

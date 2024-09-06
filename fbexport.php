@@ -36,7 +36,7 @@ while ($result = $query->nextResult()) {
     $export_row["availability"] = "in stock";
     $export_row["condition"] = "new";
 
-    $link = $item->getDetailsURL()->url();
+    $link = $item->getDetailsURL()->toString();
     $export_row["link"] = fullURL($link);
 
     $image_link = $item->getPhoto()->hrefImage(640,-1);
@@ -54,4 +54,3 @@ while ($result = $query->nextResult()) {
 
 
 ?>
-

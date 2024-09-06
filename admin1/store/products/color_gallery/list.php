@@ -44,7 +44,7 @@ $cmp->getView()->getColumn("color_photo")->setCellRenderer($ticr1);
 
 $act = $cmp->viewItemActions();
 
-$act->getByAction("Edit")->getURLBuilder()->add(new DataParameter("prodID", $rc->getID()));
+$act->getByAction("Edit")->getURL()->add(new DataParameter("prodID", $rc->getID()));
 
 $act->append(Action::RowSeparator());
 

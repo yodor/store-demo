@@ -122,23 +122,7 @@ try {
     $cmp->getPage()->setName($pageName);
 
     $cmp->getPage()->getActions()->removeByAction("Add");
-//    $action_add = $cmp->getPage()->getActions()->getByAction("Add");
-//    $action_add->getURLBuilder()->add(new URLParameter("prodID", $prodID));
-//
-//    $action_multi = new Action("Multi-Add", "multi_add.php");
-//    $action_multi->setAttribute("title", "Multi-Add");
-//    $action_multi->getURLBuilder()->add(new URLParameter( "prodID", $prodID));
-//    $cmp->getPage()->getActions()->append($action_multi);
 
-
-    //$search_fields = array("product_name", "category_name", "class_name", "product_description", "keywords", "brand_name",
-    //                       "section", "color", "inventory_attributes");
-    //
-    //$cmp->getSearch()->getForm()->setFields($search_fields);
-
-//    $form->getInput("prodID")->setValue($prodID);
-//    $form->removeInput("filter_section");
-//    $form->removeInput("filter_catID");
 
 }
 catch (Exception $e) {
@@ -148,17 +132,6 @@ catch (Exception $e) {
 }
 
 
-
-//$frend = new FormRenderer($form);
-//$frend->setAttribute("autocomplete", "off");
-//$frend->setMethod(FormRenderer::METHOD_GET);
-//$frend->getSubmitLine()->setEnabled(false);
-//$cmp->append($frend);
-//
-//
-//$proc = new FormProcessor();
-//
-//$proc->process($form);
 
 
 $qry = $bean->query();
@@ -281,7 +254,7 @@ $view->setDefaultOrder("prodID DESC");
 
 $act = $cmp->viewItemActions();
 $edit_action = $act->getByAction("Edit");
-$edit_action->getURLBuilder()->add(new DataParameter("prodID"));
+$edit_action->getURL()->add(new DataParameter("prodID"));
 
 $act->removeByAction("Delete");
 

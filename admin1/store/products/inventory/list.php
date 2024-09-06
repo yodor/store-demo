@@ -30,7 +30,7 @@ try {
     $cmp->getPage()->setName($pageName);
 
     $action_add = $cmp->getPage()->getActions()->getByAction("Add");
-    $action_add->getURLBuilder()->add(new URLParameter("prodID", $prodID));
+    $action_add->getURL()->add(new URLParameter("prodID", $prodID));
 
 }
 catch (Exception $e) {
@@ -112,7 +112,7 @@ $view->getColumn("pclrpID")->setCellRenderer($ticr1);
 
 $act = $cmp->viewItemActions();
 $edit_action = $act->getByAction("Edit");
-$edit_action->getURLBuilder()->add(new DataParameter("prodID"));
+$edit_action->getURL()->add(new DataParameter("prodID"));
 
 $act->append(Action::RowSeparator());
 

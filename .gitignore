@@ -5,6 +5,10 @@ error*log
 /config/dbconfig.php
 /session.php
 /admin
+/account
+/checkout
+/orders
+/products
 *.zip
 .ftpquota
 .well-known

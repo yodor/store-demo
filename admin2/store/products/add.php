@@ -17,6 +17,7 @@ $cmp->initView();
 
 $closure = function(BeanTransactorEvent $event) {
     if ($event->isEvent(BeanTransactorEvent::AFTER_COMMIT)) {
+        debug("Closure handing event: ".$event->getName());
         $transactor = $event->getSource();
         $db = $event->getDB();
         if (!$transactor instanceof BeanTransactor) throw new Exception("Incorrect event source class");
@@ -51,7 +52,8 @@ $closure = function(BeanTransactorEvent $event) {
         }
     }
 };
-$cmp->getEditor()->getTransactor()->getObserver()->setCallback($closure);
+SparkEventManager::register(BeanTransactorEvent::class, new SparkObserver($closure));
+//$cmp->getEditor()->getTransactor()->getObserver()->setCallback($closure);
 
 $cmp->getEditor()->getTransactor()->assignInsertValue("insert_date", DBConnections::Get()->dateTime());
 $cmp->render();

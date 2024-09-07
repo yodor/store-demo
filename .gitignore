@@ -9,6 +9,7 @@ error*log
 /checkout
 /orders
 /products
+/content
 *.zip
 .ftpquota
 .well-known

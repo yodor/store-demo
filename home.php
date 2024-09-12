@@ -105,7 +105,7 @@ foreach ($sections as $idx=>$section) {
     echo "</div>";
 }
 
-Session::Set("shopping.list", $page->getPageURL());
+Session::Set("shopping.list", URL::Current()->toString());
 ?>
 <script type="text/javascript">
     function fadeBanners()

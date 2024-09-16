@@ -19,7 +19,7 @@ class ColorPhotosSQL extends SQLSelect
     {
 
         $sql = "CREATE VIEW IF NOT EXISTS $view_name AS ({$this->getSQL()})";
-        $db = DBConnections::Get();
+        $db = DBConnections::Open();
         $res = $db->query($sql);
         $db->free($res);
 

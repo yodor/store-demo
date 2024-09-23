@@ -31,7 +31,7 @@ $qry->exec();
 $sections = array();
 
 while ($result = $qry->nextResult()) {
-    $sections[] = $result->getAll();
+    $sections[] = $result->toArray();
 }
 
 $sellables = new SellableProducts();

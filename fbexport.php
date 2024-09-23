@@ -25,7 +25,7 @@ while ($result = $query->nextResult()) {
     $prodID = $result->get("prodID");
     $piID = $result->get("piID");
 
-    $data = $result->getAll();
+    $data = $result->toArray();
     $item->setData($data);
 
     $export_row = array();
@@ -36,8 +36,8 @@ while ($result = $query->nextResult()) {
     $export_row["availability"] = "in stock";
     $export_row["condition"] = "new";
 
-    $link = $item->getDetailsURL()->toString();
-    $export_row["link"] = fullURL($link);
+    $link = $item->getDetailsURL()->fullURL()->toString();
+    $export_row["link"] = $link;
 
     $image_link = $item->getPhoto()->hrefImage(640,-1);
     $export_row["image_link"] = fullURL($image_link);

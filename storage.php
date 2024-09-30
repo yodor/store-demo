@@ -1,5 +1,5 @@
 <?php
 define("STORAGE_REQUEST", 1);
-include_once("storage/BeanDataRequest.php");
-$storage = new BeanDataRequest();
+include_once("session.php");
+include_once("sparkstorage.php");
 ?>

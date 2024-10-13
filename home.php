@@ -111,13 +111,13 @@ Session::Set("shopping.list", URL::Current()->toString());
     function fadeBanners()
     {
 
-        let sections = $(".section .banner");
+        document.querySelectorAll(".section .banner").forEach((section)=>{
+            let first = section.childNodes.item(0);
+            if (first) {
+                section.appendChild(section.removeChild(first));
+            }
+        });
 
-        for (var a=0;a<sections.length;a++) {
-            let section = sections[a];
-
-            $(section).children().first().appendTo($(section));
-        }
         setTimeout(fadeBanners,3000);
 
     }
